@@ -57,6 +57,7 @@ The goal of this document is to outline a set of technologies and tools that can
 
 - Google Analytics
 - Something simpler and more privacy friendly
+- (Log Rocket)[https://logrocket.com/]
 
 # Backend
 
