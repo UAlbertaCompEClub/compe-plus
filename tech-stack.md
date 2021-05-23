@@ -47,6 +47,7 @@ The goal of this document is to outline a set of technologies and tools that can
 - TailwindCSS
 - Custom CSS
 - Something like Bootstrap
+- Component Library (Ex. (Material)[https://material-ui.com/], (Ant Design)[https://ant.design/])  
 
 ### Hosting Options
 
