@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import logging from "../config/logging";
+import logging from "../util/logging";
 
 const NAMESPACE = "Sample Controller";
 

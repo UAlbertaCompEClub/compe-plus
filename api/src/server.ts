@@ -1,24 +1,15 @@
 import http from "http";
 import express from "express";
-import logging from "./config/logging";
-import config from "./config/config";
+import logging from "./util/logging";
+import config from "./util/config";
 import sampleRoutes from "./routes/sample";
+import middleware from "./routes/middleware";
 
 const NAMESPACE = "Server";
 const router = express();
 
-// TODO move to a middleware file
 /** Log the request */
-router.use((req, res, next) => {
-  const message = `METHOD - [${req.method}], URL - [${req.url}]`;
-  logging.info(NAMESPACE, message);
-
-  res.on("finish", () => {
-    logging.info(NAMESPACE, message);
-  });
-
-  next();
-});
+router.use(middleware.logRequest);
 
 /** Parse the request */
 router.use(express.json());
@@ -27,11 +18,7 @@ router.use(express.json());
 router.use("/api/v1", sampleRoutes);
 
 /** Error handling */
-router.use((req, res, next) => {
-  const error = new Error("not found");
-
-  return res.status(404).json({ message: error.message });
-});
+router.use(middleware.notFound);
 
 /** Create the server */
 const httpServer = http.createServer(router);
