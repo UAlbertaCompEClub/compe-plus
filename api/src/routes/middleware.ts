@@ -3,7 +3,6 @@ import logging from "../util/logging";
 
 const NAMESPACE = "Server";
 
-/** Log the request */
 /**
  * Log the request.
  *
@@ -11,12 +10,12 @@ const NAMESPACE = "Server";
  * @param res HTTP response.
  * @param next Next function in chain of handlers.
  */
-function logRequest(req: Request, res: Response, next: NextFunction) {
+function logRequest(req: Request, res: Response, next: NextFunction): void {
   const message = `METHOD - [${req.method}], URL - [${req.url}]`;
   logging.info(NAMESPACE, message);
 
   res.on("finish", () => {
-    logging.info(NAMESPACE, message);
+    logging.info(NAMESPACE, `${message}, STATUS - [${res.statusCode}]`);
   });
 
   next();
@@ -29,7 +28,7 @@ function logRequest(req: Request, res: Response, next: NextFunction) {
  * @param next Next function in chain of handlers.
  * @returns
  */
-function notFound(req: Request, res: Response, next: NextFunction) {
+function notFound(req: Request, res: Response, next: NextFunction): void {
   const error = new Error("not found");
 
   res.status(404).json({ message: error.message });
