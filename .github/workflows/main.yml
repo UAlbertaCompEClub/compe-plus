@@ -16,7 +16,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      # TODO cache the following step if it gets too slow
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-api-node-modules
+        with:
+          path: './api/node_modules'
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./api/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: Install dependencies
         run: npm install
       - name: Check linting
