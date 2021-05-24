@@ -15,13 +15,13 @@ To run a Postgres instance locally we leverage Docker. The following instruction
 
 ## Starting Postgres
 
-`docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres:13`
+`docker run --rm --name pg-docker -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=compe-plus -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres:13`
 
 Verify that it is running with `docker ps` or kill it with `docker kill pg-docker`
 
 ## Connecting to Postgres
 
-`psql -h localhost -U postgres -d postgres` (Password is "docker")
+`psql -h localhost -U postgres -d compe-plus` (Password is "postgres")
 
 # Production
 
@@ -29,7 +29,7 @@ In production a Postgres instance is provisioned via a Heroku add-on.
 
 # Migrations
 
-To manage migrations within Postgres we use [golang-migrate](https://github.com/golang-migrate/migrate).
+To manage migrations within Postgres we use [golang-migrate](https://github.com/golang-migrate/migrate). Look [here](https://github.com/golang-migrate/migrate/blob/master/database/postgres/TUTORIAL.md) for a decent high-level tutorial of the process.
 
 ## Setup
 
@@ -43,4 +43,10 @@ mv migrate.linux-amd64.tar.gz /usr/local/bin/migrate
 migrate --version
 ```
 
-## Performing a migration
+## Creating a new migration
+
+`migrate create -ext sql -seq -digits 3 -dir db/migrations/ <NAME>`
+
+## Applying a migration locally
+
+`migrate -database 'postgres://postgres:postgres@localhost:5432/compe-plus?sslmode=disable' -path db/migrations up`
