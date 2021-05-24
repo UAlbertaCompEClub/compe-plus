@@ -69,6 +69,7 @@ Formats all of the source code.
 ### `npm run lint`
 
 Runs ESLint across the codebase. Does not tolerate linter warnings.
+<<<<<<< HEAD
 
 # TODO REMOVE THIS BRAINSTORMING Endpoints
 
@@ -82,3 +83,7 @@ DELETE /users/{user} ???
 GET /resume-reviews/{resume-re}
 
 ```
+
+=======
+
+> > > > > > > Write the api README.md
