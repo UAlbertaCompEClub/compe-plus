@@ -10,7 +10,8 @@
     "build": "npm run clean && tsc",
     "clean": "rm -rf build/",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "format": "prettier --config ../.prettierrc --ignore-path .prettierignore --write \"src/**/*\""
   },
   "author": "",
   "license": "ISC",
