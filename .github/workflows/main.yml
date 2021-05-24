@@ -15,7 +15,8 @@ jobs:
         working-directory: ./api
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+      # TODO cache the following step if it gets too slow
       - name: Install dependencies
         run: npm install
       - name: Compile project
@@ -26,3 +27,15 @@ jobs:
         run: npm run format:check
       - name: Check linting
         run: npm run lint
+
+  www:
+    name: Integrate www
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./www
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: TODO add more steps
+        run: echo 'Hello World!'
