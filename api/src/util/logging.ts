@@ -32,7 +32,7 @@ function log(level: string, namespace: string, message: string, object?: any) {
  * @param object Optional object to add to log.
  */
 function info(namespace: string, message: string, object?: any) {
-  log("INFO", namespace, message, object);
+  log('INFO', namespace, message, object);
 }
 
 /**
@@ -42,7 +42,7 @@ function info(namespace: string, message: string, object?: any) {
  * @param object Optional object to add to log.
  */
 function warn(namespace: string, message: string, object?: any) {
-  log("WARN", namespace, message, object);
+  log('WARN', namespace, message, object);
 }
 
 /**
@@ -52,7 +52,7 @@ function warn(namespace: string, message: string, object?: any) {
  * @param object Optional object to add to log.
  */
 function error(namespace: string, message: string, object?: any) {
-  log("ERROR", namespace, message, object);
+  log('ERROR', namespace, message, object);
 }
 
 /**
@@ -62,7 +62,7 @@ function error(namespace: string, message: string, object?: any) {
  * @param object Optional object to add to log.
  */
 function debug(namespace: string, message: string, object?: any) {
-  log("DEBUG", namespace, message, object);
+  log('DEBUG', namespace, message, object);
 }
 
 export default {

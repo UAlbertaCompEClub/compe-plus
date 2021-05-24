@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import logging from "../util/logging";
+import { NextFunction, Request, Response } from 'express';
+import logging from '../util/logging';
 
-const NAMESPACE = "Server";
+const NAMESPACE = 'Server';
 
 /**
  * Log the request.
@@ -14,7 +14,7 @@ function logRequest(req: Request, res: Response, next: NextFunction): void {
   const message = `METHOD - [${req.method}], URL - [${req.url}]`;
   logging.info(NAMESPACE, message);
 
-  res.on("finish", () => {
+  res.on('finish', () => {
     logging.info(NAMESPACE, `${message}, STATUS - [${res.statusCode}]`);
   });
 
@@ -29,7 +29,7 @@ function logRequest(req: Request, res: Response, next: NextFunction): void {
  * @returns
  */
 function notFound(req: Request, res: Response, next: NextFunction): void {
-  const error = new Error("not found");
+  const error = new Error('not found');
 
   res.status(404).json({ message: error.message });
 }
