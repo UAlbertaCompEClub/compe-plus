@@ -16,5 +16,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
+      - name: Install Dependencies
+        run: npm install
       - name: Compile TypeScript
         run: npm run build
