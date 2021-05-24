@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import logging from '../util/logging';
 
 const NAMESPACE = 'Sample Controller';
 
-const sampleHealthCheck = (req: Request, res: Response, next: NextFunction) => {
+const sampleHealthCheck = (req: Request, res: Response): Response => {
   logging.info(NAMESPACE, 'Sample health check route called.');
 
   return res.status(200).json({ message: 'pong' });
