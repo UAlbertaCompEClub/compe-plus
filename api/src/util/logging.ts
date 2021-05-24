@@ -6,7 +6,7 @@
  * @returns Current time in an ISO format.
  */
 function getTimestamp(): string {
-  return new Date().toISOString();
+    return new Date().toISOString();
 }
 
 /**
@@ -18,11 +18,11 @@ function getTimestamp(): string {
  * @param object Optional object to add to log.
  */
 function log(level: string, namespace: string, message: string, object?: unknown) {
-  if (object) {
-    console.log(`[${getTimestamp()}] [${level}] [${namespace}] ${message}`, object);
-  } else {
-    console.log(`[${getTimestamp()}] [${level}] [${namespace}] ${message}`);
-  }
+    if (object) {
+        console.log(`[${getTimestamp()}] [${level}] [${namespace}] ${message}`, object);
+    } else {
+        console.log(`[${getTimestamp()}] [${level}] [${namespace}] ${message}`);
+    }
 }
 
 /**
@@ -32,7 +32,7 @@ function log(level: string, namespace: string, message: string, object?: unknown
  * @param object Optional object to add to log.
  */
 function info(namespace: string, message: string, object?: unknown): void {
-  log('INFO', namespace, message, object);
+    log('INFO', namespace, message, object);
 }
 
 /**
@@ -42,7 +42,7 @@ function info(namespace: string, message: string, object?: unknown): void {
  * @param object Optional object to add to log.
  */
 function warn(namespace: string, message: string, object?: unknown): void {
-  log('WARN', namespace, message, object);
+    log('WARN', namespace, message, object);
 }
 
 /**
@@ -52,7 +52,7 @@ function warn(namespace: string, message: string, object?: unknown): void {
  * @param object Optional object to add to log.
  */
 function error(namespace: string, message: string, object?: unknown): void {
-  log('ERROR', namespace, message, object);
+    log('ERROR', namespace, message, object);
 }
 
 /**
@@ -62,12 +62,12 @@ function error(namespace: string, message: string, object?: unknown): void {
  * @param object Optional object to add to log.
  */
 function debug(namespace: string, message: string, object?: unknown): void {
-  log('DEBUG', namespace, message, object);
+    log('DEBUG', namespace, message, object);
 }
 
 export default {
-  info,
-  warn,
-  error,
-  debug,
+    info,
+    warn,
+    error,
+    debug,
 };

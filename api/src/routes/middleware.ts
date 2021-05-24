@@ -11,14 +11,14 @@ const NAMESPACE = 'Server';
  * @param next Next function in chain of handlers.
  */
 function logRequest(req: Request, res: Response, next: NextFunction): void {
-  const message = `METHOD - [${req.method}], URL - [${req.url}]`;
-  logging.info(NAMESPACE, message);
+    const message = `METHOD - [${req.method}], URL - [${req.url}]`;
+    logging.info(NAMESPACE, message);
 
-  res.on('finish', () => {
-    logging.info(NAMESPACE, `${message}, STATUS - [${res.statusCode}]`);
-  });
+    res.on('finish', () => {
+        logging.info(NAMESPACE, `${message}, STATUS - [${res.statusCode}]`);
+    });
 
-  next();
+    next();
 }
 
 /**
@@ -29,12 +29,12 @@ function logRequest(req: Request, res: Response, next: NextFunction): void {
  * @returns
  */
 function notFound(req: Request, res: Response): void {
-  const error = new Error('not found');
+    const error = new Error('not found');
 
-  res.status(404).json({ message: error.message });
+    res.status(404).json({ message: error.message });
 }
 
 export default {
-  logRequest,
-  notFound,
+    logRequest,
+    notFound,
 };
