@@ -4,12 +4,13 @@ import logging from './util/logging';
 import config from './util/config';
 import sampleRoutes from './routes/sample';
 import middleware from './routes/middleware';
+import pino from 'pino-http';
 
 const NAMESPACE = 'Server';
 const router = express();
 
 /** Log the request */
-router.use(middleware.logRequest);
+router.use(pino());
 
 /** Parse the request */
 router.use(express.json());
