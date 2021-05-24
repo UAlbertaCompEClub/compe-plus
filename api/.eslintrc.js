@@ -4,6 +4,6 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
   rules: {
-    'prettier/prettier': 'warn', // TODO: Convert to error later
+    'prettier/prettier': 'error',
   },
 };

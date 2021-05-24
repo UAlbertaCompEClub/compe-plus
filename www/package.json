@@ -1,6 +1,6 @@
 {
     "name": "compe-plus-www",
-    "description": "Front end for CompE+",
+    "description": "Frontend for CompE+",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
