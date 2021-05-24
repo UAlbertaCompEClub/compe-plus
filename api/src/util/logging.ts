@@ -17,7 +17,7 @@ function getTimestamp(): string {
  * @param message Message to log.
  * @param object Optional object to add to log.
  */
-function log(level: string, namespace: string, message: string, object?: any) {
+function log(level: string, namespace: string, message: string, object?: unknown) {
   if (object) {
     console.log(`[${getTimestamp()}] [${level}] [${namespace}] ${message}`, object);
   } else {
@@ -31,7 +31,7 @@ function log(level: string, namespace: string, message: string, object?: any) {
  * @param message Message to log.
  * @param object Optional object to add to log.
  */
-function info(namespace: string, message: string, object?: any) {
+function info(namespace: string, message: string, object?: unknown): void {
   log('INFO', namespace, message, object);
 }
 
@@ -41,7 +41,7 @@ function info(namespace: string, message: string, object?: any) {
  * @param message Message to log.
  * @param object Optional object to add to log.
  */
-function warn(namespace: string, message: string, object?: any) {
+function warn(namespace: string, message: string, object?: unknown): void {
   log('WARN', namespace, message, object);
 }
 
@@ -51,7 +51,7 @@ function warn(namespace: string, message: string, object?: any) {
  * @param message Message to log.
  * @param object Optional object to add to log.
  */
-function error(namespace: string, message: string, object?: any) {
+function error(namespace: string, message: string, object?: unknown): void {
   log('ERROR', namespace, message, object);
 }
 
@@ -61,7 +61,7 @@ function error(namespace: string, message: string, object?: any) {
  * @param message Message to log.
  * @param object Optional object to add to log.
  */
-function debug(namespace: string, message: string, object?: any) {
+function debug(namespace: string, message: string, object?: unknown): void {
   log('DEBUG', namespace, message, object);
 }
 

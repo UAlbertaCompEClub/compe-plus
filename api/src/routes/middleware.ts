@@ -28,7 +28,7 @@ function logRequest(req: Request, res: Response, next: NextFunction): void {
  * @param next Next function in chain of handlers.
  * @returns
  */
-function notFound(req: Request, res: Response, next: NextFunction): void {
+function notFound(req: Request, res: Response): void {
   const error = new Error('not found');
 
   res.status(404).json({ message: error.message });

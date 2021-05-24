@@ -3,32 +3,19 @@ import { NextFunction, Request, Response } from 'express';
 import logging from '../util/logging';
 
 describe('notFound middleware', () => {
-  let mockRequest: Partial<Request>;
-  let mockResponse: Partial<Response>;
-  let nextFunction: NextFunction;
-
-  beforeEach(() => {
-    mockRequest = {};
-    mockResponse = {};
-    mockResponse.json = jest.fn().mockReturnValue(mockResponse);
-    mockResponse.status = jest.fn().mockReturnValue(mockResponse);
-    nextFunction = jest.fn();
-  });
+  const mockRequest: Partial<Request> = {};
+  const mockResponse: Partial<Response> = {};
+  mockResponse.json = jest.fn().mockReturnValue(mockResponse);
+  mockResponse.status = jest.fn().mockReturnValue(mockResponse);
 
   it('always returns 404', () => {
     const expectedResponse = {
       message: 'not found',
     };
-    middleware.notFound(mockRequest as Request, mockResponse as Response, nextFunction);
+    middleware.notFound(mockRequest as Request, mockResponse as Response);
 
     expect(mockResponse.json).toBeCalledWith(expectedResponse);
     expect(mockResponse.status).toBeCalledWith(404);
-  });
-
-  it('does not call further middleware', () => {
-    middleware.notFound(mockRequest as Request, mockResponse as Response, nextFunction);
-
-    expect(nextFunction).toBeCalledTimes(0);
   });
 });
 
