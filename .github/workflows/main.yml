@@ -7,8 +7,8 @@ on:
     branches: [master]
 
 jobs:
-  build:
-    name: Build
+  api:
+    name: Integrate api
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -16,7 +16,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm install
-      - name: Compile TypeScript
+      - name: Compile project
         run: npm run build
+      - name: Run tests
+        run: npm run test
+      - name: Check formatting
+        run: npm run format:check
+      - name: Check linting
+        run: npm run lint

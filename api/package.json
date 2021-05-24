@@ -12,7 +12,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "format": "prettier --config ../.prettierrc --ignore-path .prettierignore --write .",
-    "lint": "eslint src --ext .js,.ts"
+    "format:check": "prettier --config ../.prettierrc --ignore-path .prettierignore --check .",
+    "lint": "eslint src --ext .js,.ts --max-warnings 0"
   },
   "author": "",
   "license": "ISC",
