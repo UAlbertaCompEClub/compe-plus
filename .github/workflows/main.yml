@@ -1,4 +1,4 @@
-name: TODO
+name: Continuous Integration
 
 on:
   push:
@@ -8,10 +8,13 @@ on:
 
 jobs:
   build:
-    name: build
+    name: Build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v1
-      - name: TODO
-        run: ls
+      - name: Compile TypeScript
+        run: npm run build
