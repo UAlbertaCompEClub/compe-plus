@@ -1,11 +1,11 @@
-import http from "http";
-import express from "express";
-import logging from "./util/logging";
-import config from "./util/config";
-import sampleRoutes from "./routes/sample";
-import middleware from "./routes/middleware";
+import http from 'http';
+import express from 'express';
+import logging from './util/logging';
+import config from './util/config';
+import sampleRoutes from './routes/sample';
+import middleware from './routes/middleware';
 
-const NAMESPACE = "Server";
+const NAMESPACE = 'Server';
 const router = express();
 
 /** Log the request */
@@ -15,7 +15,7 @@ router.use(middleware.logRequest);
 router.use(express.json());
 
 /** Routes */
-router.use("/api/v1", sampleRoutes);
+router.use('/api/v1', sampleRoutes);
 
 /** Error handling */
 router.use(middleware.notFound);

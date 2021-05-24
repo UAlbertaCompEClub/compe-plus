@@ -1,8 +1,8 @@
-import middleware from "./middleware";
-import { NextFunction, Request, Response } from "express";
-import logging from "../util/logging";
+import middleware from './middleware';
+import { NextFunction, Request, Response } from 'express';
+import logging from '../util/logging';
 
-describe("notFound middleware", () => {
+describe('notFound middleware', () => {
   let mockRequest: Partial<Request>;
   let mockResponse: Partial<Response>;
   let nextFunction: NextFunction;
@@ -15,9 +15,9 @@ describe("notFound middleware", () => {
     nextFunction = jest.fn();
   });
 
-  it("always returns 404", () => {
+  it('always returns 404', () => {
     const expectedResponse = {
-      message: "not found",
+      message: 'not found',
     };
     middleware.notFound(mockRequest as Request, mockResponse as Response, nextFunction);
 
@@ -25,39 +25,39 @@ describe("notFound middleware", () => {
     expect(mockResponse.status).toBeCalledWith(404);
   });
 
-  it("does not call further middleware", () => {
+  it('does not call further middleware', () => {
     middleware.notFound(mockRequest as Request, mockResponse as Response, nextFunction);
 
     expect(nextFunction).toBeCalledTimes(0);
   });
 });
 
-describe("logRequest middleware", () => {
+describe('logRequest middleware', () => {
   let mockRequest: Partial<Request>;
   let mockResponse: Partial<Response>;
   let nextFunction: NextFunction;
 
   beforeEach(() => {
     mockRequest = {};
-    mockRequest.url = "/api/v1/ping";
-    mockRequest.method = "GET";
+    mockRequest.url = '/api/v1/ping';
+    mockRequest.method = 'GET';
     mockResponse = {};
     mockResponse.on = jest.fn();
     nextFunction = jest.fn();
     logging.info = jest.fn();
   });
 
-  it("logs start of request", () => {
+  it('logs start of request', () => {
     middleware.logRequest(mockRequest as Request, mockResponse as Response, nextFunction);
     expect(logging.info).toBeCalledTimes(1);
-    expect(logging.info).toBeCalledWith("Server", "METHOD - [GET], URL - [/api/v1/ping]");
+    expect(logging.info).toBeCalledWith('Server', 'METHOD - [GET], URL - [/api/v1/ping]');
   });
 
-  it("logs end of request", () => {
+  it('logs end of request', () => {
     // TODO I don't know how to test this yet
   });
 
-  it("calls next middleware", () => {
+  it('calls next middleware', () => {
     middleware.logRequest(mockRequest as Request, mockResponse as Response, nextFunction);
 
     expect(nextFunction).toBeCalledTimes(1);
