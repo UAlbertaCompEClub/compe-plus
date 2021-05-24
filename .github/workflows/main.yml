@@ -29,9 +29,6 @@ jobs:
             ${{ runner.os }}-
       - name: Install dependencies
         run: npm install
-      # TODO cache the following step if it gets too slow
-      - name: Install dependencies
-        run: npm install
       - name: Check linting
         run: npm run lint
       - name: Compile project
