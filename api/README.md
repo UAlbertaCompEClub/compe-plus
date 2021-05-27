@@ -69,3 +69,16 @@ Formats all of the source code.
 ### `npm run lint`
 
 Runs ESLint across the codebase. Does not tolerate linter warnings.
+
+# TODO REMOVE THIS BRAINSTORMING Endpoints
+
+```
+GET /users
+GET /users/{user}
+POST /users/{user}
+PUT /users/{user}
+DELETE /users/{user} ???
+
+GET /resume-reviews/{resume-re}
+
+```
