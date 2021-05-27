@@ -26,7 +26,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "lint": "eslint src --ext .js,.ts,.tsx,.jsx",
+        "lint": "eslint src --ext .js,.ts,.tsx,.jsx --max-warnings 0",
         "format": "prettier --config ../.prettierrc --ignore-path .prettierignore --write ."
     },
     "browserslist": {
