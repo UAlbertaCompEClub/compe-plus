@@ -1,49 +1,66 @@
 name: Continuous Integration
 
 on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
 
 jobs:
-  api:
-    name: Integrate api
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./api
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-api-node-modules
-        with:
-          path: './api/node_modules'
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./api/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install dependencies
-        run: npm install
-      - name: Check linting
-        run: npm run lint
-      - name: Compile project
-        run: npm run build
-      - name: Run tests
-        run: npm run test
+    api:
+        name: Integrate api
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./api
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Cache node modules
+              uses: actions/cache@v2
+              env:
+                  cache-name: cache-api-node-modules
+              with:
+                  path: './api/node_modules'
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./api/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
+            - name: Install dependencies
+              run: npm install
+            - name: Check linting
+              run: npm run lint
+            - name: Compile project
+              run: npm run build
+            - name: Run tests
+              run: npm run test
 
-  www:
-    name: Integrate www
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./www
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: TODO add more steps
-        run: echo 'Hello World!'
+    www:
+        name: Integrate www
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./www
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Cache node modules
+              uses: actions/cache@v2
+              env:
+                  cache-name: cache-www-node-modules
+              with:
+                  path: './www/node_modules'
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./www/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
+            - name: Install dependencies
+              run: npm install
+            - name: Check linting
+              run: npm run lint
+            - name: Compile project
+              run: npm run build
+            - name: Run tests
+              run: npm run test
