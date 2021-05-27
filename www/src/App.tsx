@@ -1,10 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Layout from './common/Layout';
 
 function App(): JSX.Element {
     return (
-        <div className="App">
+        <Layout>
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
                 <p>
@@ -14,7 +15,7 @@ function App(): JSX.Element {
                     Learn React
                 </a>
             </header>
-        </div>
+        </Layout>
     );
 }
 
