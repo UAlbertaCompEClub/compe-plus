@@ -10,10 +10,10 @@ The goal of this document is to outline a set of technologies and tools that can
 | Framework            | React              |
 | State Management     | Redux              |
 | Testing              | Jest               |
-| Authentication       | ?                  |
-| Styling              | ?                  |
-| Hosting              | ?                  |
-| Analytics            | ?                  |
+| Authentication       | OAuth React Component (Requires prototyping)                   |
+| Styling              | Material UI                  |
+| Hosting              | Netlify                  |
+| Analytics            | Google Analytics                  |
 
 ## Reasoning
 
@@ -36,6 +36,10 @@ The goal of this document is to outline a set of technologies and tools that can
 
 - Solid library and popular in community
 
+### Authentication
+
+- [Guide](https://auth0.com/blog/complete-guide-to-react-user-authentication/)
+
 ## Open Questions
 
 ### Authentication Options
@@ -47,16 +51,16 @@ The goal of this document is to outline a set of technologies and tools that can
 - TailwindCSS
 - Custom CSS
 - Something like Bootstrap
-- Component Library (Ex. [Material](https://material-ui.com/), [Ant Design](https://ant.design/))
+- Component Library (Ex. **[Material](https://material-ui.com/)**, [Ant Design](https://ant.design/))
 
 ### Hosting Options
 
 - Github Pages
-- Netlify
+- **Netlify**
 
 ### Analytics
 
-- Google Analytics
+- **Google Analytics**
 - Something simpler and more privacy friendly
 - [Log Rocket](https://logrocket.com/)
 
@@ -72,9 +76,9 @@ The goal of this document is to outline a set of technologies and tools that can
 | Migrations                  | ?                  |
 | Database                    | PostgreSQL         |
 | Authentication              | Passport.js        |
-| Blob Storage                | ?                  |
-| Transactional Email         | ?                  |
-| Google Calendar Integration | ?                  |
+| Blob Storage                | Heroku Add-on                  |
+| Transactional Email         | Heroku Add-on (recommend: send grid)                  |
+| Google Calendar Integration | Google Calendar API/SDK                  |
 
 ## Reasoning
 
