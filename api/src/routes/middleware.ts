@@ -1,37 +1,29 @@
 import { NextFunction, Request, Response } from 'express';
-import logging from '../util/logging';
+import pinoExpressMiddleware from 'express-pino-logger';
+import logger, { standardSerializers, verboseSerializers } from '../util/logger';
+import config from '../util/config';
 
-const NAMESPACE = 'Server';
+type Middleware = (req: Request, res: Response, next?: NextFunction) => void;
 
 /**
- * Log the request.
- *
- * @param req HTTP request.
- * @param res HTTP response.
- * @param next Next function in chain of handlers.
+ * Returns middleware that will log every request.
+ * @returns Logging middleware.
  */
-function logRequest(req: Request, res: Response, next: NextFunction): void {
-    const message = `METHOD - [${req.method}], URL - [${req.url}]`;
-    logging.info(NAMESPACE, message);
-
-    res.on('finish', () => {
-        logging.info(NAMESPACE, `${message}, STATUS - [${res.statusCode}]`);
-    });
-
-    next();
+function logRequest(): Middleware {
+    const serializers = config.verbose ? verboseSerializers : standardSerializers;
+    return pinoExpressMiddleware({ logger: logger, serializers: serializers });
 }
 
 /**
- *
- * @param req HTTP request.
- * @param res HTTP response.
- * @param next Next function in chain of handlers.
- * @returns
+ * Returns middelware that will return a 404 and stop the request chain.
+ * @returns NotFound middelware.
  */
-function notFound(req: Request, res: Response): void {
-    const error = new Error('not found');
+function notFound(): Middleware {
+    return (req: Request, res: Response): void => {
+        const error = new Error('not found');
 
-    res.status(404).json({ message: error.message });
+        res.status(404).json({ message: error.message });
+    };
 }
 
 export default {
