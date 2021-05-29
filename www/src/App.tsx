@@ -4,6 +4,17 @@ import { GetTokenSilentlyOptions, useAuth0 } from '@auth0/auth0-react';
 import AuthButton from './components/auth/AuthButton';
 import logo from './logo.svg';
 import './App.css';
+import { Container } from '@material-ui/core';
+import React from 'react';
+import { Header, Section } from './components/Header';
+import { ABOUT, COMMUNITY, COMPE_PLUS, MOCK_INTERVIEW, RESUME_REVIEW } from './constants';
+
+const header_sections: Section[] = [
+    { title: ABOUT, url: '#' },
+    { title: RESUME_REVIEW, url: '#' },
+    { title: MOCK_INTERVIEW, url: '#' },
+    { title: COMMUNITY, url: '#' },
+];
 
 // TODO: Remove dummy requests
 type TokenAcquirer = (options?: GetTokenSilentlyOptions) => Promise<string>;
@@ -20,20 +31,11 @@ const App: FC = () => {
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                    Learn React
-                </a>
-                {user && <p>Welcome {user.name}!</p>}
-                {isAuthenticated && <button onClick={async () => requestWithToken(getAccessTokenSilently)} />}
-                <AuthButton />
-            </header>
-        </div>
+        <>
+            <Container maxWidth={false} style={{ padding: 0 }}>
+                <Header sections={header_sections} title={COMPE_PLUS} />
+            </Container>
+        </>
     );
 };
 
