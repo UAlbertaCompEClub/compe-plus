@@ -8,3 +8,14 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+#root {
+    height: 100%;
+}
+
+html,
+body {
+    height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}

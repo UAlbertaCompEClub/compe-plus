@@ -5,16 +5,17 @@ import AuthButton from './components/auth/AuthButton';
 import logo from './logo.svg';
 import './App.css';
 import { Container } from '@material-ui/core';
+// Libraries
 import React from 'react';
-import { Header, Section } from './components/Header';
-import { ABOUT, COMMUNITY, COMPE_PLUS, MOCK_INTERVIEW, RESUME_REVIEW } from './constants';
 
-const header_sections: Section[] = [
-    { title: ABOUT, url: '#' },
-    { title: RESUME_REVIEW, url: '#' },
-    { title: MOCK_INTERVIEW, url: '#' },
-    { title: COMMUNITY, url: '#' },
-];
+// Material UI
+import { ThemeProvider } from '@material-ui/core';
+
+// Components
+import { Landing } from './routes/Landing';
+
+// Styles
+import theme from './theme';
 
 // TODO: Remove dummy requests
 type TokenAcquirer = (options?: GetTokenSilentlyOptions) => Promise<string>;
@@ -31,11 +32,9 @@ const App: FC = () => {
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
     return (
-        <>
-            <Container maxWidth={false} style={{ padding: 0 }}>
-                <Header sections={header_sections} title={COMPE_PLUS} />
-            </Container>
-        </>
+        <ThemeProvider theme={theme}>
+            <Landing />
+        </ThemeProvider>
     );
 };
 

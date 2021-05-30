@@ -19,6 +19,18 @@ const palette = {
 };
 
 const typography = {
+    h1: {
+        fontSize: 62,
+        fontWeight: 600,
+    },
+    h2: {
+        fontSize: 28,
+        fontWeight: 50,
+    },
+    h3: {
+        fontSize: 26,
+        fontWeight: 50,
+    },
     h5: {
         fontSize: 24,
         fontWeight: 600,
@@ -30,9 +42,9 @@ const typography = {
         color: '#FFFFFF',
     },
     fontSize: 18,
-    allVariants: {
-        color: '#FFFFFF',
-    },
+    // allVariants: {
+    //     color: '#FFFFFF',
+    // },
 };
 
 const themeName = 'CompE+ Theme';

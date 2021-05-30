@@ -1,11 +1,18 @@
+// Libraries
 import React, { FC } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+
+// Material UI
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import Container from '@material-ui/core/Container';
+
+// Assets
 import logo from '../assets/logo_white.svg';
+
+// Components
 import OutlinedButton from './OutlinedButton';
-import { Container } from '@material-ui/core';
 
 type Props = {
     sections: Section[];
@@ -24,7 +31,7 @@ export const Header: FC<Props> = (props: Props) => {
     return (
         <Toolbar className={classes.toolbar} disableGutters={true}>
             <img src={logo} className={classes.logo} />
-            <Typography component="h2" variant="h5" align="left" noWrap>
+            <Typography component="h2" variant="h5" align="left" noWrap className={classes.title}>
                 {title}
             </Typography>
             <Container className={classes.linkContainer}>
@@ -62,5 +69,8 @@ const useStyles = makeStyles((theme) => ({
         width: 37,
         height: 37,
         margin: 5,
+    },
+    title: {
+        color: theme.palette.text.primary,
     },
 }));

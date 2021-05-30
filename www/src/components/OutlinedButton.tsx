@@ -1,7 +1,10 @@
+// Libraries
 import React, { FC } from 'react';
+
+// Material UI
 import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import { CSSProperties } from '@material-ui/styles';
+import Button from '@material-ui/core/Button';
 
 const styles = (theme: Theme) => ({
     root: {
