@@ -55,3 +55,7 @@ migrate --version
 ## Applying a migration locally
 
 `migrate -database 'postgres://postgres:postgres@localhost:5432/compe-plus?sslmode=disable' -path db/migrations up`
+
+# Schema
+
+![Schema](schema.png)
