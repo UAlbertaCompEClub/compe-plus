@@ -30,7 +30,7 @@ export const Landing: FC = () => {
         <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
             <Header sections={header_sections} title={COMPE_PLUS} />
             <Grid container spacing={1} style={{ padding: 0, height: '100%' }}>
-                <Grid container item xs={4}>
+                <Grid container item xs={5}>
                     <Grid container item xs={12} style={{ justifyContent: 'center', alignItems: 'left', display: 'flex' }} direction="column">
                         <Grid item>
                             <img src={logo} className={classes.logo} />
@@ -39,7 +39,7 @@ export const Landing: FC = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid container item xs={8} style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+                <Grid container item xs={7} style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <img src={PairProgramming} className={classes.pairProgramming} />
                 </Grid>
                 <Grid container item xs={12} style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
@@ -54,9 +54,9 @@ export const Landing: FC = () => {
 
 const useStyles = makeStyles((theme) => ({
     pairProgramming: {
-        width: 650,
-        height: 420,
-        margin: 5,
+        width: 680,
+        height: 460,
+        // margin: 5,
     },
     logo: {
         width: 100,
