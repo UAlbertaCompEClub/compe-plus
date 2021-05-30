@@ -48,7 +48,7 @@ export const Header: FC<Props> = (props: Props) => {
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
-        boxShadow: '0px 5px 5px grey',
+        boxShadow: '0px 5px 5px #547d54',
         paddingLeft: 10,
         paddingRight: 10,
         backgroundColor: theme.palette.primary.main,
