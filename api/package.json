@@ -13,7 +13,8 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "format": "prettier --config ../.prettierrc --ignore-path .prettierignore --write .",
-        "lint": "eslint src --ext .js,.ts --max-warnings 0"
+        "lint": "eslint src --ext .js,.ts --max-warnings 0",
+        "psql": "psql -h localhost -U postgres -d compe-plus"
     },
     "author": "",
     "license": "ISC",

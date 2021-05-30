@@ -11,7 +11,12 @@ To run a Postgres instance locally we leverage Docker. The following instruction
 1. [Install Docker](https://www.docker.com/get-started)
 2. Pull down the Postgres Docker image `docker pull postgres:13`
 3. Create a directory to serve as the local host mount point for Postgres data files `mkdir -p $HOME/docker/volumes/postgres`
-4. Install `psql` via `sudo apt-get install postgresql-client`
+4. Install `psql` via `sudo apt-get install postgresql-client`. This only installs the `psql` client and not the entirity of Postgres which is why we use Docker.
+5. Setup a file at `~/.psqlrc` with the following contents:
+    ```
+    \x
+    \pset null 'Ø'
+    ```
 
 ## Starting Postgres
 

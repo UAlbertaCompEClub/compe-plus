@@ -70,6 +70,10 @@ Formats all of the source code.
 
 Runs ESLint across the codebase. Does not tolerate linter warnings.
 
+### `npm run psql`
+
+Shorthand to access local dev database.
+
 # Schema Design
 
 TODO: this should be replaced by a more thorough documenation in the future.
