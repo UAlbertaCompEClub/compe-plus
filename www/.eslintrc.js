@@ -15,6 +15,7 @@ module.exports = {
     plugins: ['react', '@typescript-eslint', 'prettier'],
     rules: {
         'prettier/prettier': 'error',
+        'jsx-quotes': ['error', 'prefer-single'],
     },
     settings: {
         react: {
