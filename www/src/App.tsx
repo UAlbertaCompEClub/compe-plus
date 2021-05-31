@@ -9,13 +9,22 @@ import { Container } from '@material-ui/core';
 import React from 'react';
 
 // Material UI
-import { ThemeProvider } from '@material-ui/core';
+import { Box, Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 
 // Components
 import { Landing } from './routes/Landing';
 
 // Styles
 import theme from './theme';
+import { Header, Section } from './components/Header';
+import { ABOUT, COMMUNITY, COMPE_PLUS, MOCK_INTERVIEW, RESUME_REVIEW } from './constants';
+
+const header_sections: Section[] = [
+    { title: ABOUT, url: '#' },
+    { title: RESUME_REVIEW, url: '#' },
+    { title: MOCK_INTERVIEW, url: '#' },
+    { title: COMMUNITY, url: '#' },
+];
 
 // TODO: Remove dummy requests
 type TokenAcquirer = (options?: GetTokenSilentlyOptions) => Promise<string>;
@@ -33,7 +42,11 @@ const App: FC = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Landing />
+            <CssBaseline />
+            <Container maxWidth={false} style={{ padding: 0 }}>
+                <Header sections={header_sections} title={COMPE_PLUS} />
+                <Landing />
+            </Container>
         </ThemeProvider>
     );
 };

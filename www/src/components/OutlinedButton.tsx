@@ -26,7 +26,7 @@ type Props = {
 
 const OutlinedButton: FC<Props & WithStyles<typeof styles>> = (props: Props & WithStyles<typeof styles>) => {
     return (
-        <Button href={props.url} variant="outlined" size="small" color="secondary" style={props.style} className={props.classes.root}>
+        <Button href={props.url} variant='outlined' size='small' color='secondary' style={props.style} className={props.classes.root}>
             {props.title}
         </Button>
     );

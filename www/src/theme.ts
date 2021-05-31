@@ -12,9 +12,13 @@ const palette = {
     },
     secondary: {
         main: '#D9FFD9',
+        light: '#E2F8E2',
     },
     text: {
-        primary: '#FFFFFF',
+        primary: '#000000',
+    },
+    background: {
+        default: '#E2F8E2',
     },
 };
 
@@ -24,7 +28,7 @@ const typography = {
         fontWeight: 600,
     },
     h2: {
-        fontSize: 28,
+        fontSize: 32,
         fontWeight: 50,
     },
     h3: {
@@ -34,6 +38,9 @@ const typography = {
     h5: {
         fontSize: 24,
         fontWeight: 600,
+    },
+    body1: {
+        fontSize: 24,
     },
     body2: {
         fontWeight: 600,

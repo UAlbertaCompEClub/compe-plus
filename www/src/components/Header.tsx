@@ -31,12 +31,12 @@ export const Header: FC<Props> = (props: Props) => {
     return (
         <Toolbar className={classes.toolbar} disableGutters={true}>
             <img src={logo} className={classes.logo} />
-            <Typography component="h2" variant="h5" align="left" noWrap className={classes.title}>
+            <Typography component='h2' variant='h5' align='left' noWrap className={classes.title}>
                 {title}
             </Typography>
             <Container className={classes.linkContainer}>
                 {sections.map((section) => (
-                    <Link color="inherit" noWrap key={section.title} variant="body2" href={section.url} className={classes.toolbarLink}>
+                    <Link color='inherit' noWrap key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
                         {section.title}
                     </Link>
                 ))}
