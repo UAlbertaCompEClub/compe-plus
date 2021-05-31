@@ -17,13 +17,16 @@ import { Landing } from './routes/Landing';
 // Styles
 import theme from './theme';
 import { Header, Section } from './components/Header';
-import { ABOUT, COMMUNITY, COMPE_PLUS, MOCK_INTERVIEW, RESUME_REVIEW } from './constants';
+import { COMMUNITY, COMPE_PLUS, MOCK_INTERVIEW, RESUME_REVIEW } from './constants';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { ResumeReview } from './routes/ResumeReview';
+import { MockInterview } from './routes/MockInterview';
+import { Community } from './routes/Community';
 
 const header_sections: Section[] = [
-    { title: ABOUT, url: '#' },
-    { title: RESUME_REVIEW, url: '#' },
-    { title: MOCK_INTERVIEW, url: '#' },
-    { title: COMMUNITY, url: '#' },
+    { title: RESUME_REVIEW, url: '/resume-review' },
+    { title: MOCK_INTERVIEW, url: '/mock-interview' },
+    { title: COMMUNITY, url: '/community' },
 ];
 
 // TODO: Remove dummy requests
@@ -45,7 +48,22 @@ const App: FC = () => {
             <CssBaseline />
             <Container maxWidth={false} style={{ padding: 0 }}>
                 <Header sections={header_sections} title={COMPE_PLUS} />
-                <Landing />
+                <Router>
+                    <Switch>
+                        <Route path='/resume-review'>
+                            <ResumeReview />
+                        </Route>
+                        <Route path='/mock-interview'>
+                            <MockInterview />
+                        </Route>
+                        <Route path='/community'>
+                            <Community />
+                        </Route>
+                        <Route path='/'>
+                            <Landing />
+                        </Route>
+                    </Switch>
+                </Router>
             </Container>
         </ThemeProvider>
     );

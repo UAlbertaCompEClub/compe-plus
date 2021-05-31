@@ -31,9 +31,9 @@ export const Header: FC<Props> = (props: Props) => {
     return (
         <Toolbar className={classes.toolbar} disableGutters={true}>
             <img src={logo} className={classes.logo} />
-            <Typography component='h2' variant='h5' align='left' noWrap className={classes.title}>
+            <Link underline='none' color='inherit' noWrap variant='h5' href={'/'} className={classes.title}>
                 {title}
-            </Typography>
+            </Link>
             <Container className={classes.linkContainer}>
                 {sections.map((section) => (
                     <Link color='inherit' noWrap key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
