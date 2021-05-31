@@ -17,7 +17,6 @@ import OutlinedButton from '../components/OutlinedButton';
 import { makeStyles } from '@material-ui/core';
 
 export const Landing: FC = () => {
-    const classes = useStyles();
     return (
         <Grid container direction='row' justify='center' style={{ backgroundImage: `url(${LandingBackground})`, backgroundSize: 'cover', paddingBottom: 80 }}>
             <Grid container item spacing={10} xs={10}>
@@ -183,7 +182,7 @@ const Services: FC = () => {
     );
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     pairProgramming: {
         width: 680,
         height: 460,

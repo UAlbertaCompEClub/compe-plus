@@ -9,7 +9,7 @@ import { Container } from '@material-ui/core';
 import React from 'react';
 
 // Material UI
-import { Box, Container, CssBaseline, ThemeProvider } from '@material-ui/core';
+import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 
 // Components
 import { Landing } from './routes/Landing';
