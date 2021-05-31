@@ -94,7 +94,7 @@ VALUES
 /* documents table */
 CREATE TABLE documents (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
-    message TEXT NOT NULL,
+    note TEXT NOT NULL,
     file_url TEXT NOT NULL,
     is_review BOOLEAN NOT NULL,
     user_id UUID NOT NULL REFERENCES users,
