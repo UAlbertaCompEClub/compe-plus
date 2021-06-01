@@ -6,9 +6,9 @@ import logo from './logo.svg';
 import './App.css';
 
 // TODO: Remove dummy requests
-type tokenAcquierer = (options?: GetTokenSilentlyOptions | undefined) => Promise<string>;
+type TokenAcquirer = (options?: GetTokenSilentlyOptions) => Promise<string>;
 
-async function requestWithToken(getAccessTokenSilently: tokenAcquierer) {
+async function requestWithToken(getAccessTokenSilently: TokenAcquirer) {
     console.debug(
         `request with token: ${await getAccessTokenSilently({
             scope: 'reviewer_scope',
