@@ -1,8 +1,24 @@
 import React from 'react';
+import { GetTokenSilentlyOptions, useAuth0 } from '@auth0/auth0-react';
+
+import AuthenticateButton from './components/auth/AuthenticateButton';
 import logo from './logo.svg';
 import './App.css';
 
+// TODO: Remove dummy requests
+type tokenAcquierer = (options?: GetTokenSilentlyOptions | undefined) => Promise<string>;
+
+async function requestWithToken(getAccessTokenSilently: tokenAcquierer) {
+    console.debug(
+        `request with token: ${await getAccessTokenSilently({
+            scope: 'reviewer_scope',
+        })}`,
+    );
+}
+
 function App(): JSX.Element {
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+
     return (
         <div className="App">
             <header className="App-header">
@@ -13,6 +29,9 @@ function App(): JSX.Element {
                 <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
                     Learn React
                 </a>
+                {user && <p>Welcome {user.name}!</p>}
+                {isAuthenticated && <button onClick={async () => requestWithToken(getAccessTokenSilently)} />}
+                <AuthenticateButton />
             </header>
         </div>
     );
