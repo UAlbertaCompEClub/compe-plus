@@ -45,8 +45,8 @@ VALUES
 
 /* user_roles table */
 CREATE TABLE user_roles (
-    user_id UUID NOT NULL REFERENCES users,
-    role TEXT NOT NULL REFERENCES roles,
+    user_id UUID NOT NULL REFERENCES users ON DELETE CASCADE,
+    role TEXT NOT NULL REFERENCES roles ON DELETE CASCADE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (user_id, role)
 );
@@ -68,9 +68,9 @@ VALUES
 /* resume_reviews table */
 CREATE TABLE resume_reviews (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
-    reviewee_id UUID NOT NULL,
-    reviewer_id UUID REFERENCES users,
-    state TEXT NOT NULL REFERENCES resume_review_states,
+    reviewee_id UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
+    reviewer_id UUID REFERENCES users ON DELETE RESTRICT,
+    state TEXT NOT NULL REFERENCES resume_review_states ON DELETE RESTRICT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -97,9 +97,9 @@ CREATE TABLE documents (
     note TEXT NOT NULL,
     file_url TEXT NOT NULL,
     is_review BOOLEAN NOT NULL,
-    user_id UUID NOT NULL REFERENCES users,
-    state TEXT NOT NULL REFERENCES document_states,
-    resume_review_id UUID NOT NULL REFERENCES resume_reviews,
+    user_id UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
+    state TEXT NOT NULL REFERENCES document_states ON DELETE RESTRICT,
+    resume_review_id UUID NOT NULL REFERENCES resume_reviews ON DELETE RESTRICT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -113,7 +113,7 @@ CREATE TRIGGER update_time_documents
 CREATE TABLE time_slots (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     at TIMESTAMPTZ NOT NULL,
-    user_id UUID NOT NULL REFERENCES users,
+    user_id UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -126,9 +126,9 @@ CREATE TRIGGER update_time_time_slots
 /* interviews table */
 CREATE TABLE interviews (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
-    time_slot UUID NOT NULL REFERENCES time_slots,
-    interviewee UUID NOT NULL REFERENCES users,
-    interviewer UUID NOT NULL REFERENCES users
+    time_slot UUID NOT NULL REFERENCES time_slots ON DELETE RESTRICT,
+    interviewee UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
+    interviewer UUID NOT NULL REFERENCES users ON DELETE RESTRICT
 );
 
 CREATE TRIGGER update_time_interviews
