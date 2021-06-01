@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { AppState, Auth0Provider } from '@auth0/auth0-react';
 
+import config from '../util/config';
+
 const Auth0ProviderWithHistory: React.FC = ({ children }) => {
-    const domain = process.env.REACT_APP_AUTH0_DOMAIN ?? '';
-    const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID ?? '';
+    const { domain, clientId } = config.auth0;
 
     const history = useHistory();
 
