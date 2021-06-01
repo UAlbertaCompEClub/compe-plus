@@ -8,7 +8,7 @@ type BaseButtonProps = {
 };
 
 const BaseButton: React.FC<BaseButtonProps> = (props) => {
-    return <button onClick={(_e) => props.onClick()}>{props.text}</button>;
+    return <button onClick={props.onClick}>{props.text}</button>;
 };
 
 const LogoutButton = () => {
