@@ -21,7 +21,7 @@ const LoginButton = () => {
     return <BaseButton text="Login" onClick={() => loginWithRedirect()} />;
 };
 
-const AuthenticateButton: React.FC = () => {
+const AuthButton: React.FC = () => {
     const { isAuthenticated } = useAuth0();
 
     if (isAuthenticated) {
@@ -36,4 +36,4 @@ BaseButton.propTypes = {
     onClick: PropTypes.func.isRequired,
 };
 
-export default AuthenticateButton;
+export default AuthButton;

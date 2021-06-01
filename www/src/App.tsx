@@ -1,7 +1,7 @@
 import React from 'react';
 import { GetTokenSilentlyOptions, useAuth0 } from '@auth0/auth0-react';
 
-import AuthenticateButton from './components/auth/AuthenticateButton';
+import AuthButton from './components/auth/AuthButton';
 import logo from './logo.svg';
 import './App.css';
 
@@ -31,7 +31,7 @@ function App(): JSX.Element {
                 </a>
                 {user && <p>Welcome {user.name}!</p>}
                 {isAuthenticated && <button onClick={async () => requestWithToken(getAccessTokenSilently)} />}
-                <AuthenticateButton />
+                <AuthButton />
             </header>
         </div>
     );
