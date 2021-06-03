@@ -1,3 +1,4 @@
+import config from './config';
 import pino from 'pino';
 
 /**
@@ -6,6 +7,8 @@ import pino from 'pino';
 const logger = pino({
     timestamp: pino.stdTimeFunctions.isoTime,
     base: null,
+    useLevelLabels: true,
+    level: config.extraVerbose ? 'trace' : config.verbose ? 'debug' : 'info',
 });
 
 export default logger;
