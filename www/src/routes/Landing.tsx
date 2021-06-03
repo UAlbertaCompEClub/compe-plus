@@ -4,17 +4,21 @@ import React, { FC } from 'react';
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { Box, Container, makeStyles } from '@material-ui/core';
 
 // Assets
-import PairProgramming from '../assets/undraw_pair_programming_njlp.svg';
-import logo from '../assets/logo_black.svg';
+import PairProgramming from '../assets/pair_programming.svg';
 import LandingBackground from '../assets/LandingBackground.svg';
+import BlackLogo from '../assets/logo_black.svg';
+import Practice from '../assets/practice.svg';
+import MockInterview from '../assets/mock_interview.svg';
+import Industry from '../assets/industry.svg';
+import ResumeReview from '../assets/resume_review.svg';
+import Teamwork from '../assets/teamwork.svg';
+import Support from '../assets/support.svg';
 
 // Components
 import OutlinedButton from '../components/OutlinedButton';
-
-// Constants
-import { makeStyles } from '@material-ui/core';
 
 export const Landing: FC = () => {
     return (
@@ -36,13 +40,17 @@ const Intro: FC = () => {
             <Grid container item style={{ height: '100vh' }}>
                 <Grid container item xs={5} alignItems='center'>
                     <Grid item>
-                        <img src={logo} className={classes.logo} />
+                        <Box maxWidth='sm'>
+                            <img src={BlackLogo} className={classes.logo_1} />
+                        </Box>
                         <Typography variant='h1'>CompE+</Typography>
                         <Typography variant='h3'>Practice, Insight, and Support</Typography>
                     </Grid>
                 </Grid>
                 <Grid container item xs={7} alignItems='center' justify='center'>
-                    <img src={PairProgramming} className={classes.pairProgramming} />
+                    <Box maxWidth='sm'>
+                        <img src={PairProgramming} className={classes.svg} />
+                    </Box>
                 </Grid>
                 <Grid container item xs={12} justify='center'>
                     <Grid container item alignItems='center' justify='center' direction='column' spacing={3}>
@@ -70,7 +78,7 @@ const Intro: FC = () => {
                     </Grid>
                 </Grid>
                 <Grid container item xs={4} alignItems='center' justify='center'>
-                    <img src={logo} className={classes.logo2} />
+                    <img src={BlackLogo} className={classes.logo_2} />
                 </Grid>
             </Grid>
         </Grid>
@@ -85,9 +93,9 @@ const Values: FC = () => {
             <Grid container item>
                 <Typography variant='h1'>Values</Typography>
             </Grid>
-            <Grid container item>
-                <Grid container item xs={3} justify='center' alignItems='center'>
-                    <img src={logo} className={classes.logo} />
+            <Grid container item spacing={5}>
+                <Grid container item xs={3} className={classes.values}>
+                    <img src={Practice} className={classes.svg} />
                 </Grid>
                 <Grid item xs={9}>
                     <Typography variant='h2'>Practice</Typography>
@@ -97,7 +105,7 @@ const Values: FC = () => {
                     </Typography>
                 </Grid>
             </Grid>
-            <Grid container item>
+            <Grid container item spacing={5}>
                 <Grid item xs={9}>
                     <Typography align='right' variant='h2'>
                         Insight
@@ -107,13 +115,13 @@ const Values: FC = () => {
                         students
                     </Typography>
                 </Grid>
-                <Grid container item xs={3} justify='center' alignItems='center'>
-                    <img src={logo} className={classes.logo} />
+                <Grid container item xs={3} className={classes.values}>
+                    <img src={Industry} className={classes.svg} />
                 </Grid>
             </Grid>
-            <Grid container item>
-                <Grid container item xs={3} justify='center' alignItems='center'>
-                    <img src={logo} className={classes.logo} />
+            <Grid container item spacing={5}>
+                <Grid container item xs={3} className={classes.values}>
+                    <img src={Support} className={classes.svg} />
                 </Grid>
                 <Grid item xs={9}>
                     <Typography variant='h2'>Support</Typography>
@@ -138,22 +146,22 @@ const Services: FC = () => {
             <Grid container item spacing={2}>
                 <Grid container item xs={12} spacing={3}>
                     <Grid container item xs={4} justify='center'>
-                        <img src={logo} className={classes.logo} />
+                        <img src={ResumeReview} className={classes.services_svg} />
                     </Grid>
                     <Grid container item xs={4} justify='center'>
-                        <img src={logo} className={classes.logo} />
+                        <img src={MockInterview} className={classes.services_svg} />
                     </Grid>
                     <Grid container item xs={4} justify='center'>
-                        <img src={logo} className={classes.logo} />
+                        <img src={Teamwork} className={classes.services_svg} />
                     </Grid>
                 </Grid>
 
                 <Grid container item xs={12} spacing={3}>
                     <Grid container item xs={4} justify='center'>
-                        <Typography variant='h2'>Mock Interviews</Typography>
+                        <Typography variant='h2'>Resume Review</Typography>
                     </Grid>
                     <Grid container item xs={4} justify='center'>
-                        <Typography variant='h2'>Resume Review</Typography>
+                        <Typography variant='h2'>Mock Interviews</Typography>
                     </Grid>
                     <Grid container item xs={4} justify='center'>
                         <Typography variant='h2'>Community</Typography>
@@ -183,17 +191,24 @@ const Services: FC = () => {
 };
 
 const useStyles = makeStyles(() => ({
-    pairProgramming: {
-        width: 680,
-        height: 460,
+    svg: {
+        width: '100%',
+        height: 'auto',
     },
-    logo: {
-        width: 100,
-        height: 100,
-        margin: 0,
+    values: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    logo2: {
-        width: 300,
-        height: 300,
+    services_svg: {
+        width: '80%',
+        height: 'auto',
+    },
+    logo_2: {
+        width: '70%',
+        height: 'auto',
+    },
+    logo_1: {
+        width: '50%',
+        height: 'auto',
     },
 }));
