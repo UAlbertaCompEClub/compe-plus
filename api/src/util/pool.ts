@@ -1,5 +1,5 @@
-import config from '../../util/config';
-import logger from '../../util/logger';
+import config from './config';
+import logger from './logger';
 import pg from 'pg';
 
 /**
