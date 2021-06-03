@@ -7,21 +7,23 @@ import './App.css';
 import { Container } from '@material-ui/core';
 // Libraries
 import React from 'react';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 // Material UI
 import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 
-// Components
-import { Landing } from './routes/Landing';
-
-// Styles
-import theme from './theme';
+// Components and Routes
 import { Header, Section } from './components/Header';
-import { COMMUNITY, COMPE_PLUS, MOCK_INTERVIEW, RESUME_REVIEW } from './constants';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Landing } from './routes/Landing';
 import { ResumeReview } from './routes/ResumeReview';
 import { MockInterview } from './routes/MockInterview';
 import { Community } from './routes/Community';
+
+// Styles
+import theme from './styles/theme';
+
+// Constants
+import { COMMUNITY, COMPE_PLUS, MOCK_INTERVIEW, RESUME_REVIEW } from './util/constants';
 
 const header_sections: Section[] = [
     { title: RESUME_REVIEW, url: '/resume-review' },

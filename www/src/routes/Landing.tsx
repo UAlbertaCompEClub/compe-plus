@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { Box, Container, makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 
 // Assets
 import PairProgramming from '../assets/pair_programming.svg';
