@@ -9,10 +9,8 @@ import Button from '@material-ui/core/Button';
 const styles = (theme: Theme) => ({
     root: {
         borderRadius: '10px',
-        color: theme.palette.text.primary,
-        borderColor: theme.palette.text.primary,
         '&:hover': {
-            backgroundColor: theme.palette.text.primary,
+            backgroundColor: theme.palette.text.secondary,
             color: theme.palette.primary.main,
         },
     },

@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     toolbarLink: {
         padding: theme.spacing(8),
         flexShrink: 0,
-        color: theme.palette.text.primary,
+        color: theme.palette.text.secondary,
     },
     logo: {
         width: 37,
@@ -70,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
         margin: 5,
     },
     title: {
-        color: theme.palette.text.primary,
+        color: theme.palette.text.secondary,
+    },
+    button: {
+        color: theme.palette.text.secondary,
     },
 }));

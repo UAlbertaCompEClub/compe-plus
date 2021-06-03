@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
     interface ThemeOptions {
@@ -16,6 +16,7 @@ const palette = {
     },
     text: {
         primary: '#000000',
+        secondary: '#FFFFFF',
     },
     background: {
         default: '#E2F8E2',
@@ -49,11 +50,9 @@ const typography = {
         color: '#FFFFFF',
     },
     fontSize: 18,
-    // allVariants: {
-    //     color: '#FFFFFF',
-    // },
 };
 
 const themeName = 'CompE+ Theme';
 
-export default createMuiTheme({ palette, typography, themeName });
+export default responsiveFontSizes(createMuiTheme({ palette, typography, themeName }));
+// export default createMuiTheme({ palette, typography, themeName });
