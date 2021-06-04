@@ -4,4 +4,4 @@ TODO
 
 # CompE+ Team
 
--   Cyrus Diego
+-   [Cyrus Diego](https://github.com/cyrusdiego)
