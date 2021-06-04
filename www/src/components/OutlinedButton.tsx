@@ -16,13 +16,13 @@ const styles = (theme: Theme) => ({
     },
 });
 
-type Props = {
+type OutlinedButtonProps = {
     title: string;
     url: string;
     style?: CSSProperties;
 };
 
-const OutlinedButton: FC<Props & WithStyles<typeof styles>> = (props: Props & WithStyles<typeof styles>) => {
+const OutlinedButton: FC<OutlinedButtonProps & WithStyles<typeof styles>> = (props: OutlinedButtonProps & WithStyles<typeof styles>) => {
     return (
         <Button href={props.url} variant='outlined' size='small' color='secondary' style={props.style} className={props.classes.root}>
             {props.title}

@@ -6,7 +6,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Container } from '@material-ui/core';
 // Libraries
-import React from 'react';
+import React, { FC } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 // Material UI

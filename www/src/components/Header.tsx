@@ -13,7 +13,7 @@ import logo from '../assets/logo_white.svg';
 // Components
 import OutlinedButton from './OutlinedButton';
 
-type Props = {
+type HeaderProps = {
     sections: Section[];
     title: string;
 };
@@ -23,7 +23,7 @@ export type Section = {
     url: string;
 };
 
-export const Header: FC<Props> = (props: Props) => {
+export const Header: FC<HeaderProps> = (props: HeaderProps) => {
     const classes = useStyles();
     const { sections, title } = props;
 

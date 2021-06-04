@@ -55,4 +55,3 @@ const typography = {
 const themeName = 'CompE+ Theme';
 
 export default responsiveFontSizes(createMuiTheme({ palette, typography, themeName }));
-// export default createMuiTheme({ palette, typography, themeName });
