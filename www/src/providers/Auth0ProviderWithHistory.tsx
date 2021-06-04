@@ -4,7 +4,9 @@ import { AppState, Auth0Provider } from '@auth0/auth0-react';
 
 import config from '../util/config';
 
-const Auth0ProviderWithHistory: FC<void> = ({ children }: PropsWithChildren<void>) => {
+type Auth0ProviderWithHistoryProps = unknown;
+
+const Auth0ProviderWithHistory: FC<Auth0ProviderWithHistoryProps> = ({ children }: PropsWithChildren<Auth0ProviderWithHistoryProps>) => {
     const { domain, clientId } = config.auth0;
 
     const history = useHistory();
