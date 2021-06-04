@@ -1,11 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, PropsWithChildren } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppState, Auth0Provider } from '@auth0/auth0-react';
 
 import config from '../util/config';
 
-const Auth0ProviderWithHistory: React.FC = ({ children }) => {
+const Auth0ProviderWithHistory: FC<void> = ({ children }: PropsWithChildren<void>) => {
     const { domain, clientId } = config.auth0;
 
     const history = useHistory();
@@ -20,10 +19,6 @@ const Auth0ProviderWithHistory: React.FC = ({ children }) => {
             {children}
         </Auth0Provider>
     );
-};
-
-Auth0ProviderWithHistory.propTypes = {
-    children: PropTypes.element.isRequired,
 };
 
 export default Auth0ProviderWithHistory;

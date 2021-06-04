@@ -1,13 +1,12 @@
+import React, { FC, PropsWithChildren } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import PropTypes from 'prop-types';
-import React from 'react';
 
 type BaseButtonProps = {
     text: string;
     onClick: () => void;
 };
 
-const BaseButton: React.FC<BaseButtonProps> = (props) => {
+const BaseButton: FC<BaseButtonProps> = (props: PropsWithChildren<BaseButtonProps>) => {
     return <button onClick={props.onClick}>{props.text}</button>;
 };
 
@@ -21,7 +20,7 @@ const LoginButton = () => {
     return <BaseButton text="Login" onClick={() => loginWithRedirect()} />;
 };
 
-const AuthButton: React.FC = () => {
+const AuthButton: FC = () => {
     const { isAuthenticated } = useAuth0();
 
     if (isAuthenticated) {
@@ -29,11 +28,6 @@ const AuthButton: React.FC = () => {
     }
 
     return <LoginButton />;
-};
-
-BaseButton.propTypes = {
-    text: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
 };
 
 export default AuthButton;
