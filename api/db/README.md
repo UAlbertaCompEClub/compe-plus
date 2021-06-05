@@ -59,3 +59,7 @@ migrate --version
 # Schema
 
 ![Schema](schema.png)
+
+# Zapatos
+
+Zapatos allows us to access the DB with nearly pure SQL while still giving us full typing support. The [docs](https://jawj.github.io/zapatos) are a great starting place to learn about it. Note that anytime we migrate the database, we will need to update the Zapatos schema by running `PGUSER=postgres PGPASSWORD=postgres npx zapatos`.

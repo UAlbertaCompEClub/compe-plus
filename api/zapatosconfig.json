@@ -1,0 +1,56 @@
+{
+    "db": {
+        "connectionString": "postgresql://localhost/compe-plus"
+    },
+    "outDir": "./src",
+    "schemas": {
+        "public": {
+            "include": "*",
+            "exclude": ["schema_migrations"]
+        }
+    },
+    "columnOptions": {
+        "*": {
+            "updated_at": {
+                "insert": "excluded",
+                "update": "excluded"
+            },
+            "created_at": {
+                "insert": "excluded",
+                "update": "excluded"
+            },
+            "id": {
+                "insert": "excluded",
+                "update": "excluded"
+            }
+        },
+        "user_roles": {
+            "user_id": {
+                "insert": "included",
+                "update": "excluded"
+            },
+            "role": {
+                "insert": "included",
+                "update": "excluded"
+            }
+        },
+        "document_states": {
+            "name": {
+                "insert": "excluded",
+                "update": "excluded"
+            }
+        },
+        "resume_review_states": {
+            "name": {
+                "insert": "excluded",
+                "update": "excluded"
+            }
+        },
+        "roles": {
+            "name": {
+                "insert": "excluded",
+                "update": "excluded"
+            }
+        }
+    }
+}
