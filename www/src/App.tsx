@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { GetTokenSilentlyOptions, useAuth0 } from '@auth0/auth0-react';
 
 import AuthButton from './components/auth/AuthButton';
@@ -16,7 +16,7 @@ async function requestWithToken(getAccessTokenSilently: TokenAcquirer) {
     );
 }
 
-function App(): JSX.Element {
+const App: FC = () => {
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
     return (
@@ -35,6 +35,6 @@ function App(): JSX.Element {
             </header>
         </div>
     );
-}
+};
 
 export default App;

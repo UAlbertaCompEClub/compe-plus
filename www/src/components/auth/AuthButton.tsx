@@ -10,12 +10,12 @@ const BaseButton: FC<BaseButtonProps> = (props: PropsWithChildren<BaseButtonProp
     return <button onClick={props.onClick}>{props.text}</button>;
 };
 
-const LogoutButton = () => {
+const LogoutButton: FC = () => {
     const { logout } = useAuth0();
     return <BaseButton text="Logout" onClick={() => logout()} />;
 };
 
-const LoginButton = () => {
+const LoginButton: FC = () => {
     const { loginWithRedirect } = useAuth0();
     return <BaseButton text="Login" onClick={() => loginWithRedirect()} />;
 };
