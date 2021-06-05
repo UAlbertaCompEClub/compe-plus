@@ -22,6 +22,10 @@ declare module 'zapatos/schema' {
   export namespace every {
     export type resume_review_state = ['canceled', 'finished', 'reviewing', 'seeking_reviewer'];
   }
+  export type role_type = 'admin' | 'interviewer' | 'reviewer';
+  export namespace every {
+    export type role_type = ['admin', 'interviewer', 'reviewer'];
+  }
 
   /* --- tables --- */
 
@@ -538,45 +542,6 @@ declare module 'zapatos/schema' {
     export type SQL = SQLExpression | SQLExpression[];
   }
 
-  export namespace roles {
-    export type Table = 'roles';
-    export interface Selectable {
-      /**
-      * **roles.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name: string;
-    }
-    export interface JSONSelectable {
-      /**
-      * **roles.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name: string;
-    }
-    export interface Whereable {
-      /**
-      * **roles.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
-    }
-    export interface Insertable {
-    
-    }
-    export interface Updatable {
-    
-    }
-    export type UniqueIndex = 'roles_pkey';
-    export type Column = keyof Selectable;
-    export type OnlyCols<T extends readonly Column[]> = Pick<Selectable, T[number]>;
-    export type SQLExpression = db.GenericSQLExpression | db.ColumnNames<Updatable | (keyof Updatable)[]> | db.ColumnValues<Updatable> | Table | Whereable | Column;
-    export type SQL = SQLExpression | SQLExpression[];
-  }
-
   export namespace time_slots {
     export type Table = 'time_slots';
     export interface Selectable {
@@ -721,10 +686,10 @@ declare module 'zapatos/schema' {
       user_id: string;
       /**
       * **user_roles.role**
-      * - `text` in database
+      * - `role_type` in database
       * - `NOT NULL`, no default
       */
-      role: string;
+      role: role_type;
       /**
       * **user_roles.created_at**
       * - `timestamptz` in database
@@ -741,10 +706,10 @@ declare module 'zapatos/schema' {
       user_id: string;
       /**
       * **user_roles.role**
-      * - `text` in database
+      * - `role_type` in database
       * - `NOT NULL`, no default
       */
-      role: string;
+      role: role_type;
       /**
       * **user_roles.created_at**
       * - `timestamptz` in database
@@ -761,10 +726,10 @@ declare module 'zapatos/schema' {
       user_id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
       * **user_roles.role**
-      * - `text` in database
+      * - `role_type` in database
       * - `NOT NULL`, no default
       */
-      role?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
+      role?: role_type | db.Parameter<role_type> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, role_type | db.Parameter<role_type> | db.SQLFragment | db.ParentColumn>;
       /**
       * **user_roles.created_at**
       * - `timestamptz` in database
@@ -781,10 +746,10 @@ declare module 'zapatos/schema' {
       user_id: string | db.Parameter<string> | db.SQLFragment;
       /**
       * **user_roles.role**
-      * - `text` in database
+      * - `role_type` in database
       * - `NOT NULL`, no default
       */
-      role: string | db.Parameter<string> | db.SQLFragment;
+      role: role_type | db.Parameter<role_type> | db.SQLFragment;
     }
     export interface Updatable {
     
@@ -1111,15 +1076,15 @@ declare module 'zapatos/schema' {
 
   /* === cross-table types === */
 
-  export type Table = documents.Table | interviews.Table | resume_reviews.Table | roles.Table | time_slots.Table | user_roles.Table | users.Table;
-  export type Selectable = documents.Selectable | interviews.Selectable | resume_reviews.Selectable | roles.Selectable | time_slots.Selectable | user_roles.Selectable | users.Selectable;
-  export type JSONSelectable = documents.JSONSelectable | interviews.JSONSelectable | resume_reviews.JSONSelectable | roles.JSONSelectable | time_slots.JSONSelectable | user_roles.JSONSelectable | users.JSONSelectable;
-  export type Whereable = documents.Whereable | interviews.Whereable | resume_reviews.Whereable | roles.Whereable | time_slots.Whereable | user_roles.Whereable | users.Whereable;
-  export type Insertable = documents.Insertable | interviews.Insertable | resume_reviews.Insertable | roles.Insertable | time_slots.Insertable | user_roles.Insertable | users.Insertable;
-  export type Updatable = documents.Updatable | interviews.Updatable | resume_reviews.Updatable | roles.Updatable | time_slots.Updatable | user_roles.Updatable | users.Updatable;
-  export type UniqueIndex = documents.UniqueIndex | interviews.UniqueIndex | resume_reviews.UniqueIndex | roles.UniqueIndex | time_slots.UniqueIndex | user_roles.UniqueIndex | users.UniqueIndex;
-  export type Column = documents.Column | interviews.Column | resume_reviews.Column | roles.Column | time_slots.Column | user_roles.Column | users.Column;
-  export type AllTables = [documents.Table, interviews.Table, resume_reviews.Table, roles.Table, time_slots.Table, user_roles.Table, users.Table];
+  export type Table = documents.Table | interviews.Table | resume_reviews.Table | time_slots.Table | user_roles.Table | users.Table;
+  export type Selectable = documents.Selectable | interviews.Selectable | resume_reviews.Selectable | time_slots.Selectable | user_roles.Selectable | users.Selectable;
+  export type JSONSelectable = documents.JSONSelectable | interviews.JSONSelectable | resume_reviews.JSONSelectable | time_slots.JSONSelectable | user_roles.JSONSelectable | users.JSONSelectable;
+  export type Whereable = documents.Whereable | interviews.Whereable | resume_reviews.Whereable | time_slots.Whereable | user_roles.Whereable | users.Whereable;
+  export type Insertable = documents.Insertable | interviews.Insertable | resume_reviews.Insertable | time_slots.Insertable | user_roles.Insertable | users.Insertable;
+  export type Updatable = documents.Updatable | interviews.Updatable | resume_reviews.Updatable | time_slots.Updatable | user_roles.Updatable | users.Updatable;
+  export type UniqueIndex = documents.UniqueIndex | interviews.UniqueIndex | resume_reviews.UniqueIndex | time_slots.UniqueIndex | user_roles.UniqueIndex | users.UniqueIndex;
+  export type Column = documents.Column | interviews.Column | resume_reviews.Column | time_slots.Column | user_roles.Column | users.Column;
+  export type AllTables = [documents.Table, interviews.Table, resume_reviews.Table, time_slots.Table, user_roles.Table, users.Table];
   export type AllMaterializedViews = [];
 
 
@@ -1127,7 +1092,6 @@ declare module 'zapatos/schema' {
     documents: documents.Selectable;
     interviews: interviews.Selectable;
     resume_reviews: resume_reviews.Selectable;
-    roles: roles.Selectable;
     time_slots: time_slots.Selectable;
     user_roles: user_roles.Selectable;
     users: users.Selectable;
@@ -1137,7 +1101,6 @@ declare module 'zapatos/schema' {
     documents: documents.JSONSelectable;
     interviews: interviews.JSONSelectable;
     resume_reviews: resume_reviews.JSONSelectable;
-    roles: roles.JSONSelectable;
     time_slots: time_slots.JSONSelectable;
     user_roles: user_roles.JSONSelectable;
     users: users.JSONSelectable;
@@ -1147,7 +1110,6 @@ declare module 'zapatos/schema' {
     documents: documents.Whereable;
     interviews: interviews.Whereable;
     resume_reviews: resume_reviews.Whereable;
-    roles: roles.Whereable;
     time_slots: time_slots.Whereable;
     user_roles: user_roles.Whereable;
     users: users.Whereable;
@@ -1157,7 +1119,6 @@ declare module 'zapatos/schema' {
     documents: documents.Insertable;
     interviews: interviews.Insertable;
     resume_reviews: resume_reviews.Insertable;
-    roles: roles.Insertable;
     time_slots: time_slots.Insertable;
     user_roles: user_roles.Insertable;
     users: users.Insertable;
@@ -1167,7 +1128,6 @@ declare module 'zapatos/schema' {
     documents: documents.Updatable;
     interviews: interviews.Updatable;
     resume_reviews: resume_reviews.Updatable;
-    roles: roles.Updatable;
     time_slots: time_slots.Updatable;
     user_roles: user_roles.Updatable;
     users: users.Updatable;
@@ -1177,7 +1137,6 @@ declare module 'zapatos/schema' {
     documents: documents.UniqueIndex;
     interviews: interviews.UniqueIndex;
     resume_reviews: resume_reviews.UniqueIndex;
-    roles: roles.UniqueIndex;
     time_slots: time_slots.UniqueIndex;
     user_roles: user_roles.UniqueIndex;
     users: users.UniqueIndex;
@@ -1187,7 +1146,6 @@ declare module 'zapatos/schema' {
     documents: documents.Column;
     interviews: interviews.Column;
     resume_reviews: resume_reviews.Column;
-    roles: roles.Column;
     time_slots: time_slots.Column;
     user_roles: user_roles.Column;
     users: users.Column;
@@ -1197,7 +1155,6 @@ declare module 'zapatos/schema' {
     documents: documents.SQL;
     interviews: interviews.SQL;
     resume_reviews: resume_reviews.SQL;
-    roles: roles.SQL;
     time_slots: time_slots.SQL;
     user_roles: user_roles.SQL;
     users: users.SQL;
