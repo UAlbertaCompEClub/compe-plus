@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Authentication set-up
+
+1. Copy `www/.env.sample` to `www/.env`
+1. Navigate to `compe-plus` application in ![Auth0](https://manage.auth0.com/dashboard)
+2. In the settings page, copy the domain and client ID to their respective fields in the `.env` file
+
 ## Available Scripts
 
 In the project directory, you can run:
