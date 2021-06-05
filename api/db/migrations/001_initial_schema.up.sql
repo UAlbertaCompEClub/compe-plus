@@ -32,7 +32,7 @@ CREATE TRIGGER update_time_users
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 /* roles table */
-CREATE TABLE roles (
+CREATE TABLE IF NOT EXISTS roles (
     name text NOT NULL PRIMARY KEY
 );
 
@@ -44,33 +44,27 @@ VALUES
     ('admin');
 
 /* user_roles table */
-CREATE TABLE user_roles (
+CREATE TABLE IF NOT EXISTS user_roles (
     user_id UUID NOT NULL REFERENCES users ON DELETE CASCADE,
     role TEXT NOT NULL REFERENCES roles ON DELETE CASCADE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (user_id, role)
 );
 
-/* resume_review_states table */
-CREATE TABLE resume_review_states (
-    name TEXT NOT NULL PRIMARY KEY
+/* resume_review_state enum*/
+CREATE TYPE resume_review_state AS ENUM (
+    'seeking_reviewer',
+    'reviewing',
+    'finished',
+    'canceled'
 );
 
-INSERT INTO
-    resume_review_states (name)
-VALUES
-    ('creating'),
-    ('seeking_reviewer'),
-    ('reviewing'),
-    ('finished'),
-    ('cancelled');
-
 /* resume_reviews table */
-CREATE TABLE resume_reviews (
+CREATE TABLE IF NOT EXISTS resume_reviews (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     reviewee_id UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
     reviewer_id UUID REFERENCES users ON DELETE RESTRICT,
-    state TEXT NOT NULL REFERENCES resume_review_states ON DELETE RESTRICT,
+    state resume_review_state NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -81,7 +75,7 @@ CREATE TRIGGER update_time_resume_reviews
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 /* documents table */
-CREATE TABLE documents (
+CREATE TABLE IF NOT EXISTS documents (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     note TEXT NOT NULL,
     file_url TEXT NOT NULL,
@@ -98,7 +92,7 @@ CREATE TRIGGER update_time_documents
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 /* time_slots table */
-CREATE TABLE time_slots (
+CREATE TABLE IF NOT EXISTS time_slots (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     at TIMESTAMPTZ NOT NULL,
     user_id UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
@@ -112,7 +106,7 @@ CREATE TRIGGER update_time_time_slots
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 /* interviews table */
-CREATE TABLE interviews (
+CREATE TABLE IF NOT EXISTS interviews (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     time_slot UUID NOT NULL REFERENCES time_slots ON DELETE RESTRICT,
     interviewee UUID NOT NULL REFERENCES users ON DELETE RESTRICT,

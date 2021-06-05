@@ -14,7 +14,7 @@ DROP TRIGGER IF EXISTS update_time_resume_reviews ON resume_reviews;
 
 DROP TABLE IF EXISTS resume_reviews;
 
-DROP TABLE IF EXISTS resume_review_states;
+DROP TYPE IF EXISTS resume_review_state;
 
 DROP TABLE IF EXISTS user_roles;
 
