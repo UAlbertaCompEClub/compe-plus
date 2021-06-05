@@ -80,17 +80,6 @@ CREATE TRIGGER update_time_resume_reviews
     ON resume_reviews
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
-/* document_states table */
-CREATE TABLE document_states (
-    name TEXT NOT NULL PRIMARY KEY
-);
-
-INSERT INTO
-    document_states (name)
-VALUES
-    ('creating'),
-    ('ready');
-
 /* documents table */
 CREATE TABLE documents (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -98,7 +87,6 @@ CREATE TABLE documents (
     file_url TEXT NOT NULL,
     is_review BOOLEAN NOT NULL,
     user_id UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
-    state TEXT NOT NULL REFERENCES document_states ON DELETE RESTRICT,
     resume_review_id UUID NOT NULL REFERENCES resume_reviews ON DELETE RESTRICT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
