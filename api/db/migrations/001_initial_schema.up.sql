@@ -31,22 +31,13 @@ CREATE TRIGGER update_time_users
     ON users
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
-/* roles table */
-CREATE TABLE IF NOT EXISTS roles (
-    name text NOT NULL PRIMARY KEY
-);
-
-INSERT INTO
-    roles (name)
-VALUES
-    ('reviewer'),
-    ('interviewer'),
-    ('admin');
+/* roles enum */
+CREATE TYPE role_type AS ENUM ('reviewer', 'interviewer', 'admin');
 
 /* user_roles table */
 CREATE TABLE IF NOT EXISTS user_roles (
     user_id UUID NOT NULL REFERENCES users ON DELETE CASCADE,
-    role TEXT NOT NULL REFERENCES roles ON DELETE CASCADE,
+    role role_type NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (user_id, role)
 );

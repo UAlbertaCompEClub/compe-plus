@@ -18,7 +18,7 @@ DROP TYPE IF EXISTS resume_review_state;
 
 DROP TABLE IF EXISTS user_roles;
 
-DROP TABLE IF EXISTS roles;
+DROP TYPE IF EXISTS role_type;
 
 DROP TRIGGER IF EXISTS update_time_users ON users;
 
