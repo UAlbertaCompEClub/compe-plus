@@ -1,11 +1,17 @@
 import http from 'http';
 import express from 'express';
+import cors from 'cors';
+
 import logger from './util/logger';
 import config from './util/config';
 import sampleRoutes from './routes/sample';
+import secureRoutes from './routes/secure';
 import middleware from './routes/middleware';
 
 const router = express();
+
+/** Allow cross origin requests */
+router.use(cors());
 
 /** Log the request */
 router.use(middleware.logRequest());
@@ -15,6 +21,7 @@ router.use(express.json());
 
 /** Routes */
 router.use('/api/v1', sampleRoutes);
+router.use('/api/secure/v1', secureRoutes);
 
 /** Error handling */
 router.use(middleware.notFound());
