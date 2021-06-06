@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import pinoExpressMiddleware from 'express-pino-logger';
+import jwt from 'express-jwt';
+import jwks from 'jwks-rsa';
+
 import logger, { standardSerializers, verboseSerializers } from '../util/logger';
 import config from '../util/config';
 
@@ -16,7 +19,7 @@ function logRequest(): Middleware {
 
 /**
  * Returns middelware that will return a 404 and stop the request chain.
- * @returns NotFound middelware.
+ * @returns NotFound middleware.
  */
 function notFound(): Middleware {
     return (req: Request, res: Response): void => {
@@ -26,7 +29,34 @@ function notFound(): Middleware {
     };
 }
 
+/**
+ * Returns middle ware that will ensure the client accessing is authenticated.
+ * @returns JwtCheck middleware.
+ */
+function jwtCheck(): Middleware {
+    const jwtCheck = jwt({
+        secret: jwks.expressJwtSecret({
+            cache: true,
+            rateLimit: true,
+            jwksRequestsPerMinute: 5,
+            jwksUri: config.auth0.jwks_uri,
+        }),
+        audience: config.auth0.audience,
+        issuer: config.auth0.issuer,
+        algorithms: ['RS256'],
+    });
+
+    return (req: Request, res: Response, next?: NextFunction): void => {
+        if (next === undefined) {
+            return;
+        }
+
+        jwtCheck(req, res, next);
+    };
+}
+
 export default {
     logRequest,
     notFound,
+    jwtCheck,
 };
