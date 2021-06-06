@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import { GetTokenSilentlyOptions, useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
 import AuthButton from './components/auth/AuthButton';
+import config from './util/config';
 import logo from './logo.svg';
 import './App.css';
 
@@ -9,11 +11,25 @@ import './App.css';
 type TokenAcquirer = (options?: GetTokenSilentlyOptions) => Promise<string>;
 
 async function requestWithToken(getAccessTokenSilently: TokenAcquirer) {
-    console.debug(
-        `request with token: ${await getAccessTokenSilently({
-            scope: 'reviewer_scope',
-        })}`,
-    );
+    const tokenRequest = {
+        audience: config.server.audience,
+        scope: 'request:review',
+    };
+
+    try {
+        const apiToken = await getAccessTokenSilently(tokenRequest);
+
+        const res = await axios.get(`${config.server.endpoint}/api/secure/v1/reviews`, {
+            headers: {
+                Authorization: `Bearer ${apiToken}`,
+            },
+        });
+
+        console.debug('Response from server:');
+        console.debug(res);
+    } catch (e) {
+        console.error(e);
+    }
 }
 
 const App: FC = () => {
@@ -30,7 +46,7 @@ const App: FC = () => {
                     Learn React
                 </a>
                 {user && <p>Welcome {user.name}!</p>}
-                {isAuthenticated && <button onClick={async () => requestWithToken(getAccessTokenSilently)} />}
+                {isAuthenticated && <button onClick={async () => requestWithToken(getAccessTokenSilently)}>Access server</button>}
                 <AuthButton />
             </header>
         </div>
