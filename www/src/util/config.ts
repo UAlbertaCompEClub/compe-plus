@@ -1,8 +1,8 @@
 const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN || '';
 const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID || '';
 
-const SERVER_ENDPOINT = process.env.SERVER_ENDPOINT || '';
-const SERVER_AUDIENCE = process.env.SERVER_AUDIENCE || '';
+const SERVER_ENDPOINT = process.env.REACT_APP_SERVER_ENDPOINT || '';
+const SERVER_AUDIENCE = process.env.REACT_APP_SERVER_AUDIENCE || '';
 
 const AUTH0 = {
     domain: AUTH0_DOMAIN,
