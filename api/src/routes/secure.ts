@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.use(middleware.jwtCheck());
 
-router.get('/reviews', controller.sampleHealthCheck);
+router.get('/ping', controller.sampleHealthCheck);
 
 export = router;

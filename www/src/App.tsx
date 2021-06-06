@@ -19,7 +19,7 @@ async function requestWithToken(getAccessTokenSilently: TokenAcquirer) {
     try {
         const apiToken = await getAccessTokenSilently(tokenRequest);
 
-        const res = await axios.get(`${config.server.endpoint}/api/secure/v1/reviews`, {
+        const res = await axios.get(`${config.server.endpoint}/api/secure/v1/ping`, {
             headers: {
                 Authorization: `Bearer ${apiToken}`,
             },
