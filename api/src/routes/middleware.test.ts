@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import * as checkJwt from '../util/checkJwt';
 import logger from '../util/logger';
 import middleware from './middleware';
+import NotFoundException from '../exceptions/NotFoundException';
 
 describe('notFound middleware', () => {
     const mockRequest: Partial<Request> = {};
@@ -10,14 +11,10 @@ describe('notFound middleware', () => {
     mockResponse.json = jest.fn().mockReturnValue(mockResponse);
     mockResponse.status = jest.fn().mockReturnValue(mockResponse);
 
-    it('always returns 404', () => {
-        const expectedResponse = {
-            message: 'not found',
-        };
-        middleware.notFound()(mockRequest as Request, mockResponse as Response);
-
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
-        expect(mockResponse.status).toBeCalledWith(404);
+    it('always returns a NotFoundException', () => {
+        expect(() => {
+            middleware.notFound()(mockRequest as Request, mockResponse as Response);
+        }).toThrowError(new NotFoundException());
     });
 });
 

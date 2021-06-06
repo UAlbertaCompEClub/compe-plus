@@ -29,8 +29,11 @@ router.use(middleware.authenticate());
 router.use('/api/v1', sampleRoutes);
 router.use('/api/v1', resumeReviewRoutes);
 
-/** Error handling */
+/** Not found */
 router.use(middleware.notFound());
+
+/** Error handling */
+router.use(middleware.errorHandler());
 
 /** Create the server */
 const httpServer = http.createServer(router);
