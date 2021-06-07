@@ -2,12 +2,8 @@ import cors from 'cors';
 import express from 'express';
 import http from 'http';
 
-import logger from './util/logger';
-import config from './util/config';
-import sampleRoutes from './routes/sample';
+import middleware from './controllers/middleware';
 import resumeReviewRoutes from './routes/resumeReview';
-import middleware from './routes/middleware';
-import sampleRoutes from './routes/sample';
 import config from './util/config';
 import logger from './util/logger';
 
@@ -26,7 +22,6 @@ router.use(express.json());
 router.use(middleware.authenticate());
 
 /** Routes */
-router.use('/api/v1', sampleRoutes);
 router.use('/api/v1', resumeReviewRoutes);
 
 /** Not found */
