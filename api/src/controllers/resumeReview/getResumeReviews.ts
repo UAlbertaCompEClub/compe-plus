@@ -1,9 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
 import NotImplementedException from '../../exceptions/NotImplementedException';
 import controller from '../controllerUtil';
-import { validate as uuidValidate } from 'uuid';
-import Validator from '../validation';
+import Validator, { beAValidUuid, beAResumeReviewState } from '../validation';
 
 type ReqQuery = {
     reviewer?: string; // TODO UUID?
@@ -16,15 +15,15 @@ class ReqQueryValidator extends Validator<ReqQuery> {
         super('query parameters');
 
         this.ruleFor('reviewer')
-            .must({ predicate: (reviewer) => uuidValidate(reviewer!), message: 'Must be a UUID' })
+            .must(beAValidUuid)
             .when((reqQuery) => reqQuery.reviewer !== undefined);
 
         this.ruleFor('reviewee')
-            .must({ predicate: (reviewee) => uuidValidate(reviewee!), message: 'Must be a UUID' })
+            .must(beAValidUuid)
             .when((reqQuery) => reqQuery.reviewee !== undefined);
 
         this.ruleFor('state')
-            .must({ predicate: (state) => ['canceled', 'finished', 'reviewing', 'seeking_reviewer'].includes(state!), message: 'Must be a valid enum member' }) // TODO make sure array stays in sync with typed union
+            .must(beAResumeReviewState)
             .when((reqQuery) => reqQuery.state !== undefined);
     }
 }
@@ -39,7 +38,7 @@ type ResBody = {
  * @param res HTTP response.
  * @returns HTTP response.
  */
-const getResumeReviews = controller(async (req: Request<unknown, ResBody, unknown, ReqQuery>, res: Response<ResBody>, next: NextFunction): Promise<void> => {
+const getResumeReviews = controller(async (req: Request<unknown, ResBody, unknown, ReqQuery>, res: Response<ResBody>): Promise<void> => {
     // Validate query parameters
     new ReqQueryValidator().validateAndThrow(req.query);
 

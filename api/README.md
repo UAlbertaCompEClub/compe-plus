@@ -186,6 +186,4 @@ Delete an interview i.e. cancel it.
 
 # TODO remove this
 
--   Test validator
--   Wire through details in httpexception
 -   Implement repository for getResumeReviews
