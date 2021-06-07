@@ -8,7 +8,7 @@ class NotFoundException extends HttpException {
      * Create an NotFoundException.
      */
     constructor() {
-        super(404, 'Not found', 'Resource was not found');
+        super(404, 'Not found');
         Object.setPrototypeOf(this, NotFoundException.prototype);
     }
 }

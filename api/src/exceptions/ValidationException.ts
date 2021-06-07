@@ -9,7 +9,7 @@ class ValidationException extends HttpException {
      * @param whatIsInvalid What part of the request is invalid.
      * @param whyItsInvalid Why is it invalid.
      */
-    constructor(whatIsInvalid: string, whyItsInvalid: string) {
+    constructor(whatIsInvalid: string, whyItsInvalid: Record<string, unknown>) {
         super(400, `Invalid ${whatIsInvalid.toLowerCase()}`, whyItsInvalid);
         Object.setPrototypeOf(this, ValidationException.prototype);
     }

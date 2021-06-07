@@ -42,7 +42,7 @@ function errorHandler(): ErrMiddleware {
         } else {
             // Handle an unknown error
             req.log.error(err, 'Unknown error');
-            const unknownErr = new HttpException(500, 'Unknown error', err.message);
+            const unknownErr = new HttpException(500, 'Unknown error', { errorMessage: err.message });
             res.status(unknownErr.status).json(unknownErr.serialize());
         }
     };

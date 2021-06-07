@@ -9,7 +9,7 @@ class NotImplementedException extends HttpException {
      * @param routeName Route that is not implemented.
      */
     constructor(routeName: string) {
-        super(404, 'Not implemented', `Route ${routeName} is not implemented`);
+        super(404, `Route ${routeName} is not implemented`);
         Object.setPrototypeOf(this, NotImplementedException.prototype);
     }
 }

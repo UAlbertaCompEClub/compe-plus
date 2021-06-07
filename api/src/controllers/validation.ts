@@ -14,15 +14,8 @@ class Validtor<TModel> extends FluentValidator<TModel> {
         const validationResults = this.validate(value);
 
         if (Object.keys(validationResults).length > 0) {
-            // TODO format this better
-            let errorMessage = '';
-            for (const [key, value] of Object.entries(validationResults)) {
-                errorMessage += `${key}: ${value}. `;
-            }
-            throw new ValidationException(this.validatorFor, errorMessage);
+            throw new ValidationException(this.validatorFor, validationResults);
         }
-        console.log(Object.keys(validationResults).length);
-        console.log(validationResults);
     }
 }
 
