@@ -1,9 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
 import NotImplementedException from '../../exceptions/NotImplementedException';
 import controller from '../controllerUtil';
-import { validate as uuidValidate } from 'uuid';
-import Validator from '../validation';
 
 type Params = Record<string, unknown>;
 
@@ -13,6 +11,10 @@ type ResBody = s.resume_reviews.Selectable;
 
 const postResumeReview = controller(async (req: Request<Params, ResBody, ReqBody>, res: Response<ResBody>): Promise<void> => {
     throw new NotImplementedException('postResumeReview');
+
+    // Just to use req and res and remove lints
+    req.body;
+    res.send();
 
     // TODO validate ReqBody
 
