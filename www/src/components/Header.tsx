@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
+
 // Assets
 import logo from '../assets/logo_white.svg';
 
