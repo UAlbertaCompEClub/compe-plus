@@ -12,7 +12,7 @@ import AppBar from '@material-ui/core/AppBar';
 import logo from '../assets/logo_white.svg';
 
 // Components
-import OutlinedButton from './OutlinedButton';
+import AuthButton from './auth/AuthButton';
 
 type HeaderProps = {
     sections: Section[];
@@ -42,7 +42,7 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
                         </Link>
                     ))}
                 </Container>
-                <OutlinedButton title={'Login'} url={'#'} />
+                <AuthButton />
             </Toolbar>
         </AppBar>
     );

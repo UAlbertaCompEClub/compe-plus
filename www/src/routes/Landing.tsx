@@ -60,7 +60,7 @@ const Intro: FC = () => {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <OutlinedButton title={'Get Started'} url={'#'} />
+                            <OutlinedButton text={'Get Started'} onClick={() => console.log('clicked Get Started button')} />
                         </Grid>
                     </Grid>
                 </Grid>

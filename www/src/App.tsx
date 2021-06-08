@@ -1,10 +1,3 @@
-import React, { FC } from 'react';
-import { GetTokenSilentlyOptions, useAuth0 } from '@auth0/auth0-react';
-
-import AuthButton from './components/auth/AuthButton';
-import logo from './logo.svg';
-import './App.css';
-import { Container } from '@material-ui/core';
 // Libraries
 import React, { FC } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
@@ -23,28 +16,15 @@ import { Community } from './routes/Community';
 import theme from './styles/theme';
 
 // Constants
-import { COMMUNITY, COMPE_PLUS, MOCK_INTERVIEW, RESUME_REVIEW } from './util/constants';
+import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
 
 const header_sections: Section[] = [
-    { title: RESUME_REVIEW, url: '/resume-review' },
-    { title: MOCK_INTERVIEW, url: '/mock-interview' },
-    { title: COMMUNITY, url: '/community' },
+    { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
+    { title: MOCK_INTERVIEW, url: MOCK_INTERVIEW_ROUTE },
+    { title: COMMUNITY, url: COMMUNITY_ROUTE },
 ];
 
-// TODO: Remove dummy requests
-type TokenAcquirer = (options?: GetTokenSilentlyOptions) => Promise<string>;
-
-async function requestWithToken(getAccessTokenSilently: TokenAcquirer) {
-    console.debug(
-        `request with token: ${await getAccessTokenSilently({
-            scope: 'reviewer_scope',
-        })}`,
-    );
-}
-
 const App: FC = () => {
-    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />

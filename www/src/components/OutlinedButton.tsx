@@ -17,15 +17,15 @@ const styles = (theme: Theme) => ({
 });
 
 type OutlinedButtonProps = {
-    title: string;
-    url: string;
+    text: string;
     style?: CSSProperties;
+    onClick: () => void;
 };
 
 const OutlinedButton: FC<OutlinedButtonProps & WithStyles<typeof styles>> = (props: OutlinedButtonProps & WithStyles<typeof styles>) => {
     return (
-        <Button href={props.url} variant='outlined' size='small' color='secondary' style={props.style} className={props.classes.root}>
-            {props.title}
+        <Button onClick={props.onClick} variant='outlined' size='small' color='secondary' style={props.style} className={props.classes.root}>
+            {props.text}
         </Button>
     );
 };
