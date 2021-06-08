@@ -6,7 +6,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
-
+import AppBar from '@material-ui/core/AppBar';
 // Assets
 import logo from '../assets/logo_white.svg';
 
@@ -28,20 +28,22 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
     const { sections, title } = props;
 
     return (
-        <Toolbar className={classes.toolbar} disableGutters={true}>
-            <img src={logo} className={classes.logo} />
-            <Link underline='none' color='inherit' noWrap variant='h5' href={'/'} className={classes.title}>
-                {title}
-            </Link>
-            <Container className={classes.linkContainer}>
-                {sections.map((section) => (
-                    <Link color='inherit' noWrap key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
-                        {section.title}
-                    </Link>
-                ))}
-            </Container>
-            <OutlinedButton title={'Login'} url={'#'} />
-        </Toolbar>
+        <AppBar position='relative'>
+            <Toolbar className={classes.toolbar} disableGutters={true}>
+                <img src={logo} className={classes.logo} />
+                <Link underline='none' color='inherit' noWrap variant='h5' href={'/'} className={classes.title}>
+                    {title}
+                </Link>
+                <Container className={classes.linkContainer}>
+                    {sections.map((section) => (
+                        <Link color='inherit' noWrap key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
+                            {section.title}
+                        </Link>
+                    ))}
+                </Container>
+                <OutlinedButton title={'Login'} url={'#'} />
+            </Toolbar>
+        </AppBar>
     );
 };
 
@@ -51,8 +53,6 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 10,
         paddingRight: 10,
         backgroundColor: theme.palette.primary.main,
-        display: 'flex',
-        justifyContent: 'center',
     },
     linkContainer: {
         display: 'inline-block',
