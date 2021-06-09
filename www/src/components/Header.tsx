@@ -2,10 +2,7 @@
 import React, { FC } from 'react';
 
 // Material UI
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Link from '@material-ui/core/Link';
-import AppBar from '@material-ui/core/AppBar';
+import { Toolbar, Link, AppBar, makeStyles } from '@material-ui/core';
 
 // Assets
 import logo from '../assets/logo_white.svg';

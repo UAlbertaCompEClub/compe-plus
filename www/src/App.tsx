@@ -7,10 +7,10 @@ import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 
 // Components and Routes
 import { Header, Section } from './components/Header';
-import { Landing } from './routes/Landing';
-import { ResumeReview } from './routes/ResumeReview';
-import { MockInterview } from './routes/MockInterview';
-import { Community } from './routes/Community';
+import Landing from './routes/Landing';
+import ResumeReview from './routes/ResumeReview';
+import MockInterview from './routes/MockInterview';
+import Community from './routes/Community';
 
 // Styles
 import theme from './styles/theme';

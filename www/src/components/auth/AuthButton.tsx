@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 
 const LogoutButton: FC = () => {
     const { logout } = useAuth0();

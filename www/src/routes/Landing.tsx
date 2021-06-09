@@ -2,11 +2,9 @@
 import React, { FC } from 'react';
 
 // Material UI
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/styles';
+import { Grid, Typography, Box, Button } from '@material-ui/core';
+
 // Assets
 import PairProgramming from '../assets/pair_programming.svg';
 import LandingBackground from '../assets/LandingBackground.svg';
@@ -18,10 +16,7 @@ import ResumeReview from '../assets/resume_review.svg';
 import Teamwork from '../assets/teamwork.svg';
 import Support from '../assets/support.svg';
 
-// Components
-import OutlinedButton from '../components/OutlinedButton';
-
-export const Landing: FC = () => {
+const Landing: FC = () => {
     return (
         <Grid container direction='row' justify='center' style={{ backgroundImage: `url(${LandingBackground})`, backgroundSize: 'cover', paddingBottom: 80 }}>
             <Grid container item spacing={10} xs={10}>
@@ -215,3 +210,5 @@ const useStyles = makeStyles(() => ({
         height: 'auto',
     },
 }));
+
+export default Landing;

@@ -1,4 +1,4 @@
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
     interface ThemeOptions {
