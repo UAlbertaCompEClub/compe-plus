@@ -4,8 +4,9 @@ import React, { FC } from 'react';
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { Box, makeStyles } from '@material-ui/core';
-
+import Box from '@material-ui/core/Box';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Button from '@material-ui/core/Button';
 // Assets
 import PairProgramming from '../assets/pair_programming.svg';
 import LandingBackground from '../assets/LandingBackground.svg';
@@ -60,7 +61,9 @@ const Intro: FC = () => {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <OutlinedButton text={'Get Started'} onClick={() => console.log('clicked Get Started button')} />
+                            <Button variant='contained' color='primary' onClick={() => console.log('clicked Get Started button')}>
+                                {'Get Started'}
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>

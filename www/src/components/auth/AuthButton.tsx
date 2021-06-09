@@ -1,15 +1,23 @@
 import React, { FC } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import OutlinedButton from '../OutlinedButton';
+import Button from '@material-ui/core/Button';
 
 const LogoutButton: FC = () => {
     const { logout } = useAuth0();
-    return <OutlinedButton text='Logout' onClick={() => logout()} />;
+    return (
+        <Button variant='outlined' color='secondary' onClick={() => logout()}>
+            Logout
+        </Button>
+    );
 };
 
 const LoginButton: FC = () => {
     const { loginWithRedirect } = useAuth0();
-    return <OutlinedButton text='Login' onClick={() => loginWithRedirect()} />;
+    return (
+        <Button variant='outlined' color='secondary' onClick={() => loginWithRedirect()}>
+            Login
+        </Button>
+    );
 };
 
 const AuthButton: FC = () => {
