@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
-import NotImplementedException from '../../exceptions/NotImplementedException';
 import controller from '../controllerUtil';
 import Validator, { beAValidUuid, beAResumeReviewState } from '../validation';
+import * as resumeReviewRepository from '../../repositories/resumeReview';
 
 type ReqQuery = {
-    reviewer?: string; // TODO UUID?
-    reviewee?: string; // TODO UUID?
+    reviewer?: string;
+    reviewee?: string;
     state?: s.resume_review_state;
 };
 
@@ -29,7 +29,7 @@ class ReqQueryValidator extends Validator<ReqQuery> {
 }
 
 type ResBody = {
-    resumeReviews: s.resume_reviews.Selectable[];
+    resumeReviews: s.resume_reviews.JSONSelectable[];
 };
 
 /**
@@ -39,19 +39,11 @@ type ResBody = {
  * @returns HTTP response.
  */
 const getResumeReviews = controller(async (req: Request<unknown, ResBody, unknown, ReqQuery>, res: Response<ResBody>): Promise<void> => {
-    // Validate query parameters
     new ReqQueryValidator().validateAndThrow(req.query);
 
-    throw new NotImplementedException('getResumeReviews');
-    // TODO validate query
+    const allResumeReviews = await resumeReviewRepository.get(req.query.reviewee, req.query.reviewer, req.query.state);
 
-    // TODO use repository to fetch get all resume reviews
-
-    // TODO return all resume reviews
-    req.log.debug('about to error');
-    throw new Error('My custom error');
-
-    res.status(200).json({ resumeReviews: [] });
+    res.status(200).json({ resumeReviews: allResumeReviews });
 });
 
 export default getResumeReviews;
