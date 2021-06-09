@@ -5,7 +5,6 @@ import React, { FC } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Link from '@material-ui/core/Link';
-import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 
 // Assets
@@ -31,17 +30,18 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
     return (
         <AppBar position='relative'>
             <Toolbar className={classes.toolbar} disableGutters={true}>
-                <img src={logo} className={classes.logo} />
-                <Link underline='none' color='inherit' noWrap variant='h5' href={'/'} className={classes.title}>
-                    {title}
-                </Link>
-                <Container className={classes.linkContainer}>
+                <div className={classes.main}>
+                    <img src={logo} className={classes.logo} />
+                    <Link underline='none' color='textSecondary' variant='h5' href={'/'}>
+                        {title}
+                    </Link>
                     {sections.map((section) => (
-                        <Link color='inherit' noWrap key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
+                        <Link color='textSecondary' key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
                             {section.title}
                         </Link>
                     ))}
-                </Container>
+                </div>
+
                 <AuthButton />
             </Toolbar>
         </AppBar>
@@ -55,25 +55,18 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: 10,
         backgroundColor: theme.palette.primary.main,
     },
-    linkContainer: {
-        display: 'inline-block',
-        justifyContent: 'space-between',
-        textAlign: 'center',
+    main: {
+        flexGrow: 1,
+        display: 'flex',
+        alignItems: 'center',
     },
     toolbarLink: {
-        padding: theme.spacing(8),
-        flexShrink: 0,
-        color: theme.palette.text.secondary,
+        paddingLeft: theme.spacing(4),
+        paddingRight: theme.spacing(4),
     },
     logo: {
         width: 37,
         height: 37,
         margin: 5,
-    },
-    title: {
-        color: theme.palette.text.secondary,
-    },
-    button: {
-        color: theme.palette.text.secondary,
     },
 }));

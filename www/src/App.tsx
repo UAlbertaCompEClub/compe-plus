@@ -16,12 +16,13 @@ import { Community } from './routes/Community';
 import theme from './styles/theme';
 
 // Constants
-import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
+import { COMMUNITY, COMMUNITY_ROUTE, COMPE_CLUB, COMPE_CLUB_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
 
 const header_sections: Section[] = [
     { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
     { title: MOCK_INTERVIEW, url: MOCK_INTERVIEW_ROUTE },
     { title: COMMUNITY, url: COMMUNITY_ROUTE },
+    { title: COMPE_CLUB, url: COMPE_CLUB_ROUTE },
 ];
 
 const App: FC = () => {
