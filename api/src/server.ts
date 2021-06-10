@@ -1,9 +1,10 @@
-import http from 'http';
 import express from 'express';
-import logger from './util/logger';
-import config from './util/config';
-import sampleRoutes from './routes/sample';
+import http from 'http';
+
 import middleware from './routes/middleware';
+import sampleRoutes from './routes/sample';
+import config from './util/config';
+import logger from './util/logger';
 
 const router = express();
 
