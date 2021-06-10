@@ -15,7 +15,18 @@ describe('HttpException', () => {
         expect(obj.message).toEqual(message);
     });
 
-    it.todo('can be serialized into an object with details');
+    it('can be serialized into an object with details', () => {
+        const status = 400;
+        const message = 'validation error';
+        const details = { fieldA: 'is too short' };
+
+        const e = new HttpException(status, message, details);
+        const obj = e.serialize();
+
+        expect(obj.code).toEqual(status);
+        expect(obj.message).toEqual(message);
+        expect(obj.details).toEqual(details);
+    });
 });
 
 describe('NotFoundException', () => {
