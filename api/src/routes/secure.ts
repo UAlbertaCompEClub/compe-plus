@@ -6,7 +6,7 @@ import jwtAuthz from 'express-jwt-authz';
 
 const router = express.Router();
 
-router.use(middleware.jwtCheck());
+router.use(middleware.checkJwt());
 
 router.get('/ping', jwtAuthz(['call:ping']), controller.sampleHealthCheck);
 

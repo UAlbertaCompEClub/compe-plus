@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import pinoExpressMiddleware from 'express-pino-logger';
-import jwt from 'express-jwt';
-import jwks from 'jwks-rsa';
 
 import logger, { standardSerializers, verboseSerializers } from '../util/logger';
+import { jwtCheck } from '../util/jwtCheck';
 import config from '../util/config';
 
 type Middleware = (req: Request, res: Response, next?: NextFunction) => void;
@@ -33,19 +32,7 @@ function notFound(): Middleware {
  * Returns middle ware that will ensure the client accessing is authenticated.
  * @returns JwtCheck middleware.
  */
-function jwtCheck(): Middleware {
-    const jwtCheck = jwt({
-        secret: jwks.expressJwtSecret({
-            cache: true,
-            rateLimit: true,
-            jwksRequestsPerMinute: 5,
-            jwksUri: config.auth0.jwks_uri,
-        }),
-        audience: config.auth0.audience,
-        issuer: config.auth0.issuer,
-        algorithms: ['RS256'],
-    });
-
+function checkJwt(): Middleware {
     return (req: Request, res: Response, next?: NextFunction): void => {
         if (next === undefined) {
             return;
@@ -58,5 +45,5 @@ function jwtCheck(): Middleware {
 export default {
     logRequest,
     notFound,
-    jwtCheck,
+    checkJwt,
 };

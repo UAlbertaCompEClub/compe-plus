@@ -1,6 +1,7 @@
 import middleware from './middleware';
 import { NextFunction, Request, Response } from 'express';
 import logger from '../util/logger';
+import * as jwtCheckModule from '../util/jwtCheck';
 
 describe('notFound middleware', () => {
     const mockRequest: Partial<Request> = {};
@@ -41,6 +42,33 @@ describe('logRequest middleware', () => {
 
     it('calls next middleware', () => {
         middleware.logRequest()(mockRequest as Request, mockResponse as Response, nextFunction);
+
+        expect(nextFunction).toBeCalledTimes(1);
+    });
+});
+
+describe('jwtCheck middleware', () => {
+    let mockRequest: Partial<Request>;
+    let mockResponse: Partial<Response>;
+    let nextFunction: NextFunction;
+
+    beforeEach(() => {
+        mockRequest = {};
+        mockRequest.url = '/api/secure/v1/ping';
+        mockRequest.method = 'GET';
+        mockResponse = {};
+        mockResponse.on = jest.fn();
+        nextFunction = jest.fn();
+    });
+
+    it('jwtCheck is used', () => {
+        const jwtCheckMock = jest.spyOn(jwtCheckModule, 'jwtCheck');
+        middleware.checkJwt()(mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(jwtCheckMock).toBeCalledTimes(1);
+    });
+
+    it('calls next middleware', () => {
+        middleware.checkJwt()(mockRequest as Request, mockResponse as Response, nextFunction);
 
         expect(nextFunction).toBeCalledTimes(1);
     });
