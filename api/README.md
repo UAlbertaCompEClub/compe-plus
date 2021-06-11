@@ -183,10 +183,3 @@ Create an interview.
 ### `DELETE /interviews/{interview}`
 
 Delete an interview i.e. cancel it.
-
-# TODO remove this
-
--   Test repository
--   Test controller
--   Error handling in repository
--   Implement post route top to bottom
