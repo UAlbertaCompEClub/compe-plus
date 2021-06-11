@@ -13,7 +13,7 @@ type TokenAcquirer = (options?: GetTokenSilentlyOptions) => Promise<string>;
 async function requestWithToken(getAccessTokenSilently: TokenAcquirer) {
     const tokenRequest = {
         audience: config.server.audience,
-        scope: 'request:review',
+        scope: 'call:ping',
     };
 
     try {
