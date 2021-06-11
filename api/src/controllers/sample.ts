@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import * as db from 'zapatos/db';
-import controller from './controller';
 
 import pool from '../util/pool';
+import controller from './controller';
 
 /**
  * Sample controller.

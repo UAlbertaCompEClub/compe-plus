@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
+
 import NotImplementedException from '../../exceptions/NotImplementedException';
 import controller from '../controllerUtil';
 

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 type Handler = (req: Request<any>, res: Response<any>, next: NextFunction) => Promise<void>;
 

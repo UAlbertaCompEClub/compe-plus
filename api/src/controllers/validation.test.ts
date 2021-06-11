@@ -1,7 +1,8 @@
-import ValidationException from '../exceptions/ValidationException';
-import Validator, { beAValidUuid, beAResumeReviewState } from './validation';
 import { v4 } from 'uuid';
 import type * as s from 'zapatos/schema';
+
+import ValidationException from '../exceptions/ValidationException';
+import Validator, { beAResumeReviewState, beAValidUuid } from './validation';
 
 type TestType = {
     a: string;

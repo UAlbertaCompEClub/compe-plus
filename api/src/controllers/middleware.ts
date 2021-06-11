@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import pinoExpressMiddleware from 'express-pino-logger';
 
+import HttpException from '../exceptions/HttpException';
+import NotFoundException from '../exceptions/NotFoundException';
 import { checkJwt } from '../util/checkJwt';
 import config from '../util/config';
 import logger, { standardSerializers, verboseSerializers } from '../util/logger';
-import NotFoundException from '../exceptions/NotFoundException';
-import HttpException from '../exceptions/HttpException';
 
 type Middleware = (req: Request, res: Response, next?: NextFunction) => void;
 type ErrMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => void;

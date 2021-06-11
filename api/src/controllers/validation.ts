@@ -1,6 +1,7 @@
 import { Validator as FluentValidator } from 'fluentvalidation-ts';
-import ValidationException from '../exceptions/ValidationException';
 import { validate as uuidValidate } from 'uuid';
+
+import ValidationException from '../exceptions/ValidationException';
 
 /**
  * Validator class that adds an extra method to the fluentvalidation-ts validator that
@@ -48,5 +49,5 @@ const beAResumeReviewState = {
     message: 'Must be a "canceled", "finished", "reviewing", or "seeking_reviewer"',
 };
 
-export { beAValidUuid, beAResumeReviewState };
+export { beAResumeReviewState, beAValidUuid };
 export default Validator;

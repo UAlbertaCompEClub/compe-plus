@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
-import controller from '../controllerUtil';
-import Validator, { beAValidUuid, beAResumeReviewState } from '../validation';
+
 import * as resumeReviewRepository from '../../repositories/resumeReview';
+import controller from '../controllerUtil';
+import Validator, { beAResumeReviewState, beAValidUuid } from '../validation';
 
 type ReqQuery = {
     reviewer?: string;

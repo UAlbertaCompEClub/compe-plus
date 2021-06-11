@@ -1,8 +1,9 @@
+import { NextFunction, Request, Response } from 'express';
 import { mocked } from 'ts-jest/utils';
-import { Request, Response, NextFunction } from 'express';
+import type * as s from 'zapatos/schema';
+
 import * as resumeReviewRepository from '../../repositories/resumeReview';
 import getResumeReviews from './getResumeReviews';
-import type * as s from 'zapatos/schema';
 
 jest.mock('../../repositories/resumeReview');
 const mockResumeReviewRepository = mocked(resumeReviewRepository, true);

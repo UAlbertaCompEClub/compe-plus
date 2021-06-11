@@ -1,6 +1,7 @@
-import type * as s from 'zapatos/schema';
 import * as db from 'zapatos/db';
 import { conditions as dc } from 'zapatos/db';
+import type * as s from 'zapatos/schema';
+
 import pool from '../util/pool';
 
 /**

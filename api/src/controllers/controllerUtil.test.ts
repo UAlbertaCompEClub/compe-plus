@@ -1,5 +1,6 @@
-import controller from './controllerUtil';
 import { NextFunction, Request, Response } from 'express';
+
+import controller from './controllerUtil';
 
 describe('controller helper function', () => {
     it('runs given controller', async () => {
