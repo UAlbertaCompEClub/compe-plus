@@ -25,6 +25,4 @@ const get = async (reviewee?: string, reviewer?: string, state?: s.resume_review
     return await db.select('resume_reviews', where).run(pool);
 };
 
-// TODO handle db exceptions
-
 export { get };

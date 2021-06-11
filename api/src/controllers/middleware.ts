@@ -31,20 +31,21 @@ function notFound(): Middleware {
 
 /**
  * Returns middleware that handles all exceptions that are thrown within the server.
- * @returns
+ * @returns ErrMiddleware.
  */
 function errorHandler(): ErrMiddleware {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (err: Error, req: Request, res: Response, next: NextFunction): void => {
+        let outErr: HttpException;
         if (err instanceof HttpException) {
             // Handle a known server error
-            res.status(err.status).json(err.serialize());
+            outErr = err;
         } else {
             // Handle an unknown error
-            req.log.error(err, 'Unknown error');
-            const unknownErr = new HttpException(500, 'Unknown error', { errorMessage: err.message });
-            res.status(unknownErr.status).json(unknownErr.serialize());
+            req.log.error({ error: err }, 'Unknown error');
+            outErr = new HttpException(500, 'Unknown error');
         }
+        res.status(outErr.status).json(outErr.serialize());
     };
 }
 
