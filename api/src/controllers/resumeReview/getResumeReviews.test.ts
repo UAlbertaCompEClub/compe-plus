@@ -2,7 +2,6 @@ import { mocked } from 'ts-jest/utils';
 import { Request, Response, NextFunction } from 'express';
 import * as resumeReviewRepository from '../../repositories/resumeReview';
 import getResumeReviews from './getResumeReviews';
-import ValidationException from '../../exceptions/ValidationException';
 import type * as s from 'zapatos/schema';
 
 jest.mock('../../repositories/resumeReview');
@@ -24,9 +23,7 @@ it('rejects invalid reviewer query parameter', async () => {
     await getResumeReviews(req as Request, res as Response, next);
 
     expect(mockResumeReviewRepository.get).toBeCalledTimes(0);
-    // TODO pick a style
     expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { reviewer: 'Must be a UUID' } });
-    expect(next).toBeCalledWith(new ValidationException('query parameters', {}));
 });
 
 it('rejects invalid revieweee query parameter', async () => {
@@ -35,9 +32,7 @@ it('rejects invalid revieweee query parameter', async () => {
     await getResumeReviews(req as Request, res as Response, next);
 
     expect(mockResumeReviewRepository.get).toBeCalledTimes(0);
-    // TODO pick a style
     expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { reviewee: 'Must be a UUID' } });
-    expect(next).toBeCalledWith(new ValidationException('query parameters', {}));
 });
 
 it('rejects invalid state query parameter', async () => {
@@ -46,9 +41,7 @@ it('rejects invalid state query parameter', async () => {
     await getResumeReviews(req as Request, res as Response, next);
 
     expect(mockResumeReviewRepository.get).toBeCalledTimes(0);
-    // TODO pick a style
     expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { state: 'Must be a "canceled", "finished", "reviewing", or "seeking_reviewer"' } });
-    expect(next).toBeCalledWith(new ValidationException('query parameters', {}));
 });
 
 it('works on the happy path', async () => {
