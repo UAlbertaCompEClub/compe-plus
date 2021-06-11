@@ -10,17 +10,15 @@ DROP TRIGGER IF EXISTS update_time_documents ON documents;
 
 DROP TABLE IF EXISTS documents;
 
-DROP TABLE IF EXISTS document_states;
-
 DROP TRIGGER IF EXISTS update_time_resume_reviews ON resume_reviews;
 
 DROP TABLE IF EXISTS resume_reviews;
 
-DROP TABLE IF EXISTS resume_review_states;
+DROP TYPE IF EXISTS resume_review_state;
 
 DROP TABLE IF EXISTS user_roles;
 
-DROP TABLE IF EXISTS roles;
+DROP TYPE IF EXISTS role_type;
 
 DROP TRIGGER IF EXISTS update_time_users ON users;
 

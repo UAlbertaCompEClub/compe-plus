@@ -18,47 +18,16 @@ declare module 'zapatos/schema' {
 
   /* --- enums --- */
 
+  export type resume_review_state = 'canceled' | 'finished' | 'reviewing' | 'seeking_reviewer';
+  export namespace every {
+    export type resume_review_state = ['canceled', 'finished', 'reviewing', 'seeking_reviewer'];
+  }
+  export type role_type = 'admin' | 'interviewer' | 'reviewer';
+  export namespace every {
+    export type role_type = ['admin', 'interviewer', 'reviewer'];
+  }
 
   /* --- tables --- */
-
-  export namespace document_states {
-    export type Table = 'document_states';
-    export interface Selectable {
-      /**
-      * **document_states.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name: string;
-    }
-    export interface JSONSelectable {
-      /**
-      * **document_states.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name: string;
-    }
-    export interface Whereable {
-      /**
-      * **document_states.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
-    }
-    export interface Insertable {
-    
-    }
-    export interface Updatable {
-    
-    }
-    export type UniqueIndex = 'document_states_pkey';
-    export type Column = keyof Selectable;
-    export type OnlyCols<T extends readonly Column[]> = Pick<Selectable, T[number]>;
-    export type SQLExpression = db.GenericSQLExpression | db.ColumnNames<Updatable | (keyof Updatable)[]> | db.ColumnValues<Updatable> | Table | Whereable | Column;
-    export type SQL = SQLExpression | SQLExpression[];
-  }
 
   export namespace documents {
     export type Table = 'documents';
@@ -93,12 +62,6 @@ declare module 'zapatos/schema' {
       * - `NOT NULL`, no default
       */
       user_id: string;
-      /**
-      * **documents.state**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      state: string;
       /**
       * **documents.resume_review_id**
       * - `uuid` in database
@@ -150,12 +113,6 @@ declare module 'zapatos/schema' {
       */
       user_id: string;
       /**
-      * **documents.state**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      state: string;
-      /**
       * **documents.resume_review_id**
       * - `uuid` in database
       * - `NOT NULL`, no default
@@ -206,12 +163,6 @@ declare module 'zapatos/schema' {
       */
       user_id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
-      * **documents.state**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      state?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
-      /**
       * **documents.resume_review_id**
       * - `uuid` in database
       * - `NOT NULL`, no default
@@ -256,12 +207,6 @@ declare module 'zapatos/schema' {
       */
       user_id: string | db.Parameter<string> | db.SQLFragment;
       /**
-      * **documents.state**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      state: string | db.Parameter<string> | db.SQLFragment;
-      /**
       * **documents.resume_review_id**
       * - `uuid` in database
       * - `NOT NULL`, no default
@@ -293,12 +238,6 @@ declare module 'zapatos/schema' {
       * - `NOT NULL`, no default
       */
       user_id?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
-      /**
-      * **documents.state**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      state?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
       /**
       * **documents.resume_review_id**
       * - `uuid` in database
@@ -440,45 +379,6 @@ declare module 'zapatos/schema' {
     export type SQL = SQLExpression | SQLExpression[];
   }
 
-  export namespace resume_review_states {
-    export type Table = 'resume_review_states';
-    export interface Selectable {
-      /**
-      * **resume_review_states.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name: string;
-    }
-    export interface JSONSelectable {
-      /**
-      * **resume_review_states.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name: string;
-    }
-    export interface Whereable {
-      /**
-      * **resume_review_states.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
-    }
-    export interface Insertable {
-    
-    }
-    export interface Updatable {
-    
-    }
-    export type UniqueIndex = 'resume_review_states_pkey';
-    export type Column = keyof Selectable;
-    export type OnlyCols<T extends readonly Column[]> = Pick<Selectable, T[number]>;
-    export type SQLExpression = db.GenericSQLExpression | db.ColumnNames<Updatable | (keyof Updatable)[]> | db.ColumnValues<Updatable> | Table | Whereable | Column;
-    export type SQL = SQLExpression | SQLExpression[];
-  }
-
   export namespace resume_reviews {
     export type Table = 'resume_reviews';
     export interface Selectable {
@@ -502,10 +402,10 @@ declare module 'zapatos/schema' {
       reviewer_id: string | null;
       /**
       * **resume_reviews.state**
-      * - `text` in database
+      * - `resume_review_state` in database
       * - `NOT NULL`, no default
       */
-      state: string;
+      state: resume_review_state;
       /**
       * **resume_reviews.created_at**
       * - `timestamptz` in database
@@ -540,10 +440,10 @@ declare module 'zapatos/schema' {
       reviewer_id: string | null;
       /**
       * **resume_reviews.state**
-      * - `text` in database
+      * - `resume_review_state` in database
       * - `NOT NULL`, no default
       */
-      state: string;
+      state: resume_review_state;
       /**
       * **resume_reviews.created_at**
       * - `timestamptz` in database
@@ -578,10 +478,10 @@ declare module 'zapatos/schema' {
       reviewer_id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
       * **resume_reviews.state**
-      * - `text` in database
+      * - `resume_review_state` in database
       * - `NOT NULL`, no default
       */
-      state?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
+      state?: resume_review_state | db.Parameter<resume_review_state> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, resume_review_state | db.Parameter<resume_review_state> | db.SQLFragment | db.ParentColumn>;
       /**
       * **resume_reviews.created_at**
       * - `timestamptz` in database
@@ -610,10 +510,10 @@ declare module 'zapatos/schema' {
       reviewer_id?: string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment;
       /**
       * **resume_reviews.state**
-      * - `text` in database
+      * - `resume_review_state` in database
       * - `NOT NULL`, no default
       */
-      state: string | db.Parameter<string> | db.SQLFragment;
+      state: resume_review_state | db.Parameter<resume_review_state> | db.SQLFragment;
     }
     export interface Updatable {
       /**
@@ -630,51 +530,12 @@ declare module 'zapatos/schema' {
       reviewer_id?: string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment>;
       /**
       * **resume_reviews.state**
-      * - `text` in database
+      * - `resume_review_state` in database
       * - `NOT NULL`, no default
       */
-      state?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
+      state?: resume_review_state | db.Parameter<resume_review_state> | db.SQLFragment | db.SQLFragment<any, resume_review_state | db.Parameter<resume_review_state> | db.SQLFragment>;
     }
     export type UniqueIndex = 'resume_reviews_pkey';
-    export type Column = keyof Selectable;
-    export type OnlyCols<T extends readonly Column[]> = Pick<Selectable, T[number]>;
-    export type SQLExpression = db.GenericSQLExpression | db.ColumnNames<Updatable | (keyof Updatable)[]> | db.ColumnValues<Updatable> | Table | Whereable | Column;
-    export type SQL = SQLExpression | SQLExpression[];
-  }
-
-  export namespace roles {
-    export type Table = 'roles';
-    export interface Selectable {
-      /**
-      * **roles.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name: string;
-    }
-    export interface JSONSelectable {
-      /**
-      * **roles.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name: string;
-    }
-    export interface Whereable {
-      /**
-      * **roles.name**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      name?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
-    }
-    export interface Insertable {
-    
-    }
-    export interface Updatable {
-    
-    }
-    export type UniqueIndex = 'roles_pkey';
     export type Column = keyof Selectable;
     export type OnlyCols<T extends readonly Column[]> = Pick<Selectable, T[number]>;
     export type SQLExpression = db.GenericSQLExpression | db.ColumnNames<Updatable | (keyof Updatable)[]> | db.ColumnValues<Updatable> | Table | Whereable | Column;
@@ -825,10 +686,10 @@ declare module 'zapatos/schema' {
       user_id: string;
       /**
       * **user_roles.role**
-      * - `text` in database
+      * - `role_type` in database
       * - `NOT NULL`, no default
       */
-      role: string;
+      role: role_type;
       /**
       * **user_roles.created_at**
       * - `timestamptz` in database
@@ -845,10 +706,10 @@ declare module 'zapatos/schema' {
       user_id: string;
       /**
       * **user_roles.role**
-      * - `text` in database
+      * - `role_type` in database
       * - `NOT NULL`, no default
       */
-      role: string;
+      role: role_type;
       /**
       * **user_roles.created_at**
       * - `timestamptz` in database
@@ -865,10 +726,10 @@ declare module 'zapatos/schema' {
       user_id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
       * **user_roles.role**
-      * - `text` in database
+      * - `role_type` in database
       * - `NOT NULL`, no default
       */
-      role?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
+      role?: role_type | db.Parameter<role_type> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, role_type | db.Parameter<role_type> | db.SQLFragment | db.ParentColumn>;
       /**
       * **user_roles.created_at**
       * - `timestamptz` in database
@@ -885,10 +746,10 @@ declare module 'zapatos/schema' {
       user_id: string | db.Parameter<string> | db.SQLFragment;
       /**
       * **user_roles.role**
-      * - `text` in database
+      * - `role_type` in database
       * - `NOT NULL`, no default
       */
-      role: string | db.Parameter<string> | db.SQLFragment;
+      role: role_type | db.Parameter<role_type> | db.SQLFragment;
     }
     export interface Updatable {
     
@@ -1215,109 +1076,85 @@ declare module 'zapatos/schema' {
 
   /* === cross-table types === */
 
-  export type Table = document_states.Table | documents.Table | interviews.Table | resume_review_states.Table | resume_reviews.Table | roles.Table | time_slots.Table | user_roles.Table | users.Table;
-  export type Selectable = document_states.Selectable | documents.Selectable | interviews.Selectable | resume_review_states.Selectable | resume_reviews.Selectable | roles.Selectable | time_slots.Selectable | user_roles.Selectable | users.Selectable;
-  export type JSONSelectable = document_states.JSONSelectable | documents.JSONSelectable | interviews.JSONSelectable | resume_review_states.JSONSelectable | resume_reviews.JSONSelectable | roles.JSONSelectable | time_slots.JSONSelectable | user_roles.JSONSelectable | users.JSONSelectable;
-  export type Whereable = document_states.Whereable | documents.Whereable | interviews.Whereable | resume_review_states.Whereable | resume_reviews.Whereable | roles.Whereable | time_slots.Whereable | user_roles.Whereable | users.Whereable;
-  export type Insertable = document_states.Insertable | documents.Insertable | interviews.Insertable | resume_review_states.Insertable | resume_reviews.Insertable | roles.Insertable | time_slots.Insertable | user_roles.Insertable | users.Insertable;
-  export type Updatable = document_states.Updatable | documents.Updatable | interviews.Updatable | resume_review_states.Updatable | resume_reviews.Updatable | roles.Updatable | time_slots.Updatable | user_roles.Updatable | users.Updatable;
-  export type UniqueIndex = document_states.UniqueIndex | documents.UniqueIndex | interviews.UniqueIndex | resume_review_states.UniqueIndex | resume_reviews.UniqueIndex | roles.UniqueIndex | time_slots.UniqueIndex | user_roles.UniqueIndex | users.UniqueIndex;
-  export type Column = document_states.Column | documents.Column | interviews.Column | resume_review_states.Column | resume_reviews.Column | roles.Column | time_slots.Column | user_roles.Column | users.Column;
-  export type AllTables = [document_states.Table, documents.Table, interviews.Table, resume_review_states.Table, resume_reviews.Table, roles.Table, time_slots.Table, user_roles.Table, users.Table];
+  export type Table = documents.Table | interviews.Table | resume_reviews.Table | time_slots.Table | user_roles.Table | users.Table;
+  export type Selectable = documents.Selectable | interviews.Selectable | resume_reviews.Selectable | time_slots.Selectable | user_roles.Selectable | users.Selectable;
+  export type JSONSelectable = documents.JSONSelectable | interviews.JSONSelectable | resume_reviews.JSONSelectable | time_slots.JSONSelectable | user_roles.JSONSelectable | users.JSONSelectable;
+  export type Whereable = documents.Whereable | interviews.Whereable | resume_reviews.Whereable | time_slots.Whereable | user_roles.Whereable | users.Whereable;
+  export type Insertable = documents.Insertable | interviews.Insertable | resume_reviews.Insertable | time_slots.Insertable | user_roles.Insertable | users.Insertable;
+  export type Updatable = documents.Updatable | interviews.Updatable | resume_reviews.Updatable | time_slots.Updatable | user_roles.Updatable | users.Updatable;
+  export type UniqueIndex = documents.UniqueIndex | interviews.UniqueIndex | resume_reviews.UniqueIndex | time_slots.UniqueIndex | user_roles.UniqueIndex | users.UniqueIndex;
+  export type Column = documents.Column | interviews.Column | resume_reviews.Column | time_slots.Column | user_roles.Column | users.Column;
+  export type AllTables = [documents.Table, interviews.Table, resume_reviews.Table, time_slots.Table, user_roles.Table, users.Table];
   export type AllMaterializedViews = [];
 
 
   export type SelectableForTable<T extends Table> = {
-    document_states: document_states.Selectable;
     documents: documents.Selectable;
     interviews: interviews.Selectable;
-    resume_review_states: resume_review_states.Selectable;
     resume_reviews: resume_reviews.Selectable;
-    roles: roles.Selectable;
     time_slots: time_slots.Selectable;
     user_roles: user_roles.Selectable;
     users: users.Selectable;
   }[T];
 
   export type JSONSelectableForTable<T extends Table> = {
-    document_states: document_states.JSONSelectable;
     documents: documents.JSONSelectable;
     interviews: interviews.JSONSelectable;
-    resume_review_states: resume_review_states.JSONSelectable;
     resume_reviews: resume_reviews.JSONSelectable;
-    roles: roles.JSONSelectable;
     time_slots: time_slots.JSONSelectable;
     user_roles: user_roles.JSONSelectable;
     users: users.JSONSelectable;
   }[T];
 
   export type WhereableForTable<T extends Table> = {
-    document_states: document_states.Whereable;
     documents: documents.Whereable;
     interviews: interviews.Whereable;
-    resume_review_states: resume_review_states.Whereable;
     resume_reviews: resume_reviews.Whereable;
-    roles: roles.Whereable;
     time_slots: time_slots.Whereable;
     user_roles: user_roles.Whereable;
     users: users.Whereable;
   }[T];
 
   export type InsertableForTable<T extends Table> = {
-    document_states: document_states.Insertable;
     documents: documents.Insertable;
     interviews: interviews.Insertable;
-    resume_review_states: resume_review_states.Insertable;
     resume_reviews: resume_reviews.Insertable;
-    roles: roles.Insertable;
     time_slots: time_slots.Insertable;
     user_roles: user_roles.Insertable;
     users: users.Insertable;
   }[T];
 
   export type UpdatableForTable<T extends Table> = {
-    document_states: document_states.Updatable;
     documents: documents.Updatable;
     interviews: interviews.Updatable;
-    resume_review_states: resume_review_states.Updatable;
     resume_reviews: resume_reviews.Updatable;
-    roles: roles.Updatable;
     time_slots: time_slots.Updatable;
     user_roles: user_roles.Updatable;
     users: users.Updatable;
   }[T];
 
   export type UniqueIndexForTable<T extends Table> = {
-    document_states: document_states.UniqueIndex;
     documents: documents.UniqueIndex;
     interviews: interviews.UniqueIndex;
-    resume_review_states: resume_review_states.UniqueIndex;
     resume_reviews: resume_reviews.UniqueIndex;
-    roles: roles.UniqueIndex;
     time_slots: time_slots.UniqueIndex;
     user_roles: user_roles.UniqueIndex;
     users: users.UniqueIndex;
   }[T];
 
   export type ColumnForTable<T extends Table> = {
-    document_states: document_states.Column;
     documents: documents.Column;
     interviews: interviews.Column;
-    resume_review_states: resume_review_states.Column;
     resume_reviews: resume_reviews.Column;
-    roles: roles.Column;
     time_slots: time_slots.Column;
     user_roles: user_roles.Column;
     users: users.Column;
   }[T];
 
   export type SQLForTable<T extends Table> = {
-    document_states: document_states.SQL;
     documents: documents.SQL;
     interviews: interviews.SQL;
-    resume_review_states: resume_review_states.SQL;
     resume_reviews: resume_reviews.SQL;
-    roles: roles.SQL;
     time_slots: time_slots.SQL;
     user_roles: user_roles.SQL;
     users: users.SQL;
