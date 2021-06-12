@@ -7,7 +7,6 @@ import { Grid, Typography, Box, Button } from '@material-ui/core';
 
 // Assets
 import PairProgramming from '../assets/pair_programming.svg';
-import LandingBackground from '../assets/LandingBackground.svg';
 import BlackLogo from '../assets/logo_black.svg';
 import Practice from '../assets/practice.svg';
 import MockInterview from '../assets/mock_interview.svg';
@@ -18,7 +17,7 @@ import Support from '../assets/support.svg';
 
 const Landing: FC = () => {
     return (
-        <Grid container direction='row' justify='center' style={{ backgroundImage: `url(${LandingBackground})`, backgroundSize: 'cover', paddingBottom: 80 }}>
+        <Grid container direction='row' justify='center'>
             <Grid container item spacing={10} xs={10}>
                 <Intro />
                 <Values />
@@ -55,23 +54,34 @@ const Intro: FC = () => {
                                 CompE+ is a student-led pilot program to provide support for computer engineering students looking for internships
                             </Typography>
                         </Grid>
-                        <Grid item>
-                            <Button variant='contained' color='primary' onClick={() => console.log('clicked Get Started button')}>
-                                {'Get Started'}
-                            </Button>
-                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid container item spacing={10}>
-                <Grid container item xs={8} alignItems='center' justify='center'>
+                <Grid container item xs={8} alignItems='center' spacing={5}>
                     <Grid item>
                         <Typography component='h2' variant='h1' noWrap>
                             What’s CompE+ ?
                         </Typography>
+                    </Grid>
+                    <Grid item>
                         <Typography component='h2' variant='body1'>
                             CompE+ is a student led pilot program to provide CompE students with practice, insight, and support when finding internships in the tech industry. Arguably, computer
                             engineering is a unique discipline and requires different resources and support - that’s where CompE+ comes in!{' '}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography component='h2' variant='body1'>
+                            This pilot program will launch Fall 2021 for the Summer 2022 recruitment. The program will run from September - October 2021.{' '}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography component='h2' variant='body1' style={{ fontWeight: 600 }}>
+                            Currently looking for volunteers: Resume Reviewers and Interviewers!
+                        </Typography>
+
+                        <Typography component='h2' variant='body1' style={{ fontWeight: 600 }}>
+                            Contact external@compeclub.com{' '}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -202,7 +212,7 @@ const useStyles = makeStyles(() => ({
         height: 'auto',
     },
     logo_2: {
-        width: '70%',
+        width: '60%',
         height: 'auto',
     },
     logo_1: {
