@@ -1,7 +1,7 @@
 import express from 'express';
+import authorize from 'express-jwt-authz';
 
 import controller from '../controllers/sample';
-import authorize from 'express-jwt-authz';
 
 const router = express.Router();
 
