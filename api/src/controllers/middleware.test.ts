@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
+import NotFoundException from '../exceptions/NotFoundException';
 import * as checkJwt from '../util/checkJwt';
 import logger from '../util/logger';
 import middleware from './middleware';
@@ -10,14 +11,10 @@ describe('notFound middleware', () => {
     mockResponse.json = jest.fn().mockReturnValue(mockResponse);
     mockResponse.status = jest.fn().mockReturnValue(mockResponse);
 
-    it('always returns 404', () => {
-        const expectedResponse = {
-            message: 'not found',
-        };
-        middleware.notFound()(mockRequest as Request, mockResponse as Response);
-
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
-        expect(mockResponse.status).toBeCalledWith(404);
+    it('always returns a NotFoundException', () => {
+        expect(() => {
+            middleware.notFound()(mockRequest as Request, mockResponse as Response);
+        }).toThrowError(new NotFoundException());
     });
 });
 
@@ -38,7 +35,7 @@ describe('logRequest middleware', () => {
     it('logger is used', () => {
         const loggerMock = jest.spyOn(logger, 'child');
         middleware.logRequest()(mockRequest as Request, mockResponse as Response, nextFunction);
-        expect(loggerMock).toBeCalledTimes(3); // Experinmentally discovered. Proves logger is being used.
+        expect(loggerMock).toBeCalledTimes(3); // Experimentally discovered. Proves logger is being used.
     });
 
     it('calls next middleware', () => {
@@ -73,4 +70,34 @@ describe('authenticate middleware', () => {
 
         expect(nextFunction).toBeCalledTimes(1);
     });
+});
+
+describe('errorHandler middleware', () => {
+    let mockRequest: Partial<Request>;
+    let mockResponse: Partial<Response>;
+    let nextFunction: NextFunction;
+    let resJson: jest.Mock;
+    let resStatus: jest.Mock;
+
+    beforeEach(() => {
+        mockRequest = {};
+        resJson = jest.fn();
+        resStatus = jest.fn();
+        mockResponse = {
+            json: resJson,
+            status: resStatus,
+        };
+        resJson.mockImplementation(() => mockResponse);
+        resStatus.mockImplementation(() => mockResponse);
+        nextFunction = jest.fn();
+    });
+
+    it('handles known errors', () => {
+        middleware.errorHandler()(new NotFoundException(), mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(resJson).toBeCalledWith({ code: 404, message: 'Not found' });
+        expect(resStatus).toBeCalledWith(404);
+    });
+
+    // Can't figure out how to mock req.log.error so I'm punting on this
+    it.todo('handles unknown errors');
 });
