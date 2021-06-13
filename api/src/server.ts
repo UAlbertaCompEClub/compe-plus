@@ -5,7 +5,6 @@ import cors from 'cors';
 import logger from './util/logger';
 import config from './util/config';
 import sampleRoutes from './routes/sample';
-import secureRoutes from './routes/secure';
 import middleware from './routes/middleware';
 
 const router = express();
@@ -19,9 +18,11 @@ router.use(middleware.logRequest());
 /** Parse the request */
 router.use(express.json());
 
+/** Require valid JWT for any endpoint */
+router.use(middleware.authenticate());
+
 /** Routes */
 router.use('/api/v1', sampleRoutes);
-router.use('/api/secure/v1', secureRoutes);
 
 /** Error handling */
 router.use(middleware.notFound());
