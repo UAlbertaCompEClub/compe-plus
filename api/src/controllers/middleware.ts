@@ -24,7 +24,7 @@ function logRequest(): Middleware {
  * @returns NotFound middleware.
  */
 function notFound(): Middleware {
-    return (): void => {
+    return () => {
         throw new NotFoundException();
     };
 }
@@ -35,7 +35,7 @@ function notFound(): Middleware {
  */
 function errorHandler(): ErrMiddleware {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return (err: Error, req: Request, res: Response, next: NextFunction): void => {
+    return (err: Error, req: Request, res: Response, next: NextFunction) => {
         let outErr: HttpException;
         if (err instanceof HttpException) {
             // Handle a known server error
