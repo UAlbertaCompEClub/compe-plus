@@ -30,7 +30,7 @@ function notFound(): Middleware {
 
 /**
  * Returns middle ware that will ensure the client accessing is authenticated.
- * @returns JwtCheck middleware.
+ * @returns checkJwt middleware.
  */
 function authenticate(): Middleware {
     return (req: Request, res: Response, next?: NextFunction): void => {
