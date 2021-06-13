@@ -63,12 +63,12 @@ describe('jwtCheck middleware', () => {
 
     it('jwtCheck is used', () => {
         const jwtCheckMock = jest.spyOn(jwtCheckModule, 'jwtCheck');
-        middleware.checkJwt()(mockRequest as Request, mockResponse as Response, nextFunction);
+        middleware.authenticate()(mockRequest as Request, mockResponse as Response, nextFunction);
         expect(jwtCheckMock).toBeCalledTimes(1);
     });
 
     it('calls next middleware', () => {
-        middleware.checkJwt()(mockRequest as Request, mockResponse as Response, nextFunction);
+        middleware.authenticate()(mockRequest as Request, mockResponse as Response, nextFunction);
 
         expect(nextFunction).toBeCalledTimes(1);
     });
