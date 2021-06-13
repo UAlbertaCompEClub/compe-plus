@@ -1,6 +1,7 @@
+import pg from 'pg';
+
 import config from './config';
 import logger from './logger';
-import pg from 'pg';
 
 /**
  * Pool of Postgres connections to avoid overhead of connecting on every request.
