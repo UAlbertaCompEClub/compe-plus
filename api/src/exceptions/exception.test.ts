@@ -61,3 +61,17 @@ describe('ValidationException', () => {
         expect(obj.details).toMatchObject({ fieldA: 'Is too long' });
     });
 });
+
+describe('instanceof checks', () => {
+    test('HttpException is instanceof HttpException', () => {
+        expect(new HttpException(500, 'msg') instanceof HttpException).toBeTruthy();
+    });
+
+    test('Child class is instanceof HttpException', () => {
+        expect(new NotFoundException() instanceof HttpException).toBeTruthy();
+    });
+
+    test('Child class is instanceof child class', () => {
+        expect(new NotFoundException() instanceof NotFoundException).toBeTruthy();
+    });
+});
