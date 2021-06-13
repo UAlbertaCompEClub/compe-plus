@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from 'express';
 
-type Handler = (req: Request<any>, res: Response<any>, next: NextFunction) => Promise<void>;
+type Handler = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 
 /**
  * Wraps a given Express handler with exception handling to reduce boilerplate.
