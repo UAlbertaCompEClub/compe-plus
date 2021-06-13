@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
-import * as checkJwt from '../util/checkJwt';
 import NotFoundException from '../exceptions/NotFoundException';
+import * as checkJwt from '../util/checkJwt';
 import logger from '../util/logger';
 import middleware from './middleware';
 
