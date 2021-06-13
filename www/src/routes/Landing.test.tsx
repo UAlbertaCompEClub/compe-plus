@@ -2,7 +2,7 @@ import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
-import Landing from './Landing';
+import Landing, { Intro } from './Landing';
 import { shallowWithAuth0 } from '../util/testWithAuth0';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -11,11 +11,17 @@ describe('Landing', () => {
         const wrapper = shallow(<Landing />);
         expect(wrapper).toMatchSnapshot();
     });
+});
 
-    it('renders with button when not authenticated', () => {
-        const wrapper = shallowWithAuth0(<Landing />, {
-            isAuthenticated: false,
+describe('Intro', () => {
+    it.each`
+        isAuthenticated | friendlyName
+        ${true}         | ${'when authenticated'}
+        ${false}        | ${'when unauthenticated'}
+    `('renders correctly', ({ isAuthenticated, friendlyName }) => {
+        const wrapper = shallowWithAuth0(<Intro />, {
+            isAuthenticated,
         });
-        expect(wrapper).toMatchSnapshot();
+        expect(wrapper).toMatchSnapshot(friendlyName);
     });
 });

@@ -29,7 +29,7 @@ const Landing: FC = () => {
     );
 };
 
-const Intro: FC = () => {
+export const Intro: FC = () => {
     const classes = useStyles();
     const { isAuthenticated } = useAuth0();
 
