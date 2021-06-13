@@ -57,7 +57,7 @@ const Intro: FC = () => {
                                 CompE+ is a student-led pilot program to provide support for computer engineering students looking for internships
                             </Typography>
                         </Grid>
-                        {isAuthenticated && (
+                        {!isAuthenticated && (
                             <Grid item>
                                 <Button variant='contained' color='primary' onClick={() => console.log('clicked Get Started button')}>
                                     {'Get Started'}
