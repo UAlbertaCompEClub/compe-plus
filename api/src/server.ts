@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import http from 'http';
 
@@ -8,11 +9,17 @@ import logger from './util/logger';
 
 const router = express();
 
+/** Allow cross origin requests */
+router.use(cors());
+
 /** Log the request */
 router.use(middleware.logRequest());
 
 /** Parse the request */
 router.use(express.json());
+
+/** Require valid JWT for any endpoint */
+router.use(middleware.authenticate());
 
 /** Routes */
 router.use('/api/v1', sampleRoutes);

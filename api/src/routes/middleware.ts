@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import pinoExpressMiddleware from 'express-pino-logger';
 
+import { checkJwt } from '../util/checkJwt';
 import config from '../util/config';
 import logger, { standardSerializers, verboseSerializers } from '../util/logger';
 
@@ -17,7 +18,7 @@ function logRequest(): Middleware {
 
 /**
  * Returns middelware that will return a 404 and stop the request chain.
- * @returns NotFound middelware.
+ * @returns NotFound middleware.
  */
 function notFound(): Middleware {
     return (req: Request, res: Response): void => {
@@ -27,7 +28,22 @@ function notFound(): Middleware {
     };
 }
 
+/**
+ * Returns middleware that will ensure the client accessing is authenticated.
+ * @returns checkJwt middleware.
+ */
+function authenticate(): Middleware {
+    return (req: Request, res: Response, next?: NextFunction): void => {
+        if (next === undefined) {
+            return;
+        }
+
+        checkJwt(req, res, next);
+    };
+}
+
 export default {
     logRequest,
     notFound,
+    authenticate,
 };

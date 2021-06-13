@@ -17,7 +17,7 @@ const Auth0ProviderWithHistory: FC<Auth0ProviderWithHistoryProps> = ({ children 
     };
 
     return (
-        <Auth0Provider domain={domain} clientId={clientId} redirectUri={window.location.origin} onRedirectCallback={onRedirectCallback}>
+        <Auth0Provider domain={domain} clientId={clientId} redirectUri={window.location.origin} onRedirectCallback={onRedirectCallback} audience={config.server.audience} scope={'call:ping'}>
             {children}
         </Auth0Provider>
     );

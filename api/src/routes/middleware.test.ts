@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
+import * as checkJwt from '../util/checkJwt';
 import logger from '../util/logger';
 import middleware from './middleware';
 
@@ -42,6 +43,33 @@ describe('logRequest middleware', () => {
 
     it('calls next middleware', () => {
         middleware.logRequest()(mockRequest as Request, mockResponse as Response, nextFunction);
+
+        expect(nextFunction).toBeCalledTimes(1);
+    });
+});
+
+describe('authenticate middleware', () => {
+    let mockRequest: Partial<Request>;
+    let mockResponse: Partial<Response>;
+    let nextFunction: NextFunction;
+
+    beforeEach(() => {
+        mockRequest = {};
+        mockRequest.url = '/api/secure/v1/ping';
+        mockRequest.method = 'GET';
+        mockResponse = {};
+        mockResponse.on = jest.fn();
+        nextFunction = jest.fn();
+    });
+
+    it('authenticate is used', () => {
+        const authenticate = jest.spyOn(checkJwt, 'checkJwt');
+        middleware.authenticate()(mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(authenticate).toBeCalledTimes(1);
+    });
+
+    it('calls next middleware', () => {
+        middleware.authenticate()(mockRequest as Request, mockResponse as Response, nextFunction);
 
         expect(nextFunction).toBeCalledTimes(1);
     });
