@@ -1,4 +1,5 @@
 import express from 'express';
+
 import controller from '../controllers/sample';
 import authorize from 'express-jwt-authz';
 

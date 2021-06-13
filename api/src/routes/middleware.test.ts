@@ -1,7 +1,8 @@
-import middleware from './middleware';
 import { NextFunction, Request, Response } from 'express';
-import logger from '../util/logger';
+
 import * as checkJwt from '../util/checkJwt';
+import logger from '../util/logger';
+import middleware from './middleware';
 
 describe('notFound middleware', () => {
     const mockRequest: Partial<Request> = {};

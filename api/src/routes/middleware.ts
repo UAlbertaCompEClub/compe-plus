@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import pinoExpressMiddleware from 'express-pino-logger';
 
-import logger, { standardSerializers, verboseSerializers } from '../util/logger';
 import { checkJwt } from '../util/checkJwt';
 import config from '../util/config';
+import logger, { standardSerializers, verboseSerializers } from '../util/logger';
 
 type Middleware = (req: Request, res: Response, next?: NextFunction) => void;
 
