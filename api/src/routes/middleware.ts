@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import pinoExpressMiddleware from 'express-pino-logger';
 
 import logger, { standardSerializers, verboseSerializers } from '../util/logger';
-import { jwtCheck } from '../util/jwtCheck';
+import { checkJwt } from '../util/checkJwt';
 import config from '../util/config';
 
 type Middleware = (req: Request, res: Response, next?: NextFunction) => void;
@@ -38,7 +38,7 @@ function authenticate(): Middleware {
             return;
         }
 
-        jwtCheck(req, res, next);
+        checkJwt(req, res, next);
     };
 }
 
