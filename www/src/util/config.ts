@@ -1,6 +1,5 @@
 const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN || '';
 const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID || '';
-
 const SERVER_ENDPOINT = process.env.REACT_APP_SERVER_ENDPOINT || 'http://localhost:1337';
 const SERVER_AUDIENCE = process.env.REACT_APP_SERVER_AUDIENCE || '';
 
