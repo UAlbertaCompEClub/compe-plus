@@ -7,7 +7,6 @@ const SERVER_PORT = process.env.SERVER_PORT || 1337;
 const VERBOSE = process.env.VERBOSE || false;
 const EXTRA_VERBOSE = process.env.EXTRA_VERBOSE || false;
 const DATABASE_URL = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/compe-plus?sslmode=disable';
-
 const AUTH0_JWKS_URI = process.env.AUTH0_JWKS_URI || '';
 const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE || '';
 const AUTH0_ISSUER = process.env.AUTH0_ISSUER || '';
