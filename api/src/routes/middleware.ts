@@ -29,7 +29,7 @@ function notFound(): Middleware {
 }
 
 /**
- * Returns middle ware that will ensure the client accessing is authenticated.
+ * Returns middleware that will ensure the client accessing is authenticated.
  * @returns checkJwt middleware.
  */
 function authenticate(): Middleware {
