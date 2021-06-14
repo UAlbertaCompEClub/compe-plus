@@ -22,7 +22,17 @@ const get = async (reviewee?: string, reviewer?: string, state?: s.resume_review
     if (state) {
         where.state = dc.eq(state);
     }
-    return await db.select('resume_reviews', where).run(pool);
+    return db.select('resume_reviews', where).run(pool);
 };
 
-export { get };
+/**
+ * Create a new resume review.
+ * @param reviewee Reviewee id for new resume review.
+ * @param state State of new resume review.
+ * @returns The newly created resume review.
+ */
+const create = async (reviewee: string, state: s.resume_review_state): Promise<s.resume_reviews.JSONSelectable> => {
+    return db.insert('resume_reviews', { reviewee_id: reviewee, state: state }).run(pool);
+};
+
+export { create, get };

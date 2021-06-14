@@ -3,7 +3,7 @@ import express from 'express';
 import http from 'http';
 
 import middleware from './controllers/middleware';
-import resumeReviewRoutes from './routes/resumeReview';
+import resumeReviewRoutes from './routes/resumeReviewRoute';
 import config from './util/config';
 import logger from './util/logger';
 

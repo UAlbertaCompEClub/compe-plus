@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { mocked } from 'ts-jest/utils';
 import type * as s from 'zapatos/schema';
 
-import * as resumeReviewRepository from '../../repositories/resumeReview';
+import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
 import getResumeReviews from './getResumeReviews';
 
 jest.mock('../../repositories/resumeReview');

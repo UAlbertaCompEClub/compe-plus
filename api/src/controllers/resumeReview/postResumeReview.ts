@@ -1,29 +1,42 @@
 import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
 
-import NotImplementedException from '../../exceptions/NotImplementedException';
+import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
 import controller from '../controllerUtil';
+import Validator, { beAValidUser, beAValidUuid } from '../validation';
 
-type Params = Record<string, unknown>;
+// Can't define reviewer at creation b/c the assumption is that a reviewer is selected later
+// Can't choose the starting state b/c the assumption is that a resume review starts in the 'seeking_reviewer' state
+type ReqBody = {
+    reviewee: string;
+};
 
-type ReqBody = s.resume_reviews.Insertable;
+class ReqBodyValidator extends Validator<ReqBody> {
+    constructor() {
+        super('message body');
 
-type ResBody = s.resume_reviews.Selectable;
+        this.ruleFor('reviewee').must(beAValidUuid);
+        this.ruleFor('reviewee').mustAsync(beAValidUser);
+    }
+}
 
-const postResumeReview = controller(async (req: Request<Params, ResBody, ReqBody>, res: Response<ResBody>): Promise<void> => {
-    throw new NotImplementedException('postResumeReview');
+type ResBody = { resumeReview: s.resume_reviews.JSONSelectable };
 
-    // Just to use req and res and remove lints
-    req.body;
-    res.send();
+/**
+ * Create a new resume review.
+ * @param req HTTP request.
+ * @param res HTTP response.
+ * @returns HTTP response.
+ */
+const postResumeReview = controller(async (req: Request<unknown, ResBody, ReqBody>, res: Response<ResBody>): Promise<void> => {
+    await new ReqBodyValidator().validateAndThrow(req.body);
 
-    // TODO validate ReqBody
+    // Check that reviewer and reviewee are not the same TODO move to update controller
+    // Check that reviewer is a valid user
 
-    // TODO use repository to create a new resume review
+    const newResumeReview = await resumeReviewRepository.create(req.body.reviewee, 'seeking_reviewer');
 
-    // TODO return new resume review
+    res.status(201).json({ resumeReview: newResumeReview });
 });
 
 export default postResumeReview;
-
-// TODO implement this file
