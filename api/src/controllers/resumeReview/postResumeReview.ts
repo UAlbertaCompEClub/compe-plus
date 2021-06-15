@@ -31,9 +31,6 @@ type ResBody = { resumeReview: s.resume_reviews.JSONSelectable };
 const postResumeReview = controller(async (req: Request<unknown, ResBody, ReqBody>, res: Response<ResBody>): Promise<void> => {
     await new ReqBodyValidator().validateAndThrow(req.body);
 
-    // Check that reviewer and reviewee are not the same TODO move to update controller
-    // Check that reviewer is a valid user
-
     const newResumeReview = await resumeReviewRepository.create(req.body.reviewee, 'seeking_reviewer');
 
     res.status(201).json({ resumeReview: newResumeReview });

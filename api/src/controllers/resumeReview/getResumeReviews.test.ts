@@ -5,7 +5,7 @@ import type * as s from 'zapatos/schema';
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
 import getResumeReviews from './getResumeReviews';
 
-jest.mock('../../repositories/resumeReview');
+jest.mock('../../repositories/resumeReviewRepository');
 const mockResumeReviewRepository = mocked(resumeReviewRepository, true);
 
 let req: Partial<Request>;
