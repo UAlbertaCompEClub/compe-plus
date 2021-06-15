@@ -28,7 +28,9 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
         <AppBar position='relative'>
             <Toolbar className={classes.toolbar} disableGutters={true}>
                 <div className={classes.main}>
-                    <img src={logo} className={classes.logo} />
+                    <a href={'/'}>
+                        <img src={logo} className={classes.logo} />
+                    </a>
                     <Link underline='none' color='textSecondary' variant='h5' href={'/'}>
                         {title}
                     </Link>
@@ -38,8 +40,6 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
                         </Link>
                     ))}
                 </div>
-
-                <AuthButton />
             </Toolbar>
         </AppBar>
     );
