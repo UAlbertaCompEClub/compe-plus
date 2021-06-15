@@ -47,10 +47,10 @@ class TestUuidValidator extends Validator<TestUuidType> {
     constructor() {
         super('test');
 
-        this.ruleFor('a').must(beAValidUuid);
+        this.ruleFor('a').mustAsync(beAValidUuid);
 
         this.ruleFor('b')
-            .must(beAValidUuid)
+            .mustAsync(beAValidUuid)
             .when((t) => t.b !== undefined);
     }
 }
@@ -77,7 +77,7 @@ class TestUnionValidator extends Validator<TestUnionType> {
     constructor() {
         super('test');
 
-        this.ruleFor('a').must(beAResumeReviewState);
+        this.ruleFor('a').mustAsync(beAResumeReviewState);
     }
 }
 

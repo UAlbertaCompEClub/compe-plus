@@ -15,8 +15,7 @@ class ReqBodyValidator extends Validator<ReqBody> {
     constructor() {
         super('message body');
 
-        this.ruleFor('reviewee').must(beAValidUuid);
-        this.ruleFor('reviewee').mustAsync(beAValidUser);
+        this.ruleFor('reviewee').mustAsync([beAValidUuid, beAValidUser]);
     }
 }
 

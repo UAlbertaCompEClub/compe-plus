@@ -16,15 +16,15 @@ class ReqQueryValidator extends Validator<ReqQuery> {
         super('query parameters');
 
         this.ruleFor('reviewer')
-            .must(beAValidUuid)
+            .mustAsync(beAValidUuid)
             .when((reqQuery) => reqQuery.reviewer !== undefined);
 
         this.ruleFor('reviewee')
-            .must(beAValidUuid)
+            .mustAsync(beAValidUuid)
             .when((reqQuery) => reqQuery.reviewee !== undefined);
 
         this.ruleFor('state')
-            .must(beAResumeReviewState)
+            .mustAsync(beAResumeReviewState)
             .when((reqQuery) => reqQuery.state !== undefined);
     }
 }

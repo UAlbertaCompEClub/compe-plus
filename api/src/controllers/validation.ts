@@ -34,7 +34,7 @@ class Validator<TModel> extends AsyncFluentValidator<TModel> {
  * Test whether a field is a valid uuid.
  */
 const beAValidUuid = {
-    predicate: (field: string | undefined): boolean => {
+    predicate: async (field: string | undefined): Promise<boolean> => {
         return field ? uuidValidate(field) : false;
     },
     message: 'Must be a UUID',
@@ -44,7 +44,7 @@ const beAValidUuid = {
  * Test whether a field is of the union type resume_review_state.
  */
 const beAResumeReviewState = {
-    predicate: (field: string | undefined): boolean => {
+    predicate: async (field: string | undefined): Promise<boolean> => {
         return field ? ['canceled', 'finished', 'reviewing', 'seeking_reviewer'].includes(field) : false;
     },
     message: 'Must be a "canceled", "finished", "reviewing", or "seeking_reviewer"',
