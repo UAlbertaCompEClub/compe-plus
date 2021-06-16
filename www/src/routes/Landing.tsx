@@ -22,7 +22,7 @@ import Wave4 from '../assets/wave_4.svg';
 const Landing: FC = () => {
     const classes = useStyles();
     return (
-        <Grid container direction='row' justify='center'>
+        <Grid container direction='row' justify='center' style={{ overflowX: 'hidden' }}>
             <Intro />
             <img src={Wave1} className={classes.wave} />
             <Info />
@@ -41,9 +41,9 @@ const Intro: FC = () => {
 
     return (
         <>
-            <Grid container item className={classes.wave_pattern} style={{ minHeight: '60vh' }}>
+            <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '60vh' }}>
                 <Grid container item justify='center' spacing={5}>
-                    <Grid container item xs={4} alignItems='center'>
+                    <Grid container item xs={4} alignItems='center' justify='center'>
                         <Grid item>
                             <Box maxWidth='sm'>
                                 <img src={BlackLogo} className={classes.logo_1} />
@@ -58,8 +58,8 @@ const Intro: FC = () => {
                 </Grid>
             </Grid>
             <Grid container item justify='center' className={classes.wave_pattern}>
-                <Grid container item xs={10} justify='center'>
-                    <Typography variant='h3' style={{ fontWeight: 50 }}>
+                <Grid container item xs={9} justify='center'>
+                    <Typography variant='h3' style={{ fontWeight: 50 }} align='center'>
                         CompE+ is a student-led pilot program to provide support for computer engineering students looking for internships
                     </Typography>
                 </Grid>
@@ -71,7 +71,7 @@ const Intro: FC = () => {
 const Info: FC = () => {
     const classes = useStyles();
     return (
-        <Grid container item style={{ height: '100vh' }} xs={10}>
+        <Grid container item style={{ height: '100vh' }} xs={8}>
             <Grid container item justify='center'>
                 <Grid container item alignItems='center'>
                     <Grid item>
@@ -113,50 +113,52 @@ const Values: FC = () => {
 
     return (
         <Grid container item style={{ height: '100vh' }} className={classes.wave_pattern} justify='center'>
-            <Grid container item xs={10}>
-                <Grid container item>
-                    <Typography variant='h1'>Values</Typography>
-                </Grid>
-                <Grid container item spacing={5}>
-                    <Grid container item xs={3} className={classes.values}>
-                        <img src={Practice} className={classes.svg} />
+            <Grid container item direction='column' alignItems='center' justify='center'>
+                <Grid container item spacing={10} xs={8}>
+                    <Grid container item alignItems='center'>
+                        <Typography variant='h1'>Values</Typography>
                     </Grid>
-                    <Grid container item xs={9} alignItems='center'>
-                        <Typography variant='h2'>
-                            Practice
-                            <Typography variant='body1'>
-                                Technical interviews can be difficult and requires a good amount of practice. By providing resources and services, CompE+ can help computer engineering students tackle
-                                the technical interview with greater confidence
+                    <Grid container item spacing={5}>
+                        <Grid container item xs={3} className={classes.values}>
+                            <img src={Practice} className={classes.svg} />
+                        </Grid>
+                        <Grid container item xs={9} alignItems='center'>
+                            <Typography variant='h2'>
+                                Practice
+                                <Typography variant='body1'>
+                                    Technical interviews can be difficult and requires a good amount of practice. By providing resources and services, CompE+ can help computer engineering students
+                                    tackle the technical interview with greater confidence
+                                </Typography>
                             </Typography>
-                        </Typography>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid container item>
-                    <Grid container item xs={9} alignItems='center'>
-                        <Typography align='right' variant='h2'>
-                            Insight
-                            <Typography align='right' variant='body1'>
-                                The tech industry can be a black box to new students. CompE+ strives to provide insight into the industry by sharing the internship experience with all computer
-                                engineering students
+                    <Grid container item>
+                        <Grid container item xs={9} alignItems='center'>
+                            <Typography align='right' variant='h2'>
+                                Insight
+                                <Typography align='right' variant='body1'>
+                                    The tech industry can be a black box to new students. CompE+ strives to provide insight into the industry by sharing the internship experience with all computer
+                                    engineering students
+                                </Typography>
                             </Typography>
-                        </Typography>
+                        </Grid>
+                        <Grid container item xs={3} className={classes.values}>
+                            <img src={Industry} className={classes.svg} />
+                        </Grid>
                     </Grid>
-                    <Grid container item xs={3} className={classes.values}>
-                        <img src={Industry} className={classes.svg} />
-                    </Grid>
-                </Grid>
-                <Grid container item spacing={5}>
-                    <Grid container item xs={3} className={classes.values}>
-                        <img src={Support} className={classes.svg} />
-                    </Grid>
-                    <Grid container item xs={9} alignItems='center'>
-                        <Typography variant='h2'>
-                            Support{' '}
-                            <Typography variant='body1'>
-                                Entering the tech industry can be intimidating to many, even after landing the first internship, imposter syndrome can hit hard. Fostering a positive community is an
-                                important goal of CompE+
+                    <Grid container item spacing={5}>
+                        <Grid container item xs={3} className={classes.values}>
+                            <img src={Support} className={classes.svg} />
+                        </Grid>
+                        <Grid container item xs={9} alignItems='center'>
+                            <Typography variant='h2'>
+                                Support{' '}
+                                <Typography variant='body1'>
+                                    Entering the tech industry can be intimidating to many, even after landing the first internship, imposter syndrome can hit hard. Fostering a positive community is
+                                    an important goal of CompE+
+                                </Typography>
                             </Typography>
-                        </Typography>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
@@ -168,50 +170,52 @@ const Services: FC = () => {
     const classes = useStyles();
 
     return (
-        <Grid container item style={{ height: '100vh' }} xs={10}>
-            <Grid container item>
-                <Typography variant='h1'>Services</Typography>
-            </Grid>
-            <Grid container item spacing={2}>
-                <Grid container item xs={12} spacing={3}>
-                    <Grid container item xs={4} justify='center'>
-                        <img src={ResumeReview} className={classes.services_svg} />
-                    </Grid>
-                    <Grid container item xs={4} justify='center'>
-                        <img src={MockInterview} className={classes.services_svg} />
-                    </Grid>
-                    <Grid container item xs={4} justify='center'>
-                        <img src={Teamwork} className={classes.services_svg} />
-                    </Grid>
+        <Grid container item style={{ height: '100vh' }} direction='column' alignItems='center' justify='center'>
+            <Grid container item xs={8}>
+                <Grid container item alignItems='center'>
+                    <Typography variant='h1'>Services</Typography>
                 </Grid>
+                <Grid container item spacing={2} alignItems='center' justify='center'>
+                    <Grid container item xs={12} spacing={3}>
+                        <Grid container item xs={4} justify='center'>
+                            <img src={ResumeReview} className={classes.services_svg} />
+                        </Grid>
+                        <Grid container item xs={4} justify='center'>
+                            <img src={MockInterview} className={classes.services_svg} />
+                        </Grid>
+                        <Grid container item xs={4} justify='center'>
+                            <img src={Teamwork} className={classes.services_svg} />
+                        </Grid>
+                    </Grid>
 
-                <Grid container item xs={12} spacing={3}>
-                    <Grid container item xs={4} justify='center'>
-                        <Typography variant='h2'>Resume Review</Typography>
+                    <Grid container item xs={12} spacing={3}>
+                        <Grid container item xs={4} justify='center'>
+                            <Typography variant='h2'>Resume Review</Typography>
+                        </Grid>
+                        <Grid container item xs={4} justify='center'>
+                            <Typography variant='h2'>Mock Interviews</Typography>
+                        </Grid>
+                        <Grid container item xs={4} justify='center'>
+                            <Typography variant='h2'>Community</Typography>
+                        </Grid>
                     </Grid>
-                    <Grid container item xs={4} justify='center'>
-                        <Typography variant='h2'>Mock Interviews</Typography>
-                    </Grid>
-                    <Grid container item xs={4} justify='center'>
-                        <Typography variant='h2'>Community</Typography>
-                    </Grid>
-                </Grid>
 
-                <Grid container item xs={12} spacing={3}>
-                    <Grid item xs={4}>
-                        <Typography align='center' variant='body1'>
-                            Gain confidence when writing resumes by getting your resume reviewed by senior CompE students to gain key insight on how to properly format and develop your resume
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Typography align='center' variant='body1'>
-                            Led by senior CompE students, practice communicating your thoughts and problem-solving skills with mock technical interviews
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Typography align='center' variant='body1'>
-                            Connect with other CompE students, gain insight on different companies that other students have worked for, and learn more about the tech industry
-                        </Typography>
+                    <Grid container item xs={12} spacing={3}>
+                        <Grid item xs={4}>
+                            <Typography align='center' variant='body1'>
+                                Gain confidence when writing resumes by getting your resume reviewed by senior CompE students to gain key insight on how to properly format and develop your resume
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Typography align='center' variant='body1'>
+                                Led by senior CompE students, practice communicating your thoughts and problem-solving skills with mock technical interviews
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Typography align='center' variant='body1'>
+                                Connect with other CompE students, gain insight on different companies that other students have worked for, and learn more about the tech industry
+                            </Typography>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
@@ -252,7 +256,7 @@ const useStyles = makeStyles((theme) => ({
         height: 'auto',
     },
     logo_2: {
-        width: '60%',
+        width: '80%',
         height: 'auto',
     },
     logo_1: {

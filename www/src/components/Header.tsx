@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 
 // Material UI
-import { Toolbar, Link, AppBar, makeStyles } from '@material-ui/core';
+import { Toolbar, Link, AppBar, makeStyles, Grid } from '@material-ui/core';
 
 // Assets
 import logo from '../assets/logo_white.svg';
@@ -34,12 +34,12 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
                     <Link underline='none' color='textSecondary' variant='h5' href={'/'}>
                         {title}
                     </Link>
-                    {sections.map((section) => (
-                        <Link color='textSecondary' key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
-                            {section.title}
-                        </Link>
-                    ))}
                 </div>
+                {sections.map((section) => (
+                    <Link color='textSecondary' key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
+                        {section.title}
+                    </Link>
+                ))}
             </Toolbar>
         </AppBar>
     );
