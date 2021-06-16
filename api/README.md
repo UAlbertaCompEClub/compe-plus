@@ -16,6 +16,14 @@ We also have a few scripts to keep the code quality up to snuff. Run `npm run fo
 
 The API makes use of a number of services e.g., database, blog storage, email. See the [dependencies](#Dependencies) section for more on how to locally emulate these services.
 
+## .env file
+
+### Auth0
+
+You can find the three Auth0 fields from the Auth0 API dashboard. Navigate to _CompePlusAPI_'s NodeJS quick start section. You should take the fields from
+
+![auth0-env-values](./docs/auth0-env-values.png)
+
 # Logging recipes
 
 ```bash
