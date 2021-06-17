@@ -1,4 +1,4 @@
-# CompE+ Backend
+\*\*\*\*# CompE+ Backend
 
 A REST API that supports the CompE+ [frontend](../www/README.md).
 
@@ -16,11 +16,11 @@ We also have a few scripts to keep the code quality up to snuff. Run `npm run fo
 
 The API makes use of a number of services e.g., database, blog storage, email. See the [dependencies](#Dependencies) section for more on how to locally emulate these services.
 
-## .env file
+## Environment variables
 
 ### Auth0
 
-You can find the three Auth0 fields from the Auth0 API dashboard. Navigate to _CompePlusAPI_'s NodeJS quick start section. You should take the fields from
+To find the three Auth0 fields open the Auth0 Dashboard and navigate to _CompePlusAPI_'s quick start tab. You should be able to find the NodeJS snippet.
 
 ![auth0-env-values](./docs/auth0-env-values.png)
 
