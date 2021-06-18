@@ -1,6 +1,15 @@
-import React, { FC } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '@material-ui/core';
+import { useAuth0 } from '@auth0/auth0-react';
+import React, { FC, PropsWithChildren } from 'react';
+
+type BaseButtonProps = {
+    text: string;
+    onClick: () => void;
+};
+
+const BaseButton: FC<BaseButtonProps> = (props: PropsWithChildren<BaseButtonProps>) => {
+    return <button onClick={props.onClick}>{props.text}</button>;
+};
 
 const LogoutButton: FC = () => {
     const { logout } = useAuth0();

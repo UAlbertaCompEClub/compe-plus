@@ -1,9 +1,15 @@
 // Libraries
-import React, { FC } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 // Material UI
 import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
+import './App.css';
+
+import { GetTokenSilentlyOptions, useAuth0 } from '@auth0/auth0-react';
+import React, { FC } from 'react';
+
+import AuthButton from './components/auth/AuthButton';
+import logo from './logo.svg';
 
 // Components and Routes
 import { Header, Section } from './components/Header';

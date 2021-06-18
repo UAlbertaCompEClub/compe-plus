@@ -14,7 +14,7 @@ module.exports = {
     },
     plugins: ['react', '@typescript-eslint', 'prettier', 'simple-import-sort'],
     rules: {
-        'prettier/prettier': 'error',
+        'prettier/prettier': ['error', { singleQuote: true }],
         'simple-import-sort/imports': 'error',
         'simple-import-sort/exports': 'error',
     },
