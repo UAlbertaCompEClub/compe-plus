@@ -22,7 +22,6 @@ const header_sections: Section[] = [
     // { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
     // { title: MOCK_INTERVIEW, url: MOCK_INTERVIEW_ROUTE },
     // { title: COMMUNITY, url: COMMUNITY_ROUTE },
-    { title: COMPE_CLUB, url: COMPE_CLUB_ROUTE },
 ];
 
 const App: FC = () => {

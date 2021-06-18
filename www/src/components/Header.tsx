@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 
 // Material UI
-import { Toolbar, Link, AppBar, makeStyles, Grid } from '@material-ui/core';
+import { Toolbar, Link, AppBar, makeStyles } from '@material-ui/core';
 
 // Assets
 import logo from '../assets/logo_white.svg';
@@ -26,7 +26,7 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
 
     return (
         <AppBar position='relative'>
-            <Toolbar className={classes.toolbar} disableGutters={true}>
+            <Toolbar className={classes.toolbar}>
                 <div className={classes.main}>
                     <a href={'/'}>
                         <img src={logo} className={classes.logo} />

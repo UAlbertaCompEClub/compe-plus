@@ -60,7 +60,8 @@ const Intro: FC = () => {
             <Grid container item justify='center' className={classes.wave_pattern}>
                 <Grid container item xs={9} justify='center'>
                     <Typography variant='h3' style={{ fontWeight: 50 }} align='center'>
-                        CompE+ is a student-led pilot program to provide support for computer engineering students looking for internships
+                        Struggling with writing resumes or solving technical interviews? CompE+ is here to help!
+                        {/* CompE+ is a student-led pilot program to provide support for computer engineering students looking for internships */}
                     </Typography>
                 </Grid>
             </Grid>
@@ -81,8 +82,8 @@ const Info: FC = () => {
                     </Grid>
                     <Grid item>
                         <Typography component='h2' variant='body1'>
-                            CompE+ is a student led pilot program to provide CompE students with practice, insight, and support when finding internships in the tech industry. Arguably, computer
-                            engineering is a unique discipline and requires different resources and support - that’s where CompE+ comes in!{' '}
+                            CompE+ is a student led pilot program to provide CompE students with practice, insight, and support when finding internships in the tech industry. Computer engineering is a
+                            unique discipline and requires different resources and support - that’s where CompE+ comes in!{' '}
                         </Typography>
                     </Grid>
                     <Grid item>
