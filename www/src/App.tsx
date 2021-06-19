@@ -1,5 +1,3 @@
-import './App.css';
-
 import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 import React, { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
