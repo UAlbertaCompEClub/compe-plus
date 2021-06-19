@@ -5,8 +5,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Authentication set-up
 
 1. Copy `www/.env.sample` to `www/.env`
-1. Navigate to `compe-plus` application in ![Auth0](https://manage.auth0.com/dashboard)
-1. In the settings page, copy the domain and client ID to their respective fields in the `.env` file
+2. Navigate to `compe-plus` application in ![Auth0](https://manage.auth0.com/dashboard)
+3. In the settings page, copy the domain and client ID to their respective fields in the `.env` file
 
 ## Available Scripts
 
@@ -34,6 +34,10 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run lint:fix`
+
+Runs ESLint across the codebase and fixes errors.
 
 ### `npm run eject`
 
