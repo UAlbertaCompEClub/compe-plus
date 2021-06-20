@@ -6,11 +6,13 @@ import FeedbackIcon from '../assets/conversation.svg';
 
 const ResumeReview: FC = () => {
     return (
-        <Grid container justify='center' alignItems='center' direction='column' spacing={8} style={{ marginTop: '50px' }}>
+        <Grid container justify='center' alignItems='center' spacing={8} style={{ marginTop: '10px', minHeight: '75vh' }}>
             <Grid item>
-                <Typography variant='h1'>Resume Review</Typography>
+                <Typography align='center' variant='h1'>
+                    Resume Review
+                </Typography>
             </Grid>
-            <Grid container item direction='column' spacing={2}>
+            <Grid container item direction='column' spacing={3}>
                 <Grid container item spacing={3}>
                     <Grid container item justify='center' xs={4}>
                         <img src={UploadResumeIcon} />

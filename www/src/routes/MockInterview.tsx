@@ -5,11 +5,13 @@ import MockInterviewIcon from '../assets/mock_interview1.svg';
 
 const MockInterview: FC = () => {
     return (
-        <Grid container justify='center' alignItems='center' direction='column' spacing={8} style={{ marginTop: '50px' }}>
+        <Grid container justify='center' alignItems='center' spacing={8} style={{ marginTop: '10px', minHeight: '75vh' }}>
             <Grid item>
-                <Typography variant='h1'>Interview Booking</Typography>
+                <Typography align='center' variant='h1'>
+                    Interview Booking
+                </Typography>
             </Grid>
-            <Grid container item direction='column' spacing={2}>
+            <Grid container item direction='column' spacing={3}>
                 <Grid container item spacing={3}>
                     <Grid container item justify='center' xs={6}>
                         <img src={BookInterviewIcon} />
@@ -18,16 +20,18 @@ const MockInterview: FC = () => {
                         <img src={MockInterviewIcon} />
                     </Grid>
                 </Grid>
-                <Grid container item xs={12} spacing={3}>
+                <Grid container item spacing={3}>
                     <Grid item xs={6}>
                         <Typography align='center' variant='body1'>
                             Book for an available interview slot
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Typography align='center' variant='body1'>
-                            Meet with a trained Interviewer and practice communicating your thoughts
-                        </Typography>
+                    <Grid container item justify='center' xs={6}>
+                        <Grid item xs={6}>
+                            <Typography align='center' variant='body1'>
+                                Meet with a trained Interviewer and practice communicating your thoughts
+                            </Typography>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
