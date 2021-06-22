@@ -16,7 +16,7 @@ const MobileLanding: FC = () => {
                         </Grid>
                         <Grid item>
                             <Typography align='center' variant='body1' style={{ fontWeight: 200 }}>
-                                The developers are working very hard to build CompE+ with limited time so some funtionality had to be deferred. <br />
+                                The developers are working very hard to build CompE+ with limited time so some functionality had to be deferred. <br />
                                 As such, this site is not optimized for mobile 😞 please open compe.plus on desktop
                             </Typography>
                         </Grid>
