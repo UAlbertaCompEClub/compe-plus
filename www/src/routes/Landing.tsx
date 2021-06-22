@@ -28,9 +28,7 @@ const Landing: FC = () => {
             <Services />
             <Info />
             <Values />
-            <img src={Wave2} className={classes.wave} />
             <CallToAction />
-            <img src={Wave3} className={classes.wave} />
             <img src={Wave4} className={classes.wave} />
             <Footer />
         </Grid>
@@ -246,42 +244,46 @@ const CallToAction: FC = () => {
     const classes = useStyles();
 
     return (
-        <Grid container item className={`${classes.wave_pattern} `} id='call-to-action'>
-            <Fade>
-                <Grid container item justify='center' alignItems='center' xs={8} spacing={5}>
-                    <Grid container item alignItems='center'>
-                        <Grid item>
-                            <Typography variant='h1'>Mailing List</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography variant='body1' style={{ fontWeight: 200 }}>
-                                <br />
-                                CompE+ is still in development 🔧 <br /> Enter your email below to sign up for our mailing list to get up-to-date information on CompE+
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid container item justify='center' alignItems='center' direction='column' spacing={2}>
-                        <Grid container item justify='center' spacing={1}>
+        <>
+            <img src={Wave2} className={`${classes.wave} ${classes.anchor}`} id='call-to-action' />
+            <Grid container item className={`${classes.wave_pattern} `} style={{ minHeight: '50vh' }}>
+                <Fade>
+                    <Grid container item justify='center' alignItems='center' xs={8} spacing={5}>
+                        <Grid container item alignItems='center'>
                             <Grid item>
-                                <Paper component='form' className={classes.text_input_root}>
-                                    <InputBase className={classes.text_input} placeholder='Email Address' />
-                                </Paper>
+                                <Typography variant='h1'>Mailing List</Typography>
                             </Grid>
                             <Grid item>
-                                <Button variant='contained' className={classes.main_button}>
-                                    Submit
-                                </Button>
+                                <Typography variant='body1' style={{ fontWeight: 200 }}>
+                                    <br />
+                                    CompE+ is still in development 🔧 <br /> Enter your email below to sign up for our mailing list to get up-to-date information on CompE+
+                                </Typography>
                             </Grid>
                         </Grid>
-                        <Grid item>
-                            <Typography variant='body1' style={{ fontWeight: 200, fontSize: 22 }}>
-                                We promise not to spam you :)
-                            </Typography>{' '}
+                        <Grid container item justify='center' alignItems='center' direction='column' spacing={2}>
+                            <Grid container item justify='center' spacing={1}>
+                                <Grid item>
+                                    <Paper component='form' className={classes.text_input_root}>
+                                        <InputBase className={classes.text_input} placeholder='Email Address' />
+                                    </Paper>
+                                </Grid>
+                                <Grid item>
+                                    <Button variant='contained' className={classes.main_button}>
+                                        Submit
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant='body1' style={{ fontWeight: 200, fontSize: 22 }}>
+                                    We promise not to spam you :)
+                                </Typography>{' '}
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Fade>
-        </Grid>
+                </Fade>
+            </Grid>
+            <img src={Wave3} className={classes.wave} />
+        </>
     );
 };
 
@@ -370,7 +372,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     anchor: {
-        paddingTop: '25vh',
+        marginTop: '25vh',
     },
 }));
 
