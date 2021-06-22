@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
-import { Grid, Typography, Box, Button, makeStyles, IconButton, InputBase, Paper } from '@material-ui/core';
-import EmailIcon from '@material-ui/icons/Email';
+import { Grid, Typography, Box, Button, makeStyles, InputBase, Paper } from '@material-ui/core';
 
 import PairProgramming from '../assets/pair_programming.svg';
 import BlackLogo from '../assets/logo_black.svg';
@@ -186,7 +185,7 @@ const Services: FC = () => {
 
     return (
         <Fade>
-            <Grid className={classes.anchor} container item style={{ height: '100vh' }} justify='center' id='services'>
+            <Grid container item style={{ height: '100vh' }} justify='center' id='services'>
                 <Grid container item alignItems='center' justify='center' xs={8}>
                     <Grid container item alignItems='center'>
                         <Typography variant='h1'>Services</Typography>
@@ -245,7 +244,7 @@ const CallToAction: FC = () => {
 
     return (
         <>
-            <img src={Wave2} className={`${classes.wave} ${classes.anchor}`} id='call-to-action' />
+            <img src={Wave2} className={classes.wave} id='call-to-action' />
             <Grid container item className={`${classes.wave_pattern} `} style={{ minHeight: '50vh' }}>
                 <Fade>
                     <Grid container item justify='center' alignItems='center' xs={8} spacing={5}>
@@ -370,9 +369,6 @@ const useStyles = makeStyles((theme) => ({
             color: theme.palette.primary.light,
             outlineColor: theme.palette.primary.light,
         },
-    },
-    anchor: {
-        marginTop: '25vh',
     },
 }));
 
