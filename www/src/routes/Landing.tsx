@@ -178,7 +178,7 @@ const Services: FC = () => {
 
     return (
         <Fade>
-            <Grid container item style={{ height: '100vh' }} direction='column' alignItems='center' justify='center' id='services'>
+            <Grid className={classes.anchor} container item style={{ height: '100vh' }} direction='column' alignItems='center' justify='center' id='services'>
                 <Grid container item xs={8}>
                     <Grid container item alignItems='center'>
                         <Typography variant='h1'>Services</Typography>
@@ -236,7 +236,7 @@ const CallToAction: FC = () => {
     const classes = useStyles();
 
     return (
-        <Grid container item className={classes.wave_pattern} id='call-to-action'>
+        <Grid container item className={`${classes.wave_pattern} ${classes.anchor}`} id='call-to-action'>
             <Fade>
                 <Paper component='form' className={classes.text_input_root}>
                     <IconButton className={classes.text_input_icon_button} aria-label='menu'>
@@ -331,6 +331,9 @@ const useStyles = makeStyles((theme) => ({
             color: theme.palette.primary.light,
             outlineColor: theme.palette.primary.light,
         },
+    },
+    anchor: {
+        paddingTop: '25vh',
     },
 }));
 
