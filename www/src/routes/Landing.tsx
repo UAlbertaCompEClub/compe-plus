@@ -41,26 +41,24 @@ const Intro: FC = () => {
     const classes = useStyles();
 
     return (
-        <>
-            <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '60vh' }} id='intro'>
-                <Grid container item justify='center' spacing={5}>
-                    <Grid container item xs={4} alignItems='center' justify='center'>
-                        <Grid item>
-                            <Box maxWidth='sm'>
-                                <img src={BlackLogo} className={classes.logo_1} />
-                            </Box>
-                            <Typography variant='h1'>CompE+</Typography>
-                            <Typography variant='h3'>Land your dream internship with our help!</Typography>
-                        </Grid>
-                    </Grid>
-
-                    <Grid container item xs={5} alignItems='center' justify='center'>
-                        <img src={PairProgramming} className={classes.svg} />
+        <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '50vh', paddingTop: '10vh' }} id='intro'>
+            <Grid container item justify='center' spacing={5}>
+                <Grid container item xs={4} alignItems='center' justify='center'>
+                    <Grid item>
+                        <Box maxWidth='sm'>
+                            <img src={BlackLogo} className={classes.logo_1} />
+                        </Box>
+                        <Typography variant='h1'>CompE+</Typography>
+                        <Typography variant='h3'>Resume Review, Mock Interviews, Community</Typography>
                     </Grid>
                 </Grid>
+
+                <Grid container item xs={5} alignItems='center' justify='center'>
+                    <img src={PairProgramming} className={classes.svg} />
+                </Grid>
             </Grid>
-            <Grid container item justify='center' className={classes.wave_pattern}>
-                <Grid container item xs={9} justify='center' alignItems='center' spacing={8}>
+            <Grid container item justify='center' alignItems='center' style={{ paddingTop: '5vh' }} spacing={5}>
+                <Grid container item justify='center' alignItems='center' spacing={4}>
                     <Grid item>
                         <Button size='large' variant='contained' className={classes.main_button} onClick={() => window.location.replace('/#call-to-action')}>
                             Get Started!
@@ -72,42 +70,45 @@ const Intro: FC = () => {
                         </Button>
                     </Grid>
                 </Grid>
+                <Grid container item justify='center' alignItems='center'>
+                    <Grid item>
+                        <Typography variant='h3' style={{ fontSize: 28 }}>
+                            Get the help you need to land your dream internship!
+                        </Typography>
+                    </Grid>
+                </Grid>
             </Grid>
-        </>
+        </Grid>
     );
 };
 
 const Info: FC = () => {
     return (
         <Fade>
-            <Grid container item style={{ height: '100vh' }} xs={8} id='info'>
-                <Grid container item justify='center'>
+            <Grid container item style={{ height: '100vh' }} justify='center' id='info'>
+                <Grid container item justify='center' alignItems='center' xs={8}>
                     <Grid container item alignItems='center'>
-                        <Grid item>
-                            <Typography component='h2' variant='h1' noWrap>
-                                What’s CompE+ ?
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography component='h2' variant='body1'>
-                                CompE+ is a student led pilot program to provide CompE students with practice, insight, and support when finding internships in the tech industry. Computer engineering
-                                is a unique discipline and requires different resources and support - that’s where CompE+ comes in!{' '}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography component='h2' variant='body1'>
-                                The CompE+ pilot program is currently under development and is slated to launch Fall 2021 for the Summer 2022 recruitment. The program will run from September - October
-                                2021.{' '}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography component='h2' variant='body1' style={{ fontWeight: 600 }}>
-                                Currently looking for volunteers: Resume Reviewers and Interviewers!
-                            </Typography>
-                            <Typography component='h2' variant='body1' style={{ fontWeight: 600 }}>
-                                Contact external@compeclub.com{' '}
-                            </Typography>
-                        </Grid>
+                        <Typography variant='h1'>What’s CompE+ ?</Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant='body1'>
+                            CompE+ is a student led pilot program to provide CompE students with practice, insight, and support when finding internships in the tech industry. Computer engineering is a
+                            unique discipline and requires different resources and support - that’s where CompE+ comes in!{' '}
+                        </Typography>
+                    </Grid>
+                    <Grid container item alignItems='center'>
+                        <Typography variant='body1'>
+                            The CompE+ pilot program is currently under development and is slated to launch Fall 2021 for the Summer 2022 recruitment. The program will run from September - October
+                            2021.
+                        </Typography>
+                    </Grid>
+                    <Grid container item alignItems='center'>
+                        <Typography variant='body1' style={{ fontWeight: 600 }}>
+                            Currently looking for volunteers: Resume Reviewers and Interviewers!
+                        </Typography>
+                        <Typography variant='body1' style={{ fontWeight: 600 }}>
+                            Contact external@compeclub.com{' '}
+                        </Typography>
                     </Grid>
                 </Grid>
             </Grid>
@@ -121,7 +122,7 @@ const Values: FC = () => {
     return (
         <Fade>
             <Grid container item style={{ height: '100vh' }} justify='center' id='values'>
-                <Grid container item direction='column' alignItems='center' justify='center' xs={8} spacing={10}>
+                <Grid container item alignItems='center' justify='center' xs={8}>
                     <Grid container item alignItems='center'>
                         <Typography variant='h1'>Values</Typography>
                     </Grid>
@@ -178,8 +179,8 @@ const Services: FC = () => {
 
     return (
         <Fade>
-            <Grid className={classes.anchor} container item style={{ height: '100vh' }} direction='column' alignItems='center' justify='center' id='services'>
-                <Grid container item xs={8}>
+            <Grid className={classes.anchor} container item style={{ height: '100vh' }} justify='center' id='services'>
+                <Grid container item alignItems='center' justify='center' xs={8}>
                     <Grid container item alignItems='center'>
                         <Typography variant='h1'>Services</Typography>
                     </Grid>
