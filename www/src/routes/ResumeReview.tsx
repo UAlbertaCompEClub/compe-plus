@@ -7,7 +7,7 @@ import ResumesIcon from '../assets/documents.svg';
 
 const ResumeReview: FC = () => {
     return (
-        <div style={{ overflowX: 'hidden' }}>
+        <div style={{ overflow: 'hidden' }}>
             <Grid container justify='center' alignItems='center' spacing={8} style={{ marginTop: '10px', minHeight: '75vh' }}>
                 <Grid item>
                     <Typography align='center' variant='h1'>

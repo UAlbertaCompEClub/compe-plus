@@ -6,7 +6,7 @@ import MockInterviewIcon from '../assets/mock_interview1.svg';
 
 const MockInterview: FC = () => {
     return (
-        <div style={{ overflowX: 'hidden' }}>
+        <div style={{ overflow: 'hidden' }}>
             <Grid container justify='center' alignItems='center' spacing={8} style={{ marginTop: '10px', minHeight: '75vh' }}>
                 <Grid item>
                     <Typography align='center' variant='h1'>
