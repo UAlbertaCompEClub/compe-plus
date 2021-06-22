@@ -8,7 +8,11 @@ import config from './config';
 const logger = pino({
     timestamp: pino.stdTimeFunctions.isoTime,
     base: null,
-    useLevelLabels: true,
+    formatters: {
+        level: (label): { level: string } => {
+            return { level: label };
+        },
+    },
     level: config.extraVerbose ? 'trace' : config.verbose ? 'debug' : 'info',
 });
 

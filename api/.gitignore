@@ -97,3 +97,12 @@ tests/cases/user/axios-src/axios-src
 tests/cases/user/prettier/prettier
 .eslintcache
 build/
+
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.development.local
+.env.production.local
+.env.test.local
