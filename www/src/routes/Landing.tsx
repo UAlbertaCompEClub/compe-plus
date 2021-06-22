@@ -246,14 +246,40 @@ const CallToAction: FC = () => {
     const classes = useStyles();
 
     return (
-        <Grid container item className={`${classes.wave_pattern} ${classes.anchor}`} id='call-to-action'>
+        <Grid container item className={`${classes.wave_pattern} `} id='call-to-action'>
             <Fade>
-                <Paper component='form' className={classes.text_input_root}>
-                    <IconButton className={classes.text_input_icon_button} aria-label='menu'>
-                        <EmailIcon />
-                    </IconButton>
-                    <InputBase className={classes.text_input} placeholder='Email Address' />
-                </Paper>
+                <Grid container item justify='center' alignItems='center' xs={8} spacing={5}>
+                    <Grid container item alignItems='center'>
+                        <Grid item>
+                            <Typography variant='h1'>Mailing List</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant='body1' style={{ fontWeight: 200 }}>
+                                <br />
+                                CompE+ is still in development 🔧 <br /> Enter your email below to sign up for our mailing list to get up-to-date information on CompE+
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid container item justify='center' alignItems='center' direction='column' spacing={2}>
+                        <Grid container item justify='center' spacing={1}>
+                            <Grid item>
+                                <Paper component='form' className={classes.text_input_root}>
+                                    <InputBase className={classes.text_input} placeholder='Email Address' />
+                                </Paper>
+                            </Grid>
+                            <Grid item>
+                                <Button variant='contained' className={classes.main_button}>
+                                    Submit
+                                </Button>
+                            </Grid>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant='body1' style={{ fontWeight: 200, fontSize: 22 }}>
+                                We promise not to spam you :)
+                            </Typography>{' '}
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Fade>
         </Grid>
     );
@@ -308,6 +334,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         width: 400,
+        borderRadius: 0,
     },
     text_input: {
         marginLeft: theme.spacing(1),
