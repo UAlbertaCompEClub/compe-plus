@@ -1,12 +1,10 @@
 // Libraries
-import React, { FC } from 'react';
-
 // Material UI
-import { Toolbar, Link, AppBar, makeStyles } from '@material-ui/core';
+import { AppBar, Link, makeStyles, Toolbar } from '@material-ui/core';
+import React, { FC } from 'react';
 
 // Assets
 import logo from '../assets/logo_white.svg';
-
 // Components
 import AuthButton from './auth/AuthButton';
 

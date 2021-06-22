@@ -1,10 +1,11 @@
+import './styles/index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import Auth0ProviderWithHistory from './providers/Auth0ProviderWithHistory';
 
-import './styles/index.css';
 import App from './App';
+import Auth0ProviderWithHistory from './providers/Auth0ProviderWithHistory';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
