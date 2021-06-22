@@ -83,6 +83,7 @@ const Intro: FC = () => {
 };
 
 const Info: FC = () => {
+    const classes = useStyles();
     return (
         <Fade>
             <Grid container item style={{ height: '100vh' }} justify='center' id='info'>
@@ -90,25 +91,33 @@ const Info: FC = () => {
                     <Grid container item alignItems='center'>
                         <Typography variant='h1'>What’s CompE+ ?</Typography>
                     </Grid>
-                    <Grid item>
+                    <Grid container item>
                         <Typography variant='body1'>
-                            CompE+ is a student led pilot program to provide CompE students with practice, insight, and support when finding internships in the tech industry. Computer engineering is a
-                            unique discipline and requires different resources and support - that’s where CompE+ comes in!{' '}
+                            CompE+ is a student led pilot program to provide students with support to find internships in the tech industry. Finding an internship within the tech industry can be
+                            difficult and daunting - that’s where CompE+ comes in! CompE+ strives to provide students with services that will aid them on their internship hunt and to provide insight
+                            on what it&apos;s like to work in the tech industry.
                         </Typography>
-                    </Grid>
-                    <Grid container item alignItems='center'>
+                        <br />
                         <Typography variant='body1'>
                             The CompE+ pilot program is currently under development and is slated to launch Fall 2021 for the Summer 2022 recruitment. The program will run from September - October
                             2021.
                         </Typography>
                     </Grid>
-                    <Grid container item alignItems='center'>
-                        <Typography variant='body1' style={{ fontWeight: 600 }}>
-                            Currently looking for volunteers: Resume Reviewers and Interviewers!
-                        </Typography>
-                        <Typography variant='body1' style={{ fontWeight: 600 }}>
-                            Contact external@compeclub.com{' '}
-                        </Typography>
+                    <Grid container item justify='center' alignItems='center' direction='column' spacing={5}>
+                        <Grid container item justify='center' alignItems='center'>
+                            <Typography variant='body1' style={{ fontWeight: 600 }}>
+                                We are currently looking for volunteers: Resume Reviewers and Interviewers! <br />
+                            </Typography>
+                        </Grid>
+
+                        <Grid container item justify='center' alignItems='center' direction='column'>
+                            <Typography variant='body1' style={{ fontWeight: 600 }}>
+                                If you&apos;re interested:
+                            </Typography>
+                            <Button size='medium' variant='contained' className={classes.main_button} onClick={() => window.location.replace('/#call-to-action')}>
+                                Sign up for our mailing list!
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
