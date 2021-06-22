@@ -15,6 +15,8 @@ import Wave2 from '../assets/wave_2.svg';
 import Wave3 from '../assets/wave_3.svg';
 import Wave4 from '../assets/wave_4.svg';
 import { Fade } from '../components/Fade';
+import useGlobalStyles from '../styles/style';
+import { TextInput } from '../components/TextInput';
 
 const Landing: FC = () => {
     const classes = useStyles();
@@ -34,7 +36,7 @@ const Landing: FC = () => {
 
 const Intro: FC = () => {
     const classes = useStyles();
-
+    const global = useGlobalStyles();
     return (
         <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '50vh', paddingTop: '10vh' }} id='intro'>
             <Grid container item justify='center' spacing={5}>
@@ -55,12 +57,12 @@ const Intro: FC = () => {
             <Grid container item justify='center' alignItems='center' style={{ paddingTop: '5vh' }} spacing={5}>
                 <Grid container item justify='center' alignItems='center' spacing={4}>
                     <Grid item>
-                        <Button size='large' variant='contained' className={classes.main_button} onClick={() => window.location.replace('/#call-to-action')}>
+                        <Button size='large' variant='contained' className={global.main_button} onClick={() => window.location.replace('/#call-to-action')}>
                             Get Started!
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button size='large' variant='outlined' className={classes.secondary_button} onClick={() => window.location.replace('/#services')}>
+                        <Button size='large' variant='outlined' className={global.secondary_button} onClick={() => window.location.replace('/#services')}>
                             Learn More
                         </Button>
                     </Grid>
@@ -79,6 +81,8 @@ const Intro: FC = () => {
 
 const Info: FC = () => {
     const classes = useStyles();
+    const global = useGlobalStyles();
+
     return (
         <Fade>
             <Grid container item style={{ height: '100vh' }} justify='center' id='info'>
@@ -109,7 +113,7 @@ const Info: FC = () => {
                             <Typography variant='body1' style={{ fontWeight: 600 }}>
                                 If you&apos;re interested:
                             </Typography>
-                            <Button size='medium' variant='contained' className={classes.main_button} onClick={() => window.location.replace('/#call-to-action')}>
+                            <Button size='medium' variant='contained' className={global.main_button} onClick={() => window.location.replace('/#call-to-action')}>
                                 Sign up for our mailing list!
                             </Button>
                         </Grid>
@@ -240,6 +244,11 @@ const Services: FC = () => {
 const CallToAction: FC = () => {
     const classes = useStyles();
 
+    const handleSubmit = (value: string) => {
+        console.log(value);
+        // TODO: link to mailing list
+    };
+
     return (
         <>
             <img src={Wave2} className={classes.wave} id='call-to-action' />
@@ -258,18 +267,7 @@ const CallToAction: FC = () => {
                             </Grid>
                         </Grid>
                         <Grid container item justify='center' alignItems='center' direction='column' spacing={2}>
-                            <Grid container item justify='center' spacing={1}>
-                                <Grid item>
-                                    <Paper component='form' className={classes.text_input_root}>
-                                        <InputBase className={classes.text_input} placeholder='Email Address' />
-                                    </Paper>
-                                </Grid>
-                                <Grid item>
-                                    <Button variant='contained' className={classes.main_button}>
-                                        Submit
-                                    </Button>
-                                </Grid>
-                            </Grid>
+                            <TextInput textPlaceholder='Email Address' callback={handleSubmit} buttonPlaceholder='Submit' />
                             <Grid item>
                                 <Typography variant='body1' style={{ fontWeight: 200, fontSize: 22 }}>
                                     We promise not to spam you :)
@@ -345,28 +343,6 @@ const useStyles = makeStyles((theme) => ({
     text_input_divider: {
         height: 28,
         margin: 4,
-    },
-    main_button: {
-        backgroundColor: theme.palette.primary.dark,
-        outlineColor: theme.palette.primary.dark,
-        color: theme.palette.primary.light,
-        fontWeight: 500,
-        borderRadius: 0,
-        '&:hover': {
-            backgroundColor: theme.palette.primary.light,
-            color: theme.palette.primary.dark,
-        },
-    },
-    secondary_button: {
-        border: '2px solid',
-        outlineColor: theme.palette.primary.dark,
-        color: theme.palette.primary.dark,
-        fontWeight: 500,
-        borderRadius: 0,
-        '&:hover': {
-            color: theme.palette.primary.light,
-            outlineColor: theme.palette.primary.light,
-        },
     },
 }));
 
