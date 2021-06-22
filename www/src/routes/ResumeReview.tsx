@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
 import { Grid, Typography } from '@material-ui/core';
+import React, { FC } from 'react';
+
 import UploadResumeIcon from '../assets/add_resume.svg';
-import ResumesIcon from '../assets/documents.svg';
 import FeedbackIcon from '../assets/conversation.svg';
+import ResumesIcon from '../assets/documents.svg';
 
 const ResumeReview: FC = () => {
     return (
