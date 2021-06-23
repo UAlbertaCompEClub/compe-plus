@@ -42,7 +42,7 @@ it('rejects invalid state query parameter', async () => {
     await getResumeReviews(req as Request, res as Response, next);
 
     expect(mockResumeReviewRepository.get).toBeCalledTimes(0);
-    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { state: 'Must be a "canceled", "finished", "reviewing", or "seeking_reviewer"' } });
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { state: 'Must be one of "canceled", "finished", "reviewing", or "seeking_reviewer"' } });
 });
 
 it('works on the happy path', async () => {
