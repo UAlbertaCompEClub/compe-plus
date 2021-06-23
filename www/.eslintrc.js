@@ -12,9 +12,11 @@ module.exports = {
         ecmaVersion: 12,
         sourceType: 'module',
     },
-    plugins: ['react', '@typescript-eslint', 'prettier'],
+    plugins: ['react', '@typescript-eslint', 'prettier', 'simple-import-sort'],
     rules: {
         'prettier/prettier': ['error', { singleQuote: true }],
+        'simple-import-sort/imports': 'error',
+        'simple-import-sort/exports': 'error',
     },
     settings: {
         react: {

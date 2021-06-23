@@ -2,8 +2,8 @@ import cors from 'cors';
 import express from 'express';
 import http from 'http';
 
-import middleware from './routes/middleware';
-import sampleRoutes from './routes/sample';
+import middleware from './controllers/middleware';
+import resumeReviewRoutes from './routes/resumeReview';
 import config from './util/config';
 import logger from './util/logger';
 
@@ -22,11 +22,17 @@ router.use(express.json());
 router.use(middleware.authenticate());
 
 /** Routes */
-router.use('/api/v1', sampleRoutes);
+router.use('/api/v1', resumeReviewRoutes);
+
+/** Not found */
+router.use(middleware.notFound());
 
 /** Error handling */
-router.use(middleware.notFound());
+router.use(middleware.errorHandler());
 
 /** Create the server */
 const httpServer = http.createServer(router);
-httpServer.listen(config.server.port, () => logger.info({ config: config }, `Server running on ${config.server.hostname}:${config.server.port}`));
+httpServer.listen(config.server.port, () => {
+    logger.info(`Server running on ${config.server.hostname}:${config.server.port}`);
+    logger.debug({ config: config }, 'With the given configuration');
+});

@@ -1,13 +1,11 @@
 // Libraries
+// Material UI
+import { AppBar, Link, makeStyles, Toolbar } from '@material-ui/core';
 import React, { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-// Material UI
-import { Toolbar, Link, AppBar, makeStyles } from '@material-ui/core';
-
 // Assets
 import logo from '../assets/logo_white.svg';
-
 // Components
 import AuthButton from './auth/AuthButton';
 

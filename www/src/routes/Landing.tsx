@@ -1,21 +1,20 @@
 // Libraries
-import React, { FC } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-
 // Material UI
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { Grid, Typography, Box, Button } from '@material-ui/core';
+import React, { FC } from 'react';
 
-// Assets
-import PairProgramming from '../assets/pair_programming.svg';
+import Industry from '../assets/industry.svg';
 import LandingBackground from '../assets/LandingBackground.svg';
 import BlackLogo from '../assets/logo_black.svg';
-import Practice from '../assets/practice.svg';
 import MockInterview from '../assets/mock_interview.svg';
-import Industry from '../assets/industry.svg';
+// Assets
+import PairProgramming from '../assets/pair_programming.svg';
+import Practice from '../assets/practice.svg';
 import ResumeReview from '../assets/resume_review.svg';
-import Teamwork from '../assets/teamwork.svg';
 import Support from '../assets/support.svg';
+import Teamwork from '../assets/teamwork.svg';
 
 const Landing: FC = () => {
     return (
