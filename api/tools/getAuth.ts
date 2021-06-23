@@ -59,5 +59,3 @@ const getEnv = (env: string) => {
         console.error(error.message);
     }
 })();
-
-// TODO create multiple test applications, one for each user role and multiplex between them in this tool
