@@ -2,6 +2,7 @@
 // Material UI
 import { AppBar, Link, makeStyles, Toolbar } from '@material-ui/core';
 import React, { FC } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 // Assets
 import logo from '../assets/logo_white.svg';
@@ -22,17 +23,32 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
     const classes = useStyles();
     const { sections, title } = props;
 
+    const linkProps = sections.map((section) => {
+        if (section.url.startsWith('/')) {
+            return {
+                component: RouterLink,
+                to: section.url,
+                title: section.title,
+            };
+        }
+
+        return {
+            href: section.url,
+            title: section.title,
+        };
+    });
+
     return (
         <AppBar position='relative'>
             <Toolbar className={classes.toolbar} disableGutters={true}>
                 <div className={classes.main}>
                     <img src={logo} className={classes.logo} />
-                    <Link underline='none' color='textSecondary' variant='h5' href={'/'}>
+                    <Link underline='none' color='textSecondary' variant='h5' component={RouterLink} to='/'>
                         {title}
                     </Link>
-                    {sections.map((section) => (
-                        <Link color='textSecondary' key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
-                            {section.title}
+                    {linkProps.map((linkProp) => (
+                        <Link color='textSecondary' key={linkProp.title} variant='body2' {...linkProp} className={classes.toolbarLink}>
+                            {linkProp.title}
                         </Link>
                     ))}
                 </div>

@@ -1,6 +1,7 @@
 // Libraries
-import { Box, Button, Grid, Typography } from '@material-ui/core';
+import { useAuth0 } from '@auth0/auth0-react';
 // Material UI
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import React, { FC } from 'react';
 
@@ -27,8 +28,9 @@ const Landing: FC = () => {
     );
 };
 
-const Intro: FC = () => {
+export const Intro: FC = () => {
     const classes = useStyles();
+    const { isAuthenticated } = useAuth0();
 
     return (
         <Grid container item>
@@ -54,11 +56,13 @@ const Intro: FC = () => {
                                 CompE+ is a student-led pilot program to provide support for computer engineering students looking for internships
                             </Typography>
                         </Grid>
-                        <Grid item>
-                            <Button variant='contained' color='primary' onClick={() => console.log('clicked Get Started button')}>
-                                {'Get Started'}
-                            </Button>
-                        </Grid>
+                        {!isAuthenticated && (
+                            <Grid item>
+                                <Button variant='contained' color='primary' onClick={() => console.log('clicked Get Started button')}>
+                                    {'Get Started'}
+                                </Button>
+                            </Grid>
+                        )}
                     </Grid>
                 </Grid>
             </Grid>

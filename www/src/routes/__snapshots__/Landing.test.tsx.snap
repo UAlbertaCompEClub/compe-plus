@@ -1,0 +1,317 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Intro renders correctly: when authenticated 1`] = `
+<WithStyles(ForwardRef(Grid))
+  container={true}
+  item={true}
+>
+  <WithStyles(ForwardRef(Grid))
+    container={true}
+    item={true}
+    style={
+      Object {
+        "height": "100vh",
+      }
+    }
+  >
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      item={true}
+      xs={5}
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+      >
+        <Styled(MuiBox)
+          maxWidth="sm"
+        >
+          <img
+            className="makeStyles-logo_1-5"
+            src="logo_black.svg"
+          />
+        </Styled(MuiBox)>
+        <WithStyles(ForwardRef(Typography))
+          variant="h1"
+        >
+          CompE+
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          variant="h3"
+        >
+          Practice, Insight, and Support
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      item={true}
+      justify="center"
+      xs={7}
+    >
+      <Styled(MuiBox)
+        maxWidth="sm"
+      >
+        <img
+          className="makeStyles-svg-1"
+          src="pair_programming.svg"
+        />
+      </Styled(MuiBox)>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      container={true}
+      item={true}
+      justify="center"
+      xs={12}
+    >
+      <WithStyles(ForwardRef(Grid))
+        alignItems="center"
+        container={true}
+        direction="column"
+        item={true}
+        justify="center"
+        spacing={3}
+      >
+        <WithStyles(ForwardRef(Grid))
+          item={true}
+        >
+          <WithStyles(ForwardRef(Typography))
+            align="center"
+            component="h2"
+            variant="h2"
+          >
+            CompE+ is a student-led pilot program to provide support for computer engineering students looking for internships
+          </WithStyles(ForwardRef(Typography))>
+        </WithStyles(ForwardRef(Grid))>
+        <WithStyles(ForwardRef(Grid))
+          item={true}
+        >
+          <WithStyles(ForwardRef(Button))
+            color="primary"
+            onClick={[Function]}
+            variant="contained"
+          >
+            Get Started
+          </WithStyles(ForwardRef(Button))>
+        </WithStyles(ForwardRef(Grid))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+  <WithStyles(ForwardRef(Grid))
+    container={true}
+    item={true}
+    spacing={10}
+  >
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      item={true}
+      justify="center"
+      xs={8}
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+      >
+        <WithStyles(ForwardRef(Typography))
+          component="h2"
+          noWrap={true}
+          variant="h1"
+        >
+          What’s CompE+ ?
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          component="h2"
+          variant="body1"
+        >
+          CompE+ is a student led pilot program to provide CompE students with practice, insight, and support when finding internships in the tech industry. Arguably, computer engineering is a unique discipline and requires different resources and support - that’s where CompE+ comes in!
+           
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      item={true}
+      justify="center"
+      xs={4}
+    >
+      <img
+        className="makeStyles-logo_2-4"
+        src="logo_black.svg"
+      />
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Grid))>
+`;
+
+exports[`Intro renders correctly: when unauthenticated 1`] = `
+<WithStyles(ForwardRef(Grid))
+  container={true}
+  item={true}
+>
+  <WithStyles(ForwardRef(Grid))
+    container={true}
+    item={true}
+    style={
+      Object {
+        "height": "100vh",
+      }
+    }
+  >
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      item={true}
+      xs={5}
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+      >
+        <Styled(MuiBox)
+          maxWidth="sm"
+        >
+          <img
+            className="makeStyles-logo_1-5"
+            src="logo_black.svg"
+          />
+        </Styled(MuiBox)>
+        <WithStyles(ForwardRef(Typography))
+          variant="h1"
+        >
+          CompE+
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          variant="h3"
+        >
+          Practice, Insight, and Support
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      item={true}
+      justify="center"
+      xs={7}
+    >
+      <Styled(MuiBox)
+        maxWidth="sm"
+      >
+        <img
+          className="makeStyles-svg-1"
+          src="pair_programming.svg"
+        />
+      </Styled(MuiBox)>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      container={true}
+      item={true}
+      justify="center"
+      xs={12}
+    >
+      <WithStyles(ForwardRef(Grid))
+        alignItems="center"
+        container={true}
+        direction="column"
+        item={true}
+        justify="center"
+        spacing={3}
+      >
+        <WithStyles(ForwardRef(Grid))
+          item={true}
+        >
+          <WithStyles(ForwardRef(Typography))
+            align="center"
+            component="h2"
+            variant="h2"
+          >
+            CompE+ is a student-led pilot program to provide support for computer engineering students looking for internships
+          </WithStyles(ForwardRef(Typography))>
+        </WithStyles(ForwardRef(Grid))>
+        <WithStyles(ForwardRef(Grid))
+          item={true}
+        >
+          <WithStyles(ForwardRef(Button))
+            color="primary"
+            onClick={[Function]}
+            variant="contained"
+          >
+            Get Started
+          </WithStyles(ForwardRef(Button))>
+        </WithStyles(ForwardRef(Grid))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+  <WithStyles(ForwardRef(Grid))
+    container={true}
+    item={true}
+    spacing={10}
+  >
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      item={true}
+      justify="center"
+      xs={8}
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+      >
+        <WithStyles(ForwardRef(Typography))
+          component="h2"
+          noWrap={true}
+          variant="h1"
+        >
+          What’s CompE+ ?
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          component="h2"
+          variant="body1"
+        >
+          CompE+ is a student led pilot program to provide CompE students with practice, insight, and support when finding internships in the tech industry. Arguably, computer engineering is a unique discipline and requires different resources and support - that’s where CompE+ comes in!
+           
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      item={true}
+      justify="center"
+      xs={4}
+    >
+      <img
+        className="makeStyles-logo_2-4"
+        src="logo_black.svg"
+      />
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Grid))>
+`;
+
+exports[`Landing renders correctly 1`] = `
+<WithStyles(ForwardRef(Grid))
+  container={true}
+  direction="row"
+  justify="center"
+  style={
+    Object {
+      "backgroundImage": "url(LandingBackground.svg)",
+      "backgroundSize": "cover",
+      "paddingBottom": 80,
+    }
+  }
+>
+  <WithStyles(ForwardRef(Grid))
+    container={true}
+    item={true}
+    spacing={10}
+    xs={10}
+  >
+    <Intro />
+    <Values />
+    <Services />
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Grid))>
+`;
