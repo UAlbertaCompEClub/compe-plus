@@ -24,6 +24,20 @@ To find the three Auth0 fields open the Auth0 Dashboard and navigate to _CompePl
 
 ![auth0-env-values](./docs/auth0-env-values.png)
 
+# Authentication
+
+All endpoints are protected by both authentication and authorization mechanisms. A JWT passed in a header like so `Authorization: Bearer <Your JWT Token>` is used for both of these purposes. For local testing you can generate this authentication header by running `npx ts-node tools/getAuth.ts <role>` from within the `api/` directory. With a bit of help from Bash command substitution curl requests become trivial:
+
+```bash
+curl localhost:1337/api/v1/resume-reviews -H "$(npx ts-node tools/getAuth.ts user)"
+```
+
+In order to use the `getAuth` tool you need to setup an `.env.tools` file. Follow along with `.env.tools.sample` for the format. The actual values can be found in the Auth0 dashboard.
+
+![Test applications](test_applications.png)
+
+![Test application env values](test_application_env_values.png)
+
 # Logging recipes
 
 ```bash
