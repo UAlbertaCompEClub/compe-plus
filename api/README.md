@@ -1,4 +1,4 @@
-# CompE+ Backend
+\*\*\*\*# CompE+ Backend
 
 A REST API that supports the CompE+ [frontend](../www/README.md).
 
@@ -15,6 +15,14 @@ To test the code run `npm test`. You can also run `npm run test:watch` for an in
 We also have a few scripts to keep the code quality up to snuff. Run `npm run format` to format all the code with Prettier and run `npm run lint` to make sure that ESLint doesn't complain about anything.
 
 The API makes use of a number of services e.g., database, blog storage, email. See the [dependencies](#Dependencies) section for more on how to locally emulate these services.
+
+## Environment variables
+
+### Auth0
+
+To find the three Auth0 fields open the Auth0 Dashboard and navigate to _CompePlusAPI_'s quick start tab. You should be able to find the NodeJS snippet.
+
+![auth0-env-values](./docs/auth0-env-values.png)
 
 # Authentication
 
