@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { render, RenderResult } from '@testing-library/react';
 import { Auth0Context, Auth0ContextInterface } from '@auth0/auth0-react';
+import { render, RenderResult } from '@testing-library/react';
 import Enzyme, { shallow } from 'enzyme';
+import React from 'react';
 
 function shallowWithAuth0(
     component: React.ReactElement<any, string | React.JSXElementConstructor<any>>,
@@ -21,4 +21,4 @@ function renderWithAuth0(component: React.ReactElement<any, string | React.JSXEl
     return render(<Auth0Context.Provider value={authState as any}>{component}</Auth0Context.Provider>);
 }
 
-export { shallowWithAuth0, renderWithAuth0 };
+export { renderWithAuth0, shallowWithAuth0 };

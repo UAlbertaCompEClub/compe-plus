@@ -1,9 +1,9 @@
-import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Enzyme, { shallow } from 'enzyme';
+import React from 'react';
 
-import Landing, { Intro } from './Landing';
 import { shallowWithAuth0 } from '../util/testWithAuth0';
+import Landing, { Intro } from './Landing';
 
 Enzyme.configure({ adapter: new Adapter() });
 describe('Landing', () => {
