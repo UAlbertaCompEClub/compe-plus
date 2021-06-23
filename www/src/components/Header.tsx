@@ -26,20 +26,20 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
 
     return (
         <AppBar position='relative'>
-            <Toolbar className={classes.toolbar} disableGutters={true}>
+            <Toolbar className={classes.toolbar}>
                 <div className={classes.main}>
-                    <img src={logo} className={classes.logo} />
+                    <a href={'/'}>
+                        <img src={logo} className={classes.logo} />
+                    </a>
                     <Link underline='none' color='textSecondary' variant='h5' href={'/'}>
                         {title}
                     </Link>
-                    {sections.map((section) => (
-                        <Link color='textSecondary' key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
-                            {section.title}
-                        </Link>
-                    ))}
                 </div>
-
-                <AuthButton />
+                {sections.map((section) => (
+                    <Link color='textSecondary' key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
+                        {section.title}
+                    </Link>
+                ))}
             </Toolbar>
         </AppBar>
     );
