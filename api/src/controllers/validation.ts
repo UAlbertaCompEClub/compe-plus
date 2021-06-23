@@ -47,7 +47,7 @@ const beAResumeReviewState = {
     predicate: async (field: string | undefined): Promise<boolean> => {
         return field ? ['canceled', 'finished', 'reviewing', 'seeking_reviewer'].includes(field) : false;
     },
-    message: 'Must be a "canceled", "finished", "reviewing", or "seeking_reviewer"',
+    message: 'Must be one of "canceled", "finished", "reviewing", or "seeking_reviewer"',
 };
 
 /**
@@ -57,10 +57,9 @@ const beAValidUser = {
     predicate: async (field: string | undefined): Promise<boolean> => {
         if (field === undefined) {
             return false;
-        } else {
-            const matches = await userRepository.get(field);
-            return matches.length == 1;
         }
+        const matches = await userRepository.get(field);
+        return matches.length == 1;
     },
     message: 'Must be a user that already exists',
 };
