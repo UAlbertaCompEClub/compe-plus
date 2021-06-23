@@ -1,4 +1,5 @@
 import HttpException from './HttpException';
+import NotAuthenticatedException from './NotAuthenticatedException';
 import NotFoundException from './NotFoundException';
 import NotImplementedException from './NotImplementedException';
 import ValidationException from './ValidationException';
@@ -59,6 +60,17 @@ describe('ValidationException', () => {
         expect(obj.code).toEqual(400);
         expect(obj.message).toEqual('Invalid body');
         expect(obj.details).toMatchObject({ fieldA: 'Is too long' });
+    });
+});
+
+describe('NotAuthenticatedException', () => {
+    it('serializes properly', () => {
+        const e = new NotAuthenticatedException();
+        const obj = e.serialize();
+
+        expect(obj.code).toEqual(401);
+        expect(obj.message).toEqual('Not authenticated');
+        expect(obj.details).toBeUndefined();
     });
 });
 

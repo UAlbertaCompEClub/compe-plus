@@ -98,6 +98,14 @@ describe('errorHandler middleware', () => {
         expect(resStatus).toBeCalledWith(404);
     });
 
+    it('handles authentication errors', () => {
+        const e = new Error('asdf');
+        e.name = 'UnauthorizedError';
+        middleware.errorHandler()(e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(resJson).toBeCalledWith({ code: 401, message: 'Not authenticated' });
+        expect(resStatus).toBeCalledWith(401);
+    });
+
     // Can't figure out how to mock req.log.error so I'm punting on this
     it.todo('handles unknown errors');
 });

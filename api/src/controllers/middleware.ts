@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import pinoExpressMiddleware from 'express-pino-logger';
 
 import HttpException from '../exceptions/HttpException';
+import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotFoundException from '../exceptions/NotFoundException';
 import { checkJwt } from '../util/checkJwt';
 import config from '../util/config';
@@ -40,6 +41,8 @@ function errorHandler(): ErrMiddleware {
         if (err instanceof HttpException) {
             // Handle a known server error
             outErr = err;
+        } else if (err.name === 'UnauthorizedError') {
+            outErr = new NotAuthenticatedException();
         } else {
             // Handle an unknown error
             req.log.error({ error: err }, 'Unknown error');
