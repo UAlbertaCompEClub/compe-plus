@@ -2,10 +2,10 @@ import { NextFunction, Request, Response } from 'express';
 import { mocked } from 'ts-jest/utils';
 import type * as s from 'zapatos/schema';
 
-import * as resumeReviewRepository from '../../repositories/resumeReview';
+import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
 import getResumeReviews from './getResumeReviews';
 
-jest.mock('../../repositories/resumeReview');
+jest.mock('../../repositories/resumeReviewRepository');
 const mockResumeReviewRepository = mocked(resumeReviewRepository, true);
 
 let req: Partial<Request>;
@@ -42,7 +42,7 @@ it('rejects invalid state query parameter', async () => {
     await getResumeReviews(req as Request, res as Response, next);
 
     expect(mockResumeReviewRepository.get).toBeCalledTimes(0);
-    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { state: 'Must be a "canceled", "finished", "reviewing", or "seeking_reviewer"' } });
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { state: 'Must be one of "canceled", "finished", "reviewing", or "seeking_reviewer"' } });
 });
 
 it('works on the happy path', async () => {
