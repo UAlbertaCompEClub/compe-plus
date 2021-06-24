@@ -7,9 +7,6 @@ import { Toolbar, Link, AppBar, makeStyles } from '@material-ui/core';
 // Assets
 import logo from '../assets/logo_white.svg';
 
-// Components
-import AuthButton from './auth/AuthButton';
-
 type HeaderProps = {
     sections: Section[];
     title: string;
