@@ -17,9 +17,12 @@ import Wave4 from '../assets/wave_4.svg';
 import { Fade } from '../components/Fade';
 import useGlobalStyles from '../styles/style';
 import { TextInput } from '../components/TextInput';
+import MailchimpSubscribe from 'react-mailchimp-subscribe';
+import config from '../util/config';
 
 const Landing: FC = () => {
     const classes = useStyles();
+    console.log(config);
     return (
         <Grid container direction='row' justify='center' style={{ overflowX: 'hidden' }}>
             <Intro />
@@ -267,7 +270,21 @@ const CallToAction: FC = () => {
                             </Grid>
                         </Grid>
                         <Grid container item justify='center' alignItems='center' direction='column' spacing={2}>
-                            <TextInput textPlaceholder='Email Address' callback={handleSubmit} buttonPlaceholder='Submit' />
+                            <MailchimpSubscribe
+                                url={config.mailchimpUrl}
+                                render={({ subscribe }) => (
+                                    <div>
+                                        <TextInput
+                                            textPlaceholder='Email Address'
+                                            callback={(email) => {
+                                                subscribe({ EMAIL: email });
+                                                console.log(config.mailchimpUrl);
+                                            }}
+                                            buttonPlaceholder='Submit'
+                                        />
+                                    </div>
+                                )}
+                            />
                             <Grid item>
                                 <Typography variant='body1' style={{ fontWeight: 200, fontSize: 22 }}>
                                     We promise not to spam you :)
