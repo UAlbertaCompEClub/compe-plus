@@ -16,7 +16,10 @@ import Community from './routes/Community';
 import theme from './styles/theme';
 
 // Constants
-import { COMMUNITY, COMMUNITY_ROUTE, COMPE_CLUB, COMPE_CLUB_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
+import { COMPE_PLUS } from './util/constants';
+
+import { BrowserView, MobileView } from 'react-device-detect';
+import MobileLanding from './routes/MobileLanding';
 
 const header_sections: Section[] = [
     // { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
@@ -30,22 +33,27 @@ const App: FC = () => {
             <CssBaseline />
             <Container maxWidth={false} style={{ padding: 0 }}>
                 <Header sections={header_sections} title={COMPE_PLUS} />
-                <Router>
-                    <Switch>
-                        <Route path='/resume-review'>
-                            <ResumeReview />
-                        </Route>
-                        <Route path='/mock-interview'>
-                            <MockInterview />
-                        </Route>
-                        <Route path='/community'>
-                            <Community />
-                        </Route>
-                        <Route path='/'>
-                            <Landing />
-                        </Route>
-                    </Switch>
-                </Router>
+                <BrowserView>
+                    <Router>
+                        <Switch>
+                            <Route path='/resume-review'>
+                                <ResumeReview />
+                            </Route>
+                            <Route path='/mock-interview'>
+                                <MockInterview />
+                            </Route>
+                            <Route path='/community'>
+                                <Community />
+                            </Route>
+                            <Route path='/'>
+                                <Landing />
+                            </Route>
+                        </Switch>
+                    </Router>
+                </BrowserView>
+                <MobileView>
+                    <MobileLanding />
+                </MobileView>
             </Container>
         </ThemeProvider>
     );
