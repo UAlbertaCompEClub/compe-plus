@@ -5,8 +5,8 @@ import pinoExpressMiddleware from 'express-pino-logger';
 import HttpException from '../exceptions/HttpException';
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotFoundException from '../exceptions/NotFoundException';
-import { checkJwt } from '../util/checkJwt';
 import config from '../util/config';
+import { authenticateJwt } from '../util/jwt';
 import logger, { standardSerializers, verboseSerializers } from '../util/logger';
 
 type Middleware = (req: Request, res: Response, next?: NextFunction) => void;
@@ -55,7 +55,7 @@ function errorHandler(): ErrMiddleware {
 
 /**
  * Returns middleware that will ensure the client accessing is authenticated.
- * @returns checkJwt middleware.
+ * @returns authenticate middleware.
  */
 function authenticate(): Middleware {
     return (req: Request, res: Response, next?: NextFunction): void => {
@@ -63,7 +63,7 @@ function authenticate(): Middleware {
             return;
         }
 
-        checkJwt(req, res, next);
+        authenticateJwt(req, res, next);
     };
 }
 
