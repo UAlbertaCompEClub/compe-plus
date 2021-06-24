@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
 import NotFoundException from '../exceptions/NotFoundException';
-import * as checkJwt from '../util/checkJwt';
+import * as jwt from '../util/jwt';
 import logger from '../util/logger';
 import middleware from './middleware';
 
@@ -60,7 +60,7 @@ describe('authenticate middleware', () => {
     });
 
     it('authenticate is used', () => {
-        const authenticate = jest.spyOn(checkJwt, 'checkJwt');
+        const authenticate = jest.spyOn(jwt, 'authenticateJwt');
         middleware.authenticate()(mockRequest as Request, mockResponse as Response, nextFunction);
         expect(authenticate).toBeCalledTimes(1);
     });
