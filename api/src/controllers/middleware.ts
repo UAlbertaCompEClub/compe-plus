@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { UnauthorizedError } from 'express-jwt';
 import pinoExpressMiddleware from 'express-pino-logger';
 
 import HttpException from '../exceptions/HttpException';
@@ -41,7 +42,7 @@ function errorHandler(): ErrMiddleware {
         if (err instanceof HttpException) {
             // Handle a known server error
             outErr = err;
-        } else if (err.name === 'UnauthorizedError') {
+        } else if (err instanceof UnauthorizedError) {
             outErr = new NotAuthenticatedException();
         } else {
             // Handle an unknown error

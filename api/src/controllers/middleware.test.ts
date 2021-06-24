@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { UnauthorizedError } from 'express-jwt';
 
 import NotFoundException from '../exceptions/NotFoundException';
 import * as checkJwt from '../util/checkJwt';
@@ -99,8 +100,7 @@ describe('errorHandler middleware', () => {
     });
 
     it('handles authentication errors', () => {
-        const e = new Error('asdf');
-        e.name = 'UnauthorizedError';
+        const e = new UnauthorizedError('credentials_required', { message: '' });
         middleware.errorHandler()(e, mockRequest as Request, mockResponse as Response, nextFunction);
         expect(resJson).toBeCalledWith({ code: 401, message: 'Not authenticated' });
         expect(resStatus).toBeCalledWith(401);
