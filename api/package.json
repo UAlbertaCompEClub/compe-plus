@@ -51,7 +51,7 @@
         "express-jwt": "^6.0.0",
         "express-jwt-authz": "^2.4.1",
         "express-pino-logger": "^6.0.0",
-        "fluentvalidation-ts": "^2.2.1",
+        "fluentvalidation-ts": "^2.2.2",
         "jwks-rsa": "^2.0.3",
         "pg": "^8.6.0",
         "pino": "^6.11.3",
