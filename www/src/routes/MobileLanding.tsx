@@ -1,8 +1,9 @@
-import { Grid, Typography, makeStyles, Button, InputBase, Paper } from '@material-ui/core';
+import { Button, Grid, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
+
 import BlackLogo from '../assets/logo_black.svg';
-import Wave1 from '../assets/wave_1.svg';
 import LightGreenLogo from '../assets/logo_light_green.svg';
+import Wave1 from '../assets/wave_1.svg';
 import Wave4 from '../assets/wave_4.svg';
 
 const MobileLanding: FC = () => {
