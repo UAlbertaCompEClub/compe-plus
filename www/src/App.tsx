@@ -1,25 +1,16 @@
-// Libraries
-import React, { FC } from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-
-// Material UI
 import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
-
-// Components and Routes
-import { Header, Section } from './components/Header';
-import Landing from './routes/Landing';
-import ResumeReview from './routes/ResumeReview';
-import MockInterview from './routes/MockInterview';
-import Community from './routes/Community';
-
-// Styles
-import theme from './styles/theme';
-
-// Constants
-import { COMPE_PLUS } from './util/constants';
-
+import React, { FC } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import { Header, Section } from './components/Header';
+import Community from './routes/Community';
+import Landing from './routes/Landing';
 import MobileLanding from './routes/MobileLanding';
+import MockInterview from './routes/MockInterview';
+import ResumeReview from './routes/ResumeReview';
+import theme from './styles/theme';
+import { COMPE_PLUS } from './util/constants';
 
 const header_sections: Section[] = [
     // { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },

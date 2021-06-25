@@ -1,6 +1,6 @@
 // Credit: https://stackoverflow.com/questions/59595700/how-to-make-a-react-component-fade-in-on-scroll-using-intersectionobserver-but
 
-import { useState, useEffect, RefObject } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
 export default function useVisibility(ref: RefObject<HTMLDivElement>): boolean {
     const [isVisible, setVisibility] = useState(false);

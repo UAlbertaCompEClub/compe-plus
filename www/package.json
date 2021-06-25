@@ -34,6 +34,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "lint": "eslint src --ext .js,.ts,.tsx,.jsx --max-warnings 0",
+        "lint:fix": "eslint src --ext .js,.ts,.tsx,.jsx --max-warnings 0 --fix",
         "format": "prettier --config ../.prettierrc --ignore-path .prettierignore --write ."
     },
     "browserslist": {
@@ -55,6 +56,7 @@
         "eslint": "^7.27.0",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-react": "^7.23.2",
+        "eslint-plugin-simple-import-sort": "^7.0.0",
         "prettier": "^2.3.0"
     }
 }

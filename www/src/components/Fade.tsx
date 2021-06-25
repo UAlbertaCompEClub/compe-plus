@@ -1,10 +1,11 @@
 // Credit: dev.to/selbekk/how-to-fade-in-content-as-it-scrolls-into-view-10j4
 
-import React, { FC, useRef } from 'react';
-import useVisibility from '../hooks/useVisibility';
-import { Grid } from '@material-ui/core';
-
 import '../styles/scrollAnimation.css';
+
+import { Grid } from '@material-ui/core';
+import React, { FC, useRef } from 'react';
+
+import useVisibility from '../hooks/useVisibility';
 
 type FadeProps = {
     children: React.ReactChild;
