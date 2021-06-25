@@ -16,13 +16,14 @@ import Wave3 from '../assets/wave_3.svg';
 import Wave4 from '../assets/wave_4.svg';
 import { Fade } from '../components/Fade';
 import useGlobalStyles from '../styles/style';
-import { TextInput } from '../components/TextInput';
+import { Form } from '../components/Form';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import config from '../util/config';
+import validator from 'validator';
 
 const Landing: FC = () => {
     const classes = useStyles();
-    console.log(config);
+
     return (
         <Grid container direction='row' justify='center' style={{ overflowX: 'hidden' }}>
             <Intro />
@@ -247,9 +248,16 @@ const Services: FC = () => {
 const CallToAction: FC = () => {
     const classes = useStyles();
 
-    const handleSubmit = (value: string) => {
-        console.log(value);
-        // TODO: link to mailing list
+    const getMessage = (status: string | null): string => {
+        if (status == 'error') {
+            return 'Something went wrong :( Please try again';
+        } else if (status == 'sending') {
+            return 'Adding you to the mailing list...';
+        } else if (status == 'success') {
+            return 'You have been added to the mailing list :)';
+        }
+
+        return '';
     };
 
     return (
@@ -272,23 +280,28 @@ const CallToAction: FC = () => {
                         <Grid container item justify='center' alignItems='center' direction='column' spacing={2}>
                             <MailchimpSubscribe
                                 url={config.mailchimpUrl}
-                                render={({ subscribe }) => (
-                                    <div>
-                                        <TextInput
+                                render={({ subscribe, status }) => (
+                                    <Grid container item justify='center' alignItems='center'>
+                                        <Form
                                             textPlaceholder='Email Address'
                                             callback={(email) => {
                                                 subscribe({ EMAIL: email });
-                                                console.log(config.mailchimpUrl);
                                             }}
                                             buttonPlaceholder='Submit'
+                                            valueValidator={(email) => validator.isEmail(email)}
                                         />
-                                    </div>
+                                        <Grid item>
+                                            <Typography variant='body1' style={{ fontWeight: 200 }}>
+                                                {getMessage(status)}
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
                                 )}
                             />
                             <Grid item>
                                 <Typography variant='body1' style={{ fontWeight: 200, fontSize: 22 }}>
                                     We promise not to spam you :)
-                                </Typography>{' '}
+                                </Typography>
                             </Grid>
                         </Grid>
                     </Grid>
