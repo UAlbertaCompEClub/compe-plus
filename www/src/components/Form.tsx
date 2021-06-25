@@ -35,45 +35,40 @@ export const Form: FC<FormProps> = (props: FormProps) => {
     };
 
     return (
-        <Grid container item justify='center'>
-            <form onSubmit={handleSubmit}>
-                <Grid container item spacing={1} justify='center' alignItems='center'>
-                    <Grid item>
-                        <Paper className={`${classes.root} ${error ? classes.error : ''}`}>
-                            <InputBase
-                                onBlur={() => clearError()}
-                                required
-                                className={classes.text_input}
-                                placeholder={textPlaceholder}
-                                onChange={(e) => {
-                                    clearError();
-                                    setValue(e.target.value);
-                                }}
-                            />
-                        </Paper>
-                    </Grid>
-                    <Grid item>
-                        <Button type='submit' variant='contained' className={global.main_button}>
-                            {buttonPlaceholder}
-                        </Button>
-                    </Grid>
+        <form onSubmit={handleSubmit}>
+            <Grid container item spacing={1} justify='center' alignItems='center'>
+                <Grid item>
+                    <Paper elevation={3} square className={`${classes.root} ${error ? classes.error : ''}`}>
+                        <InputBase
+                            onBlur={() => clearError()}
+                            required
+                            fullWidth
+                            className={classes.text_input}
+                            placeholder={textPlaceholder}
+                            onChange={(e) => {
+                                clearError();
+                                setValue(e.target.value);
+                            }}
+                        />
+                    </Paper>
                 </Grid>
-            </form>
-        </Grid>
+                <Grid item>
+                    <Button type='submit' variant='contained' className={global.main_button}>
+                        {buttonPlaceholder}
+                    </Button>
+                </Grid>
+            </Grid>
+        </form>
     );
 };
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: '2px 4px',
-        display: 'flex',
-        alignItems: 'center',
-        width: 400,
-        borderRadius: 0,
         backgroundColor: theme.palette.primary.light,
     },
     text_input: {
-        marginLeft: theme.spacing(1),
+        paddingLeft: '5px',
+        paddingRight: '5px',
         flex: 1,
     },
     error: {

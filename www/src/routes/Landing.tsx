@@ -290,7 +290,7 @@ const CallToAction: FC = () => {
                                             valueValidator={(email) => validator.isEmail(email)}
                                         />
                                         <Grid item>
-                                            <Typography variant='body1' style={{ fontWeight: 200 }}>
+                                            <Typography align='center' variant='body1' style={{ fontWeight: 200 }}>
                                                 {getMessage(status)}
                                             </Typography>
                                         </Grid>

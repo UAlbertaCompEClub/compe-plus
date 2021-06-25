@@ -1,13 +1,28 @@
-import { Button, Grid, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Grid, Typography, makeStyles } from '@material-ui/core';
 import React, { FC } from 'react';
 
 import BlackLogo from '../assets/logo_black.svg';
 import LightGreenLogo from '../assets/logo_light_green.svg';
 import Wave1 from '../assets/wave_1.svg';
 import Wave4 from '../assets/wave_4.svg';
+import MailchimpSubscribe from 'react-mailchimp-subscribe';
+import { Form } from '../components/Form';
+import config from '../util/config';
+import validator from 'validator';
 
 const MobileLanding: FC = () => {
     const classes = useStyles();
+    const getMessage = (status: string | null): string => {
+        if (status == 'error') {
+            return 'Something went wrong :( Please try again';
+        } else if (status == 'sending') {
+            return 'Adding you to the mailing list...';
+        } else if (status == 'success') {
+            return 'You have been added to the mailing list :)';
+        }
+
+        return '';
+    };
     return (
         <>
             <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '50vh', paddingTop: '10vh' }} id='intro'>
@@ -39,17 +54,27 @@ const MobileLanding: FC = () => {
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Grid container item alignItems='center' justify='center' direction='column' spacing={2}>
-                        <Grid container item alignItems='center' justify='center'>
-                            <Paper component='form' className={classes.text_input_root}>
-                                <InputBase className={classes.text_input} placeholder='Email Address' />
-                            </Paper>
-                        </Grid>
-                        <Grid container item alignItems='center' justify='center'>
-                            <Button variant='contained' className={classes.main_button}>
-                                Submit
-                            </Button>
-                        </Grid>
+                    <Grid container item justify='center' alignItems='center'>
+                        <MailchimpSubscribe
+                            url={config.mailchimpUrl}
+                            render={({ subscribe, status }) => (
+                                <Grid container item justify='center' alignItems='center'>
+                                    <Form
+                                        textPlaceholder='Email Address'
+                                        callback={(email) => {
+                                            subscribe({ EMAIL: email });
+                                        }}
+                                        buttonPlaceholder='Submit'
+                                        valueValidator={(email) => validator.isEmail(email)}
+                                    />
+                                    <Grid item>
+                                        <Typography align='center' variant='body1' style={{ fontWeight: 200 }}>
+                                            {getMessage(status)}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            )}
+                        />
                     </Grid>
                 </Grid>
             </Grid>
