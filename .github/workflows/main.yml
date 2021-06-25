@@ -2,9 +2,13 @@ name: Continuous Integration
 
 on:
     push:
-        branches: [master]
+        branches:
+            - master
+            - www-prod
     pull_request:
-        branches: [master]
+        branches:
+            - master
+            - www-prod
 
 jobs:
     api:
