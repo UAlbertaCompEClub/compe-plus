@@ -1,11 +1,9 @@
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import Enzyme, { shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import React from 'react';
 
 import { shallowWithAuth0 } from '../util/testWithAuth0';
 import Landing, { Intro } from './Landing';
 
-Enzyme.configure({ adapter: new Adapter() });
 describe('Landing', () => {
     it('renders correctly', () => {
         const wrapper = shallow(<Landing />);
