@@ -84,7 +84,6 @@ const Intro: FC = () => {
 };
 
 const Info: FC = () => {
-    const classes = useStyles();
     const global = useGlobalStyles();
 
     return (
