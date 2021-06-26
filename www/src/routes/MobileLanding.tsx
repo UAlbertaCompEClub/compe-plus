@@ -5,27 +5,14 @@ import BlackLogo from '../assets/logo_black.svg';
 import LightGreenLogo from '../assets/logo_light_green.svg';
 import Wave1 from '../assets/wave_1.svg';
 import Wave4 from '../assets/wave_4.svg';
-import MailchimpSubscribe from 'react-mailchimp-subscribe';
-import { Form } from '../components/Form';
-import config from '../util/config';
-import validator from 'validator';
+import { MailChimpForm } from '../components/MailChimpForm';
 
 const MobileLanding: FC = () => {
     const classes = useStyles();
-    const getMessage = (status: string | null): string => {
-        if (status == 'error') {
-            return 'Something went wrong :( Please try again';
-        } else if (status == 'sending') {
-            return 'Adding you to the mailing list...';
-        } else if (status == 'success') {
-            return 'You have been added to the mailing list :)';
-        }
 
-        return '';
-    };
     return (
         <>
-            <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '50vh', paddingTop: '10vh' }} id='intro'>
+            <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '50vh', paddingTop: '10vh', overflowX: 'hidden' }} id='intro'>
                 <Grid container item justify='center' spacing={5}>
                     <Grid container item xs={10} alignItems='center' justify='center' spacing={3}>
                         <Grid container item justify='center'>
@@ -54,28 +41,7 @@ const MobileLanding: FC = () => {
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Grid container item justify='center' alignItems='center'>
-                        <MailchimpSubscribe
-                            url={config.mailchimpUrl}
-                            render={({ subscribe, status }) => (
-                                <Grid container item justify='center' alignItems='center'>
-                                    <Form
-                                        textPlaceholder='Email Address'
-                                        callback={(email) => {
-                                            subscribe({ EMAIL: email });
-                                        }}
-                                        buttonPlaceholder='Submit'
-                                        valueValidator={(email) => validator.isEmail(email)}
-                                    />
-                                    <Grid item>
-                                        <Typography align='center' variant='body1' style={{ fontWeight: 200 }}>
-                                            {getMessage(status)}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            )}
-                        />
-                    </Grid>
+                    <MailChimpForm />
                 </Grid>
             </Grid>
             <img src={Wave4} className={classes.wave} />
