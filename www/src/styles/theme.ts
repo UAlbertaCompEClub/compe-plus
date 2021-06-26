@@ -19,6 +19,9 @@ const palette = {
     background: {
         default: '#E2F8E2',
     },
+    error: {
+        main: '#820B00',
+    },
 };
 
 const typography = {

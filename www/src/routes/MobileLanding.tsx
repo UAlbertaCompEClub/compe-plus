@@ -1,16 +1,18 @@
-import { Button, Grid, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 
 import BlackLogo from '../assets/logo_black.svg';
 import LightGreenLogo from '../assets/logo_light_green.svg';
 import Wave1 from '../assets/wave_1.svg';
 import Wave4 from '../assets/wave_4.svg';
+import { MailChimpForm } from '../components/MailChimpForm';
 
 const MobileLanding: FC = () => {
     const classes = useStyles();
+
     return (
         <>
-            <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '50vh', paddingTop: '10vh' }} id='intro'>
+            <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '50vh', paddingTop: '10vh', overflowX: 'hidden' }} id='intro'>
                 <Grid container item justify='center' spacing={5}>
                     <Grid container item xs={10} alignItems='center' justify='center' spacing={3}>
                         <Grid container item justify='center'>
@@ -39,18 +41,7 @@ const MobileLanding: FC = () => {
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Grid container item alignItems='center' justify='center' direction='column' spacing={2}>
-                        <Grid container item alignItems='center' justify='center'>
-                            <Paper component='form' className={classes.text_input_root}>
-                                <InputBase className={classes.text_input} placeholder='Email Address' />
-                            </Paper>
-                        </Grid>
-                        <Grid container item alignItems='center' justify='center'>
-                            <Button variant='contained' className={classes.main_button}>
-                                Submit
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    <MailChimpForm />
                 </Grid>
             </Grid>
             <img src={Wave4} className={classes.wave} />
