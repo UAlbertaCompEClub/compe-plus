@@ -249,11 +249,11 @@ const CallToAction: FC = () => {
 
     const getMessage = (status: string | null): string => {
         if (status == 'error') {
-            return 'Something went wrong :( Please try again';
+            return 'Something went wrong 😔 Please try again';
         } else if (status == 'sending') {
             return 'Adding you to the mailing list...';
         } else if (status == 'success') {
-            return 'You have been added to the mailing list :)';
+            return 'You have been added to the mailing list 😀';
         }
 
         return '';
