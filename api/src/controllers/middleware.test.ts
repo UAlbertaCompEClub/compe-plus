@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { UnauthorizedError } from 'express-jwt';
 
 import NotFoundException from '../exceptions/NotFoundException';
 import * as checkJwt from '../util/checkJwt';
@@ -96,6 +97,13 @@ describe('errorHandler middleware', () => {
         middleware.errorHandler()(new NotFoundException(), mockRequest as Request, mockResponse as Response, nextFunction);
         expect(resJson).toBeCalledWith({ code: 404, message: 'Not found' });
         expect(resStatus).toBeCalledWith(404);
+    });
+
+    it('handles authentication errors', () => {
+        const e = new UnauthorizedError('credentials_required', { message: '' });
+        middleware.errorHandler()(e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(resJson).toBeCalledWith({ code: 401, message: 'Not authenticated' });
+        expect(resStatus).toBeCalledWith(401);
     });
 
     // Can't figure out how to mock req.log.error so I'm punting on this
