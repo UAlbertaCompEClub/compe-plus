@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import { useAppSelector } from './redux/hooks';
+import adminStore from './redux/substores/admin/adminStore';
 import studentStore from './redux/substores/student/studentStore';
 import volunteerStore from './redux/substores/volunteeer/volunteerStore';
 import Community from './routes/Community';
@@ -22,7 +23,6 @@ const header_sections: Section[] = [
 ];
 
 const StudentApp: FC = () => {
-    // TODO: Update components accordingly
     return (
         <Provider store={studentStore}>
             <Router>
@@ -55,6 +55,15 @@ const VolunteerApp: FC = () => {
     );
 };
 
+const AdminApp: FC = () => {
+    // TODO: Update components accordingly
+    return (
+        <Provider store={adminStore}>
+            <p>🚧 Work in progress 🚧</p>
+        </Provider>
+    );
+};
+
 const App: FC = () => {
     const currentRole = useAppSelector((state) => state.user.currentRole);
 
@@ -62,6 +71,10 @@ const App: FC = () => {
 
     if (currentRole === 'reviewer' || currentRole === 'interviewer') {
         content = <VolunteerApp />;
+    }
+
+    if (currentRole === 'admin') {
+        content = <AdminApp />;
     }
 
     return (
