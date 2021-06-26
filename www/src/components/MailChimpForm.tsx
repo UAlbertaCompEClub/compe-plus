@@ -1,8 +1,9 @@
 import { Grid, Typography } from '@material-ui/core';
-import config from '../util/config';
 import React, { FC } from 'react';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import validator from 'validator';
+
+import config from '../util/config';
 import { Form } from './Form';
 
 export const MailChimpForm: FC = () => {

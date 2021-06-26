@@ -1,4 +1,4 @@
-import { Box, Button, Grid, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 
 import Industry from '../assets/industry.svg';
@@ -15,8 +15,8 @@ import Wave2 from '../assets/wave_2.svg';
 import Wave3 from '../assets/wave_3.svg';
 import Wave4 from '../assets/wave_4.svg';
 import { Fade } from '../components/Fade';
-import useGlobalStyles from '../styles/style';
 import { MailChimpForm } from '../components/MailChimpForm';
+import useGlobalStyles from '../styles/style';
 
 const Landing: FC = () => {
     const classes = useStyles();

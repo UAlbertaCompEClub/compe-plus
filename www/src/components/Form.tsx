@@ -1,8 +1,9 @@
-import React, { FC, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import { Button, Grid } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
-import { Grid, Button } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import React, { FC, useState } from 'react';
+
 import useGlobalStyles from '../styles/style';
 
 type FormProps = {
