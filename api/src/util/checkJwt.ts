@@ -3,7 +3,7 @@ import jwks from 'jwks-rsa';
 
 import config from './config';
 
-export const authenticateJwt = jwt({
+export const checkJwt = jwt({
     secret: jwks.expressJwtSecret({
         cache: true,
         rateLimit: true,
