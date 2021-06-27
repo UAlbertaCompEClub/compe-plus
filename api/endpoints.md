@@ -2,7 +2,7 @@
 
 ## `GET /users`
 
-Read multiple users.
+Read users.
 
 ### Authorization
 
@@ -11,14 +11,7 @@ Read multiple users.
 ### Query Parameters
 
 -   `?role=reviewer`
-
-## `GET /users/{user}`
-
-Read a single user.
-
-### Authorization
-
--   `read:user` — Student, Reviewer, Interviewer, Admin
+-   `?id=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`
 
 ## `POST /users`
 
@@ -58,7 +51,7 @@ Revoke a users role.
 
 ## `GET /resume-reviews`
 
-Read all resume reviews.
+Read resume reviews.
 
 ### Authorization
 
@@ -70,15 +63,7 @@ Read all resume reviews.
 -   `?reviewer=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`
 -   `?reviewee=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`
 -   `?state=created`
-
-## `GET /resume-reviews/{resume-review}`
-
-Read a single resume review.
-
-### Authorization
-
--   `read_my:resume_review` — Student
--   `read_all:resume_review` — Reviewer, Admin
+-   `?id=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`
 
 ## `POST /resume-reviews`
 
@@ -101,7 +86,7 @@ Update a resume review.
 
 ## `GET /resume-reviews/{resume-review}/documents`
 
-Read all documents for a resume review.
+Read documents for a resume review.
 
 ### Authorization
 
@@ -112,15 +97,7 @@ Read all documents for a resume review.
 
 -   `?is_review=true`
 -   `?state=submitted`
-
-## `GET /resume-reviews/{resume-review}/documents/{document}`
-
-Read a single document from a resume review.
-
-### Authorization
-
--   `read_my:document` — Student, Reviewer
--   `read_all:document` — Admin
+-   `?id=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`
 
 ## `POST /resume-reviews/{resume-review}/documents`
 
