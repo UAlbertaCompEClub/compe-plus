@@ -276,7 +276,21 @@ const Footer: FC = () => {
     return (
         <Grid container item className={classes.footer}>
             <Grid container item className={classes.wave_pattern} justify='center' direction='column' alignItems='center'>
-                <img src={LightGreenLogo} className={classes.footer_logo} />
+                <Grid container item alignItems='center' justify='center' xs={11}>
+                    <Grid item xs={4}>
+                        <Typography className={classes.footer_text} align='left'>
+                            Contact: external@compeclub.com
+                        </Typography>
+                    </Grid>
+                    <Grid container item xs={4} alignItems='center' justify='center'>
+                        <img src={LightGreenLogo} className={classes.footer_logo} />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Typography className={classes.footer_text} align='right'>
+                            Curious how we&apos;re building CompE+? Checkout the <a href='https://github.com/UAlbertaCompEClub/compe-plus'>Github</a> 😎
+                        </Typography>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     );
@@ -310,7 +324,7 @@ const useStyles = makeStyles((theme) => ({
         padding: '0',
     },
     footer_logo: {
-        width: '3%',
+        width: '7%',
         height: 'auto',
         margin: '1em',
     },
@@ -331,6 +345,11 @@ const useStyles = makeStyles((theme) => ({
     text_input_divider: {
         height: 28,
         margin: 4,
+    },
+    footer_text: {
+        color: theme.palette.primary.light,
+        fontSize: 16,
+        fontWeight: 400,
     },
 }));
 
