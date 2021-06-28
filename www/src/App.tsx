@@ -64,18 +64,22 @@ const AdminApp: FC = () => {
     );
 };
 
+const getContentByRole = (role: string) => {
+    switch (role) {
+        case 'admin':
+            return <AdminApp />;
+        case 'reviewer':
+        case 'interviewer':
+            return <VolunteerApp />;
+        default:
+            return <StudentApp />;
+    }
+};
+
 const App: FC = () => {
     const currentRole = useAppSelector((state) => state.user.currentRole);
 
-    let content = <StudentApp />;
-
-    if (currentRole === 'reviewer' || currentRole === 'interviewer') {
-        content = <VolunteerApp />;
-    }
-
-    if (currentRole === 'admin') {
-        content = <AdminApp />;
-    }
+    const content = getContentByRole(currentRole);
 
     return (
         <ThemeProvider theme={theme}>
