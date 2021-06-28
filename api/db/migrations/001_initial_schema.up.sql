@@ -32,7 +32,7 @@ CREATE TRIGGER update_time_users
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 /* roles enum */
-CREATE TYPE role_type AS ENUM ('reviewer', 'interviewer', 'admin');
+CREATE TYPE role_type AS ENUM ('student', 'reviewer', 'interviewer', 'admin');
 
 /* user_roles table */
 CREATE TABLE IF NOT EXISTS user_roles (
