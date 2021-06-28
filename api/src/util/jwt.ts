@@ -14,3 +14,4 @@ export const authenticateJwt = jwt({
     issuer: config.auth0.issuer,
     algorithms: ['RS256'],
 });
+// TODO move into middleware file

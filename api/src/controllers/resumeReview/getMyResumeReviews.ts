@@ -5,7 +5,9 @@ import * as resumeReviewRepository from '../../repositories/resumeReviewReposito
 import controller from '../controllerUtil';
 import Validator, { beAResumeReviewState, beAValidUuid } from '../validation';
 
+// TODO test id
 type ReqQuery = {
+    id?: string;
     reviewer?: string;
     reviewee?: string;
     state?: s.resume_review_state;
@@ -14,6 +16,10 @@ type ReqQuery = {
 class ReqQueryValidator extends Validator<ReqQuery> {
     constructor() {
         super('query parameters');
+
+        this.ruleFor('id')
+            .mustAsync(beAValidUuid)
+            .when((reqQuery) => reqQuery.id !== undefined);
 
         this.ruleFor('reviewer')
             .mustAsync(beAValidUuid)
@@ -39,12 +45,13 @@ type ResBody = {
  * @param res HTTP response.
  * @returns HTTP response.
  */
-const getResumeReviews = controller(async (req: Request<unknown, ResBody, unknown, ReqQuery>, res: Response<ResBody>): Promise<void> => {
+const getAllResumeReviews = controller(async (req: Request<unknown, ResBody, unknown, ReqQuery>, res: Response<ResBody>): Promise<void> => {
     await new ReqQueryValidator().validateAndThrow(req.query);
 
-    const allResumeReviews = await resumeReviewRepository.get(req.query.reviewee, req.query.reviewer, req.query.state);
+    const allResumeReviews = await resumeReviewRepository.get(req.query.id, req.query.reviewee, req.query.reviewer, req.query.state);
 
     res.status(200).json({ resumeReviews: allResumeReviews });
 });
+// TODO constrain to related resume reviews
 
-export default getResumeReviews;
+export default getAllResumeReviews;

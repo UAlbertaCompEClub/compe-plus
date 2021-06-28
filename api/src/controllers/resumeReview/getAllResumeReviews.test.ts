@@ -3,7 +3,7 @@ import { mocked } from 'ts-jest/utils';
 import type * as s from 'zapatos/schema';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
-import getResumeReviews from './getResumeReviews';
+import getResumeReviews from './getAllResumeReviews';
 
 jest.mock('../../repositories/resumeReviewRepository');
 const mockResumeReviewRepository = mocked(resumeReviewRepository, true);

@@ -9,12 +9,13 @@ import middleware from './middleware';
 describe('notFound middleware', () => {
     const mockRequest: Partial<Request> = {};
     const mockResponse: Partial<Response> = {};
+    const nextFunction: NextFunction = jest.fn();
     mockResponse.json = jest.fn().mockReturnValue(mockResponse);
     mockResponse.status = jest.fn().mockReturnValue(mockResponse);
 
     it('always returns a NotFoundException', () => {
         expect(() => {
-            middleware.notFound()(mockRequest as Request, mockResponse as Response);
+            middleware.notFound()(mockRequest as Request, mockResponse as Response, nextFunction);
         }).toThrowError(new NotFoundException());
     });
 });
