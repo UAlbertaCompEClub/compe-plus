@@ -287,7 +287,7 @@ const Footer: FC = () => {
                     </Grid>
                     <Grid item xs={4}>
                         <Typography className={classes.footer_text} align='right'>
-                            Curious how we&apos;re building CompE+? Checkout the <a href='https://github.com/UAlbertaCompEClub/compe-plus'>Github</a> 😎
+                            Curious how we&apos;re building CompE+? Checkout the Github <a href='https://github.com/UAlbertaCompEClub/compe-plus'>repo</a> 😎
                         </Typography>
                     </Grid>
                 </Grid>
