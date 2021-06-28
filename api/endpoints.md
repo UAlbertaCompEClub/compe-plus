@@ -6,7 +6,7 @@ Read users.
 
 ### Authorization
 
--   `read:user` — Student, Reviewer, Interviewer, Admin
+-   `read:users` — Student, Reviewer, Interviewer, Admin
 
 ### Query Parameters
 
@@ -29,7 +29,7 @@ Read all roles for a user.
 
 ### Authorization
 
--   `read:role` — Student, Reviewer, Interviewer, Admin
+-   `read:roles` — Student, Reviewer, Interviewer, Admin
 
 ## `PUT /users/{user}/roles/{role}`
 
@@ -37,7 +37,7 @@ Give a user a new role.
 
 ### Authorization
 
--   `create:role` — Admin
+-   `create:roles` — Admin
 
 ## `DELETE /users/{user}/roles/{role}`
 
@@ -45,7 +45,7 @@ Revoke a users role.
 
 ### Authorization
 
--   `delete:role` — Admin
+-   `delete:roles` — Admin
 
 # Resume Review Resource
 
@@ -55,8 +55,8 @@ Read resume reviews.
 
 ### Authorization
 
--   `read_my:resume_review` — Student
--   `read_all:resume_review` — Reviewer, Admin
+-   `read_my:resume_reviews` — Student
+-   `read_all:resume_reviews` — Reviewer, Admin
 
 ### Query Parameters
 
@@ -71,7 +71,7 @@ Create a new resume review.
 
 ### Authorization
 
--   `create:resume_review` — Student, Admin
+-   `create:resume_reviews` — Student, Admin
 
 ## `PATCH /resume-reviews/{resume-review}`
 
@@ -79,8 +79,8 @@ Update a resume review.
 
 ### Authorization
 
--   `update_my:resume_review` — Student, Reviewer
--   `update_all:resume_review` — Admin
+-   `update_my:resume_reviews` — Student, Reviewer
+-   `update_all:resume_reviews` — Admin
 
 # Document Resource
 
@@ -90,8 +90,8 @@ Read documents for a resume review.
 
 ### Authorization
 
--   `read_my:document` — Student, Reviewer
--   `read_all:document` — Admin
+-   `read_my:documents` — Student, Reviewer
+-   `read_all:documents` — Admin
 
 ### Query Parameters
 
@@ -105,7 +105,7 @@ Create a new document for a resume review.
 
 ### Authorization
 
--   `create:document` — Student, Reviewer, Admin
+-   `create:documents` — Student, Reviewer, Admin
 
 ## `PATCH /resume-reviews/{resume-review}/documents/{document}`
 
@@ -113,8 +113,8 @@ Update a document from a resume review.
 
 ### Authorization
 
--   `update_my:document` — Student, Reviewer
--   `update_all:document` — Admin
+-   `update_my:documents` — Student, Reviewer
+-   `update_all:documents` — Admin
 
 # Time Slot Resource
 
@@ -124,7 +124,7 @@ Read all time slots.
 
 ### Authorization
 
--   `read:time_slot` — Student, Interviewer, Admin
+-   `read:time_slots` — Student, Interviewer, Admin
 
 ### Query Parameters
 
@@ -137,7 +137,7 @@ Create a new time slot.
 
 ### Authorization
 
--   `create:time_slot` — Interviewer, Admin
+-   `create:time_slots` — Interviewer, Admin
 
 ## `DELETE /time-slots/{time-slot}`
 
@@ -145,7 +145,7 @@ Delete a time slot.
 
 ### Authorization
 
--   `delete:time_slot` — Interviewer, Admin
+-   `delete:time_slots` — Interviewer, Admin
 
 # Interview Resource
 
@@ -155,8 +155,8 @@ Read all interviews.
 
 ### Authorization
 
--   `read_my:interview` — Student, Interviewer
--   `read_all:interview` — Admin
+-   `read_my:interviews` — Student, Interviewer
+-   `read_all:interviews` — Admin
 
 ### Query Parameters
 
@@ -170,7 +170,7 @@ Create an interview.
 
 ### Authorization
 
--   `create:interview` — Student, Admin
+-   `create:interviews` — Student, Admin
 
 ## `DELETE /interviews/{interview}`
 
@@ -178,4 +178,4 @@ Delete an interview i.e. cancel it.
 
 ### Authorization
 
--   `delete:interview` — Student, Interviewer, Admin
+-   `delete:interviews` — Student, Interviewer, Admin
