@@ -27,8 +27,8 @@ const Landing: FC = () => {
             <img src={Wave1} className={classes.wave} />
             <Services />
             <Info />
-            <Values />
             <CallToAction />
+            <Values />
             <img src={Wave4} className={classes.wave} />
             <Footer />
         </Grid>
