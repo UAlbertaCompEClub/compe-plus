@@ -13,7 +13,8 @@ const palette = {
         dark: '#124612',
     },
     secondary: {
-        main: '#E2F8E2',
+        main: '#D9FFD9',
+        light: '#E2F8E2',
     },
     text: {
         primary: '#000000',
