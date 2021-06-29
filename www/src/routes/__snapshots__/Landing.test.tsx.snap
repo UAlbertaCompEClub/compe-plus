@@ -2,23 +2,30 @@
 
 exports[`Intro renders correctly: when authenticated 1`] = `
 <WithStyles(ForwardRef(Grid))
+  className="makeStyles-wave_pattern-1"
   container={true}
+  id="intro"
   item={true}
+  justify="center"
+  style={
+    Object {
+      "minHeight": "50vh",
+      "paddingTop": "10vh",
+    }
+  }
 >
   <WithStyles(ForwardRef(Grid))
     container={true}
     item={true}
-    style={
-      Object {
-        "height": "100vh",
-      }
-    }
+    justify="center"
+    spacing={5}
   >
     <WithStyles(ForwardRef(Grid))
       alignItems="center"
       container={true}
       item={true}
-      xs={5}
+      justify="center"
+      xs={4}
     >
       <WithStyles(ForwardRef(Grid))
         item={true}
@@ -27,7 +34,7 @@ exports[`Intro renders correctly: when authenticated 1`] = `
           maxWidth="sm"
         >
           <img
-            className="makeStyles-logo_1-5"
+            className="makeStyles-logo_1-6"
             src="logo_black.svg"
           />
         </Styled(MuiBox)>
@@ -39,7 +46,7 @@ exports[`Intro renders correctly: when authenticated 1`] = `
         <WithStyles(ForwardRef(Typography))
           variant="h3"
         >
-          Practice, Insight, and Support
+          Resume Review, Mock Interviews, Community
         </WithStyles(ForwardRef(Typography))>
       </WithStyles(ForwardRef(Grid))>
     </WithStyles(ForwardRef(Grid))>
@@ -48,85 +55,56 @@ exports[`Intro renders correctly: when authenticated 1`] = `
       container={true}
       item={true}
       justify="center"
-      xs={7}
+      xs={5}
     >
-      <Styled(MuiBox)
-        maxWidth="sm"
-      >
-        <img
-          className="makeStyles-svg-1"
-          src="pair_programming.svg"
-        />
-      </Styled(MuiBox)>
-    </WithStyles(ForwardRef(Grid))>
-    <WithStyles(ForwardRef(Grid))
-      container={true}
-      item={true}
-      justify="center"
-      xs={12}
-    >
-      <WithStyles(ForwardRef(Grid))
-        alignItems="center"
-        container={true}
-        direction="column"
-        item={true}
-        justify="center"
-        spacing={3}
-      >
-        <WithStyles(ForwardRef(Grid))
-          item={true}
-        >
-          <WithStyles(ForwardRef(Typography))
-            align="center"
-            component="h2"
-            variant="h2"
-          >
-            CompE+ is a student-led pilot program to provide support for computer engineering students looking for internships
-          </WithStyles(ForwardRef(Typography))>
-        </WithStyles(ForwardRef(Grid))>
-        <WithStyles(ForwardRef(Grid))
-          item={true}
-        >
-          <WithStyles(ForwardRef(Button))
-            color="primary"
-            onClick={[Function]}
-            variant="contained"
-          >
-            Get Started
-          </WithStyles(ForwardRef(Button))>
-        </WithStyles(ForwardRef(Grid))>
-      </WithStyles(ForwardRef(Grid))>
+      <img
+        className="makeStyles-svg-2"
+        src="pair_programming.svg"
+      />
     </WithStyles(ForwardRef(Grid))>
   </WithStyles(ForwardRef(Grid))>
   <WithStyles(ForwardRef(Grid))
+    alignItems="center"
     container={true}
     item={true}
-    spacing={10}
+    justify="center"
+    spacing={5}
+    style={
+      Object {
+        "paddingTop": "5vh",
+      }
+    }
   >
     <WithStyles(ForwardRef(Grid))
       alignItems="center"
       container={true}
       item={true}
       justify="center"
-      xs={8}
+      spacing={4}
     >
       <WithStyles(ForwardRef(Grid))
         item={true}
       >
-        <WithStyles(ForwardRef(Typography))
-          component="h2"
-          noWrap={true}
-          variant="h1"
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-main_button-14"
+          onClick={[Function]}
+          size="large"
+          variant="contained"
         >
-          What’s CompE+ ?
-        </WithStyles(ForwardRef(Typography))>
-        <WithStyles(ForwardRef(Typography))
-          component="h2"
-          variant="body1"
+          Get Started!
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+      >
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-secondary_button-15"
+          onClick={[Function]}
+          size="large"
+          variant="outlined"
         >
-          CompE+ is a student led pilot program to provide CompE students with practice, insight, and support when finding internships in the tech industry. Arguably, computer engineering is a unique discipline and requires different resources and support - that’s where CompE+ comes in!
-           
-        </WithStyles(ForwardRef(Typography))>
+          Learn More
+        </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
@@ -134,12 +112,21 @@ exports[`Intro renders correctly: when authenticated 1`] = `
       container={true}
       item={true}
       justify="center"
-      xs={4}
     >
-      <img
-        className="makeStyles-logo_2-4"
-        src="logo_black.svg"
-      />
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+      >
+        <WithStyles(ForwardRef(Typography))
+          style={
+            Object {
+              "fontSize": 28,
+            }
+          }
+          variant="h3"
+        >
+          Get the help you need to land your dream internship!
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
     </WithStyles(ForwardRef(Grid))>
   </WithStyles(ForwardRef(Grid))>
 </WithStyles(ForwardRef(Grid))>
@@ -147,23 +134,30 @@ exports[`Intro renders correctly: when authenticated 1`] = `
 
 exports[`Intro renders correctly: when unauthenticated 1`] = `
 <WithStyles(ForwardRef(Grid))
+  className="makeStyles-wave_pattern-1"
   container={true}
+  id="intro"
   item={true}
+  justify="center"
+  style={
+    Object {
+      "minHeight": "50vh",
+      "paddingTop": "10vh",
+    }
+  }
 >
   <WithStyles(ForwardRef(Grid))
     container={true}
     item={true}
-    style={
-      Object {
-        "height": "100vh",
-      }
-    }
+    justify="center"
+    spacing={5}
   >
     <WithStyles(ForwardRef(Grid))
       alignItems="center"
       container={true}
       item={true}
-      xs={5}
+      justify="center"
+      xs={4}
     >
       <WithStyles(ForwardRef(Grid))
         item={true}
@@ -172,7 +166,7 @@ exports[`Intro renders correctly: when unauthenticated 1`] = `
           maxWidth="sm"
         >
           <img
-            className="makeStyles-logo_1-5"
+            className="makeStyles-logo_1-6"
             src="logo_black.svg"
           />
         </Styled(MuiBox)>
@@ -184,7 +178,7 @@ exports[`Intro renders correctly: when unauthenticated 1`] = `
         <WithStyles(ForwardRef(Typography))
           variant="h3"
         >
-          Practice, Insight, and Support
+          Resume Review, Mock Interviews, Community
         </WithStyles(ForwardRef(Typography))>
       </WithStyles(ForwardRef(Grid))>
     </WithStyles(ForwardRef(Grid))>
@@ -193,85 +187,56 @@ exports[`Intro renders correctly: when unauthenticated 1`] = `
       container={true}
       item={true}
       justify="center"
-      xs={7}
+      xs={5}
     >
-      <Styled(MuiBox)
-        maxWidth="sm"
-      >
-        <img
-          className="makeStyles-svg-1"
-          src="pair_programming.svg"
-        />
-      </Styled(MuiBox)>
-    </WithStyles(ForwardRef(Grid))>
-    <WithStyles(ForwardRef(Grid))
-      container={true}
-      item={true}
-      justify="center"
-      xs={12}
-    >
-      <WithStyles(ForwardRef(Grid))
-        alignItems="center"
-        container={true}
-        direction="column"
-        item={true}
-        justify="center"
-        spacing={3}
-      >
-        <WithStyles(ForwardRef(Grid))
-          item={true}
-        >
-          <WithStyles(ForwardRef(Typography))
-            align="center"
-            component="h2"
-            variant="h2"
-          >
-            CompE+ is a student-led pilot program to provide support for computer engineering students looking for internships
-          </WithStyles(ForwardRef(Typography))>
-        </WithStyles(ForwardRef(Grid))>
-        <WithStyles(ForwardRef(Grid))
-          item={true}
-        >
-          <WithStyles(ForwardRef(Button))
-            color="primary"
-            onClick={[Function]}
-            variant="contained"
-          >
-            Get Started
-          </WithStyles(ForwardRef(Button))>
-        </WithStyles(ForwardRef(Grid))>
-      </WithStyles(ForwardRef(Grid))>
+      <img
+        className="makeStyles-svg-2"
+        src="pair_programming.svg"
+      />
     </WithStyles(ForwardRef(Grid))>
   </WithStyles(ForwardRef(Grid))>
   <WithStyles(ForwardRef(Grid))
+    alignItems="center"
     container={true}
     item={true}
-    spacing={10}
+    justify="center"
+    spacing={5}
+    style={
+      Object {
+        "paddingTop": "5vh",
+      }
+    }
   >
     <WithStyles(ForwardRef(Grid))
       alignItems="center"
       container={true}
       item={true}
       justify="center"
-      xs={8}
+      spacing={4}
     >
       <WithStyles(ForwardRef(Grid))
         item={true}
       >
-        <WithStyles(ForwardRef(Typography))
-          component="h2"
-          noWrap={true}
-          variant="h1"
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-main_button-14"
+          onClick={[Function]}
+          size="large"
+          variant="contained"
         >
-          What’s CompE+ ?
-        </WithStyles(ForwardRef(Typography))>
-        <WithStyles(ForwardRef(Typography))
-          component="h2"
-          variant="body1"
+          Get Started!
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+      >
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-secondary_button-15"
+          onClick={[Function]}
+          size="large"
+          variant="outlined"
         >
-          CompE+ is a student led pilot program to provide CompE students with practice, insight, and support when finding internships in the tech industry. Arguably, computer engineering is a unique discipline and requires different resources and support - that’s where CompE+ comes in!
-           
-        </WithStyles(ForwardRef(Typography))>
+          Learn More
+        </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
@@ -279,12 +244,21 @@ exports[`Intro renders correctly: when unauthenticated 1`] = `
       container={true}
       item={true}
       justify="center"
-      xs={4}
     >
-      <img
-        className="makeStyles-logo_2-4"
-        src="logo_black.svg"
-      />
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+      >
+        <WithStyles(ForwardRef(Typography))
+          style={
+            Object {
+              "fontSize": 28,
+            }
+          }
+          variant="h3"
+        >
+          Get the help you need to land your dream internship!
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
     </WithStyles(ForwardRef(Grid))>
   </WithStyles(ForwardRef(Grid))>
 </WithStyles(ForwardRef(Grid))>
@@ -297,21 +271,23 @@ exports[`Landing renders correctly 1`] = `
   justify="center"
   style={
     Object {
-      "backgroundImage": "url(LandingBackground.svg)",
-      "backgroundSize": "cover",
-      "paddingBottom": 80,
+      "overflowX": "hidden",
     }
   }
 >
-  <WithStyles(ForwardRef(Grid))
-    container={true}
-    item={true}
-    spacing={10}
-    xs={10}
-  >
-    <Intro />
-    <Values />
-    <Services />
-  </WithStyles(ForwardRef(Grid))>
+  <Intro />
+  <img
+    className="makeStyles-wave-3"
+    src="wave_1.svg"
+  />
+  <Services />
+  <Info />
+  <CallToAction />
+  <Values />
+  <img
+    className="makeStyles-wave-3"
+    src="wave_4.svg"
+  />
+  <Footer />
 </WithStyles(ForwardRef(Grid))>
 `;
