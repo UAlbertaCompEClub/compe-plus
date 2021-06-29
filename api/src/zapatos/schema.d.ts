@@ -22,9 +22,9 @@ declare module 'zapatos/schema' {
   export namespace every {
     export type resume_review_state = ['canceled', 'finished', 'reviewing', 'seeking_reviewer'];
   }
-  export type role_type = 'admin' | 'interviewer' | 'reviewer';
+  export type role_type = 'admin' | 'interviewer' | 'reviewer' | 'student';
   export namespace every {
-    export type role_type = ['admin', 'interviewer', 'reviewer'];
+    export type role_type = ['admin', 'interviewer', 'reviewer', 'student'];
   }
 
   /* --- tables --- */
@@ -58,7 +58,7 @@ declare module 'zapatos/schema' {
       is_review: boolean;
       /**
       * **documents.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id: string;
@@ -108,7 +108,7 @@ declare module 'zapatos/schema' {
       is_review: boolean;
       /**
       * **documents.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id: string;
@@ -158,7 +158,7 @@ declare module 'zapatos/schema' {
       is_review?: boolean | db.Parameter<boolean> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, boolean | db.Parameter<boolean> | db.SQLFragment | db.ParentColumn>;
       /**
       * **documents.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
@@ -202,7 +202,7 @@ declare module 'zapatos/schema' {
       is_review: boolean | db.Parameter<boolean> | db.SQLFragment;
       /**
       * **documents.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id: string | db.Parameter<string> | db.SQLFragment;
@@ -234,7 +234,7 @@ declare module 'zapatos/schema' {
       is_review?: boolean | db.Parameter<boolean> | db.SQLFragment | db.SQLFragment<any, boolean | db.Parameter<boolean> | db.SQLFragment>;
       /**
       * **documents.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
@@ -269,13 +269,13 @@ declare module 'zapatos/schema' {
       time_slot: string;
       /**
       * **interviews.interviewee**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       interviewee: string;
       /**
       * **interviews.interviewer**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       interviewer: string;
@@ -295,13 +295,13 @@ declare module 'zapatos/schema' {
       time_slot: string;
       /**
       * **interviews.interviewee**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       interviewee: string;
       /**
       * **interviews.interviewer**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       interviewer: string;
@@ -321,13 +321,13 @@ declare module 'zapatos/schema' {
       time_slot?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
       * **interviews.interviewee**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       interviewee?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
       * **interviews.interviewer**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       interviewer?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
@@ -341,13 +341,13 @@ declare module 'zapatos/schema' {
       time_slot: string | db.Parameter<string> | db.SQLFragment;
       /**
       * **interviews.interviewee**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       interviewee: string | db.Parameter<string> | db.SQLFragment;
       /**
       * **interviews.interviewer**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       interviewer: string | db.Parameter<string> | db.SQLFragment;
@@ -361,13 +361,13 @@ declare module 'zapatos/schema' {
       time_slot?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
       /**
       * **interviews.interviewee**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       interviewee?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
       /**
       * **interviews.interviewer**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       interviewer?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
@@ -390,13 +390,13 @@ declare module 'zapatos/schema' {
       id: string;
       /**
       * **resume_reviews.reviewee_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       reviewee_id: string;
       /**
       * **resume_reviews.reviewer_id**
-      * - `uuid` in database
+      * - `text` in database
       * - Nullable, no default
       */
       reviewer_id: string | null;
@@ -428,13 +428,13 @@ declare module 'zapatos/schema' {
       id: string;
       /**
       * **resume_reviews.reviewee_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       reviewee_id: string;
       /**
       * **resume_reviews.reviewer_id**
-      * - `uuid` in database
+      * - `text` in database
       * - Nullable, no default
       */
       reviewer_id: string | null;
@@ -466,13 +466,13 @@ declare module 'zapatos/schema' {
       id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
       * **resume_reviews.reviewee_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       reviewee_id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
       * **resume_reviews.reviewer_id**
-      * - `uuid` in database
+      * - `text` in database
       * - Nullable, no default
       */
       reviewer_id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
@@ -498,13 +498,13 @@ declare module 'zapatos/schema' {
     export interface Insertable {
       /**
       * **resume_reviews.reviewee_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       reviewee_id: string | db.Parameter<string> | db.SQLFragment;
       /**
       * **resume_reviews.reviewer_id**
-      * - `uuid` in database
+      * - `text` in database
       * - Nullable, no default
       */
       reviewer_id?: string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment;
@@ -518,13 +518,13 @@ declare module 'zapatos/schema' {
     export interface Updatable {
       /**
       * **resume_reviews.reviewee_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       reviewee_id?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
       /**
       * **resume_reviews.reviewer_id**
-      * - `uuid` in database
+      * - `text` in database
       * - Nullable, no default
       */
       reviewer_id?: string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment>;
@@ -559,7 +559,7 @@ declare module 'zapatos/schema' {
       at: Date;
       /**
       * **time_slots.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id: string;
@@ -591,7 +591,7 @@ declare module 'zapatos/schema' {
       at: db.TimestampTzString;
       /**
       * **time_slots.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id: string;
@@ -623,7 +623,7 @@ declare module 'zapatos/schema' {
       at?: (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment | db.ParentColumn>;
       /**
       * **time_slots.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
@@ -649,7 +649,7 @@ declare module 'zapatos/schema' {
       at: (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment;
       /**
       * **time_slots.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id: string | db.Parameter<string> | db.SQLFragment;
@@ -663,7 +663,7 @@ declare module 'zapatos/schema' {
       at?: (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment | db.SQLFragment<any, (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment>;
       /**
       * **time_slots.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
@@ -680,7 +680,7 @@ declare module 'zapatos/schema' {
     export interface Selectable {
       /**
       * **user_roles.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id: string;
@@ -700,7 +700,7 @@ declare module 'zapatos/schema' {
     export interface JSONSelectable {
       /**
       * **user_roles.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id: string;
@@ -720,7 +720,7 @@ declare module 'zapatos/schema' {
     export interface Whereable {
       /**
       * **user_roles.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
@@ -740,7 +740,7 @@ declare module 'zapatos/schema' {
     export interface Insertable {
       /**
       * **user_roles.user_id**
-      * - `uuid` in database
+      * - `text` in database
       * - `NOT NULL`, no default
       */
       user_id: string | db.Parameter<string> | db.SQLFragment;
@@ -766,8 +766,8 @@ declare module 'zapatos/schema' {
     export interface Selectable {
       /**
       * **users.id**
-      * - `uuid` in database
-      * - `NOT NULL`, default: `uuid_generate_v4()`
+      * - `text` in database
+      * - `NOT NULL`, no default
       */
       id: string;
       /**
@@ -834,8 +834,8 @@ declare module 'zapatos/schema' {
     export interface JSONSelectable {
       /**
       * **users.id**
-      * - `uuid` in database
-      * - `NOT NULL`, default: `uuid_generate_v4()`
+      * - `text` in database
+      * - `NOT NULL`, no default
       */
       id: string;
       /**
@@ -902,8 +902,8 @@ declare module 'zapatos/schema' {
     export interface Whereable {
       /**
       * **users.id**
-      * - `uuid` in database
-      * - `NOT NULL`, default: `uuid_generate_v4()`
+      * - `text` in database
+      * - `NOT NULL`, no default
       */
       id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
