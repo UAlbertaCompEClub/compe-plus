@@ -10,12 +10,12 @@ import MobileLanding from './routes/MobileLanding';
 import MockInterview from './routes/MockInterview';
 import ResumeReview from './routes/ResumeReview';
 import theme from './styles/theme';
-import { COMPE_PLUS } from './util/constants';
+import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
 
 const header_sections: Section[] = [
-    // { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
-    // { title: MOCK_INTERVIEW, url: MOCK_INTERVIEW_ROUTE },
-    // { title: COMMUNITY, url: COMMUNITY_ROUTE },
+    { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
+    { title: MOCK_INTERVIEW, url: MOCK_INTERVIEW_ROUTE },
+    { title: COMMUNITY, url: COMMUNITY_ROUTE },
 ];
 
 const App: FC = () => {
