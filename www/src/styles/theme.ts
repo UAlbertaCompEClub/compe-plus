@@ -1,4 +1,4 @@
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
     interface ThemeOptions {
@@ -11,6 +11,9 @@ const palette = {
         main: '#79B178',
         light: '#E2F8E2',
         dark: '#124612',
+    },
+    secondary: {
+        main: '#E2F8E2',
     },
     text: {
         primary: '#000000',
