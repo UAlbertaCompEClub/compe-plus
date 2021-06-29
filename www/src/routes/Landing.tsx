@@ -18,6 +18,7 @@ import Wave3 from '../assets/wave_3.svg';
 import Wave4 from '../assets/wave_4.svg';
 import { Fade } from '../components/Fade';
 import { MailChimpForm } from '../components/MailChimpForm';
+import EditRolesDialog from '../components/user/EditRolesDialog';
 import useGlobalStyles from '../styles/style';
 
 const Landing: FC = () => {
@@ -26,6 +27,7 @@ const Landing: FC = () => {
     return (
         <Grid container direction='row' justify='center' style={{ overflowX: 'hidden' }}>
             <Intro />
+            <EditRolesDialog />
             <img src={Wave1} className={classes.wave} />
             <Services />
             <Info />
