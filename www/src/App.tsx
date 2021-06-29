@@ -27,22 +27,20 @@ const header_sections: Section[] = [
 const StudentApp: FC = () => {
     return (
         <Provider store={studentStore}>
-            <Router>
-                <Switch>
-                    <Route path={RESUME_REVIEW_ROUTE}>
-                        <ResumeReview />
-                    </Route>
-                    <Route path={MOCK_INTERVIEW_ROUTE}>
-                        <MockInterview />
-                    </Route>
-                    <Route path={COMMUNITY_ROUTE}>
-                        <Community />
-                    </Route>
-                    <Route path='/'>
-                        <Landing />
-                    </Route>
-                </Switch>
-            </Router>
+            <Switch>
+                <Route path={RESUME_REVIEW_ROUTE}>
+                    <ResumeReview />
+                </Route>
+                <Route path={MOCK_INTERVIEW_ROUTE}>
+                    <MockInterview />
+                </Route>
+                <Route path={COMMUNITY_ROUTE}>
+                    <Community />
+                </Route>
+                <Route path='/'>
+                    <Landing />
+                </Route>
+            </Switch>
         </Provider>
     );
 };
@@ -86,11 +84,10 @@ const App: FC = () => {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Container maxWidth={false} style={{ padding: 0 }}>
-                <Header sections={header_sections} title={COMPE_PLUS} />
-                <BrowserView>{content}</BrowserView>
-                <MobileView>
-                    <MobileLanding />
-                </MobileView>
+                <Router>
+                    <Header sections={header_sections} title={COMPE_PLUS} />
+                    {content}
+                </Router>
             </Container>
         </ThemeProvider>
     );
