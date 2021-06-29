@@ -2,9 +2,12 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 
 import App from './App';
+import { setupIntersectionObserverMock } from './util/test/intersectionObserverMock';
 import { renderWithRootState } from './util/testWithRootState';
 
 describe('App', () => {
+    beforeEach(() => setupIntersectionObserverMock());
+
     it.each`
         role             | containsString              | friendlyName
         ${'student'}     | ${'CompE+'}                 | ${'a student'}

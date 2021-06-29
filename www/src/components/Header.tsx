@@ -1,13 +1,8 @@
-// Libraries
-// Material UI
 import { AppBar, Link, makeStyles, Toolbar } from '@material-ui/core';
 import React, { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-// Assets
 import logo from '../assets/logo_white.svg';
-// Components
-import AuthButton from './auth/AuthButton';
 
 type HeaderProps = {
     sections: Section[];
@@ -40,7 +35,7 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
 
     return (
         <AppBar position='relative'>
-            <Toolbar className={classes.toolbar} disableGutters={true}>
+            <Toolbar className={classes.toolbar}>
                 <div className={classes.main}>
                     <img src={logo} className={classes.logo} />
                     <Link underline='none' color='textSecondary' variant='h5' component={RouterLink} to='/'>
@@ -52,8 +47,11 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
                         </Link>
                     ))}
                 </div>
-
-                <AuthButton />
+                {sections.map((section) => (
+                    <Link color='textSecondary' key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
+                        {section.title}
+                    </Link>
+                ))}
             </Toolbar>
         </AppBar>
     );

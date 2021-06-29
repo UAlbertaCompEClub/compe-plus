@@ -9,10 +9,8 @@ declare module '@material-ui/core/styles/createMuiTheme' {
 const palette = {
     primary: {
         main: '#79B178',
-    },
-    secondary: {
-        main: '#D9FFD9',
         light: '#E2F8E2',
+        dark: '#124612',
     },
     text: {
         primary: '#000000',
@@ -20,6 +18,9 @@ const palette = {
     },
     background: {
         default: '#E2F8E2',
+    },
+    error: {
+        main: '#820B00',
     },
 };
 
