@@ -40,8 +40,8 @@ const Landing: FC = () => {
 export const Intro: FC = () => {
     const classes = useStyles();
     const { isAuthenticated } = useAuth0();
-
     const global = useGlobalStyles();
+
     return (
         <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '50vh', paddingTop: '10vh' }} id='intro'>
             <Grid container item justify='center' spacing={5}>
