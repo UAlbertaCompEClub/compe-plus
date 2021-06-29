@@ -86,7 +86,10 @@ const App: FC = () => {
             <Container maxWidth={false} style={{ padding: 0 }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
-                    {content}
+                    <BrowserView>{content}</BrowserView>
+                    <MobileView>
+                        <MobileLanding />
+                    </MobileView>
                 </Router>
             </Container>
         </ThemeProvider>
