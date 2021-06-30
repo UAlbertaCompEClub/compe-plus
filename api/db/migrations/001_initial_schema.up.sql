@@ -13,7 +13,7 @@ $func$ LANGUAGE 'plpgsql';
 
 /* users table */
 CREATE TABLE IF NOT EXISTS users (
-    id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id TEXT NOT NULL PRIMARY KEY,
     email TEXT NOT NULL,
     ccid TEXT NOT NULL,
     program TEXT NOT NULL,
@@ -32,11 +32,11 @@ CREATE TRIGGER update_time_users
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 /* roles enum */
-CREATE TYPE role_type AS ENUM ('reviewer', 'interviewer', 'admin');
+CREATE TYPE role_type AS ENUM ('student', 'reviewer', 'interviewer', 'admin');
 
 /* user_roles table */
 CREATE TABLE IF NOT EXISTS user_roles (
-    user_id UUID NOT NULL REFERENCES users ON DELETE CASCADE,
+    user_id TEXT NOT NULL REFERENCES users ON DELETE CASCADE,
     role role_type NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (user_id, role)
@@ -53,8 +53,8 @@ CREATE TYPE resume_review_state AS ENUM (
 /* resume_reviews table */
 CREATE TABLE IF NOT EXISTS resume_reviews (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
-    reviewee_id UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
-    reviewer_id UUID REFERENCES users ON DELETE RESTRICT,
+    reviewee_id TEXT NOT NULL REFERENCES users ON DELETE RESTRICT,
+    reviewer_id TEXT REFERENCES users ON DELETE RESTRICT,
     state resume_review_state NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS documents (
     note TEXT NOT NULL,
     file_url TEXT NOT NULL,
     is_review BOOLEAN NOT NULL,
-    user_id UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
+    user_id TEXT NOT NULL REFERENCES users ON DELETE RESTRICT,
     resume_review_id UUID NOT NULL REFERENCES resume_reviews ON DELETE RESTRICT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -86,7 +86,7 @@ CREATE TRIGGER update_time_documents
 CREATE TABLE IF NOT EXISTS time_slots (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     at TIMESTAMPTZ NOT NULL,
-    user_id UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
+    user_id TEXT NOT NULL REFERENCES users ON DELETE RESTRICT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -100,8 +100,8 @@ CREATE TRIGGER update_time_time_slots
 CREATE TABLE IF NOT EXISTS interviews (
     id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     time_slot UUID NOT NULL REFERENCES time_slots ON DELETE RESTRICT,
-    interviewee UUID NOT NULL REFERENCES users ON DELETE RESTRICT,
-    interviewer UUID NOT NULL REFERENCES users ON DELETE RESTRICT
+    interviewee TEXT NOT NULL REFERENCES users ON DELETE RESTRICT,
+    interviewer TEXT NOT NULL REFERENCES users ON DELETE RESTRICT
 );
 
 CREATE TRIGGER update_time_interviews

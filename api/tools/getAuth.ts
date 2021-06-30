@@ -43,7 +43,7 @@ const getEnv = (env: string) => {
             throw new Error('Incorrect number of args');
         }
         let role = process.argv[2];
-        if (!['user', 'reviewer', 'interviewer', 'admin'].includes(role)) {
+        if (!['student', 'reviewer', 'interviewer', 'admin'].includes(role)) {
             throw new Error('Invalid role');
         }
         role = role.toUpperCase();
