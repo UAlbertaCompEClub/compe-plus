@@ -1,22 +1,22 @@
 interface User {
     /** Issuer of the JWT. */
-    iss: string;
+    iss?: string;
     /** Subject of the JWT. */
     sub: string;
     /** Recipient for wh ich the JWT is intended. */
-    aud: string;
+    aud?: string;
     /** Time at which the JWT was issued; can be used to determine age of the JWT. */
-    iat: number;
+    iat?: number;
     /** Time after which the JWT expires. */
-    exp: number;
+    exp?: number;
     /** Authorized party. Client id of who is authorized. */
-    azp: string;
+    azp?: string;
     /** Scope of permissions. */
-    scope: string;
+    scope?: string;
     /** Grant type. */
-    gty: string;
+    gty?: string;
     /** Permissions. */
-    permissions: string[];
+    permissions?: string[];
 }
 
 declare namespace Express {

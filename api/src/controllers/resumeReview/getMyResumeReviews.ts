@@ -6,8 +6,6 @@ import { decodeQueryToUser } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAResumeReviewState, beProperlyUriEncoded } from '../validation';
 
-// TODO test all of this
-
 type ReqQuery = {
     id?: string;
     reviewer?: string;
