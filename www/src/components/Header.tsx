@@ -1,4 +1,4 @@
-import { AppBar, Link, makeStyles, Toolbar } from '@material-ui/core';
+import { AppBar, Hidden, Link, makeStyles, Toolbar } from '@material-ui/core';
 import React, { FC } from 'react';
 
 import logo from '../assets/logo_white.svg';
@@ -28,11 +28,13 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
                         {title}
                     </Link>
                 </div>
-                {sections.map((section) => (
-                    <Link color='textSecondary' key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
-                        {section.title}
-                    </Link>
-                ))}
+                <Hidden xsDown>
+                    {sections.map((section) => (
+                        <Link color='textSecondary' key={section.title} variant='body2' href={section.url} className={classes.toolbarLink}>
+                            {section.title}
+                        </Link>
+                    ))}
+                </Hidden>
             </Toolbar>
         </AppBar>
     );
