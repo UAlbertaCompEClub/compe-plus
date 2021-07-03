@@ -25,7 +25,7 @@ type ResBody = { resumeReview: s.resume_reviews.JSONSelectable };
  * Create a new resume review.
  * @param req HTTP request.
  * @param res HTTP response.
- * @returns HTTP response.
+ * @returns Newly created resume review.
  */
 const postResumeReview = controller(async (req: Request<unknown, ResBody, ReqBody>, res: Response<ResBody>): Promise<void> => {
     await new ReqBodyValidator().validateAndThrow(req.body);
