@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { mocked } from 'ts-jest/utils';
-import type * as s from 'zapatos/schema';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
 import * as userRepository from '../../repositories/userRepository';
