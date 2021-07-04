@@ -23,25 +23,26 @@ const App: FC = () => {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Container maxWidth={false} style={{ padding: 0 }}>
-                <Header sections={header_sections} title={COMPE_PLUS} />
-                <BrowserView>
-                    <Router>
+                <Router>
+                    <Header sections={header_sections} title={COMPE_PLUS} />
+                    <BrowserView>
                         <Switch>
-                            <Route path='/resume-review'>
+                            <Route path={RESUME_REVIEW_ROUTE}>
                                 <ResumeReview />
                             </Route>
-                            <Route path='/mock-interview'>
+                            <Route path={MOCK_INTERVIEW_ROUTE}>
                                 <MockInterview />
                             </Route>
-                            <Route path='/community'>
+                            <Route path={COMMUNITY_ROUTE}>
                                 <Community />
                             </Route>
                             <Route path='/'>
                                 <Landing />
                             </Route>
                         </Switch>
-                    </Router>
-                </BrowserView>
+                    </BrowserView>
+                </Router>
+
                 <MobileView>
                     <MobileLanding />
                 </MobileView>
