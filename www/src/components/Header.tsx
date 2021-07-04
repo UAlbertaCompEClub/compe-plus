@@ -1,4 +1,4 @@
-import { AppBar, Link, Toolbar } from '@material-ui/core';
+import { AppBar, Hidden, Link, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -44,12 +44,13 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
                         {title}
                     </Link>
                 </div>
-
-                {linkProps.map((linkProp) => (
-                    <Link color='textSecondary' key={linkProp.title} variant='body2' {...linkProp} className={classes.toolbarLink}>
-                        {linkProp.title}
-                    </Link>
-                ))}
+                <Hidden xsDown>
+                    {linkProps.map((linkProp) => (
+                        <Link color='textSecondary' key={linkProp.title} variant='body2' {...linkProp} className={classes.toolbarLink}>
+                            {linkProp.title}
+                        </Link>
+                    ))}
+                </Hidden>
                 <AuthButton />
             </Toolbar>
         </AppBar>
