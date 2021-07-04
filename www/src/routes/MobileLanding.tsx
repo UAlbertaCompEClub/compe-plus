@@ -11,8 +11,8 @@ const MobileLanding: FC = () => {
     const classes = useStyles();
 
     return (
-        <>
-            <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '50vh', paddingTop: '10vh', overflowX: 'hidden' }} id='intro'>
+        <Grid container item style={{ overflowX: 'hidden' }}>
+            <Grid container item className={classes.wave_pattern} justify='center' style={{ minHeight: '50vh', paddingTop: '5vh' }} id='intro'>
                 <Grid container item justify='center' spacing={5}>
                     <Grid container item xs={10} alignItems='center' justify='center' spacing={3}>
                         <Grid container item justify='center'>
@@ -50,7 +50,7 @@ const MobileLanding: FC = () => {
                     <img src={LightGreenLogo} className={classes.footer_logo} />
                 </Grid>
             </Grid>
-        </>
+        </Grid>
     );
 };
 

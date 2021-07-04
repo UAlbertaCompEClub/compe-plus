@@ -1,4 +1,4 @@
-import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, Grid, Link, makeStyles, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 
 import Industry from '../assets/industry.svg';
@@ -277,17 +277,31 @@ const Footer: FC = () => {
         <Grid container item className={classes.footer}>
             <Grid container item className={classes.wave_pattern} justify='center' direction='column' alignItems='center'>
                 <Grid container item alignItems='center' justify='center' xs={11}>
-                    <Grid item xs={4}>
-                        <Typography className={classes.footer_text} align='left'>
-                            Contact: external@compeclub.com
-                        </Typography>
+                    <Grid container item xs={4} direction='column'>
+                        <Grid item>
+                            <Typography className={classes.footer_text} align='left'>
+                                Contact: external@compeclub.com
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography className={classes.footer_text} align='left'>
+                                In affiliation with the{' '}
+                                <Link href='https://www.compeclub.com/' color='inherit' underline='always'>
+                                    CompE Club
+                                </Link>
+                            </Typography>
+                        </Grid>
                     </Grid>
                     <Grid container item xs={4} alignItems='center' justify='center'>
                         <img src={LightGreenLogo} className={classes.footer_logo} />
                     </Grid>
                     <Grid item xs={4}>
                         <Typography className={classes.footer_text} align='right'>
-                            Curious how we&apos;re building CompE+? Checkout the Github <a href='https://github.com/UAlbertaCompEClub/compe-plus'>repo</a> 😎
+                            Curious how we&apos;re building CompE+? Checkout the Github{' '}
+                            <Link href='https://github.com/UAlbertaCompEClub/compe-plus' color='inherit' underline='always'>
+                                repo
+                            </Link>{' '}
+                            😎
                         </Typography>
                     </Grid>
                 </Grid>

@@ -10,12 +10,12 @@ import MobileLanding from './routes/MobileLanding';
 import MockInterview from './routes/MockInterview';
 import ResumeReview from './routes/ResumeReview';
 import theme from './styles/theme';
-import { COMPE_PLUS } from './util/constants';
+import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
 
 const header_sections: Section[] = [
-    // { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
-    // { title: MOCK_INTERVIEW, url: MOCK_INTERVIEW_ROUTE },
-    // { title: COMMUNITY, url: COMMUNITY_ROUTE },
+    { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
+    { title: MOCK_INTERVIEW, url: MOCK_INTERVIEW_ROUTE },
+    { title: COMMUNITY, url: COMMUNITY_ROUTE },
 ];
 
 const App: FC = () => {
@@ -23,25 +23,26 @@ const App: FC = () => {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Container maxWidth={false} style={{ padding: 0 }}>
-                <Header sections={header_sections} title={COMPE_PLUS} />
-                <BrowserView>
-                    <Router>
+                <Router>
+                    <Header sections={header_sections} title={COMPE_PLUS} />
+                    <BrowserView>
                         <Switch>
-                            <Route path='/resume-review'>
+                            <Route path={RESUME_REVIEW_ROUTE}>
                                 <ResumeReview />
                             </Route>
-                            <Route path='/mock-interview'>
+                            <Route path={MOCK_INTERVIEW_ROUTE}>
                                 <MockInterview />
                             </Route>
-                            <Route path='/community'>
+                            <Route path={COMMUNITY_ROUTE}>
                                 <Community />
                             </Route>
                             <Route path='/'>
                                 <Landing />
                             </Route>
                         </Switch>
-                    </Router>
-                </BrowserView>
+                    </BrowserView>
+                </Router>
+
                 <MobileView>
                     <MobileLanding />
                 </MobileView>
