@@ -59,14 +59,13 @@ const AuthenticatedContent: FC = () => (
 const ResumeReview: FC = () => {
     const { isAuthenticated } = useAuth0();
 
-    const content = isAuthenticated ? <AuthenticatedContent /> : <UnauthenticatedContent />;
     return (
         <div style={{ overflow: 'hidden' }}>
-            <Grid container justify='center' spacing={8} style={{ marginTop: '10px' }}>
+            <Grid container justify='center' alignItems='center' spacing={8} style={{ marginTop: '10px', minHeight: '75vh' }}>
                 <Grid container item justify='center'>
                     <Typography variant='h1'>Resume Review</Typography>
                 </Grid>
-                {content}
+                {isAuthenticated ? <AuthenticatedContent /> : <UnauthenticatedContent />}
             </Grid>
         </div>
     );
