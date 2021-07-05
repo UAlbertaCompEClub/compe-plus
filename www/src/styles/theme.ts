@@ -1,4 +1,4 @@
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
     interface ThemeOptions {
@@ -9,6 +9,8 @@ declare module '@material-ui/core/styles/createMuiTheme' {
 const palette = {
     primary: {
         main: '#79B178',
+        light: '#E2F8E2',
+        dark: '#124612',
     },
     secondary: {
         main: '#D9FFD9',
@@ -20,6 +22,9 @@ const palette = {
     },
     background: {
         default: '#E2F8E2',
+    },
+    error: {
+        main: '#820B00',
     },
 };
 
