@@ -41,13 +41,19 @@ const UnauthenticatedContent: FC = () => (
 );
 
 const AuthenticatedContent: FC = () => (
-    <Box display='flex' justifyContent='center' flexDirection='column' alignItems='center'>
-        <img src={UploadResumeIcon} />
-        <Typography>You have no resumes submitted</Typography>
-        <Button variant='contained' color='primary'>
-            Submit resume
-        </Button>
-    </Box>
+    <Grid container item spacing={4}>
+        <Grid container item xs={12} justify='center'>
+            <img src={UploadResumeIcon} />
+        </Grid>
+        <Grid container item xs={12} justify='center'>
+            <Typography>You have no resumes submitted</Typography>
+        </Grid>
+        <Grid container item xs={12} justify='center'>
+            <Button variant='contained' color='primary'>
+                Submit resume
+            </Button>
+        </Grid>
+    </Grid>
 );
 
 const ResumeReview: FC = () => {
