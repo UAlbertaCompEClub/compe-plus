@@ -30,7 +30,9 @@ type ResBody = { resumeReview: s.resume_reviews.JSONSelectable };
 const postResumeReview = controller(async (req: Request<unknown, ResBody, ReqBody>, res: Response<ResBody>): Promise<void> => {
     await new ReqBodyValidator().validateAndThrow(req.body);
 
-    const newResumeReview = await resumeReviewRepository.create(req.body.reviewee, 'seeking_reviewer');
+    const reviewee = decodeURIComponent(req.body.reviewee);
+
+    const newResumeReview = await resumeReviewRepository.create(reviewee, 'seeking_reviewer');
 
     res.status(201).json({ resumeReview: newResumeReview });
 });
