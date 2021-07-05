@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { UnauthorizedError } from 'express-jwt';
-import { not } from 'zapatos/dist/db/conditions';
+
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
-
 import NotFoundException from '../exceptions/NotFoundException';
 import logger from '../util/logger';
 import Scope from '../util/scopes';
