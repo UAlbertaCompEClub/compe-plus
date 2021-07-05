@@ -7,7 +7,7 @@ import UploadResumeIcon from '../assets/add_resume.svg';
 import FeedbackIcon from '../assets/conversation.svg';
 import ResumesIcon from '../assets/documents.svg';
 
-const UnauthenticatedContent: FC = () => (
+const ResumeReviewUnauthenticated: FC = () => (
     <Grid container item direction='column' spacing={3}>
         <Grid container item spacing={3}>
             <Grid container item justify='center' xs={4}>
@@ -40,7 +40,7 @@ const UnauthenticatedContent: FC = () => (
     </Grid>
 );
 
-const AuthenticatedContent: FC = () => (
+const ResumeReviewAuthenticated: FC = () => (
     <Grid container item spacing={4}>
         <Grid container item xs={12} justify='center'>
             <img src={UploadResumeIcon} />
@@ -65,7 +65,7 @@ const ResumeReview: FC = () => {
                 <Grid container item justify='center'>
                     <Typography variant='h1'>Resume Review</Typography>
                 </Grid>
-                {isAuthenticated ? <AuthenticatedContent /> : <UnauthenticatedContent />}
+                {isAuthenticated ? <ResumeReviewAuthenticated /> : <ResumeReviewUnauthenticated />}
             </Grid>
         </div>
     );
