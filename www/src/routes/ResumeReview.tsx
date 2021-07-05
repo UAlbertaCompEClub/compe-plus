@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Grid, Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import React, { FC } from 'react';
 
 import UploadResumeIcon from '../assets/add_resume.svg';
@@ -40,8 +41,12 @@ const UnauthenticatedContent: FC = () => (
 );
 
 const AuthenticatedContent: FC = () => (
-    <Box display='flex' justifyContent='center' alignItems='center'>
+    <Box display='flex' justifyContent='center' flexDirection='column' alignItems='center'>
         <img src={UploadResumeIcon} />
+        <Typography>You have no resumes submitted</Typography>
+        <Button variant='contained' color='primary'>
+            Submit resume
+        </Button>
     </Box>
 );
 
