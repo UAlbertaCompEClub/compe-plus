@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import React, { FC } from 'react';
 
@@ -62,13 +62,11 @@ const ResumeReview: FC = () => {
     const content = isAuthenticated ? <AuthenticatedContent /> : <UnauthenticatedContent />;
     return (
         <div style={{ overflow: 'hidden' }}>
-            <Grid container justify='center' spacing={8} style={{ marginTop: '10px', minHeight: '75vh' }}>
-                <Grid item>
-                    <Typography align='center' variant='h1'>
-                        Resume Review
-                    </Typography>
-                    {content}
+            <Grid container justify='center' spacing={8} style={{ marginTop: '10px' }}>
+                <Grid container item justify='center'>
+                    <Typography variant='h1'>Resume Review</Typography>
                 </Grid>
+                {content}
             </Grid>
         </div>
     );
