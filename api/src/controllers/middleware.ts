@@ -1,20 +1,20 @@
 import { NextFunction, Request, Response } from 'express';
-import { UnauthorizedError } from 'express-jwt';
+import jwt from 'express-jwt';
 import jwtAuthz from 'express-jwt-authz';
 import pinoExpressMiddleware from 'express-pino-logger';
+import jwks from 'jwks-rsa';
 
 import HttpException from '../exceptions/HttpException';
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
 import NotFoundException from '../exceptions/NotFoundException';
 import config from '../util/config';
-import { authenticateJwt } from '../util/jwt';
 import logger, { standardSerializers, verboseSerializers } from '../util/logger';
 import Scope from '../util/scopes';
 
 type Middleware = (req: Request, res: Response, next: NextFunction) => void;
 type ErrMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => void;
-type Anyware = Middleware | ErrMiddleware;
+type AuthMiddleware = [Middleware, ErrMiddleware];
 
 /**
  * Returns middleware that will log every request.
@@ -46,8 +46,6 @@ function errorHandler(): ErrMiddleware {
         if (err instanceof HttpException) {
             // Handle a known server error
             outErr = err;
-        } else if (err instanceof UnauthorizedError) {
-            outErr = new NotAuthenticatedException();
         } else {
             // Handle an unknown error
             req.log.error({ error: err }, 'Unknown error');
@@ -57,26 +55,36 @@ function errorHandler(): ErrMiddleware {
     };
 }
 
-// TODO update to follow style of authorize middleware
 /**
  * Returns middleware that will ensure the client accessing is authenticated.
  * @returns authenticate middleware.
  */
-function authenticate(): Middleware {
-    return (req: Request, res: Response, next?: NextFunction): void => {
-        if (next === undefined) {
-            return;
-        }
+function authenticate(): AuthMiddleware {
+    const authenticateJwt = jwt({
+        secret: jwks.expressJwtSecret({
+            cache: true,
+            rateLimit: true,
+            jwksRequestsPerMinute: 5,
+            jwksUri: config.auth0.jwks_uri,
+        }),
+        audience: config.auth0.audience,
+        issuer: config.auth0.issuer,
+        algorithms: ['RS256'],
+    });
 
-        authenticateJwt(req, res, next);
+    const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+        // Pass on a converted error
+        next(new NotAuthenticatedException());
     };
+
+    return [authenticateJwt, errorHandler];
 }
 
 /**
  * Returns middleware that will ensure the client accessing is authorized and will return an error if they are not.
  * @returns authorize middleware.
  */
-function authorize(scope: Scope): Anyware[] {
+function authorize(scope: Scope): AuthMiddleware {
     // Check that the caller has the proper scopes
     const checkAuthorization = jwtAuthz([scope], { failWithError: true });
 
@@ -92,7 +100,7 @@ function authorize(scope: Scope): Anyware[] {
  * Returns middleware that will ensure the client accessing is authorized and will continue matching routes if the are not.
  * @returns authorizeAndFallThrough middleware.
  */
-function authorizeAndFallThrough(scope: Scope): Anyware[] {
+function authorizeAndFallThrough(scope: Scope): AuthMiddleware {
     // Check that the caller has the proper scopes
     const checkAuthorization = jwtAuthz([scope], { failWithError: true });
 
