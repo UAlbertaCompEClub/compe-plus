@@ -21,17 +21,17 @@ beforeEach(() => {
     next = jest.fn();
 });
 
-it('rejects invalid uuid for reviewee', async () => {
-    req.body = { reviewee: 'not-a-uuid' };
+it('rejects improperly encoded reviewee for reviewee', async () => {
+    req.body = { reviewee: '%E0%A4%A' };
 
     await postResumeReview(req as Request, res as Response, next);
 
     expect(mockResumeReviewRepository.create).toBeCalledTimes(0);
-    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid message body', status: 400, details: { reviewee: 'Must be a UUID' } });
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid message body', status: 400, details: { reviewee: 'Must be properly encoded with encodeURIComponent' } });
 });
 
 it('rejects user not in db', async () => {
-    req.body = { reviewee: '097ac529-c94a-4184-bd49-7ce37b42440f' };
+    req.body = { reviewee: 'user' };
     mockUserRepository.get.mockResolvedValueOnce([]);
 
     await postResumeReview(req as Request, res as Response, next);

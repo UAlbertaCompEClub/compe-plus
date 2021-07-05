@@ -58,7 +58,8 @@ const beAValidUser = {
         if (field === undefined) {
             return false;
         }
-        const matches = await userRepository.get(field);
+        const user = decodeURIComponent(field);
+        const matches = await userRepository.get(user);
         return matches.length == 1;
     },
     message: 'Must be a user that already exists',

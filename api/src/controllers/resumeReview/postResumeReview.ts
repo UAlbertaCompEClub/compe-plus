@@ -3,7 +3,7 @@ import type * as s from 'zapatos/schema';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
 import controller from '../controllerUtil';
-import Validator, { beAValidUser, beAValidUuid } from '../validation';
+import Validator, { beAValidUser, beProperlyUriEncoded } from '../validation';
 
 // Can't define reviewer at creation b/c the assumption is that a reviewer is selected later
 // Can't choose the starting state b/c the assumption is that a resume review starts in the 'seeking_reviewer' state
@@ -15,7 +15,7 @@ class ReqBodyValidator extends Validator<ReqBody> {
     constructor() {
         super('message body');
 
-        this.ruleFor('reviewee').mustAsync(beAValidUuid).mustAsync(beAValidUser);
+        this.ruleFor('reviewee').mustAsync(beProperlyUriEncoded).mustAsync(beAValidUser);
     }
 }
 
