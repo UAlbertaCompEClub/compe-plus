@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
