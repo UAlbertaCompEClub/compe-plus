@@ -1,9 +1,10 @@
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import App from './App';
 import { setupIntersectionObserverMock } from './util/test/intersectionObserverMock';
-import { renderWithRootState } from './util/testWithRootState';
+import { withAuth0 } from './util/testWithAuth0';
+import { withRootState } from './util/testWithRootState';
 
 describe('App', () => {
     beforeEach(() => setupIntersectionObserverMock());
@@ -15,7 +16,7 @@ describe('App', () => {
         ${'interviewer'} | ${'🚧 Work in progress 🚧'} | ${'an interviewer'}
         ${'admin'}       | ${'🚧 Work in progress 🚧'} | ${'an admin'}
     `('renders correctly for $friendlyName', ({ role, containsString }) => {
-        renderWithRootState(<App />, { user: { roles: [], currentRole: role } });
+        render(withAuth0(withRootState(<App />, { user: { roles: [], currentRole: role } }), { isAuthenticated: true }));
 
         const componentsWithText = screen.getAllByText(containsString);
         expect(componentsWithText[0]).toBeInTheDocument();

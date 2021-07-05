@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { configureStore } from '@reduxjs/toolkit';
-import { render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 
@@ -20,8 +19,8 @@ function getRootStore(preloadedState: Partial<RootState>) {
 
 // TODO: Add shallow with RootState once https://github.com/enzymejs/enzyme/issues/2282 is resolved
 
-function renderWithRootState(component: React.ReactElement<any, string | React.JSXElementConstructor<any>>, preloadedState: Partial<RootState>): RenderResult {
-    return render(<Provider store={getRootStore(preloadedState)}>{component}</Provider>);
+function withRootState(component: React.ReactElement<any, string | React.JSXElementConstructor<any>>, preloadedState: Partial<RootState>): JSX.Element {
+    return <Provider store={getRootStore(preloadedState)}>{component}</Provider>;
 }
 
-export { renderWithRootState };
+export { withRootState };
