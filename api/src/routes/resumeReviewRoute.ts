@@ -6,8 +6,8 @@ import Scope from '../util/scopes';
 
 export const router = express.Router();
 
-router.get('/resume-reviews', middleware.authorizeAndFallThrough(Scope.ReadMyResumeReviews), controller.getMyResumeReviews);
-router.get('/resume-reviews', middleware.authorize(Scope.ReadAllResumeReviews), controller.getAllResumeReviews);
+router.get('/resume-reviews', middleware.authorizeAndFallThrough(Scope.ReadAllResumeReviews), controller.getAllResumeReviews);
+router.get('/resume-reviews', middleware.authorize(Scope.ReadMyResumeReviews), controller.getMyResumeReviews);
 router.post('/resume-reviews', middleware.authorize(Scope.CreateResumeReviews), controller.postResumeReview);
 
 export default router;
