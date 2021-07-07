@@ -1,3 +1,3 @@
-export { default as getAllResumeReviews } from './getAllResumeReviews';
-export { default as getMyResumeReviews } from './getMyResumeReviews';
-export { default as postResumeReview } from './postResumeReview';
+export getAllResumeReviews from './getAllResumeReviews';
+export getMyResumeReviews from './getMyResumeReviews';
+export postResumeReview from './postResumeReview';
