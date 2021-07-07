@@ -4,7 +4,7 @@ import type * as s from 'zapatos/schema';
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
 import { decodeQueryToUser } from '../../util/helper';
 import controller from '../controllerUtil';
-import Validator, { beAResumeReviewState, beProperlyUriEncoded } from '../validation';
+import Validator, { beAResumeReviewState, beAValidUuid, beProperlyUriEncoded } from '../validation';
 
 type ReqQuery = {
     id?: string;
@@ -17,7 +17,7 @@ class ReqQueryValidator extends Validator<ReqQuery> {
         super('query parameters');
 
         this.ruleFor('id')
-            .mustAsync(beProperlyUriEncoded)
+            .mustAsync(beAValidUuid)
             .when((reqQuery) => reqQuery.id !== undefined);
 
         this.ruleFor('reviewer')
@@ -43,7 +43,7 @@ type ResBody = {
 const getMyResumeReviews = controller(async (req: Request<unknown, ResBody, unknown, ReqQuery>, res: Response<ResBody>): Promise<void> => {
     await new ReqQueryValidator().validateAndThrow(req.query);
 
-    const id = decodeQueryToUser(req.query.id);
+    const id = req.query.id;
     const reviewer = decodeQueryToUser(req.query.reviewer);
 
     // Reviewee must be same as requesting user
@@ -51,7 +51,7 @@ const getMyResumeReviews = controller(async (req: Request<unknown, ResBody, unkn
 
     const myResumeReviews = await resumeReviewRepository.get(id, reviewee, reviewer, req.query.state);
 
-    res.status(200).json({ resumeReviews: allResumeReviews });
+    res.status(200).json({ resumeReviews: myResumeReviews });
 });
 
 export default getMyResumeReviews;

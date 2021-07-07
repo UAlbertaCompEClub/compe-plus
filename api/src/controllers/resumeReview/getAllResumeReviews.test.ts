@@ -18,13 +18,13 @@ beforeEach(() => {
     next = jest.fn();
 });
 
-it('rejects improperly encoded id query parameter', async () => {
-    req.query = { id: `%E0%A4%A` };
+it('rejects non-uuid id query parameter', async () => {
+    req.query = { id: `not-a-uuid` };
 
     await getAllResumeReviews(req as Request, res as Response, next);
 
     expect(mockResumeReviewRepository.get).toBeCalledTimes(0);
-    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { id: 'Must be properly encoded with encodeURIComponent' } });
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { id: 'Must be a UUID' } });
 });
 
 it('rejects improperly encoded reviewer query parameter', async () => {
