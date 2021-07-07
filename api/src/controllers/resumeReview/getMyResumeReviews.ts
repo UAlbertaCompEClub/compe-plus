@@ -49,7 +49,7 @@ const getMyResumeReviews = controller(async (req: Request<unknown, ResBody, unkn
     // Reviewee must be same as requesting user
     const reviewee = req.user.sub;
 
-    const allResumeReviews = await resumeReviewRepository.get(id, reviewee, reviewer, req.query.state);
+    const myResumeReviews = await resumeReviewRepository.get(id, reviewee, reviewer, req.query.state);
 
     res.status(200).json({ resumeReviews: allResumeReviews });
 });
