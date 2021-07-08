@@ -1,20 +1,22 @@
 import { NextFunction, Request, Response } from 'express';
-import { UnauthorizedError } from 'express-jwt';
 
+import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
+import NotAuthorizedException from '../exceptions/NotAuthorizedException';
 import NotFoundException from '../exceptions/NotFoundException';
-import * as checkJwt from '../util/checkJwt';
 import logger from '../util/logger';
+import Scope from '../util/scopes';
 import middleware from './middleware';
 
 describe('notFound middleware', () => {
     const mockRequest: Partial<Request> = {};
     const mockResponse: Partial<Response> = {};
+    const nextFunction: NextFunction = jest.fn();
     mockResponse.json = jest.fn().mockReturnValue(mockResponse);
     mockResponse.status = jest.fn().mockReturnValue(mockResponse);
 
     it('always returns a NotFoundException', () => {
         expect(() => {
-            middleware.notFound()(mockRequest as Request, mockResponse as Response);
+            middleware.notFound()(mockRequest as Request, mockResponse as Response, nextFunction);
         }).toThrowError(new NotFoundException());
     });
 });
@@ -60,16 +62,71 @@ describe('authenticate middleware', () => {
         nextFunction = jest.fn();
     });
 
-    it('authenticate is used', () => {
-        const authenticate = jest.spyOn(checkJwt, 'checkJwt');
-        middleware.authenticate()(mockRequest as Request, mockResponse as Response, nextFunction);
-        expect(authenticate).toBeCalledTimes(1);
+    it('converts any thrown error to a NotAuthenticated error', () => {
+        middleware.authenticate()[1](new Error('test'), mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith(new NotAuthenticatedException());
+    });
+});
+
+describe('authorize middleware', () => {
+    let mockRequest: Partial<Request> = {};
+    let mockResponse: Partial<Response>;
+    let nextFunction: NextFunction;
+
+    beforeEach(() => {
+        mockRequest = {};
+        mockRequest.url = '/api/secure/v1/ping';
+        mockRequest.method = 'GET';
+        mockResponse = {};
+        mockResponse.on = jest.fn();
+        nextFunction = jest.fn();
     });
 
-    it('calls next middleware', () => {
-        middleware.authenticate()(mockRequest as Request, mockResponse as Response, nextFunction);
+    it('throws error without correct scope', () => {
+        middleware.authorize(Scope.CreateDocuments)[0](mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith({ error: 'Forbidden', message: 'Insufficient scope', statusCode: 403 });
+    });
 
-        expect(nextFunction).toBeCalledTimes(1);
+    it('does not throw error with correct scope', () => {
+        mockRequest.user = { sub: 'test', scope: 'create:documents' };
+        middleware.authorize(Scope.CreateDocuments)[0](mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith();
+    });
+
+    it('converts any thrown error to a NotAuthorized error', () => {
+        middleware.authorize(Scope.CreateDocuments)[1](new Error('test'), mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith(new NotAuthorizedException());
+    });
+});
+
+describe('authorizeAndFallthrough middleware', () => {
+    let mockRequest: Partial<Request> = {};
+    let mockResponse: Partial<Response>;
+    let nextFunction: NextFunction;
+
+    beforeEach(() => {
+        mockRequest = {};
+        mockRequest.url = '/api/secure/v1/ping';
+        mockRequest.method = 'GET';
+        mockResponse = {};
+        mockResponse.on = jest.fn();
+        nextFunction = jest.fn();
+    });
+
+    it('throws error without correct scope', () => {
+        middleware.authorizeAndFallThrough(Scope.CreateDocuments)[0](mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith({ error: 'Forbidden', message: 'Insufficient scope', statusCode: 403 });
+    });
+
+    it('does not throw error with correct scope', () => {
+        mockRequest.user = { sub: 'test', scope: 'create:documents' };
+        middleware.authorizeAndFallThrough(Scope.CreateDocuments)[0](mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith();
+    });
+
+    it('calls next route if unauthroized', () => {
+        middleware.authorizeAndFallThrough(Scope.CreateDocuments)[1](new Error('test'), mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith('route');
     });
 });
 
@@ -97,13 +154,6 @@ describe('errorHandler middleware', () => {
         middleware.errorHandler()(new NotFoundException(), mockRequest as Request, mockResponse as Response, nextFunction);
         expect(resJson).toBeCalledWith({ code: 404, message: 'Not found' });
         expect(resStatus).toBeCalledWith(404);
-    });
-
-    it('handles authentication errors', () => {
-        const e = new UnauthorizedError('credentials_required', { message: '' });
-        middleware.errorHandler()(e, mockRequest as Request, mockResponse as Response, nextFunction);
-        expect(resJson).toBeCalledWith({ code: 401, message: 'Not authenticated' });
-        expect(resStatus).toBeCalledWith(401);
     });
 
     // Can't figure out how to mock req.log.error so I'm punting on this

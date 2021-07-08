@@ -2,10 +2,12 @@ import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
+import { decodeQueryToUser } from '../../util/helper';
 import controller from '../controllerUtil';
-import Validator, { beAResumeReviewState, beAValidUuid } from '../validation';
+import Validator, { beAResumeReviewState, beAValidUuid, beProperlyUriEncoded } from '../validation';
 
 type ReqQuery = {
+    id?: string;
     reviewer?: string;
     reviewee?: string;
     state?: s.resume_review_state;
@@ -15,12 +17,16 @@ class ReqQueryValidator extends Validator<ReqQuery> {
     constructor() {
         super('query parameters');
 
-        this.ruleFor('reviewer')
+        this.ruleFor('id')
             .mustAsync(beAValidUuid)
+            .when((reqQuery) => reqQuery.id !== undefined);
+
+        this.ruleFor('reviewer')
+            .mustAsync(beProperlyUriEncoded)
             .when((reqQuery) => reqQuery.reviewer !== undefined);
 
         this.ruleFor('reviewee')
-            .mustAsync(beAValidUuid)
+            .mustAsync(beProperlyUriEncoded)
             .when((reqQuery) => reqQuery.reviewee !== undefined);
 
         this.ruleFor('state')
@@ -37,14 +43,18 @@ type ResBody = {
  * Get all resume reviews.
  * @param req HTTP request.
  * @param res HTTP response.
- * @returns HTTP response.
+ * @returns All resume reviews.
  */
-const getResumeReviews = controller(async (req: Request<unknown, ResBody, unknown, ReqQuery>, res: Response<ResBody>): Promise<void> => {
+const getAllResumeReviews = controller(async (req: Request<unknown, ResBody, unknown, ReqQuery>, res: Response<ResBody>): Promise<void> => {
     await new ReqQueryValidator().validateAndThrow(req.query);
 
-    const allResumeReviews = await resumeReviewRepository.get(req.query.reviewee, req.query.reviewer, req.query.state);
+    const id = req.query.id;
+    const reviewee = decodeQueryToUser(req.query.reviewee);
+    const reviewer = decodeQueryToUser(req.query.reviewer);
+
+    const allResumeReviews = await resumeReviewRepository.get(id, reviewee, reviewer, req.query.state);
 
     res.status(200).json({ resumeReviews: allResumeReviews });
 });
 
-export default getResumeReviews;
+export default getAllResumeReviews;

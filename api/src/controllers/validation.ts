@@ -58,11 +58,31 @@ const beAValidUser = {
         if (field === undefined) {
             return false;
         }
-        const matches = await userRepository.get(field);
+        const user = decodeURIComponent(field);
+        const matches = await userRepository.get(user);
         return matches.length == 1;
     },
     message: 'Must be a user that already exists',
 };
 
-export { beAResumeReviewState, beAValidUser, beAValidUuid };
+// TODO test
+/**
+ * Test whether a field is properly URI encoded.
+ */
+const beProperlyUriEncoded = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        if (field === undefined) {
+            return false;
+        }
+        try {
+            decodeURIComponent(field);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    },
+    message: 'Must be properly encoded with encodeURIComponent',
+};
+
+export { beAResumeReviewState, beAValidUser, beAValidUuid, beProperlyUriEncoded };
 export default Validator;

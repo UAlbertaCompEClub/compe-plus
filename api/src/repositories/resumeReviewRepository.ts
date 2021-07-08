@@ -6,13 +6,17 @@ import pool from '../util/pool';
 
 /**
  * Get resume reviews. Filter as necessary.
+ * @param id Optional resume review id to filter by.
  * @param reviewee Optional reviewee to filter by.
  * @param reviewer Optional reviewer to filter by.
  * @param state Optional state to filter by.
  * @returns List of resume reviews appropriately filtered.
  */
-const get = async (reviewee?: string, reviewer?: string, state?: s.resume_review_state): Promise<s.resume_reviews.JSONSelectable[]> => {
+const get = async (id?: string, reviewee?: string, reviewer?: string, state?: s.resume_review_state): Promise<s.resume_reviews.JSONSelectable[]> => {
     const where: s.resume_reviews.Whereable = {};
+    if (id) {
+        where.id = dc.eq(id);
+    }
     if (reviewee) {
         where.reviewee_id = dc.eq(reviewee);
     }
