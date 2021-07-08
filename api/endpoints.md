@@ -15,7 +15,7 @@ Read users.
 
 ## `POST /users`
 
-Create a new user and give them the User role in Auth0.
+Create a new user and give them the Student role in Auth0.
 
 ### Authorization
 
