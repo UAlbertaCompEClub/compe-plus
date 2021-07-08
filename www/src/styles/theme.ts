@@ -1,4 +1,6 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { PaletteOptions } from '@material-ui/core/styles/createPalette';
+import { TypographyOptions } from '@material-ui/core/styles/createTypography';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
     interface ThemeOptions {
@@ -6,11 +8,12 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     }
 }
 
-const palette = {
+const palette: PaletteOptions = {
     primary: {
         main: '#79B178',
         light: '#E2F8E2',
         dark: '#124612',
+        contrastText: '#fff',
     },
     secondary: {
         main: '#D9FFD9',
@@ -28,7 +31,7 @@ const palette = {
     },
 };
 
-const typography = {
+const typography: TypographyOptions = {
     h1: {
         fontSize: 62,
         fontWeight: 600,
