@@ -65,7 +65,6 @@ const beAValidUser = {
     message: 'Must be a user that already exists',
 };
 
-// TODO test
 /**
  * Test whether a field is properly URI encoded.
  */
@@ -84,5 +83,23 @@ const beProperlyUriEncoded = {
     message: 'Must be properly encoded with encodeURIComponent',
 };
 
-export { beAResumeReviewState, beAValidUser, beAValidUuid, beProperlyUriEncoded };
+/**
+ * Test whether a field is a valid url.
+ */
+const beAValidUrl = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        if (field === undefined) {
+            return false;
+        }
+        try {
+            new URL(field);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    },
+    message: 'Must be a valid url',
+};
+
+export { beAResumeReviewState, beAValidUrl, beAValidUser, beAValidUuid, beProperlyUriEncoded };
 export default Validator;
