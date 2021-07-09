@@ -18,7 +18,6 @@ import Wave3 from '../assets/wave_3.svg';
 import Wave4 from '../assets/wave_4.svg';
 import { Fade } from '../components/Fade';
 import { MailChimpForm } from '../components/MailChimpForm';
-import EditRolesDialog from '../components/user/EditRolesDialog';
 import useGlobalStyles from '../styles/style';
 
 const Landing: FC = () => {
