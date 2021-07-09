@@ -1,7 +1,6 @@
 import { DialogContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { DialogContentText } from '@material-ui/core';
-import { Typography } from '@material-ui/core';
 import { Switch } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -36,7 +35,7 @@ const EditRolesDialog: FC = () => {
                 </DialogContent>
                 <Switch checked={isUser} onChange={(e) => setisUser(e.target.checked)} name='checkedA' inputProps={{ 'aria-label': 'secondary checkbox' }} />
             </Dialog>
-            <Button variant='contained' onClick={(_) => setisopen(true)}>
+            <Button variant='contained' onClick={() => setisopen(true)}>
                 Edit Roles{' '}
             </Button>
         </>
