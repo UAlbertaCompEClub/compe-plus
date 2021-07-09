@@ -27,7 +27,6 @@ const Landing: FC = () => {
     return (
         <Grid container direction='row' justify='center' style={{ overflowX: 'hidden' }}>
             <Intro />
-            <EditRolesDialog />
             <img src={Wave1} className={classes.wave} />
             <Services />
             <Info />
