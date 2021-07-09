@@ -6,11 +6,11 @@ import { Switch } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import theme from '../../styles/theme';
 
-function EditRolesDialog() {
+const EditRolesDialog: FC = () => {
     const [isopen, setisopen] = useState(false);
     const [isStudent, setisStudent] = useState(false);
     const [isUser, setisUser] = useState(false);
@@ -36,12 +36,12 @@ function EditRolesDialog() {
                 </DialogContent>
                 <Switch checked={isUser} onChange={(e) => setisUser(e.target.checked)} name='checkedA' inputProps={{ 'aria-label': 'secondary checkbox' }} />
             </Dialog>
-            <Button variant='contained' onClick={(e) => setisopen(true)}>
+            <Button variant='contained' onClick={(_) => setisopen(true)}>
                 Edit Roles{' '}
             </Button>
         </>
     );
-}
+};
 const useStyles = makeStyles(() => ({
     dialog_content: { color: theme.palette.text.primary },
 }));
