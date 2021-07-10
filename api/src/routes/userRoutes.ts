@@ -3,7 +3,7 @@ import express from 'express';
 import middleware from '../controllers/middleware';
 import * as controller from '../controllers/user/index';
 import NotImplementedException from '../exceptions/NotImplementedException';
-import Scope from '../util/scopes';
+import Scope from '../types/scopes';
 
 export const router = express.Router();
 

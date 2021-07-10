@@ -5,12 +5,13 @@ import pinoExpressMiddleware from 'express-pino-logger';
 import jwks from 'jwks-rsa';
 
 import HttpException from '../exceptions/HttpException';
+import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
 import NotFoundException from '../exceptions/NotFoundException';
+import Scope from '../types/scopes';
 import config from '../util/config';
 import logger, { standardSerializers, verboseSerializers } from '../util/logger';
-import Scope from '../util/scopes';
 
 type Middleware = (req: Request, res: Response, next: NextFunction) => void;
 type ErrMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => void;
@@ -46,6 +47,11 @@ function errorHandler(): ErrMiddleware {
         if (err instanceof HttpException) {
             // Handle a known server error
             outErr = err;
+
+            // Additionally log 500 errors
+            if (err instanceof InternalServerErrorException) {
+                req.log.error({ error: err.error }, 'Internal server error');
+            }
         } else {
             // Handle an unknown error
             req.log.error({ error: err }, 'Unknown error');

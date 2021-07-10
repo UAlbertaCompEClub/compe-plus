@@ -2,7 +2,7 @@ import express from 'express';
 
 import middleware from '../controllers/middleware';
 import * as controller from '../controllers/resumeReview/index';
-import Scope from '../util/scopes';
+import Scope from '../types/scopes';
 
 export const router = express.Router();
 

@@ -3,8 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
 import NotFoundException from '../exceptions/NotFoundException';
+import Scope from '../types/scopes';
 import logger from '../util/logger';
-import Scope from '../util/scopes';
 import middleware from './middleware';
 
 describe('notFound middleware', () => {

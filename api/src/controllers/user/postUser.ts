@@ -1,7 +1,10 @@
+import axios from 'axios';
 import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
 
+import * as auth0Repository from '../../repositories/auth0Repository';
 import * as userRepository from '../../repositories/userRepository';
+import Role from '../../types/roles';
 import controller from '../controllerUtil';
 import Validator, { beAValidUrl } from '../validation';
 
@@ -14,7 +17,7 @@ type ReqBody = {
     givenName: string;
     familyName: string;
     fullName: string;
-    photoUrl: string;
+    photoUrl: string; // TODO can be undefined?
 };
 
 class ReqBodyValidator extends Validator<ReqBody> {
@@ -25,7 +28,7 @@ class ReqBodyValidator extends Validator<ReqBody> {
 
         this.ruleFor('email')
             .emailAddress()
-            .matches(new RegExp(/^.*@ualberta\.ca$/)); // TODO is this the right regex
+            .matches(new RegExp(/^.*@ualberta\.ca$/));
 
         this.ruleFor('ccid').notNull().notEmpty();
 
@@ -61,8 +64,8 @@ const postUser = controller(async (req: Request<unknown, ResBody, ReqBody>, res:
         return;
     }
 
-    // By default give the user the Student role
-    // TODO
+    // By default give the user the Student role in Auth0
+    await auth0Repository.giveUserRole(req.body.user, Role.Student);
 
     // Add the user to postgres with the appropriate roles
     // TODO
