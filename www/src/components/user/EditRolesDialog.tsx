@@ -10,7 +10,7 @@ import React, { FC, useState } from 'react';
 import theme from '../../styles/theme';
 
 const EditRolesDialog: FC = () => {
-    const [isopen, setisopen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [isStudent, setisStudent] = useState(false);
     const [isUser, setisUser] = useState(false);
     const classes = useStyles();
