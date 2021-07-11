@@ -36,7 +36,7 @@ const EditRolesDialog: FC = () => {
                 <Switch checked={isUser} onChange={(e) => setisUser(e.target.checked)} name='checkedA' inputProps={{ 'aria-label': 'secondary checkbox' }} />
             </Dialog>
             <Button variant='contained' onClick={() => setisopen(true)}>
-                Edit Roles{' '}
+                Edit Roles
             </Button>
         </>
     );
