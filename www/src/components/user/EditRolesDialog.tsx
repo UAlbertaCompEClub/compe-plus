@@ -10,14 +10,14 @@ import React, { FC, useState } from 'react';
 import theme from '../../styles/theme';
 
 const EditRolesDialog: FC = () => {
-    const [isOpen, setisOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [isStudent, setisStudent] = useState(false);
     const [isUser, setisUser] = useState(false);
     const classes = useStyles();
 
     return (
         <>
-            <Dialog onClose={() => setisOpen(false)} aria-labelledby='simple-dialog-title' open={isOpen}>
+            <Dialog onClose={() => setIsOpen(false)} aria-labelledby='simple-dialog-title' open={isOpen}>
                 <DialogTitle id='simple-dialog-title'>Edit Roles</DialogTitle>
                 <DialogContent>
                     <DialogContentText className={classes.dialog_content} id='simple-dialog-title'>
@@ -32,8 +32,8 @@ const EditRolesDialog: FC = () => {
                 </DialogContent>
                 <Switch checked={isUser} onChange={(e) => setisUser(e.target.checked)} inputProps={{ 'aria-label': 'Toggle interviewer role' }} />
             </Dialog>
-            <Button variant='contained' onClick={() => setisOpen(true)}>
-                Edit Roles{' '}
+            <Button variant='contained' onClick={() => setIsOpen(true)}>
+                Edit Roles
             </Button>
         </>
     );
