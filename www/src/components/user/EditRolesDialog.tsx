@@ -10,32 +10,29 @@ import React, { FC, useState } from 'react';
 import theme from '../../styles/theme';
 
 const EditRolesDialog: FC = () => {
-    const [isopen, setisopen] = useState(false);
+    const [isOpen, setisOpen] = useState(false);
     const [isStudent, setisStudent] = useState(false);
     const [isUser, setisUser] = useState(false);
     const classes = useStyles();
-    // const [isopen, setisopen] = useState(false)
-    // function openDialog() {
-    //     setisopen(true);
-    // }
+
     return (
         <>
-            <Dialog onClose={() => setisopen(false)} aria-labelledby='simple-dialog-title' open={isopen}>
+            <Dialog onClose={() => setisOpen(false)} aria-labelledby='simple-dialog-title' open={isOpen}>
                 <DialogTitle id='simple-dialog-title'>Edit Roles</DialogTitle>
                 <DialogContent>
                     <DialogContentText className={classes.dialog_content} id='simple-dialog-title'>
                         Resume Reviewer
                     </DialogContentText>
                 </DialogContent>
-                <Switch checked={isStudent} onChange={(e) => setisStudent(e.target.checked)} name='checkedA' inputProps={{ 'aria-label': 'secondary checkbox' }} />
+                <Switch checked={isStudent} onChange={(e) => setisStudent(e.target.checked)} inputProps={{ 'aria-label': 'Toggle reviewer role' }} />
                 <DialogContent>
                     <DialogContentText className={classes.dialog_content} id='simple-dialog-title'>
                         Interviwer
                     </DialogContentText>
                 </DialogContent>
-                <Switch checked={isUser} onChange={(e) => setisUser(e.target.checked)} name='checkedA' inputProps={{ 'aria-label': 'secondary checkbox' }} />
+                <Switch checked={isUser} onChange={(e) => setisUser(e.target.checked)} inputProps={{ 'aria-label': 'Toggle interviewer role' }} />
             </Dialog>
-            <Button variant='contained' onClick={() => setisopen(true)}>
+            <Button variant='contained' onClick={() => setisOpen(true)}>
                 Edit Roles{' '}
             </Button>
         </>
