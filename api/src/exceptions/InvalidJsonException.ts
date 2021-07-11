@@ -14,5 +14,3 @@ class InvalidJsonException extends HttpException {
 }
 
 export default InvalidJsonException;
-
-// TODO test
