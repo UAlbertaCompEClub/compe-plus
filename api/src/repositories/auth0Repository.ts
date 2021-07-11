@@ -11,7 +11,7 @@ import config from '../util/config';
 const getAccessToken = async (): Promise<string> => {
     try {
         const result = await axios.post(
-            `https://${config.managementApi.domain}/oauh/token`,
+            `https://${config.managementApi.domain}/oauth/token`,
             {
                 grant_type: 'client_credentials',
                 client_id: config.managementApi.clientId,

@@ -1,7 +1,7 @@
 import type * as s from 'zapatos/schema';
 
 const user1: s.users.JSONSelectable = {
-    id: '67e8ff47-8c31-4725-885c-e0e40455e7f5',
+    id: 'google-oauth2|999937999992352499990',
     email: 'email@domain.com',
     ccid: 'myccid',
     program: 'compe',
@@ -23,4 +23,10 @@ const resumeReview1: s.resume_reviews.JSONSelectable = {
     reviewer_id: '97cf8fdc-884d-442a-ac71-9922b8f1ee5e',
 };
 
-export default { user1, resumeReview1 };
+const userRole1: s.user_roles.JSONSelectable = {
+    user_id: 'google-oauth2|999937999992352499990',
+    role: 'student',
+    created_at: '2021-06-07T04:51:55.717971+00:00',
+};
+
+export default { user1, resumeReview1, userRole1 };

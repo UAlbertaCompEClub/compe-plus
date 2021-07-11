@@ -1,11 +1,12 @@
-import { NextFunction, Request, Response } from 'express';
-import jwt from 'express-jwt';
+import express, { NextFunction, Request, Response } from 'express';
+import jwt, { UnauthorizedError } from 'express-jwt';
 import jwtAuthz from 'express-jwt-authz';
 import pinoExpressMiddleware from 'express-pino-logger';
 import jwks from 'jwks-rsa';
 
 import HttpException from '../exceptions/HttpException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
+import InvalidJsonException from '../exceptions/InvalidJsonException';
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
 import NotFoundException from '../exceptions/NotFoundException';
@@ -15,7 +16,7 @@ import logger, { standardSerializers, verboseSerializers } from '../util/logger'
 
 type Middleware = (req: Request, res: Response, next: NextFunction) => void;
 type ErrMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => void;
-type AuthMiddleware = [Middleware, ErrMiddleware];
+type ErrHandledMiddleware = [Middleware, ErrMiddleware];
 
 /**
  * Returns middleware that will log every request.
@@ -54,7 +55,7 @@ function errorHandler(): ErrMiddleware {
             }
         } else {
             // Handle an unknown error
-            req.log.error({ error: err }, 'Unknown error');
+            req.log.error({ error: err, stackTrace: err.stack }, 'Unknown error');
             outErr = new HttpException(500, 'Unknown error');
         }
         res.status(outErr.status).json(outErr.serialize());
@@ -65,7 +66,7 @@ function errorHandler(): ErrMiddleware {
  * Returns middleware that will ensure the client accessing is authenticated.
  * @returns authenticate middleware.
  */
-function authenticate(): AuthMiddleware {
+function authenticate(): ErrHandledMiddleware {
     const authenticateJwt = jwt({
         secret: jwks.expressJwtSecret({
             cache: true,
@@ -79,8 +80,11 @@ function authenticate(): AuthMiddleware {
     });
 
     const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-        // Pass on a converted error
-        next(new NotAuthenticatedException());
+        if (err instanceof UnauthorizedError) {
+            next(new NotAuthenticatedException());
+        } else {
+            next(err);
+        }
     };
 
     return [authenticateJwt, errorHandler];
@@ -90,14 +94,14 @@ function authenticate(): AuthMiddleware {
  * Returns middleware that will ensure the client accessing is authorized and will return an error if they are not.
  * @returns authorize middleware.
  */
-function authorize(scope: Scope): AuthMiddleware {
+function authorize(scope: Scope): ErrHandledMiddleware {
     // Check that the caller has the proper scopes
     const checkAuthorization = jwtAuthz([scope], { failWithError: true });
 
     // Catch errors thrown off by jwtAuthz and convert to NotAuthorizedException
     const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
         // Pass on a converted error
-        next(new NotAuthorizedException());
+        next(new NotAuthorizedException()); // TODO only convert error when thrown by jwtAuthz
     };
     return [checkAuthorization, errorHandler];
 }
@@ -106,16 +110,32 @@ function authorize(scope: Scope): AuthMiddleware {
  * Returns middleware that will ensure the client accessing is authorized and will continue matching routes if the are not.
  * @returns authorizeAndFallThrough middleware.
  */
-function authorizeAndFallThrough(scope: Scope): AuthMiddleware {
+function authorizeAndFallThrough(scope: Scope): ErrHandledMiddleware {
     // Check that the caller has the proper scopes
     const checkAuthorization = jwtAuthz([scope], { failWithError: true });
 
     // Catch errors thrown off by jwtAuthz and fallthrough
     const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
         // Fallthrough to the next route in the router
-        next('route');
+        next('route'); // TODO only convert error when thrown by jwtAuthz
     };
     return [checkAuthorization, errorHandler];
+}
+
+function jsonParser(): ErrHandledMiddleware {
+    // Parse a json body
+    const parseBody = express.json();
+
+    // Catch parsing errors
+    const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+        if (err instanceof SyntaxError) {
+            // Pass on converted error
+            next(new InvalidJsonException(err.message));
+        } else {
+            next(err);
+        }
+    };
+    return [parseBody, errorHandler];
 }
 
 export default {
@@ -125,4 +145,5 @@ export default {
     authenticate,
     authorize,
     authorizeAndFallThrough,
+    jsonParser,
 };

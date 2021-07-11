@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { UnauthorizedError } from 'express-jwt';
 
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
@@ -62,8 +63,15 @@ describe('authenticate middleware', () => {
         nextFunction = jest.fn();
     });
 
-    it('converts any thrown error to a NotAuthenticated error', () => {
-        middleware.authenticate()[1](new Error('test'), mockRequest as Request, mockResponse as Response, nextFunction);
+    it('passes through any random error', () => {
+        const e = new Error('test');
+        middleware.authenticate()[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith(e);
+    });
+
+    it('converts unauthorized error to a NotAuthenticated error', () => {
+        const e = new UnauthorizedError('invalid_token', { message: 'msg' });
+        middleware.authenticate()[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
         expect(nextFunction).toBeCalledWith(new NotAuthenticatedException());
     });
 });

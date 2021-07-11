@@ -1,11 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import { mocked } from 'ts-jest/utils';
 
+import InternalServerErrorException from '../../exceptions/InternalServerErrorException';
+import * as auth0Repository from '../../repositories/auth0Repository';
 import * as userRepository from '../../repositories/userRepository';
+import testConstants from '../../util/testConstants';
 import postUser from './postUser';
 
 jest.mock('../../repositories/userRepository');
 const mockUserRepository = mocked(userRepository, true);
+
+jest.mock('../../repositories/auth0Repository');
+const mockAuth0Repository = mocked(auth0Repository, true);
 
 let req: Partial<Request>;
 let res: Partial<Response>;
@@ -14,7 +20,7 @@ let next: jest.MockedFunction<NextFunction>;
 beforeEach(() => {
     req = {
         body: {
-            user: 'google-oauth2|166667066666652466666',
+            id: 'google-oauth2|166667066666652466666',
             email: 'test@ualberta.ca',
             ccid: 'test',
             program: 'Computer Engineering Software Option',
@@ -29,20 +35,36 @@ beforeEach(() => {
     next = jest.fn();
 });
 
-it('rejects null user', async () => {
-    req.body.user = null;
+it('rejects null id', async () => {
+    req.body.id = null;
 
     await postUser(req as Request, res as Response, next);
 
-    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid message body', status: 400, details: { user: 'Value cannot be null' } });
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid message body', status: 400, details: { id: 'Value cannot be null' } });
 });
 
-it('rejects empty user', async () => {
-    req.body.user = '';
+it('rejects empty id', async () => {
+    req.body.id = '';
 
     await postUser(req as Request, res as Response, next);
 
-    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid message body', status: 400, details: { user: 'Value cannot be empty' } });
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid message body', status: 400, details: { id: 'Value cannot be empty' } });
+});
+
+it('rejects null email', async () => {
+    req.body.email = null;
+
+    await postUser(req as Request, res as Response, next);
+
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid message body', status: 400, details: { email: 'Value cannot be null' } });
+});
+
+it('rejects null email', async () => {
+    req.body.email = '';
+
+    await postUser(req as Request, res as Response, next);
+
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid message body', status: 400, details: { email: 'Value cannot be empty' } });
 });
 
 it('rejects invalid email', async () => {
@@ -91,6 +113,14 @@ it('rejects empty program', async () => {
     await postUser(req as Request, res as Response, next);
 
     expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid message body', status: 400, details: { program: 'Value cannot be empty' } });
+});
+
+it('rejects null year', async () => {
+    req.body.year = null;
+
+    await postUser(req as Request, res as Response, next);
+
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid message body', status: 400, details: { year: 'Value cannot be null' } });
 });
 
 it('rejects invalid year', async () => {
@@ -158,7 +188,36 @@ it('rejects invalid photoUrl', async () => {
 });
 
 it('will not double register a user', async () => {
-    mockUserRepository.get.mockResolvedValueOnce([]); // TODO
+    mockUserRepository.get.mockResolvedValueOnce([testConstants.user1]); // TODO
+
+    await postUser(req as Request, res as Response, next);
+
+    expect(mockAuth0Repository.giveUserRole).not.toBeCalled();
+    expect(userRepository.create).not.toBeCalled();
+    expect(res.status).toBeCalledWith(409);
+    expect(res.json).toBeCalledWith({ user: testConstants.user1 });
+});
+
+it('will not write to db if it fails to reach auth0', async () => {
+    const e = new InternalServerErrorException({}, new Error('test'));
+    mockUserRepository.get.mockResolvedValueOnce([]);
+    mockAuth0Repository.giveUserRole.mockRejectedValueOnce(e);
+
+    await postUser(req as Request, res as Response, next);
+
+    expect(userRepository.create).not.toBeCalled();
+    expect(next).toBeCalledWith(e);
+});
+
+it('works on the happy path', async () => {
+    mockUserRepository.get.mockResolvedValueOnce([]);
+    mockAuth0Repository.giveUserRole.mockResolvedValueOnce();
+    mockUserRepository.create.mockResolvedValueOnce([testConstants.user1, testConstants.userRole1]);
+
+    await postUser(req as Request, res as Response, next);
+
+    expect(res.status).toBeCalledWith(201);
+    expect(res.json).toBeCalledWith({ user: testConstants.user1 });
 });
 
 // it('works on happy path', async () => {

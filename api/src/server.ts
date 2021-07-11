@@ -17,7 +17,7 @@ router.use(cors());
 router.use(middleware.logRequest());
 
 /** Parse the request */
-router.use(express.json());
+router.use(middleware.jsonParser());
 
 /** Require valid JWT for any endpoint */
 router.use(middleware.authenticate());

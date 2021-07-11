@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
 
@@ -9,7 +8,7 @@ import controller from '../controllerUtil';
 import Validator, { beAValidUrl } from '../validation';
 
 type ReqBody = {
-    user: string;
+    id: string;
     email: string;
     ccid: string;
     program: string;
@@ -17,16 +16,18 @@ type ReqBody = {
     givenName: string;
     familyName: string;
     fullName: string;
-    photoUrl: string; // TODO can be undefined?
+    photoUrl?: string;
 };
 
 class ReqBodyValidator extends Validator<ReqBody> {
     constructor() {
         super('message body');
 
-        this.ruleFor('user').notNull().notEmpty();
+        this.ruleFor('id').notNull().notEmpty();
 
         this.ruleFor('email')
+            .notNull()
+            .notEmpty()
             .emailAddress()
             .matches(new RegExp(/^.*@ualberta\.ca$/));
 
@@ -34,7 +35,7 @@ class ReqBodyValidator extends Validator<ReqBody> {
 
         this.ruleFor('program').notNull().notEmpty();
 
-        this.ruleFor('year').greaterThan(0);
+        this.ruleFor('year').notNull().greaterThan(0);
 
         this.ruleFor('givenName').notNull().notEmpty();
 
@@ -42,7 +43,9 @@ class ReqBodyValidator extends Validator<ReqBody> {
 
         this.ruleFor('fullName').notNull().notEmpty();
 
-        this.ruleFor('photoUrl').mustAsync(beAValidUrl);
+        this.ruleFor('photoUrl')
+            .mustAsync(beAValidUrl)
+            .when((reqBody) => reqBody.photoUrl !== undefined);
     }
 }
 
@@ -58,19 +61,29 @@ const postUser = controller(async (req: Request<unknown, ResBody, ReqBody>, res:
     await new ReqBodyValidator().validateAndThrow(req.body);
 
     // Make sure that the user isn't already registered
-    const matches = await userRepository.get(req.body.user);
+    const matches = await userRepository.get(req.body.id);
     if (matches.length > 0) {
         res.status(409).json({ user: matches[0] });
         return;
     }
 
     // By default give the user the Student role in Auth0
-    await auth0Repository.giveUserRole(req.body.user, Role.Student);
+    await auth0Repository.giveUserRole(req.body.id, Role.Student);
 
     // Add the user to postgres with the appropriate roles
-    // TODO
+    const results = await userRepository.create({
+        id: req.body.id,
+        email: req.body.email,
+        ccid: req.body.ccid,
+        program: req.body.program,
+        year: req.body.year,
+        given_name: req.body.givenName,
+        family_name: req.body.familyName,
+        full_name: req.body.fullName,
+        photo_url: req.body.photoUrl,
+    });
 
-    res.status(201).json({ user: matches[0] }); // TODO return proper thing
+    res.status(201).json({ user: results[0] });
 });
 
 export default postUser;

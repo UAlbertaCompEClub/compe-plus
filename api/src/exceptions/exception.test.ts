@@ -1,5 +1,6 @@
 import HttpException from './HttpException';
 import InternalServerErrorException from './InternalServerErrorException';
+import InvalidJsonException from './InvalidJsonException';
 import NotAuthenticatedException from './NotAuthenticatedException';
 import NotAuthorizedException from './NotAuthorizedException';
 import NotFoundException from './NotFoundException';
@@ -95,6 +96,17 @@ describe('InternalServerErrorException', () => {
         expect(obj.code).toEqual(500);
         expect(obj.message).toEqual("The server has encountered a situation it doesn't know how to handle");
         expect(obj.details).toEqual({});
+    });
+});
+
+describe('InvalidJsonException', () => {
+    it('serializes properly', () => {
+        const e = new InvalidJsonException('msg');
+        const obj = e.serialize();
+
+        expect(obj.code).toEqual(400);
+        expect(obj.message).toEqual('msg');
+        expect(obj.details).toBeUndefined();
     });
 });
 
