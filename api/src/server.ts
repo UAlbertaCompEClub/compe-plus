@@ -32,7 +32,7 @@ router.use(middleware.errorHandler());
 
 /** Create the server */
 const httpServer = http.createServer(router);
-httpServer.listen(config.server.port, () => {
-    logger.info(`Server running on ${config.server.hostname}:${config.server.port}`);
+httpServer.listen(config.port, () => {
+    logger.info(`Server listening on port ${config.port}`);
     logger.debug({ config: config }, 'With the given configuration');
 });

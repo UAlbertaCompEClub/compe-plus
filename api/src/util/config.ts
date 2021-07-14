@@ -2,22 +2,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';
-const SERVER_PORT = process.env.SERVER_PORT || 1337;
+const PORT = process.env.PORT || 1337;
 const VERBOSE = process.env.VERBOSE || false;
 const EXTRA_VERBOSE = process.env.EXTRA_VERBOSE || false;
 const DATABASE_URL = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/compe-plus?sslmode=disable';
 const AUTH0_JWKS_URI = process.env.AUTH0_JWKS_URI || '';
 const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE || '';
 const AUTH0_ISSUER = process.env.AUTH0_ISSUER || '';
-
-/**
- * Configuration for server connection.
- */
-const SERVER = {
-    hostname: SERVER_HOSTNAME,
-    port: SERVER_PORT,
-};
 
 /**
  * Configuration for authentication.
@@ -32,7 +23,7 @@ const AUTH0 = {
  * Configuration for application.
  */
 const config = {
-    server: SERVER,
+    port: PORT,
     auth0: AUTH0,
     verbose: VERBOSE,
     extraVerbose: EXTRA_VERBOSE,
