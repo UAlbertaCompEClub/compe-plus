@@ -5,7 +5,6 @@
     "main": "src/server.ts",
     "private": true,
     "scripts": {
-        "prestart": "npm run build",
         "start": "node build/src/server.js",
         "start:dev": "nodemon --exec 'ts-node --files' src/server.ts | pino-pretty",
         "build": "npm run clean && tsc",
@@ -16,6 +15,9 @@
         "lint": "eslint src --ext .js,.ts --max-warnings 0",
         "lint:fix": "eslint src --ext .js,.ts --max-warnings 0 --fix",
         "psql": "PGPASSWORD=postgres psql -h localhost -U postgres -d compe-plus"
+    },
+    "engines": {
+        "node": "14.x"
     },
     "author": "",
     "license": "ISC",
