@@ -2,6 +2,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '@material-ui/core';
 import React, { FC } from 'react';
 
+import { UserProfile } from './UserProfile';
+
 const LogoutButton: FC = () => {
     const { logout } = useAuth0();
     return (
@@ -24,7 +26,7 @@ const AuthButton: FC = () => {
     const { isAuthenticated } = useAuth0();
 
     if (isAuthenticated) {
-        return <LogoutButton />;
+        return <UserProfile />;
     }
 
     return <LoginButton />;
