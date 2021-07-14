@@ -2,16 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '@material-ui/core';
 import React, { FC } from 'react';
 
-import { UserProfile } from './UserProfile';
-
-const LogoutButton: FC = () => {
-    const { logout } = useAuth0();
-    return (
-        <Button variant='outlined' color='secondary' onClick={() => logout()}>
-            Logout
-        </Button>
-    );
-};
+import UserProfile from './UserProfile';
 
 const LoginButton: FC = () => {
     const { loginWithRedirect } = useAuth0();

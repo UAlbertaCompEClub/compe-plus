@@ -1,10 +1,12 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import React, { FC, useRef, useState } from 'react';
 
-export const UserProfile: FC = () => {
+const UserProfile: FC = () => {
     const userProfileIcon = useRef(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { logout } = useAuth0();
     return (
         <>
             <IconButton
@@ -34,8 +36,10 @@ export const UserProfile: FC = () => {
                 open={isMenuOpen}
                 onClose={() => setIsMenuOpen(false)}
             >
-                <MenuItem>Logout</MenuItem>
+                <MenuItem onClick={() => logout()}>Logout</MenuItem>
             </Menu>
         </>
     );
 };
+
+export default UserProfile;
