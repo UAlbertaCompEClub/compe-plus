@@ -30,27 +30,29 @@ const generateServiceObject = (): S3 => {
 /**
  * Upload a file to blob storage.
  * @param key Key to storage location.
- * @param bytes Bytes to write to storage.
+ * @param data Data to write to storage.
+ * @param encoding How data is encoded.
  */
-const upload = async (key: string, bytes: Buffer): Promise<void> => {
+const upload = async (key: string, data: string, encoding: BufferEncoding): Promise<void> => {
     const s3 = generateServiceObject();
 
-    await s3.putObject({ Bucket: config.bucketeer.bucket_name, Key: key, Body: bytes }).promise();
+    await s3.putObject({ Bucket: config.bucketeer.bucket_name, Key: key, Body: Buffer.from(data, encoding) }).promise();
 };
 
 /**
  * Download a file from blob storage.
  * @param key Key to storage location.
+ * @param encoding Encoding to return file in.
  */
-const download = async (key: string): Promise<void> => {
-    // TODO should return buffer but how?
+const download = async (key: string, encoding: BufferEncoding): Promise<string> => {
     // TODO what happens when key does not exist?
     const s3 = generateServiceObject();
 
-    const result = await s3.getObject({ Bucket: config.bucketeer.bucket_name, Key: key }).promise();
-
-    if (result.Body === undefined) {
-        // TODO what do I do?
+    try {
+        const result = await s3.getObject({ Bucket: config.bucketeer.bucket_name, Key: key }).promise();
+        return result.Body ? result.Body.toString(encoding) : '';
+    } catch (err) {
+        return '';
     }
 };
 

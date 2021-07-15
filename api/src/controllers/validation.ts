@@ -2,6 +2,7 @@ import { AsyncValidator as AsyncFluentValidator } from 'fluentvalidation-ts';
 import { validate as uuidValidate } from 'uuid';
 
 import ValidationException from '../exceptions/ValidationException';
+import * as resumeReviewRepository from '../repositories/resumeReviewRepository';
 import * as userRepository from '../repositories/userRepository';
 
 /**
@@ -55,7 +56,7 @@ const beAResumeReviewState = {
  */
 const beAValidUser = {
     predicate: async (field: string | undefined): Promise<boolean> => {
-        if (field === undefined) {
+        if (field === undefined || field === null) {
             return false;
         }
         const user = decodeURIComponent(field);
@@ -70,7 +71,7 @@ const beAValidUser = {
  */
 const beProperlyUriEncoded = {
     predicate: async (field: string | undefined): Promise<boolean> => {
-        if (field === undefined) {
+        if (field === undefined || field === null) {
             return false;
         }
         try {
@@ -88,7 +89,7 @@ const beProperlyUriEncoded = {
  */
 const beAValidUrl = {
     predicate: async (field: string | undefined): Promise<boolean> => {
-        if (field === undefined) {
+        if (field === undefined || field === null) {
             return false;
         }
         try {
@@ -101,5 +102,37 @@ const beAValidUrl = {
     message: 'Must be a valid url',
 };
 
-export { beAResumeReviewState, beAValidUrl, beAValidUser, beAValidUuid, beProperlyUriEncoded };
+// TODO test
+/**
+ * Test whether a field is properly Base64 encoded.
+ */
+const beProperlyBase64Encoded = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        if (field === undefined || field === null) {
+            return false;
+        }
+        if (Buffer.from(field, 'base64').toString('base64') !== field) {
+            return false;
+        }
+        return true;
+    },
+    message: 'Must be properly base64 encoded',
+};
+
+// TODO test
+/**
+ * Test whether a resume review already exists in the database.
+ */
+const beAValidResumeReview = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        if (field === undefined || field === null) {
+            return false;
+        }
+        const matches = await resumeReviewRepository.get(field);
+        return matches.length == 1;
+    },
+    message: 'Must be a resume review that already exists',
+};
+
+export { beAResumeReviewState, beAValidResumeReview, beAValidUrl, beAValidUser, beAValidUuid, beProperlyBase64Encoded, beProperlyUriEncoded };
 export default Validator;
