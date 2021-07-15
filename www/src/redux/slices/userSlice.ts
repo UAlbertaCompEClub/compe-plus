@@ -1,21 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { UserInfo } from '../thunks/registerUser';
+
 type UserStore = {
     roles: string[];
     currentRole: string | null;
     info: UserInfo | null;
-};
-
-type UserInfo = {
-    id: string;
-    email: string;
-    ccid: string;
-    program: string;
-    year: number;
-    givenName: string;
-    familyName: string;
-    fullName: string;
-    photoUrl?: string;
 };
 
 const initialState: UserStore = {
