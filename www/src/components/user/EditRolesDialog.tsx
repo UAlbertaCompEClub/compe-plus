@@ -24,7 +24,7 @@ const EditRolesDialog: FC = () => {
                         Resume Reviewer
                     </DialogContentText>
                 </DialogContent>
-                <Switch checked={isStudent} onChange={(e) => setisStudent(e.target.checked)} inputProps={{ 'aria-label': 'Toggle reviewer role' }} />
+                <Switch checked={isStudent} onChange={(e) => setIsStudent(e.target.checked)} inputProps={{ 'aria-label': 'Toggle reviewer role' }} />
                 <DialogContent>
                     <DialogContentText className={classes.dialog_content} id='simple-dialog-title'>
                         Interviwer
