@@ -30,7 +30,7 @@ const EditRolesDialog: FC = () => {
                         Interviwer
                     </DialogContentText>
                 </DialogContent>
-                <Switch checked={isUser} onChange={(e) => setisUser(e.target.checked)} inputProps={{ 'aria-label': 'Toggle interviewer role' }} />
+                <Switch checked={isUser} onChange={(e) => setIsUser(e.target.checked)} inputProps={{ 'aria-label': 'Toggle interviewer role' }} />
             </Dialog>
             <Button variant='contained' onClick={() => setIsOpen(true)}>
                 Edit Roles
