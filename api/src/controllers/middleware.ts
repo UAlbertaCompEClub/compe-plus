@@ -18,6 +18,8 @@ type Middleware = (req: Request, res: Response, next: NextFunction) => void;
 type ErrMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => void;
 type ErrHandledMiddleware = [Middleware, ErrMiddleware];
 
+const AUTHZ_ERROR_MSG = 'Insufficient scope';
+
 /**
  * Returns middleware that will log every request.
  * @returns Logging middleware.
@@ -101,7 +103,11 @@ function authorize(scope: Scope): ErrHandledMiddleware {
     // Catch errors thrown off by jwtAuthz and convert to NotAuthorizedException
     const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
         // Pass on a converted error
-        next(new NotAuthorizedException()); // TODO only convert error when thrown by jwtAuthz
+        if (err.message === AUTHZ_ERROR_MSG) {
+            next(new NotAuthorizedException());
+        } else {
+            next(err);
+        }
     };
     return [checkAuthorization, errorHandler];
 }
@@ -117,7 +123,11 @@ function authorizeAndFallThrough(scope: Scope): ErrHandledMiddleware {
     // Catch errors thrown off by jwtAuthz and fallthrough
     const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
         // Fallthrough to the next route in the router
-        next('route'); // TODO only convert error when thrown by jwtAuthz
+        if (err.message === AUTHZ_ERROR_MSG) {
+            next('route');
+        } else {
+            next(err);
+        }
     };
     return [checkAuthorization, errorHandler];
 }

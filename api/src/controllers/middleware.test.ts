@@ -101,8 +101,16 @@ describe('authorize middleware', () => {
         expect(nextFunction).toBeCalledWith();
     });
 
-    it('converts any thrown error to a NotAuthorized error', () => {
-        middleware.authorize(Scope.CreateDocuments)[1](new Error('test'), mockRequest as Request, mockResponse as Response, nextFunction);
+    it('passes through random errors', () => {
+        const e = new Error('test');
+        middleware.authorize(Scope.CreateDocuments)[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith(e);
+    });
+
+    it('converts authz errors to NotAuthorizedException', () => {
+        const e = new Error('test');
+        e.message = 'Insufficient scope';
+        middleware.authorize(Scope.CreateDocuments)[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
         expect(nextFunction).toBeCalledWith(new NotAuthorizedException());
     });
 });
@@ -132,8 +140,16 @@ describe('authorizeAndFallthrough middleware', () => {
         expect(nextFunction).toBeCalledWith();
     });
 
-    it('calls next route if unauthroized', () => {
-        middleware.authorizeAndFallThrough(Scope.CreateDocuments)[1](new Error('test'), mockRequest as Request, mockResponse as Response, nextFunction);
+    it('passes through random errors', () => {
+        const e = new Error('test');
+        middleware.authorizeAndFallThrough(Scope.CreateDocuments)[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith(e);
+    });
+
+    it('calls next route if authz error is thrown', () => {
+        const e = new Error('test');
+        e.message = 'Insufficient scope';
+        middleware.authorizeAndFallThrough(Scope.CreateDocuments)[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
         expect(nextFunction).toBeCalledWith('route');
     });
 });
