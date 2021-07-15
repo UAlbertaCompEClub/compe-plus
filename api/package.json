@@ -14,7 +14,8 @@
         "format": "prettier --config ../.prettierrc --ignore-path .prettierignore --write .",
         "lint": "eslint src --ext .js,.ts --max-warnings 0",
         "lint:fix": "eslint src --ext .js,.ts --max-warnings 0 --fix",
-        "psql": "PGPASSWORD=postgres psql -h localhost -U postgres -d compe-plus"
+        "psql": "PGPASSWORD=postgres psql -h localhost -U postgres -d compe-plus",
+        "s3-mock": "s3rver -d /tmp/s3 --configure-bucket documents.localhost"
     },
     "engines": {
         "node": "14.x"
@@ -22,6 +23,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@types/aws-sdk": "^2.7.0",
         "@types/axios": "^0.14.0",
         "@types/cors": "^2.8.10",
         "@types/dotenv": "^8.2.0",
@@ -29,6 +31,7 @@
         "@types/express-jwt": "^0.0.42",
         "@types/express-pino-logger": "^4.0.2",
         "@types/jest": "^26.0.23",
+        "@types/node": "^15.6.0",
         "@types/pg": "^8.6.0",
         "@types/pino": "^6.3.8",
         "@types/uuid": "^8.3.0",
@@ -47,6 +50,7 @@
         "typescript": "^4.2.4"
     },
     "dependencies": {
+        "aws-sdk": "^2.943.0",
         "axios": "^0.21.1",
         "cors": "^2.8.5",
         "dotenv": "^10.0.0",
