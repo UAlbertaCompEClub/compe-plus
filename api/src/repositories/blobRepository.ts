@@ -1,60 +1,57 @@
-// import * as db from 'zapatos/db';
-// import { conditions as dc } from 'zapatos/db';
-// import type * as s from 'zapatos/schema';
+import S3 from 'aws-sdk/clients/s3';
+import * as AWS from 'aws-sdk/global';
 
-// import pool from '../util/pool';
+import config from '../util/config';
 
-// /**
-//  * Get resume reviews. Filter as necessary.
-//  * @param id Optional resume review id to filter by.
-//  * @param reviewee Optional reviewee to filter by.
-//  * @param reviewer Optional reviewer to filter by.
-//  * @param state Optional state to filter by.
-//  * @returns List of resume reviews appropriately filtered.
-//  */
-// const get = async (id?: string, reviewee?: string, reviewer?: string, state?: s.resume_review_state): Promise<s.resume_reviews.JSONSelectable[]> => {
-//     const where: s.resume_reviews.Whereable = {};
-//     if (id) {
-//         where.id = dc.eq(id);
-//     }
-//     if (reviewee) {
-//         where.reviewee_id = dc.eq(reviewee);
-//     }
-//     if (reviewer) {
-//         where.reviewer_id = dc.eq(reviewer);
-//     }
-//     if (state) {
-//         where.state = dc.eq(state);
-//     }
-//     return db.select('resume_reviews', where).run(pool);
-// };
+// TODO: Research if we can avoid generating the s3 service object on every call to the repository.
+// After much googling I still haven't found an answer to this. I'm leaving it as is for now despite
+// the performance cost to avoid needing to debug weird race conditions.
 
-// /**
-//  * Create a new resume review.
-//  * @param reviewee Reviewee id for new resume review.
-//  * @param state State of new resume review.
-//  * @returns The newly created resume review.
-//  */
-// const create = async (reviewee: string, state: s.resume_review_state): Promise<s.resume_reviews.JSONSelectable> => {
-//     return db.insert('resume_reviews', { reviewee_id: reviewee, state: state }).run(pool);
-// };
+/**
+ * Helper function to generate service object.
+ * @returns S3 service object.
+ */
+const generateServiceObject = (): S3 => {
+    if (config.bucketeer.endpoint !== '') {
+        return new S3({
+            accessKeyId: config.bucketeer.aws_access_key_id,
+            secretAccessKey: config.bucketeer.aws_secret_access_key,
+            region: config.bucketeer.aws_region,
+            endpoint: new AWS.Endpoint(config.bucketeer.endpoint),
+        });
+    }
+    return new S3({
+        accessKeyId: config.bucketeer.aws_access_key_id,
+        secretAccessKey: config.bucketeer.aws_secret_access_key,
+        region: config.bucketeer.aws_region,
+    });
+};
 
-// export { create, get };
+/**
+ * Upload a file to blob storage.
+ * @param key Key to storage location.
+ * @param bytes Bytes to write to storage.
+ */
+const upload = async (key: string, bytes: Buffer): Promise<void> => {
+    const s3 = generateServiceObject();
 
-// // TODO
+    await s3.putObject({ Bucket: config.bucketeer.bucket_name, Key: key, Body: bytes }).promise();
+};
 
-console.log(req.body.base64Contents);
-const byteContents = Buffer.from(req.body.base64Contents, 'base64');
-// const byteContents = decode(req.body.base64Contents);
-const s3 = new S3({
-    accessKeyId: config.bucketeer.aws_access_key_id,
-    secretAccessKey: config.bucketeer.aws_secret_access_key,
-    region: config.bucketeer.aws_region,
-    endpoint: new AWS.Endpoint(config.bucketeer.endpoint), // TODO only configure when given
-});
-await s3.putObject({ Bucket: config.bucketeer.bucket_name, Key: req.params.resumeReview, Body: byteContents }).promise();
+/**
+ * Download a file from blob storage.
+ * @param key Key to storage location.
+ */
+const download = async (key: string): Promise<void> => {
+    // TODO should return buffer but how?
+    // TODO what happens when key does not exist?
+    const s3 = generateServiceObject();
 
-// const r = await s3.getObject({ Bucket: config.bucketeer.bucket_name, Key: req.params.resumeReview }).promise();
-// if (r.Body) {
-//     console.log(r.Body.toString('base64'));
-// }
+    const result = await s3.getObject({ Bucket: config.bucketeer.bucket_name, Key: key }).promise();
+
+    if (result.Body === undefined) {
+        // TODO what do I do?
+    }
+};
+
+export { download, upload };

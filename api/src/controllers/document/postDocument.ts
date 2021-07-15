@@ -1,10 +1,9 @@
-import * as AWS from 'aws-sdk';
-import S3 from 'aws-sdk/clients/s3';
 import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
 
+import InternalServerErrorException from '../../exceptions/InternalServerErrorException';
 import * as blobRepository from '../../repositories/blobRepository';
-import config from '../../util/config';
+import * as documentRepository from '../../repositories/documentRepository';
 import controller from '../controllerUtil';
 import Validator, { beAValidUuid } from '../validation';
 
@@ -35,7 +34,7 @@ class ReqBodyValidator extends Validator<ReqBody> {
     }
 }
 
-type ResBody = { document: Omit<s.documents.JSONSelectable, 'file_url'> };
+type ResBody = { document: s.documents.JSONSelectable };
 
 /**
  * Create a new document.
@@ -47,30 +46,19 @@ const postDocument = controller(async (req: Request<Params, ResBody, ReqBody>, r
     await new ParamsValidator().validateAndThrow(req.params);
     await new ReqBodyValidator().validateAndThrow(req.body);
 
-    // Decode contents and create file in s3
-    // TODO
-    console.log(req.body.base64Contents);
-    const byteContents = Buffer.from(req.body.base64Contents, 'base64');
-    // const byteContents = decode(req.body.base64Contents);
-    const s3 = new S3({
-        accessKeyId: config.bucketeer.aws_access_key_id,
-        secretAccessKey: config.bucketeer.aws_secret_access_key,
-        region: config.bucketeer.aws_region,
-        endpoint: new AWS.Endpoint(config.bucketeer.endpoint), // TODO only configure when given
-    });
-    await s3.putObject({ Bucket: config.bucketeer.bucket_name, Key: req.params.resumeReview, Body: byteContents }).promise();
-
-    // const r = await s3.getObject({ Bucket: config.bucketeer.bucket_name, Key: req.params.resumeReview }).promise();
-    // if (r.Body) {
-    //     console.log(r.Body.toString('base64'));
-    // }
-
-    // TODO
-
     // Create document resource in db
-    // TODO
+    const document = await documentRepository.create(req.body.note, req.body.isReview, req.body.userId, req.params.resumeReview);
 
-    res.status(201).end(); // TODO make right
+    // Decode contents and upload file to s3
+    const key = `resume-reviews/${req.params.resumeReview}/documents/${document.id}`;
+    try {
+        await blobRepository.upload(key, Buffer.from(req.body.base64Contents, 'base64'));
+    } catch (err) {
+        await documentRepository.remove(document.id);
+        throw new InternalServerErrorException({ issue: 'Failed to upload document to S3' }, err);
+    }
+
+    res.status(201).json({ document: document });
 });
 
 export default postDocument;

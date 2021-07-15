@@ -2,7 +2,7 @@ import express from 'express';
 
 import * as controller from '../controllers/document/index';
 import middleware from '../controllers/middleware';
-import Scope from '../util/scopes';
+import Scope from '../types/scopes';
 
 export const router = express.Router();
 
