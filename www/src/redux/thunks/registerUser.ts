@@ -17,7 +17,7 @@ export type UserInfo = {
 
 const registerUser = createAsyncThunk('user/register', async (userInfo: UserInfo) => {
     const response = await postWithToken(users_endpoint, [], userInfo);
-    return response?.data;
+    return response?.data as UserInfo;
 });
 
 export default registerUser;
