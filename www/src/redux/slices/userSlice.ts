@@ -4,14 +4,14 @@ import registerUser, { UserInfo } from '../thunks/registerUser';
 
 type UserStore = {
     roles: string[];
-    currentRole: string | null;
+    currentRole: string;
     info: UserInfo | null;
     isLoading: boolean;
 };
 
 const initialState: UserStore = {
     roles: [],
-    currentRole: null,
+    currentRole: '',
     info: null,
     isLoading: false,
 };
@@ -28,7 +28,7 @@ export const userSlice = createSlice({
         builder.addCase(registerUser.pending, (state) => {
             state.isLoading = true;
         });
-        builder.addCase(registerUser.pending, (state, action) => {
+        builder.addCase(registerUser.fulfilled, (state, action) => {
             console.log(action);
             const isSuccess = action.payload !== undefined;
             console.log(`Register success=${isSuccess}`);
