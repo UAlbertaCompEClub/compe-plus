@@ -4,7 +4,7 @@ import type * as s from 'zapatos/schema';
 
 import ValidationException from '../exceptions/ValidationException';
 import * as userRepository from '../repositories/userRepository';
-import Validator, { beAResumeReviewState, beAValidUser, beAValidUuid } from './validation';
+import Validator, { beAResumeReviewState, beAValidUrl, beAValidUser, beAValidUuid, beProperlyUriEncoded } from './validation';
 
 jest.mock('../repositories/userRepository');
 const mockUserRepository = mocked(userRepository, true);
@@ -130,5 +130,67 @@ describe('beAValidUser helper', () => {
         mockUserRepository.get.mockResolvedValueOnce([]);
 
         await expect(v.validateAndThrow({ a: '67e8ff47-8c31-4725-885c-e0e40455e7f5' })).rejects.toThrowError(ValidationException);
+    });
+});
+
+type TestUriType = {
+    a: string;
+    b?: string;
+};
+
+class TestUriValidator extends Validator<TestUriType> {
+    constructor() {
+        super('test');
+
+        this.ruleFor('a').mustAsync(beProperlyUriEncoded);
+
+        this.ruleFor('b')
+            .mustAsync(beProperlyUriEncoded)
+            .when((t) => t.b !== undefined);
+    }
+}
+
+describe('beProperlyUriEncoded helper', () => {
+    const v = new TestUriValidator();
+
+    it('correctly verifies a string is properly url encoded', async () => {
+        await expect(v.validateAndThrow({ a: '%E0%A4%A' })).rejects.toThrowError(ValidationException);
+        await expect(v.validateAndThrow({ a: '%7C' })).resolves.not.toThrowError(ValidationException);
+    });
+
+    it('correctly verifies strings that can be undefined', async () => {
+        await expect(v.validateAndThrow({ a: '%7C', b: '%E0%A4%A' })).rejects.toThrowError(ValidationException);
+        await expect(v.validateAndThrow({ a: '%7C', b: '%7C' })).resolves.not.toThrowError(ValidationException);
+    });
+});
+
+type TestUrlType = {
+    a: string;
+    b?: string;
+};
+
+class TestUrlValidator extends Validator<TestUrlType> {
+    constructor() {
+        super('test');
+
+        this.ruleFor('a').mustAsync(beAValidUrl);
+
+        this.ruleFor('b')
+            .mustAsync(beAValidUrl)
+            .when((t) => t.b !== undefined);
+    }
+}
+
+describe('beAValidUrl helper', () => {
+    const v = new TestUrlValidator();
+
+    it('correctly verifies a string is a url', async () => {
+        await expect(v.validateAndThrow({ a: 'bleh' })).rejects.toThrowError(ValidationException);
+        await expect(v.validateAndThrow({ a: 'https://hi.com' })).resolves.not.toThrowError(ValidationException);
+    });
+
+    it('correctly verifies strings that can be undefined', async () => {
+        await expect(v.validateAndThrow({ a: 'https://hi.com', b: 'bleh' })).rejects.toThrowError(ValidationException);
+        await expect(v.validateAndThrow({ a: 'https://hi.com', b: 'https://hi.com' })).resolves.not.toThrowError(ValidationException);
     });
 });

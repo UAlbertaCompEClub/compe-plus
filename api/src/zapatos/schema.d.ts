@@ -969,6 +969,12 @@ declare module 'zapatos/schema' {
     }
     export interface Insertable {
       /**
+      * **users.id**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      id: string | db.Parameter<string> | db.SQLFragment;
+      /**
       * **users.email**
       * - `text` in database
       * - `NOT NULL`, no default
@@ -1018,6 +1024,12 @@ declare module 'zapatos/schema' {
       photo_url?: string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment;
     }
     export interface Updatable {
+      /**
+      * **users.id**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      id?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
       /**
       * **users.email**
       * - `text` in database

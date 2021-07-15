@@ -16,4 +16,12 @@ const get = async (id: string): Promise<s.users.JSONSelectable[]> => {
     return db.select('users', where).run(pool);
 };
 
-export { get };
+/**
+ * Create user. Gives the user the student role.
+ * @param user User data.
+ */
+const create = async (user: s.users.Insertable): Promise<[s.users.JSONSelectable, s.user_roles.JSONSelectable]> => {
+    return db.serializable(pool, (txnClient) => Promise.all([db.insert('users', user).run(txnClient), db.insert('user_roles', { user_id: user.id, role: 'student' }).run(txnClient)]));
+};
+
+export { create, get };
