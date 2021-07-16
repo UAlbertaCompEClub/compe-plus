@@ -4,7 +4,12 @@ import { useEffect } from 'react';
 
 import ViewSDKClient from './ViewerSDKClient';
 
-const PDFViewer: FC = () => {
+// TODO: Modify to properly pass necessary props to make get resume from api
+type PDFViewerProps = {
+    id: string;
+};
+
+const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
     useEffect(() => {
         const viewSDKClient = new ViewSDKClient();
         viewSDKClient.ready().then(() => {
