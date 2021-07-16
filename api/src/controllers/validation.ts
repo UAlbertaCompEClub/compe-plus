@@ -102,7 +102,6 @@ const beAValidUrl = {
     message: 'Must be a valid url',
 };
 
-// TODO test
 /**
  * Test whether a field is properly Base64 encoded.
  */
@@ -119,7 +118,6 @@ const beProperlyBase64Encoded = {
     message: 'Must be properly base64 encoded',
 };
 
-// TODO test
 /**
  * Test whether a resume review already exists in the database.
  */
