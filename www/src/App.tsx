@@ -73,10 +73,10 @@ const App: FC = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Container maxWidth={false} style={{ padding: 0 }}>
+            <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
-                    <BrowserView>
+                    <BrowserView renderWithFragment>
                         {content}
                         {!isLoadingUser && isUserRegistered === false && <Redirect to={REGISTER_ROUTE} />}
                     </BrowserView>
