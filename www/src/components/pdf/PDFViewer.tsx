@@ -9,7 +9,7 @@ type PDFViewerProps = {
     id: string;
 };
 
-const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
+const PDFViewer: FC<PDFViewerProps> = () => {
     useEffect(() => {
         const viewSDKClient = new ViewSDKClient();
         viewSDKClient.ready().then(() => {

@@ -67,8 +67,9 @@ class ViewSDKClient {
                 /* Pass information on how to access the file */
                 content: {
                     /* Location of file where it is hosted */
+                    // TODO: replace empty string with GET endpoint for getting pdf
                     location: {
-                        url: 'http://localhost:5000/resume',
+                        url: '',
                         /*
                     If the file URL requires some additional headers, then it can be passed as follows:-
                     headers: [
@@ -123,31 +124,20 @@ class ViewSDKClient {
 
     registerSaveApiHandler() {
         /* Define Save API Handler */
-        const saveApiHandler = (metaData: any, content: any, options: any) => {
+        const saveApiHandler = (metaData: any, content: any) => {
             return new Promise<saveAPIResponse | void>((resolve) => {
                 const formData = new FormData();
 
                 formData.append('file', arrayBufferToBase64(content));
 
+                // TODO: replace empty string with POST endpoint for updating pdf
                 axios
-                    .post('http://localhost:5000/update_resume', formData, {
+                    .post('', formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                         },
                     })
                     .then(() => resolve());
-                /* Dummy implementation of Save API, replace with your business logic */
-                setTimeout(() => {
-                    const response = {
-                        code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
-                        data: {
-                            metaData: Object.assign(metaData, {
-                                updatedAt: new Date().getTime(),
-                            }),
-                        },
-                    };
-                    resolve(response);
-                }, 2000);
             });
         };
 
