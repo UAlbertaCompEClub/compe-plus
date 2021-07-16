@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
 
 import InternalServerErrorException from '../../exceptions/InternalServerErrorException';
-import * as blobRepository from '../../repositories/blobRepository';
 import * as documentRepository from '../../repositories/documentRepository';
+import * as s3Repository from '../../repositories/s3Repository';
 import controller from '../controllerUtil';
 import Validator, { beAValidResumeReview, beAValidUser, beAValidUuid, beProperlyBase64Encoded } from '../validation';
 
@@ -58,7 +58,7 @@ const postDocument = controller(async (req: Request<Params, ResBody, ReqBody>, r
     // Decode contents and upload file to s3
     const key = `resume-reviews/${req.params.resumeReview}/documents/${document.id}`;
     try {
-        await blobRepository.upload(key, req.body.base64Contents, 'base64');
+        await s3Repository.upload(key, req.body.base64Contents, 'base64');
     } catch (err) {
         await documentRepository.remove(document.id);
         throw new InternalServerErrorException({ issue: 'Failed to upload document to S3' }, err);

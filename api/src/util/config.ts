@@ -46,11 +46,11 @@ const MANAGEMENT_API = {
 };
 
 /**
- * Configuration for bucketeer blob storage.
+ * Configuration for Bucketeer S3 storage.
  */
-const BUCKETEER = {
-    aws_access_key_id: BUCKETEER_AWS_ACCESS_KEY_ID,
-    aws_secret_access_key: BUCKETEER_AWS_SECRET_ACCESS_KEY,
+const S3 = {
+    access_key_id: BUCKETEER_AWS_ACCESS_KEY_ID,
+    secret_access_key: BUCKETEER_AWS_SECRET_ACCESS_KEY,
     aws_region: BUCKETEER_AWS_REGION,
     bucket_name: BUCKETEER_BUCKET_NAME,
     endpoint: BUCKETEER_ENDPOINT,
@@ -66,7 +66,7 @@ const config = {
     extraVerbose: EXTRA_VERBOSE,
     databaseUrl: DATABASE_URL,
     managementApi: MANAGEMENT_API,
-    bucketeer: BUCKETEER,
+    s3: S3,
 };
 
 export default config;

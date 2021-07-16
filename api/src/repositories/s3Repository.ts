@@ -12,23 +12,23 @@ import config from '../util/config';
  * @returns S3 service object.
  */
 const generateServiceObject = (): S3 => {
-    if (config.bucketeer.endpoint !== '') {
+    if (config.s3.endpoint !== '') {
         return new S3({
-            accessKeyId: config.bucketeer.aws_access_key_id,
-            secretAccessKey: config.bucketeer.aws_secret_access_key,
-            region: config.bucketeer.aws_region,
-            endpoint: new AWS.Endpoint(config.bucketeer.endpoint),
+            accessKeyId: config.s3.access_key_id,
+            secretAccessKey: config.s3.secret_access_key,
+            region: config.s3.aws_region,
+            endpoint: new AWS.Endpoint(config.s3.endpoint),
         });
     }
     return new S3({
-        accessKeyId: config.bucketeer.aws_access_key_id,
-        secretAccessKey: config.bucketeer.aws_secret_access_key,
-        region: config.bucketeer.aws_region,
+        accessKeyId: config.s3.access_key_id,
+        secretAccessKey: config.s3.secret_access_key,
+        region: config.s3.aws_region,
     });
 };
 
 /**
- * Upload a file to blob storage.
+ * Upload a file to S3 storage.
  * @param key Key to storage location.
  * @param data Data to write to storage.
  * @param encoding How data is encoded.
@@ -36,11 +36,11 @@ const generateServiceObject = (): S3 => {
 const upload = async (key: string, data: string, encoding: BufferEncoding): Promise<void> => {
     const s3 = generateServiceObject();
 
-    await s3.putObject({ Bucket: config.bucketeer.bucket_name, Key: key, Body: Buffer.from(data, encoding) }).promise();
+    await s3.putObject({ Bucket: config.s3.bucket_name, Key: key, Body: Buffer.from(data, encoding) }).promise();
 };
 
 /**
- * Download a file from blob storage.
+ * Download a file from S3 storage.
  * @param key Key to storage location.
  * @param encoding Encoding to return file in.
  */
@@ -49,7 +49,7 @@ const download = async (key: string, encoding: BufferEncoding): Promise<string> 
     const s3 = generateServiceObject();
 
     try {
-        const result = await s3.getObject({ Bucket: config.bucketeer.bucket_name, Key: key }).promise();
+        const result = await s3.getObject({ Bucket: config.s3.bucket_name, Key: key }).promise();
         return result.Body ? result.Body.toString(encoding) : '';
     } catch (err) {
         return '';
