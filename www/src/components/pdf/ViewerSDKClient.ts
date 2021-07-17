@@ -12,6 +12,7 @@ written permission of Adobe.
 */
 import axios from 'axios';
 
+import config from '../../util/config';
 import arrayBufferToBase64 from '../../util/helpers';
 declare global {
     interface Window {
@@ -49,13 +50,13 @@ class ViewSDKClient {
     }
 
     previewFile(divId: string, viewerConfig: any): Promise<void> {
-        const config = {
+        const adobeConfig = {
             /* Pass your registered client id */
-            clientId: '8c0cd670273d451cbc9b351b11d22318',
+            clientId: config.adobePdfId,
         };
 
         /* Initialize the AdobeDC View object */
-        this.adobeDCView = new window.AdobeDC.View(config);
+        this.adobeDCView = new window.AdobeDC.View(adobeConfig);
 
         /* Invoke the file preview API on Adobe DC View object */
         const previewFilePromise = this.adobeDCView.previewFile(
@@ -80,9 +81,11 @@ class ViewSDKClient {
                 /* Pass meta data of file */
                 metaData: {
                     /* file name */
-                    fileName: 'TEST.pdf',
+                    // TODO: pass in from props
+                    fileName: '',
                     /* file ID */
-                    id: '6d07d124-ac85-43b3-a867-36930f502ac6',
+                    // TODO: pass in from props
+                    id: '',
                 },
             },
             viewerConfig,
@@ -95,7 +98,7 @@ class ViewSDKClient {
         /* Initialize the AdobeDC View object */
         this.adobeDCView = new window.AdobeDC.View({
             /* Pass your registered client id */
-            clientId: '8c0cd670273d451cbc9b351b11d22318',
+            clientId: config.adobePdfId,
             /* Pass the div id in which PDF should be rendered */
             divId,
         });
@@ -123,7 +126,6 @@ class ViewSDKClient {
         const saveApiHandler = (metaData: any, content: any) => {
             return new Promise<saveAPIResponse | void>((resolve) => {
                 const formData = new FormData();
-
                 formData.append('file', arrayBufferToBase64(content));
 
                 // TODO: replace empty string with POST endpoint for updating pdf
