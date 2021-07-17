@@ -149,10 +149,7 @@ clients:
       web_origins:
           - 'http://localhost:3000'
     - name: Deploy CLI Application
-      allowed_clients: []
       app_type: non_interactive
-      callbacks: []
-      client_aliases: []
       cross_origin_auth: false
       custom_login_page_on: true
       grant_types:
@@ -163,11 +160,6 @@ clients:
           alg: RS256
           lifetime_in_seconds: 36000
           secret_encoded: false
-      native_social_login:
-          apple:
-              enabled: false
-          facebook:
-              enabled: false
       oidc_conformant: true
       refresh_token:
           expiration_type: non-expiring
@@ -298,9 +290,15 @@ tenant:
     enabled_locales:
         - en
     flags:
+        new_universal_login_experience_enabled: true
         universal_login: true
         revoke_refresh_token_grant: false
         disable_clickjack_protection_headers: false
+    picture_url: 'https://www.compe.plus/static/media/logo_black.83556301.svg'
+    universal_login:
+        colors:
+            page_background: '#E2F8E2'
+            primary: '#79B178'
 emailProvider: {}
 emailTemplates: []
 clientGrants:
@@ -324,7 +322,7 @@ clientGrants:
           - 'create:interviews'
           - 'delete:interviews'
     - client_id: Compe+ API Application
-      audience: '##AUTH0_MANAGEMENT_API_AUDIENCE##'
+      audience: 'https://compe-plus-dev.us.auth0.com/api/v2/'
       scope:
           - 'update:users'
           - 'read:roles'
@@ -485,9 +483,14 @@ roles:
             resource_server_identifier: 'https://compe.plus/api'
           - permission_name: 'update_my:resume_reviews'
             resource_server_identifier: 'https://compe.plus/api'
-branding: {}
+branding:
+    colors:
+        page_background: '#E2F8E2'
+        primary: '#79B178'
+    logo_url: 'https://www.compe.plus/static/media/logo_black.83556301.svg'
 prompts:
     universal_login_experience: new
+    identifier_first: false
 migrations: {}
 actions:
     - name: test
