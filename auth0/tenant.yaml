@@ -322,7 +322,7 @@ clientGrants:
           - 'create:interviews'
           - 'delete:interviews'
     - client_id: Compe+ API Application
-      audience: 'https://compe-plus-dev.us.auth0.com/api/v2/'
+      audience: '##AUTH0_MANAGEMENT_API_AUDIENCE##'
       scope:
           - 'update:users'
           - 'read:roles'
