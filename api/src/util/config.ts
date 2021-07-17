@@ -2,8 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';
-const SERVER_PORT = process.env.SERVER_PORT || 1337;
+const PORT = process.env.PORT || 1337;
 const VERBOSE = process.env.VERBOSE || false;
 const EXTRA_VERBOSE = process.env.EXTRA_VERBOSE || false;
 const DATABASE_URL = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/compe-plus?sslmode=disable';
@@ -17,14 +16,6 @@ const ADMIN_ROLE_ID = process.env.ADMIN_ROLE_ID || '';
 const INTERVIEWER_ROLE_ID = process.env.INTERVIEWER_ROLE_ID || '';
 const REVIEWER_ROLE_ID = process.env.REVIEWER_ROLE_ID || '';
 const STUDENT_ROLE_ID = process.env.STUDENT_ROLE_ID || '';
-
-/**
- * Configuration for server connection.
- */
-const SERVER = {
-    hostname: SERVER_HOSTNAME,
-    port: SERVER_PORT,
-};
 
 /**
  * Configuration for authentication.
@@ -53,7 +44,7 @@ const MANAGEMENT_API = {
  * Configuration for application.
  */
 const config = {
-    server: SERVER,
+    port: PORT,
     auth0: AUTH0,
     verbose: VERBOSE,
     extraVerbose: EXTRA_VERBOSE,
