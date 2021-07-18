@@ -3,16 +3,20 @@ import { v4 } from 'uuid';
 import type * as s from 'zapatos/schema';
 
 import ValidationException from '../exceptions/ValidationException';
+import * as documentRepository from '../repositories/documentRepository';
 import * as resumeReviewRepository from '../repositories/resumeReviewRepository';
 import * as userRepository from '../repositories/userRepository';
 import testConstants from '../util/testConstants';
-import Validator, { beAResumeReviewState, beAValidResumeReview, beAValidUrl, beAValidUser, beAValidUuid, beProperlyBase64Encoded, beProperlyUriEncoded } from './validation';
+import Validator, { beAResumeReviewState, beAValidDocument, beAValidResumeReview, beAValidUrl, beAValidUser, beAValidUuid, beProperlyBase64Encoded, beProperlyUriEncoded } from './validation';
 
 jest.mock('../repositories/userRepository');
 const mockUserRepository = mocked(userRepository, true);
 
 jest.mock('../repositories/resumeReviewRepository');
 const mockresumeReviewRepository = mocked(resumeReviewRepository, true);
+
+jest.mock('../repositories/documentRepository');
+const mockDocumentRepository = mocked(documentRepository, true);
 
 type TestType = {
     a: string;
@@ -241,6 +245,34 @@ describe('beAValidUser helper', () => {
 
     it('throws if resume review does not exist', async () => {
         mockresumeReviewRepository.get.mockResolvedValueOnce([]);
+
+        await expect(v.validateAndThrow({ a: '67e8ff47-8c31-4725-885c-e0e40455e7f5' })).rejects.toThrowError(ValidationException);
+    });
+});
+
+type TestValidDocumentType = {
+    a: string;
+};
+
+class TestValidDocumentResumeReviewValidator extends Validator<TestValidDocumentType> {
+    constructor() {
+        super('test');
+
+        this.ruleFor('a').mustAsync(beAValidDocument);
+    }
+}
+
+describe('beAValidUser helper', () => {
+    const v = new TestValidDocumentResumeReviewValidator();
+
+    it('does not throw if resume review exists', async () => {
+        mockDocumentRepository.get.mockResolvedValueOnce([testConstants.document1]);
+
+        await expect(v.validateAndThrow({ a: '67e8ff47-8c31-4725-885c-e0e40455e7f5' })).resolves.not.toThrowError(ValidationException);
+    });
+
+    it('throws if resume review does not exist', async () => {
+        mockDocumentRepository.get.mockResolvedValueOnce([]);
 
         await expect(v.validateAndThrow({ a: '67e8ff47-8c31-4725-885c-e0e40455e7f5' })).rejects.toThrowError(ValidationException);
     });

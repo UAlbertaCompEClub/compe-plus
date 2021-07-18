@@ -26,4 +26,25 @@ const remove = async (id: string): Promise<s.documents.JSONSelectable[]> => {
     return db.deletes('documents', where).run(pool);
 };
 
-export { create, remove };
+/**
+ * Get documents. Filter as necessary.
+ * @param id Optional document id to filter by.
+ * @param resumeReviewId Optional resume review id to filter by.
+ * @param userId Optional user id to filter by.
+ * @returns List of documents appropriately filtered.
+ */
+const get = async (id?: string, resumeReviewId?: string, userId?: string): Promise<s.documents.JSONSelectable[]> => {
+    const where: s.documents.Whereable = {};
+    if (id) {
+        where.id = dc.eq(id);
+    }
+    if (resumeReviewId) {
+        where.resume_review_id = dc.eq(resumeReviewId);
+    }
+    if (userId) {
+        where.user_id = dc.eq(userId);
+    }
+    return db.select('documents', where).run(pool);
+};
+
+export { create, get, remove };
