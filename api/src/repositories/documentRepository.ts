@@ -47,4 +47,15 @@ const get = async (id?: string, resumeReviewId?: string, userId?: string): Promi
     return db.select('documents', where).run(pool);
 };
 
-export { create, get, remove };
+/**
+ * Update a document.
+ * @param id Id of document to update.
+ * @param note Value to update note to.
+ * @returns Updated document.
+ */
+const update = async (id: string, note?: string): Promise<s.documents.JSONSelectable[]> => {
+    const where: s.documents.Whereable = { id: dc.eq(id) };
+    return db.update('documents', { note: note }, where).run(pool);
+};
+
+export { create, get, remove, update };

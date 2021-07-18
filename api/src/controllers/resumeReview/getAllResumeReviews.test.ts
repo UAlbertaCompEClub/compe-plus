@@ -18,6 +18,10 @@ beforeEach(() => {
     next = jest.fn();
 });
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
 it('rejects non-uuid id query parameter', async () => {
     req.query = { id: `not-a-uuid` };
 
