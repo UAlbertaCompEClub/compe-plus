@@ -1,2 +1,2 @@
-export { default as getUser } from './getUser';
+export { default as getMe } from './getMe';
 export { default as postUser } from './postUser';
