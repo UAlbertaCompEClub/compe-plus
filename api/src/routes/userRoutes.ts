@@ -13,6 +13,6 @@ router.get('/users', middleware.authorize(Scope.ReadUsers), () => {
 
 router.post('/users', controller.postUser);
 
-router.get('/users/:user', controller.getUser);
+router.get('/users/me', controller.getMe);
 
 export default router;
