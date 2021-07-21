@@ -21,9 +21,9 @@ Create a new user and give them the Student role in Auth0.
 
 This route will only be protected by JWT authentication.
 
-## `GET /users/{user}`
+## `GET /users/me`
 
-Check if a user exists.
+Read the current user information.
 
 ### Authorization
 
