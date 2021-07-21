@@ -28,7 +28,7 @@ type ResBody = {
  * @param res HTTP response.
  * @returns Your resume reviews.
  */
-const getMyResumeReviews = controller(async (req: Request<ReqParams, ResBody, unknown, unknown>, res: Response<ResBody>): Promise<void> => {
+const getUser = controller(async (req: Request<ReqParams, ResBody, unknown, unknown>, res: Response<ResBody>): Promise<void> => {
     await new ReqParamsValidator().validateAndThrow(req.params);
 
     const requester = req.user.sub;
@@ -43,4 +43,4 @@ const getMyResumeReviews = controller(async (req: Request<ReqParams, ResBody, un
     res.status(200).json({ exists: matches.length == 1 });
 });
 
-export default getMyResumeReviews;
+export default getUser;
