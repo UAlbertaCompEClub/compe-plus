@@ -14,6 +14,20 @@ const user1: s.users.JSONSelectable = {
     updated_at: '2021-06-14T06:09:19.373404+00:00',
 };
 
+const user2: s.users.JSONSelectable = {
+    id: 'google-oauth2|166667066666652466666',
+    email: 'test@ualberta.ca',
+    ccid: 'test',
+    program: 'Computer Engineering Software Option',
+    year: 2,
+    given_name: 'Chuck',
+    family_name: 'Norris',
+    full_name: 'Chuck Norris',
+    photo_url: 'https://myphoto.com/id',
+    created_at: '2021-07-20T06:09:19.373404+00:00',
+    updated_at: '2021-07-20T06:09:19.373404+00:00',
+};
+
 const resumeReview1: s.resume_reviews.JSONSelectable = {
     id: '52c2cbdc-e0a8-48e7-9302-92a37e016ab0',
     state: 'seeking_reviewer',
@@ -39,4 +53,4 @@ const document1: s.documents.JSONSelectable = {
     updated_at: '2021-06-14T06:09:19.373404+00:00',
 };
 
-export default { user1, resumeReview1, userRole1, document1 };
+export default { user1, user2, resumeReview1, userRole1, document1 };
