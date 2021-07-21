@@ -4,10 +4,6 @@ import type * as s from 'zapatos/schema';
 import * as userRepository from '../../repositories/userRepository';
 import controller from '../controllerUtil';
 
-type ReqParams = {
-    user: string;
-};
-
 type ResBody = {
     user: s.users.JSONSelectable;
 };
@@ -18,7 +14,7 @@ type ResBody = {
  * @param res HTTP response.
  * @returns Your resume reviews.
  */
-const getMe = controller(async (req: Request<ReqParams>, res: Response<ResBody>): Promise<void> => {
+const getMe = controller(async (req: Request, res: Response<ResBody>): Promise<void> => {
     const id = req.user.sub;
     const matches = await userRepository.get(id);
 
