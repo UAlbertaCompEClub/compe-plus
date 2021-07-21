@@ -31,8 +31,8 @@ type ResBody = {
 const getUser = controller(async (req: Request<ReqParams, ResBody, unknown, unknown>, res: Response<ResBody>): Promise<void> => {
     await new ReqParamsValidator().validateAndThrow(req.params);
 
-    const requester = req.user.sub;
     const requested = decodeQueryToUser(req.params.user);
+    const requester = req.user.sub;
 
     if (requester !== requested) {
         throw new NotAuthorizedException();
