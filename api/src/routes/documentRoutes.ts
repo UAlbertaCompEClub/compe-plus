@@ -7,9 +7,7 @@ import Scope from '../types/scopes';
 
 export const router = express.Router();
 
-router.get('/resume-reviews/:resumeReview/documents', middleware.authorizeAndFallThrough(Scope.ReadAllDocuments), () => {
-    throw new NotImplementedException('GET /resume-reviews/:resumeReview/documents');
-});
+router.get('/resume-reviews/:resumeReview/documents', middleware.authorizeAndFallThrough(Scope.ReadAllDocuments), controller.getAllDocuments);
 router.get('/resume-reviews/:resumeReview/documents', middleware.authorize(Scope.ReadMyDocuments), () => {
     throw new NotImplementedException('GET /resume-reviews/:resumeReview/documents');
 });

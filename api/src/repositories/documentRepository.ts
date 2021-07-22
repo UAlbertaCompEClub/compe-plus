@@ -31,9 +31,10 @@ const remove = async (id: string): Promise<s.documents.JSONSelectable[]> => {
  * @param id Optional document id to filter by.
  * @param resumeReviewId Optional resume review id to filter by.
  * @param userId Optional user id to filter by.
+ * @param isReview Option to filter by if it is a review.
  * @returns List of documents appropriately filtered.
  */
-const get = async (id?: string, resumeReviewId?: string, userId?: string): Promise<s.documents.JSONSelectable[]> => {
+const get = async (id?: string, resumeReviewId?: string, userId?: string, isReview?: boolean): Promise<s.documents.JSONSelectable[]> => {
     const where: s.documents.Whereable = {};
     if (id) {
         where.id = dc.eq(id);
@@ -43,6 +44,9 @@ const get = async (id?: string, resumeReviewId?: string, userId?: string): Promi
     }
     if (userId) {
         where.user_id = dc.eq(userId);
+    }
+    if (isReview) {
+        where.is_review = dc.eq(isReview);
     }
     return db.select('documents', where).run(pool);
 };
