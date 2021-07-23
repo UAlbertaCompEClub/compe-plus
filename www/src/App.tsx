@@ -1,12 +1,13 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
-import { useAppSelector } from './redux/hooks';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { checkUserRegistration } from './redux/slices/userSlice';
 import adminStore from './redux/substores/admin/adminStore';
 import volunteerStore from './redux/substores/volunteeer/volunteerStore';
 import MobileLanding from './routes/MobileLanding';
@@ -55,7 +56,14 @@ const App: FC = () => {
     const currentRole = useAppSelector((state) => state.user.currentRole);
 
     const { isAuthenticated } = useAuth0();
+    const dispatch = useAppDispatch();
     const content = isAuthenticated ? getContentByRole(currentRole) : <UnauthenticatedApp />;
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            dispatch(checkUserRegistration());
+        }
+    }, [isAuthenticated]);
 
     return (
         <ThemeProvider theme={theme}>
