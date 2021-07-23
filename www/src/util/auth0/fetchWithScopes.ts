@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import config from '../config';
 
-const fetchWithAuth0 = async <T>(url: string, scopes?: string[]): Promise<T> => {
+const fetchWithScopes = async <T>(url: string, scopes?: string[]): Promise<T> => {
     const { getAccessTokenSilently } = useAuth0();
     const token = await getAccessTokenSilently({
         audience: config.server.audience,
@@ -16,4 +16,4 @@ const fetchWithAuth0 = async <T>(url: string, scopes?: string[]): Promise<T> => 
     });
 };
 
-export default fetchWithAuth0;
+export default fetchWithScopes;
