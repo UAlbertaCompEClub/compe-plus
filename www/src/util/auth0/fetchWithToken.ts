@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 
 export type TokenAcquirer = (options?: GetTokenSilentlyOptions) => Promise<string>;
 
-const fetchWithScopes = async <T>(url: string, tokenAcquirer: TokenAcquirer, scopes?: string[]): Promise<AxiosResponse<T> | undefined> => {
+const fetchWithToken = async <T>(url: string, tokenAcquirer: TokenAcquirer, scopes?: string[]): Promise<AxiosResponse<T> | undefined> => {
     const token = await tokenAcquirer({
         scope: scopes?.join(' '),
     });
@@ -14,4 +14,4 @@ const fetchWithScopes = async <T>(url: string, tokenAcquirer: TokenAcquirer, sco
     });
 };
 
-export default fetchWithScopes;
+export default fetchWithToken;
