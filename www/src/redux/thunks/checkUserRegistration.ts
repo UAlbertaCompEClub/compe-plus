@@ -5,8 +5,8 @@ import { userMe } from '../../util/endpoints';
 import { User } from '../../util/serverResponses';
 
 const checkUserRegistration = createAsyncThunk('user/checkUserRegistration', async () => {
-    const user = await fetchWithScopes<User | null>(userMe);
-    return user;
+    const user = await fetchWithScopes(userMe);
+    return user?.data as User;
 });
 
 export default checkUserRegistration;

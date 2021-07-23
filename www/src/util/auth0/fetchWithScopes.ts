@@ -1,19 +1,21 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
-import config from '../config';
-
-const fetchWithScopes = async <T>(url: string, scopes?: string[]): Promise<T> => {
+const fetchWithScopes = async <T>(url: string, scopes?: string[]): Promise<AxiosResponse<T> | undefined> => {
     const { getAccessTokenSilently } = useAuth0();
-    const token = await getAccessTokenSilently({
-        audience: config.server.audience,
-        scope: scopes?.join(' '),
-    });
-    return await axios.get(url, {
-        headers: {
-            authorization: `Bearer ${token}`,
-        },
-    });
+    try {
+        const token = await getAccessTokenSilently({
+            scope: scopes?.join(' '),
+        });
+        return await axios.get(url, {
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+        });
+    } catch (e) {
+        console.error(e);
+    }
+    return undefined;
 };
 
 export default fetchWithScopes;
