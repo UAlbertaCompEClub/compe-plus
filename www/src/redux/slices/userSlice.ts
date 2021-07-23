@@ -1,13 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import fetchWithScopes from '../../util/auth0/fetchWithScopes';
-import { userMe } from '../../util/endpoints';
-import { User } from '../../util/serverResponses';
-
-export const checkUserRegistration = createAsyncThunk('user/checkUserRegistration', async () => {
-    const user = await fetchWithScopes(userMe);
-    return user as User | null;
-});
+import checkUserRegistration from '../thunks/checkUserRegistration';
 
 export const userSlice = createSlice({
     name: 'user',
