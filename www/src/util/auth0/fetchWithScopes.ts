@@ -1,9 +1,10 @@
-import { useAuth0 } from '@auth0/auth0-react';
+import { GetTokenSilentlyOptions } from '@auth0/auth0-react';
 import axios, { AxiosResponse } from 'axios';
 
-const fetchWithScopes = async <T>(url: string, scopes?: string[]): Promise<AxiosResponse<T> | undefined> => {
-    const { getAccessTokenSilently } = useAuth0();
-    const token = await getAccessTokenSilently({
+export type TokenAcquirer = (options?: GetTokenSilentlyOptions) => Promise<string>;
+
+const fetchWithScopes = async <T>(url: string, tokenAcquirer: TokenAcquirer, scopes?: string[]): Promise<AxiosResponse<T> | undefined> => {
+    const token = await tokenAcquirer({
         scope: scopes?.join(' '),
     });
     return await axios.get(url, {
