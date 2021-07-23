@@ -7,9 +7,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import { checkUserRegistration } from './redux/slices/userSlice';
 import adminStore from './redux/substores/admin/adminStore';
 import volunteerStore from './redux/substores/volunteeer/volunteerStore';
+import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import MobileLanding from './routes/MobileLanding';
 import StudentApp from './routes/Student';
 import UnauthenticatedApp from './routes/Unauthenticated';
