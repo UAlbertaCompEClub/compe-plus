@@ -2,6 +2,7 @@ import { AsyncValidator as AsyncFluentValidator } from 'fluentvalidation-ts';
 import { validate as uuidValidate } from 'uuid';
 
 import ValidationException from '../exceptions/ValidationException';
+import * as resumeReviewRepository from '../repositories/resumeReviewRepository';
 import * as userRepository from '../repositories/userRepository';
 
 /**
@@ -55,14 +56,81 @@ const beAResumeReviewState = {
  */
 const beAValidUser = {
     predicate: async (field: string | undefined): Promise<boolean> => {
-        if (field === undefined) {
+        if (field === undefined || field === null) {
             return false;
         }
-        const matches = await userRepository.get(field);
+        const user = decodeURIComponent(field);
+        const matches = await userRepository.get(user);
         return matches.length == 1;
     },
     message: 'Must be a user that already exists',
 };
 
-export { beAResumeReviewState, beAValidUser, beAValidUuid };
+/**
+ * Test whether a field is properly URI encoded.
+ */
+const beProperlyUriEncoded = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        if (field === undefined || field === null) {
+            return false;
+        }
+        try {
+            decodeURIComponent(field);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    },
+    message: 'Must be properly encoded with encodeURIComponent',
+};
+
+/**
+ * Test whether a field is a valid url.
+ */
+const beAValidUrl = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        if (field === undefined || field === null) {
+            return false;
+        }
+        try {
+            new URL(field);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    },
+    message: 'Must be a valid url',
+};
+
+/**
+ * Test whether a field is properly Base64 encoded.
+ */
+const beProperlyBase64Encoded = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        if (field === undefined || field === null) {
+            return false;
+        }
+        if (Buffer.from(field, 'base64').toString('base64') !== field) {
+            return false;
+        }
+        return true;
+    },
+    message: 'Must be properly base64 encoded',
+};
+
+/**
+ * Test whether a resume review already exists in the database.
+ */
+const beAValidResumeReview = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        if (field === undefined || field === null) {
+            return false;
+        }
+        const matches = await resumeReviewRepository.get(field);
+        return matches.length == 1;
+    },
+    message: 'Must be a resume review that already exists',
+};
+
+export { beAResumeReviewState, beAValidResumeReview, beAValidUrl, beAValidUser, beAValidUuid, beProperlyBase64Encoded, beProperlyUriEncoded };
 export default Validator;

@@ -2,22 +2,25 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';
-const SERVER_PORT = process.env.SERVER_PORT || 1337;
+const PORT = process.env.PORT || 1337;
 const VERBOSE = process.env.VERBOSE || false;
 const EXTRA_VERBOSE = process.env.EXTRA_VERBOSE || false;
 const DATABASE_URL = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/compe-plus?sslmode=disable';
 const AUTH0_JWKS_URI = process.env.AUTH0_JWKS_URI || '';
 const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE || '';
 const AUTH0_ISSUER = process.env.AUTH0_ISSUER || '';
-
-/**
- * Configuration for server connection.
- */
-const SERVER = {
-    hostname: SERVER_HOSTNAME,
-    port: SERVER_PORT,
-};
+const CLIENT_ID = process.env.CLIENT_ID || '';
+const CLIENT_SECRET = process.env.CLIENT_SECRET || '';
+const DOMAIN = process.env.DOMAIN || '';
+const ADMIN_ROLE_ID = process.env.ADMIN_ROLE_ID || '';
+const INTERVIEWER_ROLE_ID = process.env.INTERVIEWER_ROLE_ID || '';
+const REVIEWER_ROLE_ID = process.env.REVIEWER_ROLE_ID || '';
+const STUDENT_ROLE_ID = process.env.STUDENT_ROLE_ID || '';
+const BUCKETEER_AWS_ACCESS_KEY_ID = process.env.BUCKETEER_AWS_ACCESS_KEY_ID || 'S3RVER';
+const BUCKETEER_AWS_SECRET_ACCESS_KEY = process.env.BUCKETEER_AWS_SECRET_ACCESS_KEY || 'S3RVER';
+const BUCKETEER_AWS_REGION = process.env.BUCKETEER_AWS_REGION || 'us-east-1';
+const BUCKETEER_BUCKET_NAME = process.env.BUCKETEER_BUCKET_NAME || 'documents';
+const BUCKETEER_ENDPOINT = process.env.BUCKETEER_ENDPOINT || '';
 
 /**
  * Configuration for authentication.
@@ -29,14 +32,41 @@ const AUTH0 = {
 };
 
 /**
+ * Configuration for Auth0 user management api.
+ */
+
+const MANAGEMENT_API = {
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    domain: DOMAIN,
+    adminRoleId: ADMIN_ROLE_ID,
+    interviewerRoleId: INTERVIEWER_ROLE_ID,
+    reviewerRoleId: REVIEWER_ROLE_ID,
+    studentRoleId: STUDENT_ROLE_ID,
+};
+
+/**
+ * Configuration for Bucketeer S3 storage.
+ */
+const S3 = {
+    access_key_id: BUCKETEER_AWS_ACCESS_KEY_ID,
+    secret_access_key: BUCKETEER_AWS_SECRET_ACCESS_KEY,
+    aws_region: BUCKETEER_AWS_REGION,
+    bucket_name: BUCKETEER_BUCKET_NAME,
+    endpoint: BUCKETEER_ENDPOINT,
+};
+
+/**
  * Configuration for application.
  */
 const config = {
-    server: SERVER,
+    port: PORT,
     auth0: AUTH0,
     verbose: VERBOSE,
     extraVerbose: EXTRA_VERBOSE,
     databaseUrl: DATABASE_URL,
+    managementApi: MANAGEMENT_API,
+    s3: S3,
 };
 
 export default config;

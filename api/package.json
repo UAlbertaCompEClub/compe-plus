@@ -5,7 +5,6 @@
     "main": "src/server.ts",
     "private": true,
     "scripts": {
-        "prestart": "npm run build",
         "start": "node build/src/server.js",
         "start:dev": "nodemon --exec 'ts-node --files' src/server.ts | pino-pretty",
         "build": "npm run clean && tsc",
@@ -15,11 +14,16 @@
         "format": "prettier --config ../.prettierrc --ignore-path .prettierignore --write .",
         "lint": "eslint src --ext .js,.ts --max-warnings 0",
         "lint:fix": "eslint src --ext .js,.ts --max-warnings 0 --fix",
-        "psql": "PGPASSWORD=postgres psql -h localhost -U postgres -d compe-plus"
+        "psql": "PGPASSWORD=postgres psql -h localhost -U postgres -d compe-plus",
+        "s3-mock": "s3rver -d /tmp/s3 --configure-bucket documents.localhost"
+    },
+    "engines": {
+        "node": "14.x"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@types/aws-sdk": "^2.7.0",
         "@types/axios": "^0.14.0",
         "@types/cors": "^2.8.10",
         "@types/dotenv": "^8.2.0",
@@ -27,12 +31,12 @@
         "@types/express-jwt": "^0.0.42",
         "@types/express-pino-logger": "^4.0.2",
         "@types/jest": "^26.0.23",
+        "@types/node": "^15.6.0",
         "@types/pg": "^8.6.0",
         "@types/pino": "^6.3.8",
         "@types/uuid": "^8.3.0",
         "@typescript-eslint/eslint-plugin": "^4.24.0",
         "@typescript-eslint/parser": "^4.24.0",
-        "axios": "^0.21.1",
         "eslint": "^7.27.0",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-simple-import-sort": "^7.0.0",
@@ -40,11 +44,14 @@
         "nodemon": "^2.0.7",
         "pino-pretty": "^5.0.0",
         "prettier": "^2.3.0",
+        "s3rver": "^3.7.0",
         "ts-jest": "^26.5.6",
         "ts-node": "^9.1.1",
         "typescript": "^4.2.4"
     },
     "dependencies": {
+        "aws-sdk": "^2.943.0",
+        "axios": "^0.21.1",
         "cors": "^2.8.5",
         "dotenv": "^10.0.0",
         "express": "^4.17.1",

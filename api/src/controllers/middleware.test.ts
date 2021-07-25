@@ -1,20 +1,23 @@
 import { NextFunction, Request, Response } from 'express';
 import { UnauthorizedError } from 'express-jwt';
 
+import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
+import NotAuthorizedException from '../exceptions/NotAuthorizedException';
 import NotFoundException from '../exceptions/NotFoundException';
-import * as checkJwt from '../util/checkJwt';
+import Scope from '../types/scopes';
 import logger from '../util/logger';
 import middleware from './middleware';
 
 describe('notFound middleware', () => {
     const mockRequest: Partial<Request> = {};
     const mockResponse: Partial<Response> = {};
+    const nextFunction: NextFunction = jest.fn();
     mockResponse.json = jest.fn().mockReturnValue(mockResponse);
     mockResponse.status = jest.fn().mockReturnValue(mockResponse);
 
     it('always returns a NotFoundException', () => {
         expect(() => {
-            middleware.notFound()(mockRequest as Request, mockResponse as Response);
+            middleware.notFound()(mockRequest as Request, mockResponse as Response, nextFunction);
         }).toThrowError(new NotFoundException());
     });
 });
@@ -60,16 +63,94 @@ describe('authenticate middleware', () => {
         nextFunction = jest.fn();
     });
 
-    it('authenticate is used', () => {
-        const authenticate = jest.spyOn(checkJwt, 'checkJwt');
-        middleware.authenticate()(mockRequest as Request, mockResponse as Response, nextFunction);
-        expect(authenticate).toBeCalledTimes(1);
+    it('passes through any random error', () => {
+        const e = new Error('test');
+        middleware.authenticate()[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith(e);
     });
 
-    it('calls next middleware', () => {
-        middleware.authenticate()(mockRequest as Request, mockResponse as Response, nextFunction);
+    it('converts unauthorized error to a NotAuthenticated error', () => {
+        const e = new UnauthorizedError('invalid_token', { message: 'msg' });
+        middleware.authenticate()[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith(new NotAuthenticatedException());
+    });
+});
 
-        expect(nextFunction).toBeCalledTimes(1);
+describe('authorize middleware', () => {
+    let mockRequest: Partial<Request> = {};
+    let mockResponse: Partial<Response>;
+    let nextFunction: NextFunction;
+
+    beforeEach(() => {
+        mockRequest = {};
+        mockRequest.url = '/api/secure/v1/ping';
+        mockRequest.method = 'GET';
+        mockResponse = {};
+        mockResponse.on = jest.fn();
+        nextFunction = jest.fn();
+    });
+
+    it('throws error without correct scope', () => {
+        middleware.authorize(Scope.CreateDocuments)[0](mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith({ error: 'Forbidden', message: 'Insufficient scope', statusCode: 403 });
+    });
+
+    it('does not throw error with correct scope', () => {
+        mockRequest.user = { sub: 'test', scope: 'create:documents' };
+        middleware.authorize(Scope.CreateDocuments)[0](mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith();
+    });
+
+    it('passes through random errors', () => {
+        const e = new Error('test');
+        middleware.authorize(Scope.CreateDocuments)[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith(e);
+    });
+
+    it('converts authz errors to NotAuthorizedException', () => {
+        const e = new Error('test');
+        e.message = 'Insufficient scope';
+        middleware.authorize(Scope.CreateDocuments)[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith(new NotAuthorizedException());
+    });
+});
+
+describe('authorizeAndFallthrough middleware', () => {
+    let mockRequest: Partial<Request> = {};
+    let mockResponse: Partial<Response>;
+    let nextFunction: NextFunction;
+
+    beforeEach(() => {
+        mockRequest = {};
+        mockRequest.url = '/api/secure/v1/ping';
+        mockRequest.method = 'GET';
+        mockResponse = {};
+        mockResponse.on = jest.fn();
+        nextFunction = jest.fn();
+    });
+
+    it('throws error without correct scope', () => {
+        middleware.authorizeAndFallThrough(Scope.CreateDocuments)[0](mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith({ error: 'Forbidden', message: 'Insufficient scope', statusCode: 403 });
+    });
+
+    it('does not throw error with correct scope', () => {
+        mockRequest.user = { sub: 'test', scope: 'create:documents' };
+        middleware.authorizeAndFallThrough(Scope.CreateDocuments)[0](mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith();
+    });
+
+    it('passes through random errors', () => {
+        const e = new Error('test');
+        middleware.authorizeAndFallThrough(Scope.CreateDocuments)[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith(e);
+    });
+
+    it('calls next route if authz error is thrown', () => {
+        const e = new Error('test');
+        e.message = 'Insufficient scope';
+        middleware.authorizeAndFallThrough(Scope.CreateDocuments)[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(nextFunction).toBeCalledWith('route');
     });
 });
 
@@ -97,13 +178,6 @@ describe('errorHandler middleware', () => {
         middleware.errorHandler()(new NotFoundException(), mockRequest as Request, mockResponse as Response, nextFunction);
         expect(resJson).toBeCalledWith({ code: 404, message: 'Not found' });
         expect(resStatus).toBeCalledWith(404);
-    });
-
-    it('handles authentication errors', () => {
-        const e = new UnauthorizedError('credentials_required', { message: '' });
-        middleware.errorHandler()(e, mockRequest as Request, mockResponse as Response, nextFunction);
-        expect(resJson).toBeCalledWith({ code: 401, message: 'Not authenticated' });
-        expect(resStatus).toBeCalledWith(401);
     });
 
     // Can't figure out how to mock req.log.error so I'm punting on this

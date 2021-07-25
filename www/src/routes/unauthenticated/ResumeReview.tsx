@@ -1,18 +1,16 @@
 import { Grid, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 
-import UploadResumeIcon from '../assets/add_resume.svg';
-import FeedbackIcon from '../assets/conversation.svg';
-import ResumesIcon from '../assets/documents.svg';
+import UploadResumeIcon from '../../assets/add_resume.svg';
+import FeedbackIcon from '../../assets/conversation.svg';
+import ResumesIcon from '../../assets/documents.svg';
 
 const ResumeReview: FC = () => {
     return (
         <div style={{ overflow: 'hidden' }}>
             <Grid container justify='center' alignItems='center' spacing={8} style={{ marginTop: '10px', minHeight: '75vh' }}>
-                <Grid item>
-                    <Typography align='center' variant='h1'>
-                        Resume Review
-                    </Typography>
+                <Grid container item justify='center'>
+                    <Typography variant='h1'>Resume Review</Typography>
                 </Grid>
                 <Grid container item direction='column' spacing={3}>
                     <Grid container item spacing={3}>
@@ -39,7 +37,7 @@ const ResumeReview: FC = () => {
                         </Grid>
                         <Grid item xs={4}>
                             <Typography align='center' variant='body1'>
-                                Recieve the feedback and iterate on your resume
+                                Receive the feedback and iterate on your resume
                             </Typography>
                         </Grid>
                     </Grid>

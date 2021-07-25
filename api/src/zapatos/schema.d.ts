@@ -45,12 +45,6 @@ declare module 'zapatos/schema' {
       */
       note: string;
       /**
-      * **documents.file_url**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      file_url: string;
-      /**
       * **documents.is_review**
       * - `bool` in database
       * - `NOT NULL`, no default
@@ -94,12 +88,6 @@ declare module 'zapatos/schema' {
       * - `NOT NULL`, no default
       */
       note: string;
-      /**
-      * **documents.file_url**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      file_url: string;
       /**
       * **documents.is_review**
       * - `bool` in database
@@ -145,12 +133,6 @@ declare module 'zapatos/schema' {
       */
       note?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
-      * **documents.file_url**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      file_url?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
-      /**
       * **documents.is_review**
       * - `bool` in database
       * - `NOT NULL`, no default
@@ -189,12 +171,6 @@ declare module 'zapatos/schema' {
       */
       note: string | db.Parameter<string> | db.SQLFragment;
       /**
-      * **documents.file_url**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      file_url: string | db.Parameter<string> | db.SQLFragment;
-      /**
       * **documents.is_review**
       * - `bool` in database
       * - `NOT NULL`, no default
@@ -220,12 +196,6 @@ declare module 'zapatos/schema' {
       * - `NOT NULL`, no default
       */
       note?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
-      /**
-      * **documents.file_url**
-      * - `text` in database
-      * - `NOT NULL`, no default
-      */
-      file_url?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
       /**
       * **documents.is_review**
       * - `bool` in database
@@ -969,6 +939,12 @@ declare module 'zapatos/schema' {
     }
     export interface Insertable {
       /**
+      * **users.id**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      id: string | db.Parameter<string> | db.SQLFragment;
+      /**
       * **users.email**
       * - `text` in database
       * - `NOT NULL`, no default
@@ -1018,6 +994,12 @@ declare module 'zapatos/schema' {
       photo_url?: string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment;
     }
     export interface Updatable {
+      /**
+      * **users.id**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      id?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
       /**
       * **users.email**
       * - `text` in database

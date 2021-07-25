@@ -24,6 +24,11 @@
                 "update": "excluded"
             }
         },
+        "users": {
+            "id": {
+                "insert": "included"
+            }
+        },
         "user_roles": {
             "user_id": {
                 "insert": "included",

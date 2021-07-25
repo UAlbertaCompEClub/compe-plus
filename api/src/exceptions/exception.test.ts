@@ -1,5 +1,8 @@
 import HttpException from './HttpException';
+import InternalServerErrorException from './InternalServerErrorException';
+import InvalidJsonException from './InvalidJsonException';
 import NotAuthenticatedException from './NotAuthenticatedException';
+import NotAuthorizedException from './NotAuthorizedException';
 import NotFoundException from './NotFoundException';
 import NotImplementedException from './NotImplementedException';
 import ValidationException from './ValidationException';
@@ -70,6 +73,39 @@ describe('NotAuthenticatedException', () => {
 
         expect(obj.code).toEqual(401);
         expect(obj.message).toEqual('Not authenticated');
+        expect(obj.details).toBeUndefined();
+    });
+});
+
+describe('NotAuthorizedException', () => {
+    it('serializes properly', () => {
+        const e = new NotAuthorizedException();
+        const obj = e.serialize();
+
+        expect(obj.code).toEqual(403);
+        expect(obj.message).toEqual('Not authorized');
+        expect(obj.details).toBeUndefined();
+    });
+});
+
+describe('InternalServerErrorException', () => {
+    it('serializes properly', () => {
+        const e = new InternalServerErrorException({}, new Error('hi'));
+        const obj = e.serialize();
+
+        expect(obj.code).toEqual(500);
+        expect(obj.message).toEqual("The server has encountered a situation it doesn't know how to handle");
+        expect(obj.details).toEqual({});
+    });
+});
+
+describe('InvalidJsonException', () => {
+    it('serializes properly', () => {
+        const e = new InvalidJsonException('msg');
+        const obj = e.serialize();
+
+        expect(obj.code).toEqual(400);
+        expect(obj.message).toEqual('msg');
         expect(obj.details).toBeUndefined();
     });
 });
