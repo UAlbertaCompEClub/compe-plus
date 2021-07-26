@@ -67,4 +67,22 @@ describe('App', () => {
             expect(dispatchMock).not.toBeCalled();
         }
     });
+
+    it('redirects to registration page if user is authenticated but not registered', () => {
+        const dispatchMock = jest.fn();
+        useAppDispatchMock.mockReturnValue(dispatchMock);
+
+        const rootState = { user: { roles: [], currentRole: '', isLoading: false, hasRegistered: false } };
+        const auth0State = { isAuthenticated: true };
+
+        const actionMock = {};
+        checkUserRegistrationMock.mockReturnValueOnce(actionMock as AsyncThunkAction<User | null | undefined, TokenAcquirer, never>);
+
+        useAppSelectorMock.mockImplementation((selector) => selector(rootState));
+
+        render(withAuth0(withRootState(<App />, rootState), auth0State));
+
+        const componentsWithRegistrationText = screen.getAllByText('Registration page');
+        expect(componentsWithRegistrationText[0]).toBeInTheDocument();
+    });
 });
