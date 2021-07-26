@@ -16,7 +16,7 @@ describe('App', () => {
         ${'interviewer'} | ${'🚧 Work in progress 🚧'} | ${'an interviewer'}
         ${'admin'}       | ${'🚧 Work in progress 🚧'} | ${'an admin'}
     `('renders correctly for $friendlyName', ({ role, containsString }) => {
-        render(withAuth0(withRootState(<App />, { user: { roles: [], currentRole: role } }), { isAuthenticated: true }));
+        render(withAuth0(withRootState(<App />, { user: { roles: [], currentRole: role, isLoading: false, hasRegistered: true } }), { isAuthenticated: true }));
 
         const componentsWithText = screen.getAllByText(containsString);
         expect(componentsWithText[0]).toBeInTheDocument();
