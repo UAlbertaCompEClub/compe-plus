@@ -43,12 +43,16 @@ describe('App', () => {
         expect(componentsWithText[0]).toBeInTheDocument();
     });
 
-    it('calls check user registration on authenticated', () => {
+    it.each`
+        isAuthenticated | friendlyName
+        ${true}         | ${'calls check user registration on authenticated'}
+        ${false}        | ${'does not call check user registration if user is not authenticated'}
+    `('$friendlyName', (isAuthenticated) => {
         const dispatchMock = jest.fn();
         useAppDispatchMock.mockReturnValue(dispatchMock);
 
         const rootState = { user: { roles: [], currentRole: '', isLoading: false, hasRegistered: null } };
-        const auth0State = { isAuthenticated: true };
+        const auth0State = { isAuthenticated };
 
         const actionMock = {};
         checkUserRegistrationMock.mockReturnValueOnce(actionMock as AsyncThunkAction<User | null | undefined, TokenAcquirer, never>);
@@ -57,6 +61,10 @@ describe('App', () => {
 
         render(withAuth0(withRootState(<App />, rootState), auth0State));
 
-        expect(dispatchMock).toBeCalledWith(actionMock);
+        if (isAuthenticated) {
+            expect(dispatchMock).toBeCalledWith(actionMock);
+        } else {
+            expect(dispatchMock).not.toBeCalled();
+        }
     });
 });
