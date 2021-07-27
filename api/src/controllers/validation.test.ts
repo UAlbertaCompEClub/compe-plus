@@ -262,16 +262,16 @@ class TestValidDocumentResumeReviewValidator extends Validator<TestValidDocument
     }
 }
 
-describe('beAValidUser helper', () => {
+describe('beAValidDocument helper', () => {
     const v = new TestValidDocumentResumeReviewValidator();
 
-    it('does not throw if resume review exists', async () => {
+    it('does not throw if document exists', async () => {
         mockDocumentRepository.get.mockResolvedValueOnce([testConstants.document1]);
 
         await expect(v.validateAndThrow({ a: '67e8ff47-8c31-4725-885c-e0e40455e7f5' })).resolves.not.toThrowError(ValidationException);
     });
 
-    it('throws if resume review does not exist', async () => {
+    it('throws if document does not exist', async () => {
         mockDocumentRepository.get.mockResolvedValueOnce([]);
 
         await expect(v.validateAndThrow({ a: '67e8ff47-8c31-4725-885c-e0e40455e7f5' })).rejects.toThrowError(ValidationException);
