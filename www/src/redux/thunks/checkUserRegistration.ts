@@ -3,11 +3,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import fetchWithToken from '../../util/auth0/fetchWithToken';
 import TokenAcquirer from '../../util/auth0/TokenAcquirer';
 import { userMe } from '../../util/endpoints';
-import { User } from '../../util/serverResponses';
+import { WrappedUser } from '../../util/serverResponses';
 
-export const checkUserRegistration = async (tokenAcquirer: TokenAcquirer): Promise<User | undefined | null> => {
+export const checkUserRegistration = async (tokenAcquirer: TokenAcquirer): Promise<WrappedUser | undefined | null> => {
     try {
-        const user = await fetchWithToken<User>(userMe, tokenAcquirer);
+        const user = await fetchWithToken<WrappedUser>(userMe, tokenAcquirer);
         return user?.data;
     } catch (e) {
         return null;

@@ -3,7 +3,7 @@ import { mocked } from 'ts-jest/utils';
 
 import fetchWithToken from '../../util/auth0/fetchWithToken';
 import { userMe } from '../../util/endpoints';
-import { User } from '../../util/serverResponses';
+import { WrappedUser } from '../../util/serverResponses';
 import tc from '../../util/testConstants';
 import { checkUserRegistration } from './checkUserRegistration';
 
@@ -14,9 +14,11 @@ const getTokenSilentlyMock = jest.fn();
 
 it('returns the user if the user exists', async () => {
     const mockResponse = {
-        data: tc.user1,
+        data: {
+            user: tc.user1,
+        },
     };
-    fetchWithTokenMock.mockResolvedValueOnce(mockResponse as AxiosResponse<User>);
+    fetchWithTokenMock.mockResolvedValueOnce(mockResponse as AxiosResponse<WrappedUser>);
 
     const result = await checkUserRegistration(getTokenSilentlyMock);
 
