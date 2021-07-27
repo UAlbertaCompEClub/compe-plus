@@ -9,6 +9,9 @@ const UserProfile: FC = () => {
     const userProfileIcon = useRef(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { logout } = useAuth0();
+    const { user } = useAuth0();
+    const ccid = user?.email?.split('@')[0] ?? '';
+
     return (
         <>
             <IconButton
@@ -39,7 +42,7 @@ const UserProfile: FC = () => {
                 onClose={() => setIsMenuOpen(false)}
                 className={classes.menu}
             >
-                <Typography className={classes.menu_text}> Signed in as: [ccid] </Typography>
+                <Typography className={classes.menu_text}> Signed in as: {ccid} </Typography>
                 <MenuItem onClick={() => logout()} className={classes.menu_text} style={{ marginBottom: '100px' }}>
                     Settings
                 </MenuItem>
@@ -55,10 +58,10 @@ const useStyles = makeStyles((theme) => ({
     menu: {
         '& .MuiPaper-root': {
             backgroundColor: theme.palette.primary.dark,
-            color: theme.palette.text.secondary,
         },
     },
     menu_text: {
+        color: theme.palette.text.secondary,
         fontSize: 20,
         fontWeight: 500,
         padding: '15px',
