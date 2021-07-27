@@ -1,4 +1,4 @@
-import { Dialog } from '@material-ui/core';
+import { Dialog, Switch } from '@material-ui/core';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
@@ -28,4 +28,17 @@ it.each([true, false])('gets the proper dialog state from redux state', (isEditR
 
     const dialog = result.find(Dialog);
     expect(dialog.props()['open']).toBe(isEditRolesDialogOpen);
+});
+
+it.each(['student', 'volunteer'])('gets the proper user role from redux state', (currentRole) => {
+    const state = {
+        user: { currentRole },
+    } as RootState;
+
+    useAppSelectorMock.mockImplementationOnce((selector) => selector(state));
+
+    const result = shallow(<EditRolesDialog />);
+
+    const roleSwitch = result.find({ inputProps: { 'aria-label': `Toggle ${currentRole} role` } });
+    expect(roleSwitch.props()['checked']).toBe(true);
 });
