@@ -2,10 +2,10 @@ import axios, { AxiosResponse } from 'axios';
 
 import TokenAcquirer from './TokenAcquirer';
 
-const postWithToken = async <BodyType, ResponseType>(url: string, tokenAcquirer: TokenAcquirer, scopes: string[], data?: BodyType): Promise<AxiosResponse<ResponseType> | undefined> => {
+const postWithToken = async <BodyType, ResponseType>(url: string, tokenAcquirer: TokenAcquirer, scopes?: string[], data?: BodyType): Promise<AxiosResponse<ResponseType> | undefined> => {
     try {
         const token = await tokenAcquirer({
-            scope: scopes.join(' '),
+            scope: scopes?.join(' '),
         });
         return axios.post(url, data, {
             headers: {
