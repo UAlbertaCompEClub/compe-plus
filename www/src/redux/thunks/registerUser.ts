@@ -15,9 +15,9 @@ export type UserInfo = {
     photoUrl?: string;
 };
 
-const registerUser = createAsyncThunk('user/register', async (userInfo: UserInfo) => {
+export const registerUser = async (userInfo: UserInfo): Promise<UserInfo | undefined> => {
     const response = await postWithToken(users_endpoint, [], userInfo);
     return response?.data as UserInfo;
-});
+};
 
-export default registerUser;
+export default createAsyncThunk('user/register', registerUser);
