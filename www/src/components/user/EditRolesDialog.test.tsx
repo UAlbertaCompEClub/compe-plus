@@ -1,4 +1,4 @@
-import { Dialog, Switch } from '@material-ui/core';
+import { Dialog } from '@material-ui/core';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
@@ -39,6 +39,7 @@ it.each(['student', 'volunteer'])('gets the proper user role from redux state', 
 
     const result = shallow(<EditRolesDialog />);
 
+    // TODO: Update selector once UI has been refactored to use keys
     const roleSwitch = result.find({ inputProps: { 'aria-label': `Toggle ${currentRole} role` } });
     expect(roleSwitch.props()['checked']).toBe(true);
 });
