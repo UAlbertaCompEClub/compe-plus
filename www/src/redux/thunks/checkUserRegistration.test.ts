@@ -23,7 +23,7 @@ it('returns the user if the user exists', async () => {
     const result = await checkUserRegistration(getTokenSilentlyMock);
 
     expect(fetchWithTokenMock).toBeCalledWith(me, getTokenSilentlyMock);
-    expect(result).toBe(tc.user1);
+    expect(result).toStrictEqual({ user: tc.user1 });
 });
 
 it('null if the user does not exist (server returns 404)', async () => {
