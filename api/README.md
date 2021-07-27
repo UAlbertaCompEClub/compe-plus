@@ -99,3 +99,7 @@ Runs ESLint across the codebase and fixes errors.
 ### `npm run psql`
 
 Shorthand to access local dev database.
+
+### `npm run s3-mock`
+
+Run a mock S3 server locally.

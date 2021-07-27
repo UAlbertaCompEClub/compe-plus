@@ -1,17 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import checkUserRegistration from '../thunks/checkUserRegistration';
 import registerUser, { UserInfo } from '../thunks/registerUser';
 
-type UserStore = {
+type UserState = {
     roles: string[];
     currentRole: string;
+    hasRegistered: boolean | null;
     info: UserInfo | null;
     isLoading: boolean;
 };
 
-const initialState: UserStore = {
+const initialState: UserState = {
     roles: [],
     currentRole: '',
+    hasRegistered: null,
     info: null,
     isLoading: false,
 };
@@ -33,6 +36,13 @@ export const userSlice = createSlice({
             const isSuccess = action.payload !== undefined;
             console.log(`Register success=${isSuccess}`);
             state.isLoading = true;
+        });
+        builder.addCase(checkUserRegistration.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(checkUserRegistration.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.hasRegistered = action.payload !== null;
         });
     },
 });

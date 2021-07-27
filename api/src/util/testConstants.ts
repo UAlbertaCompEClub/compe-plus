@@ -29,4 +29,14 @@ const userRole1: s.user_roles.JSONSelectable = {
     created_at: '2021-06-07T04:51:55.717971+00:00',
 };
 
-export default { user1, resumeReview1, userRole1 };
+const document1: s.documents.JSONSelectable = {
+    id: 'a41dbb6d-8957-4d67-a13c-05986cb01916',
+    note: 'My note',
+    is_review: false,
+    user_id: 'google-oauth2|999937999992352499990',
+    resume_review_id: '52c2cbdc-e0a8-48e7-9302-92a37e016ab0',
+    created_at: '2021-06-14T06:09:19.373404+00:00',
+    updated_at: '2021-06-14T06:09:19.373404+00:00',
+};
+
+export default { user1, resumeReview1, userRole1, document1 };

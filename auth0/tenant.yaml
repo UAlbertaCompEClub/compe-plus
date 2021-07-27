@@ -1,0 +1,507 @@
+rules: []
+rulesConfigs: []
+hooks: []
+pages: []
+resourceServers:
+    - name: Compe+API
+      identifier: 'https://compe.plus/api'
+      allow_offline_access: true
+      enforce_policies: true
+      scopes:
+          - value: 'read:users'
+            description: Read users
+          - value: 'read:roles'
+            description: Read roles
+          - value: 'create:roles'
+            description: Create roles
+          - value: 'delete:roles'
+            description: Delete roles
+          - value: 'read_my:resume_reviews'
+            description: Read your resume reviews
+          - value: 'read_all:resume_reviews'
+            description: Read all resume reviews
+          - value: 'create:resume_reviews'
+            description: Create resume reviews
+          - value: 'update_my:resume_reviews'
+            description: Update your resume reviews
+          - value: 'update_all:resume_reviews'
+            description: Update all resume reviews
+          - value: 'read_my:documents'
+            description: Read your documents
+          - value: 'read_all:documents'
+            description: Read all documents
+          - value: 'create:documents'
+            description: Create documents
+          - value: 'update_my:documents'
+            description: Update your documents
+          - value: 'update_all:documents'
+            description: Update all documents
+          - value: 'read:time_slots'
+            description: Read time slots
+          - value: 'create:time_slots'
+            description: Create time slots
+          - value: 'delete:time_slots'
+            description: Delete time slots
+          - value: 'read_my:interviews'
+            description: Read your interviews
+          - value: 'read_all:interviews'
+            description: Read all interviews
+          - value: 'create:interviews'
+            description: Create interviews
+          - value: 'delete:interviews'
+            description: Delete interviews
+      signing_alg: RS256
+      skip_consent_for_verifiable_first_party_clients: true
+      token_dialect: access_token_authz
+      token_lifetime: 86400
+      token_lifetime_for_web: 7200
+clients:
+    - name: Admin Test Application
+      app_type: non_interactive
+      cross_origin_auth: false
+      custom_login_page_on: true
+      grant_types:
+          - client_credentials
+      is_first_party: true
+      is_token_endpoint_ip_header_trusted: false
+      jwt_configuration:
+          alg: RS256
+          lifetime_in_seconds: 36000
+          secret_encoded: false
+      oidc_conformant: true
+      refresh_token:
+          expiration_type: non-expiring
+          leeway: 0
+          infinite_token_lifetime: true
+          infinite_idle_token_lifetime: true
+          token_lifetime: 31557600
+          idle_token_lifetime: 2592000
+          rotation_type: non-rotating
+      sso_disabled: false
+      token_endpoint_auth_method: client_secret_post
+    - name: Compe+ API Application
+      allowed_clients: []
+      app_type: non_interactive
+      callbacks: []
+      client_aliases: []
+      cross_origin_auth: false
+      custom_login_page_on: true
+      grant_types:
+          - client_credentials
+      is_first_party: true
+      is_token_endpoint_ip_header_trusted: false
+      jwt_configuration:
+          alg: RS256
+          lifetime_in_seconds: 36000
+          secret_encoded: false
+      native_social_login:
+          apple:
+              enabled: false
+          facebook:
+              enabled: false
+      oidc_conformant: true
+      refresh_token:
+          expiration_type: non-expiring
+          leeway: 0
+          infinite_token_lifetime: true
+          infinite_idle_token_lifetime: true
+          token_lifetime: 31557600
+          idle_token_lifetime: 2592000
+          rotation_type: non-rotating
+      sso_disabled: false
+      token_endpoint_auth_method: client_secret_post
+    - name: Compe+ Web Application
+      allowed_clients: []
+      allowed_logout_urls:
+          - 'http://localhost:3000'
+      app_type: spa
+      callbacks:
+          - 'http://localhost:3000'
+      client_aliases: []
+      cross_origin_auth: false
+      custom_login_page_on: true
+      grant_types:
+          - authorization_code
+          - implicit
+          - refresh_token
+      is_first_party: true
+      is_token_endpoint_ip_header_trusted: false
+      jwt_configuration:
+          alg: RS256
+          lifetime_in_seconds: 36000
+          secret_encoded: false
+      native_social_login:
+          apple:
+              enabled: false
+          facebook:
+              enabled: false
+      oidc_conformant: true
+      refresh_token:
+          expiration_type: expiring
+          leeway: 0
+          token_lifetime: 2592000
+          idle_token_lifetime: 1296000
+          infinite_token_lifetime: false
+          infinite_idle_token_lifetime: false
+          rotation_type: rotating
+      sso_disabled: false
+      token_endpoint_auth_method: none
+      web_origins:
+          - 'http://localhost:3000'
+    - name: Deploy CLI Application
+      app_type: non_interactive
+      cross_origin_auth: false
+      custom_login_page_on: true
+      grant_types:
+          - client_credentials
+      is_first_party: true
+      is_token_endpoint_ip_header_trusted: false
+      jwt_configuration:
+          alg: RS256
+          lifetime_in_seconds: 36000
+          secret_encoded: false
+      oidc_conformant: true
+      refresh_token:
+          expiration_type: non-expiring
+          leeway: 0
+          infinite_token_lifetime: true
+          infinite_idle_token_lifetime: true
+          token_lifetime: 31557600
+          idle_token_lifetime: 2592000
+          rotation_type: non-rotating
+      sso_disabled: false
+      token_endpoint_auth_method: client_secret_post
+    - name: Interviewer Test Application
+      app_type: non_interactive
+      cross_origin_auth: false
+      custom_login_page_on: true
+      grant_types:
+          - client_credentials
+      is_first_party: true
+      is_token_endpoint_ip_header_trusted: false
+      jwt_configuration:
+          alg: RS256
+          lifetime_in_seconds: 36000
+          secret_encoded: false
+      oidc_conformant: true
+      refresh_token:
+          expiration_type: non-expiring
+          leeway: 0
+          infinite_token_lifetime: true
+          infinite_idle_token_lifetime: true
+          token_lifetime: 31557600
+          idle_token_lifetime: 2592000
+          rotation_type: non-rotating
+      sso_disabled: false
+      token_endpoint_auth_method: client_secret_post
+    - name: Reviewer Test Application
+      app_type: non_interactive
+      cross_origin_auth: false
+      custom_login_page_on: true
+      grant_types:
+          - client_credentials
+      is_first_party: true
+      is_token_endpoint_ip_header_trusted: false
+      jwt_configuration:
+          alg: RS256
+          lifetime_in_seconds: 36000
+          secret_encoded: false
+      oidc_conformant: true
+      refresh_token:
+          expiration_type: non-expiring
+          leeway: 0
+          infinite_token_lifetime: true
+          infinite_idle_token_lifetime: true
+          token_lifetime: 31557600
+          idle_token_lifetime: 2592000
+          rotation_type: non-rotating
+      sso_disabled: false
+      token_endpoint_auth_method: client_secret_post
+    - name: Student Test Application
+      allowed_clients: []
+      app_type: non_interactive
+      callbacks: []
+      client_aliases: []
+      cross_origin_auth: false
+      custom_login_page_on: true
+      grant_types:
+          - client_credentials
+      is_first_party: true
+      is_token_endpoint_ip_header_trusted: false
+      jwt_configuration:
+          alg: RS256
+          lifetime_in_seconds: 36000
+          secret_encoded: false
+      native_social_login:
+          apple:
+              enabled: false
+          facebook:
+              enabled: false
+      oidc_conformant: true
+      refresh_token:
+          expiration_type: non-expiring
+          leeway: 0
+          infinite_token_lifetime: true
+          infinite_idle_token_lifetime: true
+          token_lifetime: 31557600
+          idle_token_lifetime: 2592000
+          rotation_type: non-rotating
+      sso_disabled: false
+      token_endpoint_auth_method: client_secret_post
+databases:
+    - name: Username-Password-Authentication
+      strategy: auth0
+      enabled_clients:
+          - Admin Test Application
+          - Compe+ API Application
+          - Deploy CLI Application
+          - Interviewer Test Application
+          - Reviewer Test Application
+          - Student Test Application
+      is_domain_connection: false
+      options:
+          mfa:
+              active: true
+              return_enroll_settings: true
+          passwordPolicy: good
+          strategy_version: 2
+          brute_force_protection: true
+      realms:
+          - Username-Password-Authentication
+connections:
+    - name: google-oauth2
+      strategy: google-oauth2
+      enabled_clients:
+          - Admin Test Application
+          - Compe+ API Application
+          - Compe+ Web Application
+          - Deploy CLI Application
+          - Interviewer Test Application
+          - Reviewer Test Application
+          - Student Test Application
+      is_domain_connection: false
+      options:
+          email: true
+          scope:
+              - email
+              - profile
+          profile: true
+tenant:
+    enabled_locales:
+        - en
+    flags:
+        new_universal_login_experience_enabled: true
+        universal_login: true
+        revoke_refresh_token_grant: false
+        disable_clickjack_protection_headers: false
+    picture_url: 'https://www.compe.plus/static/media/logo_black.83556301.svg'
+    universal_login:
+        colors:
+            page_background: '#E2F8E2'
+            primary: '#79B178'
+emailProvider: {}
+emailTemplates: []
+clientGrants:
+    - client_id: Admin Test Application
+      audience: 'https://compe.plus/api'
+      scope:
+          - 'read:users'
+          - 'read:roles'
+          - 'create:roles'
+          - 'delete:roles'
+          - 'read_all:resume_reviews'
+          - 'create:resume_reviews'
+          - 'update_all:resume_reviews'
+          - 'read_all:documents'
+          - 'create:documents'
+          - 'update_all:documents'
+          - 'read:time_slots'
+          - 'create:time_slots'
+          - 'delete:time_slots'
+          - 'read_all:interviews'
+          - 'create:interviews'
+          - 'delete:interviews'
+    - client_id: Compe+ API Application
+      audience: '##AUTH0_MANAGEMENT_API_AUDIENCE##'
+      scope:
+          - 'update:users'
+          - 'read:roles'
+    - client_id: Interviewer Test Application
+      audience: 'https://compe.plus/api'
+      scope:
+          - 'read:users'
+          - 'read:roles'
+          - 'read:time_slots'
+          - 'create:time_slots'
+          - 'delete:time_slots'
+          - 'read_my:interviews'
+          - 'delete:interviews'
+    - client_id: Reviewer Test Application
+      audience: 'https://compe.plus/api'
+      scope:
+          - 'read:users'
+          - 'read:roles'
+          - 'read_all:resume_reviews'
+          - 'update_my:resume_reviews'
+          - 'read_my:documents'
+          - 'create:documents'
+          - 'update_my:documents'
+    - client_id: Student Test Application
+      audience: 'https://compe.plus/api'
+      scope:
+          - 'read:users'
+          - 'read:roles'
+          - 'read_my:resume_reviews'
+          - 'create:resume_reviews'
+          - 'update_my:resume_reviews'
+          - 'read_my:documents'
+          - 'create:documents'
+          - 'update_my:documents'
+          - 'read:time_slots'
+          - 'read_my:interviews'
+          - 'create:interviews'
+          - 'delete:interviews'
+guardianFactors:
+    - name: duo
+      enabled: false
+    - name: email
+      enabled: false
+    - name: otp
+      enabled: false
+    - name: push-notification
+      enabled: false
+    - name: recovery-code
+      enabled: false
+    - name: sms
+      enabled: false
+    - name: webauthn-platform
+      enabled: false
+    - name: webauthn-roaming
+      enabled: false
+guardianFactorProviders: []
+guardianFactorTemplates: []
+guardianPolicies:
+    policies: []
+guardianPhoneFactorSelectedProvider:
+    provider: auth0
+guardianPhoneFactorMessageTypes:
+    message_types: []
+roles:
+    - name: Admin
+      description: Allowed to perform management operations
+      permissions:
+          - permission_name: 'create:documents'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'create:interviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'create:resume_reviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'create:roles'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'create:time_slots'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'delete:interviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'delete:roles'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'delete:time_slots'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read_all:documents'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read_all:interviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read_all:resume_reviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:roles'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:time_slots'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:users'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update_all:documents'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update_all:resume_reviews'
+            resource_server_identifier: 'https://compe.plus/api'
+    - name: Interviewer
+      description: Allowed to conduct interviews
+      permissions:
+          - permission_name: 'create:time_slots'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'delete:interviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'delete:time_slots'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read_my:interviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:roles'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:time_slots'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:users'
+            resource_server_identifier: 'https://compe.plus/api'
+    - name: Reviewer
+      description: Allowed to view submitted resumes and submit reviews
+      permissions:
+          - permission_name: 'create:documents'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read_all:resume_reviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read_my:documents'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:roles'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:users'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update_my:documents'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update_my:resume_reviews'
+            resource_server_identifier: 'https://compe.plus/api'
+    - name: Student
+      description: 'Allowed to submit resume for review, be an interviewee, etc.'
+      permissions:
+          - permission_name: 'create:documents'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'create:interviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'create:resume_reviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'delete:interviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read_my:documents'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read_my:interviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read_my:resume_reviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:roles'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:time_slots'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:users'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update_my:documents'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update_my:resume_reviews'
+            resource_server_identifier: 'https://compe.plus/api'
+branding:
+    colors:
+        page_background: '#E2F8E2'
+        primary: '#79B178'
+    logo_url: 'https://www.compe.plus/static/media/logo_black.83556301.svg'
+prompts:
+    universal_login_experience: new
+    identifier_first: false
+migrations: {}
+actions:
+    - name: test
+      code: ./actions/test/code.js
+      dependencies: []
+      deployed: false
+      runtime: node12
+      secrets: []
+      status: built
+      supported_triggers:
+          - id: credentials-exchange
+            version: v2
+triggers: {}
+organizations: []
