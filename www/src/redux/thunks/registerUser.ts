@@ -21,9 +21,13 @@ export type RegisterUserParameters = {
     tokenAcquirer: TokenAcquirer;
 };
 
-export const registerUser = async ({ userInfo, tokenAcquirer }: RegisterUserParameters): Promise<UserInfo | undefined> => {
-    const response = await postWithToken(users_endpoint, tokenAcquirer, [], userInfo);
-    return response?.data as UserInfo;
+export const registerUser = async ({ userInfo, tokenAcquirer }: RegisterUserParameters): Promise<UserInfo | undefined | null> => {
+    try {
+        const response = await postWithToken<UserInfo, UserInfo>(users_endpoint, tokenAcquirer, [], userInfo);
+        return response?.data;
+    } catch (e) {
+        return null;
+    }
 };
 
 export default createAsyncThunk('user/register', registerUser);
