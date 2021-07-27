@@ -1,16 +1,15 @@
 import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
 
-import InternalServerErrorException from '../../exceptions/InternalServerErrorException';
-import NotAuthorizedException from '../../exceptions/NotAuthorizedException';
+import BadRequestException from '../../exceptions/BadRequestException';
 import * as documentRepository from '../../repositories/documentRepository';
 import * as s3Repository from '../../repositories/s3Repository';
+import { decodeQueryToUser, documentS3Key } from '../../util/helper';
 import controller from '../controllerUtil';
-import Validator, { beAValidDocument, beAValidResumeReview, beAValidUuid, beProperlyBase64Encoded } from '../validation';
+import Validator, { beAValidResumeReview, beAValidUuid, beProperlyUriEncoded } from '../validation';
 
 type Params = {
     resumeReview: string;
-    document: string;
 };
 
 class ParamsValidator extends Validator<Params> {
@@ -18,56 +17,73 @@ class ParamsValidator extends Validator<Params> {
         super('route parameters');
 
         this.ruleFor('resumeReview').mustAsync(beAValidUuid).mustAsync(beAValidResumeReview);
-
-        this.ruleFor('document').mustAsync(beAValidUuid).mustAsync(beAValidDocument);
     }
 }
 
-type ReqBody = {
-    note?: string;
-    base64Contents?: string;
+type ReqQuery = {
+    id?: string;
+    userId?: string;
+    resumeReviewId?: string;
+    isReview?: boolean;
 };
 
-class ReqBodyValidator extends Validator<ReqBody> {
+class ReqQueryValidator extends Validator<ReqQuery> {
     constructor() {
-        super('message body');
+        super('query parameters');
 
-        this.ruleFor('base64Contents')
-            .mustAsync(beProperlyBase64Encoded)
-            .when((reqBody) => reqBody.base64Contents !== undefined);
+        this.ruleFor('id')
+            .mustAsync(beAValidUuid)
+            .when((reqQuery) => reqQuery.id !== undefined);
+
+        this.ruleFor('userId')
+            .mustAsync(beProperlyUriEncoded)
+            .when((reqQuery) => reqQuery.userId !== undefined);
+
+        this.ruleFor('resumeReviewId')
+            .mustAsync(beAValidUuid)
+            .when((reqQuery) => reqQuery.resumeReviewId !== undefined);
+
+        this.ruleFor('isReview')
+            .notNull()
+            .when((reqQuery) => reqQuery.isReview !== undefined);
     }
 }
 
-type ResBody = { document: s.documents.JSONSelectable };
+interface Document extends s.documents.JSONSelectable {
+    base64Contents: string;
+}
+
+type ResBody = { documents: Document[] };
 
 /**
- * Update my document.
+ * Get my documents.
  * @param req HTTP request.
  * @param res HTTP response.
- * @returns Nothing.
+ * @returns My documents.
  */
-const patchMyDocument = controller(async (req: Request<Params, ResBody, ReqBody>, res: Response<ResBody>): Promise<void> => {
+const getMyDocuments = controller(async (req: Request<Params, ResBody, unknown, ReqQuery>, res: Response<ResBody>): Promise<void> => {
     await new ParamsValidator().validateAndThrow(req.params);
-    await new ReqBodyValidator().validateAndThrow(req.body);
+    await new ReqQueryValidator().validateAndThrow(req.query);
 
-    // Make sure that the calling user is associated with the document
-    if ((await documentRepository.get(req.params.document, undefined, req.user.sub)).length === 0) {
-        throw new NotAuthorizedException();
+    const id = req.query.id;
+    const userId = decodeQueryToUser(req.query.userId);
+    const resumeReviewId = req.query.resumeReviewId;
+    const isReview = req.query.isReview;
+
+    const allDocuments = await documentRepository.getAssociatedToUser(req.user.sub, id, userId, resumeReviewId, isReview);
+
+    if (allDocuments.length > 6) {
+        throw new BadRequestException({ issue: 'Cannot request more than 6 documents at once. Narrow your query.' });
     }
 
-    try {
-        if (req.body.note !== null && req.body.note !== undefined) {
-            await documentRepository.update(req.params.document, req.body.note);
-        }
-        if (req.body.base64Contents !== null && req.body.base64Contents !== undefined) {
-            const key = `resume-reviews/${req.params.resumeReview}/documents/${req.params.document}`;
-            await s3Repository.upload(key, req.body.base64Contents, 'base64');
-        }
-    } catch (err) {
-        throw new InternalServerErrorException({ issue: 'Failed to update note or base64Contents. Try again with same data.' }, err);
+    const enhancedDocuments: Document[] = [];
+    for (const d of allDocuments) {
+        const document: Document = { ...d, base64Contents: '' };
+        document.base64Contents = await s3Repository.download(documentS3Key(req.params.resumeReview, document.id), 'base64');
+        enhancedDocuments.push(document);
     }
 
-    res.status(204).end();
+    res.status(200).json({ documents: enhancedDocuments });
 });
 
-export default patchMyDocument;
+export default getMyDocuments;

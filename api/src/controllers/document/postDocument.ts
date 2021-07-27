@@ -35,7 +35,7 @@ class ReqBodyValidator extends Validator<ReqBody> {
 
         this.ruleFor('isReview').notNull();
 
-        this.ruleFor('userId').mustAsync(beAValidUser);
+        this.ruleFor('userId').mustAsync(beAValidUser); // TODO this should match the user creating it
 
         this.ruleFor('base64Contents').mustAsync(beProperlyBase64Encoded);
     }

@@ -52,6 +52,29 @@ const get = async (id?: string, resumeReviewId?: string, userId?: string, isRevi
 };
 
 /**
+ * Get documents associated to user. Filter as necessary.
+ * @param associatedUser User that document should be associated with.
+ * @param id Optional document id to filter by.
+ * @param resumeReviewId Optional resume review id to filter by.
+ * @param userId Optional user id to filter by.
+ * @param isReview Option to filter by if it is a review.
+ * @returns List of documents associated to user and appropriately filtered.
+ */
+const getAssociatedToUser = async (associatedUser: string, id?: string, resumeReviewId?: string, userId?: string, isReview?: boolean): Promise<s.documents.JSONSelectable[]> => {
+    return db.sql<s.documents.SQL | s.resume_reviews.SQL, s.documents.JSONSelectable[]>`
+    SELECT ${'documents'}.*
+      FROM ${'documents'}
+      JOIN ${'resume_reviews'}
+        ON ${'documents'}.${'resume_review_id'} = ${'resume_reviews'}.${'id'}
+     WHERE (${'resume_reviews'}.${'reviewee_id'} = ${db.param(associatedUser)} OR ${'resume_reviews'}.${'reviewer_id'} = ${db.param(associatedUser)})
+       AND (${db.param(id, 'uuid')} IS NULL OR ${'documents'}.${'id'} = ${db.param(id, 'uuid')})
+       AND (${db.param(resumeReviewId, 'uuid')} IS NULL OR ${'documents'}.${'resume_review_id'} = ${db.param(resumeReviewId, 'uuid')})
+       AND (${db.param(userId, 'text')} IS NULL OR ${'documents'}.${'user_id'} = ${db.param(userId, 'text')})
+       AND (${db.param(isReview, 'bool')} IS NULL OR ${'documents'}.${'is_review'} = ${db.param(isReview, 'bool')})
+       `.run(pool);
+};
+
+/**
  * Update a document.
  * @param id Id of document to update.
  * @param note Value to update note to.
@@ -62,4 +85,4 @@ const update = async (id: string, note?: string): Promise<s.documents.JSONSelect
     return db.update('documents', { note: note }, where).run(pool);
 };
 
-export { create, get, remove, update };
+export { create, get, getAssociatedToUser, remove, update };
