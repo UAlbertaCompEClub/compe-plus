@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import fetchWithToken, { TokenAcquirer } from '../../util/auth0/fetchWithToken';
+import fetchWithToken from '../../util/auth0/fetchWithToken';
+import TokenAcquirer from '../../util/auth0/TokenAcquirer';
 import { userMe } from '../../util/endpoints';
 import { User } from '../../util/serverResponses';
 
