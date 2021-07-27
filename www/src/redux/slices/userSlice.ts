@@ -32,7 +32,7 @@ export const userSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(registerUser.fulfilled, (state, action) => {
-            const isSuccess = action.payload !== undefined;
+            const isSuccess = action.payload !== null;
             if (isSuccess) {
                 state.hasRegistered = true;
             } else {
