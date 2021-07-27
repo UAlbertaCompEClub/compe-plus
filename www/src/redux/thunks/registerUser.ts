@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { users_endpoint } from '../../endpoints';
-import { postWithToken } from '../../util/auth0/postWithToken';
+import postWithToken from '../../util/auth0/postWithToken';
 import TokenAcquirer from '../../util/auth0/TokenAcquirer';
 
 export type UserInfo = {
