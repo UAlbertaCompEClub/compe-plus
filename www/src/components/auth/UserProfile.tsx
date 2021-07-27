@@ -24,7 +24,7 @@ const UserProfile: FC = () => {
                     setIsMenuOpen(true);
                 }}
             >
-                <AccountCircle />
+                <AccountCircle color='secondary' />
             </IconButton>
             <Menu
                 id='menu-appbar'
