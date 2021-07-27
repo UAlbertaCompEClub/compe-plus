@@ -76,7 +76,7 @@ const App: FC = () => {
                     <Header sections={header_sections} title={COMPE_PLUS} />
                     <BrowserView>
                         {content}
-                        {!isLoadingUser && !isUserRegistered && <Redirect to={REGISTER_ROUTE} />}
+                        {!isLoadingUser && isUserRegistered === false && <Redirect to={REGISTER_ROUTE} />}
                     </BrowserView>
                     <MobileView>
                         <MobileLanding />
