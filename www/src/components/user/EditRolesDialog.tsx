@@ -12,7 +12,7 @@ import theme from '../../styles/theme';
 const EditRolesDialog: FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isStudent, setIsStudent] = useState(false);
-    const [isUser, setIsUser] = useState(false);
+    const [isVolunteer, setIsVolunteer] = useState(false);
     const classes = useStyles();
 
     return (
@@ -30,7 +30,7 @@ const EditRolesDialog: FC = () => {
                         Interviwer
                     </DialogContentText>
                 </DialogContent>
-                <Switch checked={isUser} onChange={(e) => setIsUser(e.target.checked)} inputProps={{ 'aria-label': 'Toggle interviewer role' }} />
+                <Switch checked={isVolunteer} onChange={(e) => setIsVolunteer(e.target.checked)} inputProps={{ 'aria-label': 'Toggle interviewer role' }} />
             </Dialog>
             <Button variant='contained' onClick={() => setIsOpen(true)}>
                 Edit Roles
