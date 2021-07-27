@@ -1,10 +1,10 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import axios, { AxiosResponse } from 'axios';
 
-export const postWithToken = async <DataType, ResponseType>(url: string, scopes: string[], data?: DataType): Promise<AxiosResponse<ResponseType> | undefined> => {
-    const { getAccessTokenSilently } = useAuth0();
+import TokenAcquirer from './TokenAcquirer';
+
+export const postWithToken = async <DataType, ResponseType>(url: string, tokenAcquirer: TokenAcquirer, scopes: string[], data?: DataType): Promise<AxiosResponse<ResponseType> | undefined> => {
     try {
-        const token = await getAccessTokenSilently({
+        const token = await tokenAcquirer({
             scope: scopes.join(' '),
         });
         return axios.post(url, data, {
