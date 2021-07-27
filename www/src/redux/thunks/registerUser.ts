@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { users_endpoint } from '../../endpoints';
 import postWithToken from '../../util/auth0/postWithToken';
 import TokenAcquirer from '../../util/auth0/TokenAcquirer';
+import { User } from '../../util/serverResponses';
 
 export type UserInfo = {
     id: string;
@@ -21,9 +22,9 @@ export type RegisterUserParameters = {
     tokenAcquirer: TokenAcquirer;
 };
 
-export const registerUser = async ({ userInfo, tokenAcquirer }: RegisterUserParameters): Promise<UserInfo | undefined | null> => {
+export const registerUser = async ({ userInfo, tokenAcquirer }: RegisterUserParameters): Promise<User | undefined | null> => {
     try {
-        const response = await postWithToken<UserInfo, UserInfo>(users_endpoint, tokenAcquirer, [], userInfo);
+        const response = await postWithToken<UserInfo, User>(users_endpoint, tokenAcquirer, [], userInfo);
         return response?.data;
     } catch (e) {
         return null;
