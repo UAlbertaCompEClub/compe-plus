@@ -4,13 +4,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AccountCircle } from '@material-ui/icons';
 import React, { FC, useRef, useState } from 'react';
 
+import { useAppDispatch } from '../../redux/hooks';
+import { openEditRolesDialog } from '../../redux/slices/userSlice';
+
 const UserProfile: FC = () => {
     const classes = useStyles();
     const userProfileIcon = useRef(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { logout } = useAuth0();
-    const { user } = useAuth0();
+    const { logout, user } = useAuth0();
     const ccid = user?.email?.split('@')[0] ?? '';
+
+    const dispatch = useAppDispatch();
 
     return (
         <>
@@ -43,7 +47,7 @@ const UserProfile: FC = () => {
                 className={classes.menu}
             >
                 <Typography className={classes.menu_text}> Signed in as: {ccid} </Typography>
-                <MenuItem onClick={() => logout()} className={classes.menu_text} style={{ marginBottom: '100px' }}>
+                <MenuItem onClick={() => dispatch(openEditRolesDialog())} className={classes.menu_text} style={{ marginBottom: '100px' }}>
                     Settings
                 </MenuItem>
                 <MenuItem onClick={() => logout()} className={classes.menu_text}>
