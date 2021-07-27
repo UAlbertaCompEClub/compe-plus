@@ -35,6 +35,10 @@ beforeEach(() => {
     next = jest.fn();
 });
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
 it('rejects null id', async () => {
     req.body.id = null;
 
