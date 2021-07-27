@@ -21,3 +21,5 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+
+export const { setCurrentRole, openEditRolesDialog, closeEditRolesDialog } = userSlice.actions;
