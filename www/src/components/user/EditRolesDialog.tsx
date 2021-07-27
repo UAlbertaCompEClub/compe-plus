@@ -25,11 +25,11 @@ const EditRolesDialog: FC = () => {
                 <DialogContent>
                     <DialogContentText className={classes.dialog_content}>Resume Reviewer</DialogContentText>
                 </DialogContent>
-                <Switch checked={currentRole === 'student'} onChange={(e) => dispatch(setCurrentRole('student'))} inputProps={{ 'aria-label': 'Toggle student role' }} />
+                <Switch checked={currentRole === 'student'} onChange={() => dispatch(setCurrentRole('student'))} inputProps={{ 'aria-label': 'Toggle student role' }} />
                 <DialogContent>
                     <DialogContentText className={classes.dialog_content}>Interviwer</DialogContentText>
                 </DialogContent>
-                <Switch checked={currentRole === 'volunteer'} onChange={(e) => dispatch(setCurrentRole('volunteer'))} inputProps={{ 'aria-label': 'Toggle volunteer role' }} />
+                <Switch checked={currentRole === 'volunteer'} onChange={() => dispatch(setCurrentRole('volunteer'))} inputProps={{ 'aria-label': 'Toggle volunteer role' }} />
             </Dialog>
             <Button variant='contained' onClick={() => dispatch(openEditRolesDialog())}>
                 Edit Roles
