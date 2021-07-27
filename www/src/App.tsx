@@ -48,8 +48,10 @@ const getContentByRole = (role: string) => {
         case 'reviewer':
         case 'interviewer':
             return <VolunteerApp />;
-        default:
+        case 'student':
             return <StudentApp />;
+        default:
+            return <UnauthenticatedApp />;
     }
 };
 
@@ -60,7 +62,7 @@ const App: FC = () => {
 
     const { isAuthenticated, getAccessTokenSilently } = useAuth0();
     const dispatch = useAppDispatch();
-    const content = isAuthenticated ? getContentByRole(currentRole) : <UnauthenticatedApp />;
+    const content = getContentByRole(currentRole);
 
     useEffect(() => {
         if (isAuthenticated) {
