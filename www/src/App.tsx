@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
+import EditRolesDialog from './components/user/EditRolesDialog';
 import { useAppSelector } from './redux/hooks';
 import adminStore from './redux/substores/admin/adminStore';
 import volunteerStore from './redux/substores/volunteeer/volunteerStore';
@@ -63,7 +64,9 @@ const App: FC = () => {
             <Container maxWidth={false} style={{ padding: 0 }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
-                    <BrowserView>{content}</BrowserView>
+                    <BrowserView>
+                        {content} <EditRolesDialog />
+                    </BrowserView>
                     <MobileView>
                         <MobileLanding />
                     </MobileView>
