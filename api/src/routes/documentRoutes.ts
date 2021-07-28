@@ -16,11 +16,7 @@ router.get('/resume-reviews/:resumeReview/documents', middleware.authorize(Scope
 
 router.post('/resume-reviews/:resumeReview/documents', middleware.authorize(Scope.CreateDocuments), controller.postDocument);
 
-router.patch('/resume-reviews/:resumeReview/documents/:document', middleware.authorizeAndFallThrough(Scope.UpdateAllDocuments), () => {
-    throw new NotImplementedException('PATCH /resume-reviews/:resumeReview/documents/:document');
-});
-router.patch('/resume-reviews/:resumeReview/documents/:document', middleware.authorize(Scope.UpdateMyDocuments), () => {
-    throw new NotImplementedException('PATCH /resume-reviews/:resumeReview/documents/:document');
-});
+router.patch('/resume-reviews/:resumeReview/documents/:document', middleware.authorizeAndFallThrough(Scope.UpdateAllDocuments), controller.patchAllDocument);
+router.patch('/resume-reviews/:resumeReview/documents/:document', middleware.authorize(Scope.UpdateMyDocuments), controller.patchMyDocument);
 
 export default router;
