@@ -10,7 +10,6 @@ import { TokenAcquirer } from './util/auth0/fetchWithToken';
 import { User } from './util/serverResponses';
 import { setupIntersectionObserverMock } from './util/test/intersectionObserverMock';
 import { withAuth0 } from './util/testWithAuth0';
-import { withRootState } from './util/testWithRootState';
 
 jest.mock('./redux/hooks');
 const useAppDispatchMock = mocked(useAppDispatch, true);
@@ -20,6 +19,11 @@ jest.mock('./redux/thunks/checkUserRegistration');
 const checkUserRegistrationMock = mocked(checkUserRegistration);
 
 describe('App', () => {
+    const defaultUserState = { roles: [], currentRole: '', isLoading: false, hasRegistered: true, isEditRolesDialogOpen: false };
+    const defaultRootState = {
+        user: defaultUserState,
+    };
+
     beforeEach(() => setupIntersectionObserverMock());
 
     it.each`
@@ -32,12 +36,12 @@ describe('App', () => {
         const dispatchMock = jest.fn();
         useAppDispatchMock.mockReturnValue(dispatchMock);
 
-        const rootState = { user: { roles: [], currentRole: role, isLoading: false, hasRegistered: true } };
+        const rootState = { ...defaultRootState, user: { ...defaultUserState, currentRole: role } };
         const auth0State = { isAuthenticated: true };
 
         useAppSelectorMock.mockImplementation((selector) => selector(rootState));
 
-        render(withAuth0(withRootState(<App />, rootState), auth0State));
+        render(withAuth0(<App />, auth0State));
 
         const componentsWithText = screen.getAllByText(containsString);
         expect(componentsWithText[0]).toBeInTheDocument();
@@ -51,7 +55,7 @@ describe('App', () => {
         const dispatchMock = jest.fn();
         useAppDispatchMock.mockReturnValue(dispatchMock);
 
-        const rootState = { user: { roles: [], currentRole: '', isLoading: false, hasRegistered: null } };
+        const rootState = { ...defaultRootState };
         const auth0State = { isAuthenticated };
 
         const actionMock = {};
@@ -59,7 +63,7 @@ describe('App', () => {
 
         useAppSelectorMock.mockImplementation((selector) => selector(rootState));
 
-        render(withAuth0(withRootState(<App />, rootState), auth0State));
+        render(withAuth0(<App />, auth0State));
 
         if (isAuthenticated) {
             expect(dispatchMock).toBeCalledWith(actionMock);
@@ -72,7 +76,7 @@ describe('App', () => {
         const dispatchMock = jest.fn();
         useAppDispatchMock.mockReturnValue(dispatchMock);
 
-        const rootState = { user: { roles: [], currentRole: '', isLoading: false, hasRegistered: false } };
+        const rootState = { ...defaultRootState, user: { ...defaultUserState, hasRegistered: false } };
         const auth0State = { isAuthenticated: true };
 
         const actionMock = {};
@@ -80,7 +84,7 @@ describe('App', () => {
 
         useAppSelectorMock.mockImplementation((selector) => selector(rootState));
 
-        render(withAuth0(withRootState(<App />, rootState), auth0State));
+        render(withAuth0(<App />, auth0State));
 
         const componentsWithRegistrationText = screen.getAllByText('Registration page');
         expect(componentsWithRegistrationText[0]).toBeInTheDocument();
