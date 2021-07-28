@@ -19,8 +19,9 @@ jest.mock('./redux/thunks/checkUserRegistration');
 const checkUserRegistrationMock = mocked(checkUserRegistration);
 
 describe('App', () => {
+    const defaultUserState = { roles: [], currentRole: '', isLoading: false, hasRegistered: true, isEditRolesDialogOpen: false };
     const defaultRootState = {
-        user: { roles: [], currentRole: '', isLoading: false, hasRegistered: true, isEditRolesDialogOpen: false },
+        user: defaultUserState,
     };
 
     beforeEach(() => setupIntersectionObserverMock());
@@ -35,7 +36,7 @@ describe('App', () => {
         const dispatchMock = jest.fn();
         useAppDispatchMock.mockReturnValue(dispatchMock);
 
-        const rootState = { ...defaultRootState, user: { ...defaultRootState.user, currentRole: role } };
+        const rootState = { ...defaultRootState, user: { ...defaultUserState, currentRole: role } };
         const auth0State = { isAuthenticated: true };
 
         useAppSelectorMock.mockImplementation((selector) => selector(rootState));
@@ -75,7 +76,7 @@ describe('App', () => {
         const dispatchMock = jest.fn();
         useAppDispatchMock.mockReturnValue(dispatchMock);
 
-        const rootState = { ...defaultRootState, user: { ...defaultRootState.user, hasRegistered: false } };
+        const rootState = { ...defaultRootState, user: { ...defaultUserState, hasRegistered: false } };
         const auth0State = { isAuthenticated: true };
 
         const actionMock = {};
