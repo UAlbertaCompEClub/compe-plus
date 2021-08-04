@@ -1,5 +1,7 @@
+import cors from 'cors';
 import { NextFunction, Request, Response } from 'express';
 import { UnauthorizedError } from 'express-jwt';
+import { IncomingHttpHeaders } from 'http';
 
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
@@ -182,4 +184,46 @@ describe('errorHandler middleware', () => {
 
     // Can't figure out how to mock req.log.error so I'm punting on this
     it.todo('handles unknown errors');
+});
+
+describe('cors middleware', () => {
+    const allowedOrigin = 'http://example.com';
+    const allowedOrigins = [allowedOrigin];
+
+    const corsMiddleware = cors({
+        origin: (origin, callback) => {
+            if (allowedOrigins.some((allowedOrigin) => allowedOrigin === origin)) {
+                callback(null, true);
+            }
+            callback(null);
+        },
+    });
+
+    let mockRequest: Partial<Request>;
+    let mockResponse: Partial<Response>;
+    let nextFunction: NextFunction;
+
+    beforeEach(() => {
+        mockRequest = {};
+        mockRequest.headers = {
+            origin: 'http://example.com',
+        };
+        mockResponse = {
+            setHeader: jest.fn(),
+            getHeader: jest.fn(),
+        };
+        nextFunction = jest.fn();
+    });
+
+    it('cors header is attached', () => {
+        corsMiddleware(mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(mockResponse.setHeader).toBeCalledWith('Access-Control-Allow-Origin', allowedOrigin);
+    });
+
+    it('does not add header if origin does not match', () => {
+        mockRequest.headers = {};
+
+        corsMiddleware(mockRequest as Request, mockResponse as Response, nextFunction);
+        expect(mockResponse.setHeader).not.toBeCalled();
+    });
 });
