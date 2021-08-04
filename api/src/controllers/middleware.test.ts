@@ -1,7 +1,6 @@
 import cors from 'cors';
 import { NextFunction, Request, Response } from 'express';
 import { UnauthorizedError } from 'express-jwt';
-import { IncomingHttpHeaders } from 'http';
 
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
