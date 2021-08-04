@@ -11,11 +11,22 @@ import logger from './util/logger';
 
 const router = express();
 
-/** Allow cross origin requests */
-router.use(cors());
+const allowedOrigins = config.corsAllowedOrigins;
 
 /** Log the request */
 router.use(middleware.logRequest());
+
+/** Allow cross origin requests */
+router.use(
+    cors({
+        origin: (origin, callback) => {
+            if (allowedOrigins.some((allowedOrigin) => allowedOrigin === origin)) {
+                callback(null, true);
+            }
+            callback(null);
+        },
+    }),
+);
 
 /** Parse the request */
 router.use(middleware.jsonParser());
