@@ -187,7 +187,7 @@ describe('errorHandler middleware', () => {
 });
 
 describe('cors middleware', () => {
-    const allowedOriginsMock = ['http://example.com', 'https://*-staging.example.com'];
+    const allowedOriginsMock = ['http://example.com', 'https://*staging.example.com'];
 
     jest.mock('../util/config');
     const mockConfig = mocked(config, true);
@@ -217,19 +217,21 @@ describe('cors middleware', () => {
     });
 
     it('does not add header if origin does not match', () => {
-        mockRequest.headers = {};
+        mockRequest.headers = {
+            origin: 'http://subdomain.example.com',
+        };
 
         corsMiddleware(mockRequest as Request, mockResponse as Response, nextFunction);
         expect(mockResponse.setHeader).not.toBeCalled();
     });
 
-    it('handles wildcards', () => {
+    it.each(['https://staging.example.com', 'https://prefix--staging.example.com'])('handles wildcards', (origin) => {
         mockRequest.headers = {
-            origin: 'https://prefix--staging.example.com',
+            origin,
         };
 
         corsMiddleware(mockRequest as Request, mockResponse as Response, nextFunction);
 
-        expect(mockResponse.setHeader).toBeCalledWith('Access-Control-Allow-Origin', 'https://prefix--staging.example.com');
+        expect(mockResponse.setHeader).toBeCalledWith('Access-Control-Allow-Origin', origin);
     });
 });
