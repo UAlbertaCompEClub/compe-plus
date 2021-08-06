@@ -1,4 +1,3 @@
-import cors from 'cors';
 import express from 'express';
 import http from 'http';
 
@@ -11,22 +10,11 @@ import logger from './util/logger';
 
 const router = express();
 
-const allowedOrigins = config.corsAllowedOrigins;
-
 /** Log the request */
 router.use(middleware.logRequest());
 
 /** Allow cross origin requests */
-router.use(
-    cors({
-        origin: (origin, callback) => {
-            if (allowedOrigins.some((allowedOrigin) => allowedOrigin === origin)) {
-                callback(null, true);
-            }
-            callback(null);
-        },
-    }),
-);
+router.use(middleware.cors());
 
 /** Parse the request */
 router.use(middleware.jsonParser());

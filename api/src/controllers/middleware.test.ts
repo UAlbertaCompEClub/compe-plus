@@ -1,11 +1,12 @@
-import cors from 'cors';
 import { NextFunction, Request, Response } from 'express';
 import { UnauthorizedError } from 'express-jwt';
+import { mocked } from 'ts-jest/utils';
 
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
 import NotFoundException from '../exceptions/NotFoundException';
 import Scope from '../types/scopes';
+import config from '../util/config';
 import logger from '../util/logger';
 import middleware from './middleware';
 
@@ -186,17 +187,14 @@ describe('errorHandler middleware', () => {
 });
 
 describe('cors middleware', () => {
-    const allowedOrigin = 'http://example.com';
-    const allowedOrigins = [allowedOrigin];
+    const allowedOriginMock = 'http://example.com';
+    const allowedOriginsMock = [allowedOriginMock];
 
-    const corsMiddleware = cors({
-        origin: (origin, callback) => {
-            if (allowedOrigins.some((allowedOrigin) => allowedOrigin === origin)) {
-                callback(null, true);
-            }
-            callback(null);
-        },
-    });
+    jest.mock('../util/config');
+    const mockConfig = mocked(config, true);
+    mockConfig.corsAllowedOrigins = allowedOriginsMock;
+
+    const corsMiddleware = middleware.cors();
 
     let mockRequest: Partial<Request>;
     let mockResponse: Partial<Response>;
@@ -216,7 +214,7 @@ describe('cors middleware', () => {
 
     it('cors header is attached', () => {
         corsMiddleware(mockRequest as Request, mockResponse as Response, nextFunction);
-        expect(mockResponse.setHeader).toBeCalledWith('Access-Control-Allow-Origin', allowedOrigin);
+        expect(mockResponse.setHeader).toBeCalledWith('Access-Control-Allow-Origin', allowedOriginMock);
     });
 
     it('does not add header if origin does not match', () => {
