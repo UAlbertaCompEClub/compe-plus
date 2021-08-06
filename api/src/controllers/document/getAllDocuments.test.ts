@@ -65,14 +65,6 @@ it('rejects improperly encoded userId query parameter', async () => {
     expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { userId: 'Must be properly encoded with encodeURIComponent' } });
 });
 
-it('rejects non-uuid resumeReviewId query param', async () => {
-    req.query = { resumeReviewId: 'asdf' };
-
-    await getAllDocuments(req as Request<Params>, res as Response, next);
-
-    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid query parameters', status: 400, details: { resumeReviewId: 'Must be a UUID' } });
-});
-
 it('will not return more than 6 documents', async () => {
     mockDocumentRepository.get.mockResolvedValueOnce(
         Array(7)

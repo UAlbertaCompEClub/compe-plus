@@ -55,7 +55,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-# Dev
+# Staging
 
 https://amazing-snyder-c0ce1a.netlify.app/
 

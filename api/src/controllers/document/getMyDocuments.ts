@@ -23,7 +23,6 @@ class ParamsValidator extends Validator<Params> {
 type ReqQuery = {
     id?: string;
     userId?: string;
-    resumeReviewId?: string;
     isReview?: boolean;
 };
 
@@ -38,10 +37,6 @@ class ReqQueryValidator extends Validator<ReqQuery> {
         this.ruleFor('userId')
             .mustAsync(beProperlyUriEncoded)
             .when((reqQuery) => reqQuery.userId !== undefined);
-
-        this.ruleFor('resumeReviewId')
-            .mustAsync(beAValidUuid)
-            .when((reqQuery) => reqQuery.resumeReviewId !== undefined);
 
         this.ruleFor('isReview')
             .notNull()
@@ -67,10 +62,9 @@ const getMyDocuments = controller(async (req: Request<Params, ResBody, unknown, 
 
     const id = req.query.id;
     const userId = decodeQueryToUser(req.query.userId);
-    const resumeReviewId = req.query.resumeReviewId;
     const isReview = req.query.isReview;
 
-    const allDocuments = await documentRepository.getAssociatedToUser(req.user.sub, id, userId, resumeReviewId, isReview);
+    const allDocuments = await documentRepository.getAssociatedToUser(req.user.sub, id, req.params.resumeReview, userId, isReview);
 
     if (allDocuments.length > 6) {
         throw new BadRequestException({ issue: 'Cannot request more than 6 documents at once. Narrow your query.' });
