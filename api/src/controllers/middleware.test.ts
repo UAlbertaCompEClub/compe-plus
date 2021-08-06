@@ -223,4 +223,12 @@ describe('cors middleware', () => {
         corsMiddleware(mockRequest as Request, mockResponse as Response, nextFunction);
         expect(mockResponse.setHeader).not.toBeCalled();
     });
+
+    it('handles wildcards', () => {
+        mockRequest.headers = {
+            origin: 'https://prefix--staging.example.com',
+        };
+        mockConfig.corsAllowedOrigins = ['https://*-staging.example.com'];
+        expect(mockResponse.setHeader).toBeCalledWith('Access-Control-Allow-Origin', allowedOriginMock);
+    });
 });
