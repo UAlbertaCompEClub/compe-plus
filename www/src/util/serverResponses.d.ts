@@ -22,3 +22,14 @@ export type User = {
 export type WrappedUser = {
     user: User;
 };
+
+export type resumeReviewState = 'canceled' | 'finished' | 'reviewing' | 'seeking_reviewer';
+
+export type ResumeReview = {
+    id: string;
+    revieweeId: string;
+    reviewerId: string | null;
+    state: resumeReviewState;
+    createdAt: TimestampTzString;
+    updatedAt: TimestampTzString;
+};
