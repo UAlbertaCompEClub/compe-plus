@@ -1,8 +1,7 @@
 import { Grid, Typography } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import React, { FC } from 'react';
 
-import UploadResumeIcon from '../../assets/add_resume.svg';
+import NoResumes from './resumeReview/NoResumes';
 
 const ResumeReview: FC = () => {
     return (
@@ -12,19 +11,7 @@ const ResumeReview: FC = () => {
                     <Typography variant='h1'>Resume Review</Typography>
                 </Grid>
 
-                <Grid container item spacing={4}>
-                    <Grid container item xs={12} justify='center'>
-                        <img src={UploadResumeIcon} />
-                    </Grid>
-                    <Grid container item xs={12} justify='center'>
-                        <Typography>You have no resumes submitted</Typography>
-                    </Grid>
-                    <Grid container item xs={12} justify='center'>
-                        <Button variant='contained' color='primary'>
-                            Submit resume
-                        </Button>
-                    </Grid>
-                </Grid>
+                <NoResumes />
             </Grid>
         </div>
     );
