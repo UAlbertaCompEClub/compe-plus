@@ -104,8 +104,9 @@ Read documents for a resume review.
 ### Query Parameters
 
 -   `?is_review=true`
--   `?state=submitted`
 -   `?id=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`
+-   `?userId=asdf`
+-   `?resumeReviewId=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`
 
 ## `POST /resume-reviews/{resume-review}/documents`
 
