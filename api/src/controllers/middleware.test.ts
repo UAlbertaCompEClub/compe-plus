@@ -214,7 +214,7 @@ describe('cors middleware', () => {
     it('cors header is attached', () => {
         corsMiddleware(mockRequest as Request, mockResponse as Response, nextFunction);
 
-        expect(mockResponse.setHeader).toBeCalledTimes(2);
+        expect(mockResponse.setHeader).toBeCalledTimes(2); // Experimentally discovered. Proves cors is being used.
         expect(mockResponse.setHeader).toBeCalledWith('Access-Control-Allow-Origin', 'http://example.com');
     });
 
