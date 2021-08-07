@@ -1,10 +1,3 @@
-export declare type DateString = `${number}-${number}-${number}`;
-export declare type TimeString = `${number}:${number}${'' | `:${number}`}`;
-export declare type TzSuffix = 'Z' | `${'+' | '-'}${number}${'' | `:${number}`}`;
-export declare type TimeTzString = `${TimeString}${TzSuffix}`;
-export declare type TimestampString = `${DateString}T${TimeString}`;
-export type TimestampTzString = `${TimestampString}${TzSuffix}`; // ISO8601-formatted date and time string **with no timezone**
-
 export type User = {
     id: string;
     email: string;
@@ -15,21 +8,29 @@ export type User = {
     family_name: string;
     full_name: string;
     photo_url: string | null;
-    created_at: TimestampTzString;
-    updated_at: TimestampTzString;
+    created_at: string;
+    updated_at: string;
 };
 
 export type WrappedUser = {
     user: User;
 };
 
-export type resumeReviewState = 'canceled' | 'finished' | 'reviewing' | 'seeking_reviewer';
-
 export type ResumeReview = {
     id: string;
     revieweeId: string;
     reviewerId: string | null;
-    state: resumeReviewState;
-    createdAt: TimestampTzString;
-    updatedAt: TimestampTzString;
+    state: 'canceled' | 'finished' | 'reviewing' | 'seeking_reviewer';
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type Document = {
+    id: string;
+    note: string;
+    isReview: boolean;
+    userId: string;
+    resumeReviewId: string;
+    createdAt: string;
+    updatedAt: string;
 };
