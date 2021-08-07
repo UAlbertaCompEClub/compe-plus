@@ -13,7 +13,7 @@ written permission of Adobe.
 import axios from 'axios';
 
 import config from '../../util/config';
-import arrayBufferToBase64 from '../../util/helpers';
+import { arrayBufferToBase64 } from '../../util/helpers';
 declare global {
     interface Window {
         AdobeDC: any;

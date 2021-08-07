@@ -8,4 +8,4 @@ function arrayBufferToBase64(buffer: ArrayBuffer): string {
     return window.btoa(binary);
 }
 
-export default arrayBufferToBase64;
+export { arrayBufferToBase64 };
