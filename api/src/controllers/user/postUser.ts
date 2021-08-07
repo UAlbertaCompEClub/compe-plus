@@ -1,23 +1,15 @@
 import { Request, Response } from 'express';
+import { CamelCasedProperties } from 'type-fest';
 import type * as s from 'zapatos/schema';
 
 import * as auth0Repository from '../../repositories/auth0Repository';
 import * as userRepository from '../../repositories/userRepository';
 import Role from '../../types/roles';
+import { toSnakeCase } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAValidUrl } from '../validation';
 
-type ReqBody = {
-    id: string;
-    email: string;
-    ccid: string;
-    program: string;
-    year: number;
-    givenName: string;
-    familyName: string;
-    fullName: string;
-    photoUrl?: string;
-};
+type ReqBody = Omit<CamelCasedProperties<s.users.JSONSelectable>, 'createdAt' | 'updatedAt'>;
 
 class ReqBodyValidator extends Validator<ReqBody> {
     constructor() {
@@ -71,17 +63,7 @@ const postUser = controller(async (req: Request<unknown, ResBody, ReqBody>, res:
     await auth0Repository.giveUserRole(req.body.id, Role.Student);
 
     // Add the user to postgres with the appropriate roles
-    const results = await userRepository.create({
-        id: req.body.id,
-        email: req.body.email,
-        ccid: req.body.ccid,
-        program: req.body.program,
-        year: req.body.year,
-        given_name: req.body.givenName,
-        family_name: req.body.familyName,
-        full_name: req.body.fullName,
-        photo_url: req.body.photoUrl,
-    });
+    const results = await userRepository.create(toSnakeCase(req.body));
 
     res.status(201).json({ user: results[0] });
 });

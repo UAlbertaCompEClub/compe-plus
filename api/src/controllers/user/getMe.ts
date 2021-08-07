@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
+import { CamelCasedProperties } from 'type-fest';
 import type * as s from 'zapatos/schema';
 
 import * as userRepository from '../../repositories/userRepository';
+import { toCamelCase } from '../../util/helper';
 import controller from '../controllerUtil';
 
-type ResBody = {
-    user: s.users.JSONSelectable;
-};
+type ResBody = { user: CamelCasedProperties<s.users.JSONSelectable> };
 
 /**
  * Get my resume reviews.
@@ -24,7 +24,7 @@ const getMe = controller(async (req: Request, res: Response<ResBody>): Promise<v
         res.status(404);
     }
 
-    res.status(200).json({ user: matches[0] });
+    res.status(200).json({ user: toCamelCase(matches[0]) });
 });
 
 export default getMe;

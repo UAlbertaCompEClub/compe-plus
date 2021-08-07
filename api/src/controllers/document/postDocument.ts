@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
+import { CamelCasedProperties } from 'type-fest';
 import type * as s from 'zapatos/schema';
 
 import InternalServerErrorException from '../../exceptions/InternalServerErrorException';
 import * as documentRepository from '../../repositories/documentRepository';
 import * as s3Repository from '../../repositories/s3Repository';
+import { toCamelCase } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAValidResumeReview, beAValidUser, beAValidUuid, beProperlyBase64Encoded } from '../validation';
 
@@ -40,7 +42,7 @@ class ReqBodyValidator extends Validator<ReqBody> {
     }
 }
 
-type ResBody = { document: s.documents.JSONSelectable };
+type ResBody = { document: CamelCasedProperties<s.documents.JSONSelectable> };
 
 /**
  * Create a new document.
@@ -64,7 +66,7 @@ const postDocument = controller(async (req: Request<Params, ResBody, ReqBody>, r
         throw new InternalServerErrorException({ issue: 'Failed to upload document to S3' }, err);
     }
 
-    res.status(201).json({ document: document });
+    res.status(201).json({ document: toCamelCase(document) });
 });
 
 export default postDocument;
