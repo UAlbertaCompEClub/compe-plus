@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import InternalServerErrorException from '../../exceptions/InternalServerErrorException';
 import * as documentRepository from '../../repositories/documentRepository';
 import * as s3Repository from '../../repositories/s3Repository';
+import { documentS3Key } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAValidDocument, beAValidResumeReview, beAValidUuid, beProperlyBase64Encoded } from '../validation';
 
@@ -51,8 +52,7 @@ const patchAllDocument = controller(async (req: Request<Params, unknown, ReqBody
             await documentRepository.update(req.params.document, req.body.note);
         }
         if (req.body.base64Contents !== null && req.body.base64Contents !== undefined) {
-            const key = `resume-reviews/${req.params.resumeReview}/documents/${req.params.document}`;
-            await s3Repository.upload(key, req.body.base64Contents, 'base64');
+            await s3Repository.upload(documentS3Key(req.params.resumeReview, req.params.document), req.body.base64Contents, 'base64');
         }
     } catch (err) {
         throw new InternalServerErrorException({ issue: 'Failed to update note or base64Contents. Try again with same data.' }, err);

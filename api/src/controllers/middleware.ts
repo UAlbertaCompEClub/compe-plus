@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import jwt, { UnauthorizedError } from 'express-jwt';
 import jwtAuthz from 'express-jwt-authz';
@@ -148,6 +149,23 @@ function jsonParser(): ErrHandledMiddleware {
     return [parseBody, errorHandler];
 }
 
+/**
+ * Returns middleware that will attach the access-control-allow-origin header to client side requests.
+ * @returns CORS middleware.
+ */
+function customizedCors(): Middleware {
+    const allowedOrigins = config.corsAllowedOrigins;
+
+    return cors({
+        origin: (origin, callback) => {
+            if (allowedOrigins.some((allowedOrigin) => allowedOrigin === origin)) {
+                callback(null, true);
+            }
+            callback(null);
+        },
+    });
+}
+
 export default {
     logRequest,
     notFound,
@@ -156,4 +174,5 @@ export default {
     authorize,
     authorizeAndFallThrough,
     jsonParser,
+    cors: customizedCors,
 };

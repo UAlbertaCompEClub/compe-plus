@@ -1,3 +1,4 @@
+import BadRequestException from './BadRequestException';
 import HttpException from './HttpException';
 import InternalServerErrorException from './InternalServerErrorException';
 import InvalidJsonException from './InvalidJsonException';
@@ -107,6 +108,17 @@ describe('InvalidJsonException', () => {
         expect(obj.code).toEqual(400);
         expect(obj.message).toEqual('msg');
         expect(obj.details).toBeUndefined();
+    });
+});
+
+describe('BadRequestException', () => {
+    it('serializes properly', () => {
+        const e = new BadRequestException({ a: 'b' });
+        const obj = e.serialize();
+
+        expect(obj.code).toEqual(400);
+        expect(obj.message).toEqual('Bad request');
+        expect(obj.details).toEqual({ a: 'b' });
     });
 });
 

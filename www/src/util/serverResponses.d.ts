@@ -12,4 +12,6 @@ export type User = {
     updated_at: db.TimestampTzString;
 };
 
-// TODO: Find better way of syncing server reponse types
+export type WrappedUser = {
+    user: User;
+};

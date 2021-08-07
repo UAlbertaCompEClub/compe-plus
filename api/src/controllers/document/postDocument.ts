@@ -5,7 +5,7 @@ import type * as s from 'zapatos/schema';
 import InternalServerErrorException from '../../exceptions/InternalServerErrorException';
 import * as documentRepository from '../../repositories/documentRepository';
 import * as s3Repository from '../../repositories/s3Repository';
-import { toCamelCase } from '../../util/helper';
+import { documentS3Key, toCamelCase } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAValidResumeReview, beAValidUser, beAValidUuid, beProperlyBase64Encoded } from '../validation';
 
@@ -36,7 +36,7 @@ class ReqBodyValidator extends Validator<ReqBody> {
 
         this.ruleFor('isReview').notNull();
 
-        this.ruleFor('userId').mustAsync(beAValidUser);
+        this.ruleFor('userId').mustAsync(beAValidUser); // TODO this should match the user creating it
 
         this.ruleFor('base64Contents').mustAsync(beProperlyBase64Encoded);
     }
@@ -58,9 +58,8 @@ const postDocument = controller(async (req: Request<Params, ResBody, ReqBody>, r
     const document = await documentRepository.create(req.body.note, req.body.isReview, req.body.userId, req.params.resumeReview);
 
     // Decode contents and upload file to s3
-    const key = `resume-reviews/${req.params.resumeReview}/documents/${document.id}`;
     try {
-        await s3Repository.upload(key, req.body.base64Contents, 'base64');
+        await s3Repository.upload(documentS3Key(req.params.resumeReview, document.id), req.body.base64Contents, 'base64');
     } catch (err) {
         await documentRepository.remove(document.id);
         throw new InternalServerErrorException({ issue: 'Failed to upload document to S3' }, err);

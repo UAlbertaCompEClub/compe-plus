@@ -19,3 +19,7 @@ export const manyToCamelCase = <T extends Object>(object: T[]): CamelCasedProper
 export const toSnakeCase = <T extends Object>(object: T): SnakeCasedProperties<T> => {
     return <SnakeCasedProperties<T>>changeCase.snakeCase(object);
 };
+
+export const documentS3Key = (resumeReview: string, document: string): string => {
+    return `resume-reviews/${resumeReview}/documents/${document}`;
+};

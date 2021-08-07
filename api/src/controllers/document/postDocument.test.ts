@@ -56,7 +56,7 @@ it('rejects non-uuid resume review', async () => {
     expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid route parameters', status: 400, details: { resumeReview: 'Must be a UUID' } });
 });
 
-it('rejects non-exsistent resume review', async () => {
+it('rejects non-existent resume review', async () => {
     mockResumeReviewRepository.get.mockReset();
     mockResumeReviewRepository.get.mockResolvedValueOnce([]);
     await postDocument(req as Request<Params>, res as Response, next);
