@@ -63,7 +63,7 @@ it('rejects non-uuid document', async () => {
     expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid route parameters', status: 400, details: { document: 'Must be a UUID' } });
 });
 
-it('rejects non-exsistent resume review', async () => {
+it('rejects non-existent resume review', async () => {
     mockResumeReviewRepository.get.mockReset();
     mockResumeReviewRepository.get.mockResolvedValueOnce([]);
     await patchAllDocument(req as Request<Params>, res as Response, next);
@@ -71,7 +71,7 @@ it('rejects non-exsistent resume review', async () => {
     expect(next.mock.calls[0][0]).toMatchObject({ message: 'Invalid route parameters', status: 400, details: { resumeReview: 'Must be a resume review that already exists' } });
 });
 
-it('rejects non-exsistent document', async () => {
+it('rejects non-existent document', async () => {
     mockDocumentRepository.get.mockReset();
     mockDocumentRepository.get.mockResolvedValueOnce([]);
     await patchAllDocument(req as Request<Params>, res as Response, next);

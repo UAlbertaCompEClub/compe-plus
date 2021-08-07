@@ -1,6 +1,7 @@
 import S3 from 'aws-sdk/clients/s3';
 import * as AWS from 'aws-sdk/global';
 
+import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 import config from '../util/config';
 
 // TODO: Research if we can avoid generating the s3 service object on every call to the repository.
@@ -45,14 +46,16 @@ const upload = async (key: string, data: string, encoding: BufferEncoding): Prom
  * @param encoding Encoding to return file in.
  */
 const download = async (key: string, encoding: BufferEncoding): Promise<string> => {
-    // TODO what happens when key does not exist?
     const s3 = generateServiceObject();
 
     try {
         const result = await s3.getObject({ Bucket: config.s3.bucket_name, Key: key }).promise();
         return result.Body ? result.Body.toString(encoding) : '';
     } catch (err) {
-        return '';
+        if (err.code === 'NoSuchKey') {
+            throw new InternalServerErrorException({ issue: 'No document found in S3 for document in DB', key: key }, err);
+        }
+        throw new InternalServerErrorException({ issue: 'Something went wrong while downloading document from S3' }, err);
     }
 };
 
