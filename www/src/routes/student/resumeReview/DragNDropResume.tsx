@@ -20,8 +20,9 @@ const handleOnFileSelected = async (dispatch: AppDispatch, files?: FileList | nu
         alert('File selected must be pdf');
     }
 
+    // TODO: encode array buffer to base64 and add to redux slice
     const file = await pdfFile.arrayBuffer();
-    // TODO: encode array buffer to base64 and add to slice
+    console.debug(file.byteLength);
 };
 
 const DragNDropResume: FC = () => {
@@ -30,6 +31,7 @@ const DragNDropResume: FC = () => {
     return (
         <Grid container item spacing={4}>
             <Grid container justify='center' item xs={12}>
+                {/* TODO: Replace with react-dropzone */}
                 <input type='file' aria-label='upload-resume' onChange={(e) => handleOnFileSelected(dispatch, e.target.files)} />
             </Grid>
             <Grid container justify='center' item xs={12}>
