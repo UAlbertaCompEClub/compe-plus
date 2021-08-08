@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BaseThunkAPI } from '@reduxjs/toolkit/dist/createAsyncThunk';
 
 import postWithToken from '../../../../util/auth0/postWithToken';
 import TokenAcquirer from '../../../../util/auth0/TokenAcquirer';
@@ -36,13 +35,13 @@ type PayloadCreatorReturn = {
     document?: Document;
 };
 
-const initiateResumeReview = async (params: InitiateResumeReviewParams, thunkAPI: BaseThunkAPI<StudentState, unknown, StudentDispatch, string>) => {
+export const initiateResumeReview = async (params: InitiateResumeReviewParams): Promise<PayloadCreatorReturn> => {
     const resumeReviewResult = await postWithToken<ResumeReviewBody, ResumeReview>(postResumeReviews, params.tokenAcquirer, [Scope.CreateResumeReviews], {
         reviewee: params.userId,
     });
 
     if (resumeReviewResult?.data === undefined) {
-        return thunkAPI.rejectWithValue('Unable to create resume review object');
+        throw new Error('Unable to create resume review object');
     }
 
     const documentResult = await postWithToken<DocumentBody, Document>(postDocuments(resumeReviewResult?.data.id ?? ''), params.tokenAcquirer, [Scope.CreateDocuments], {
@@ -53,7 +52,7 @@ const initiateResumeReview = async (params: InitiateResumeReviewParams, thunkAPI
     });
 
     if (documentResult?.data === undefined) {
-        return thunkAPI.rejectWithValue('Unable to upload document');
+        throw new Error('Unable to upload document');
     }
 
     return {
@@ -62,4 +61,10 @@ const initiateResumeReview = async (params: InitiateResumeReviewParams, thunkAPI
     };
 };
 
-export default createAsyncThunk<PayloadCreatorReturn, InitiateResumeReviewParams, AsyncThunkConfig>('resumeReview/initiate', initiateResumeReview);
+export default createAsyncThunk<PayloadCreatorReturn, InitiateResumeReviewParams, AsyncThunkConfig>('resumeReview/initiate', (params, thunkApi) => {
+    try {
+        return initiateResumeReview(params);
+    } catch (e) {
+        return thunkApi.rejectWithValue(e);
+    }
+});
