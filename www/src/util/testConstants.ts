@@ -1,4 +1,4 @@
-import { ResumeReview, User } from './serverResponses';
+import { Document, ResumeReview, User } from './serverResponses';
 
 const user1: User = {
     id: 'google-oauth2|999937999992352499990',
@@ -23,4 +23,14 @@ const resumeReview1: ResumeReview = {
     updatedAt: '2021-06-14T06:09:19.373404+00:00',
 };
 
-export default { user1, resumeReview1 };
+const document1: Document = {
+    id: '123e4567-e89b-12d3-a456-426614174000',
+    note: '',
+    isReview: false,
+    userId: user1.id,
+    resumeReviewId: '123e4567-e89b-12d3-a456-426614174000',
+    createdAt: '2021-06-14T06:09:19.373404+00:00',
+    updatedAt: '2021-06-14T06:09:19.373404+00:00',
+};
+
+export default { user1, resumeReview1, document1 };
