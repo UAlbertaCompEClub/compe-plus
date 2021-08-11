@@ -65,7 +65,8 @@ const App: FC = () => {
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
                     <BrowserView>
-                        {content} <EditRolesDialog />
+                        {content}
+                        <EditRolesDialog />
                     </BrowserView>
                     <MobileView>
                         <MobileLanding />
