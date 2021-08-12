@@ -158,12 +158,7 @@ function customizedCors(): Middleware {
     const allowedOriginsRegExp = allowedOrigins.map((allowedOrigin) => new RegExp(allowedOrigin.replace('*', '[\\w-]*')));
 
     return cors({
-        origin: (origin, callback) => {
-            if (allowedOriginsRegExp.some((allowedOriginRegExp) => origin?.match(allowedOriginRegExp))) {
-                callback(null, true);
-            }
-            callback(null);
-        },
+        origin: allowedOriginsRegExp,
     });
 }
 
