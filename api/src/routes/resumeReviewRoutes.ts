@@ -12,11 +12,7 @@ router.get('/resume-reviews', middleware.authorize(Scope.ReadMyResumeReviews), c
 
 router.post('/resume-reviews', middleware.authorize(Scope.CreateResumeReviews), controller.postResumeReview);
 
-router.patch('/resume-reviews/:resumeReview', middleware.authorizeAndFallThrough(Scope.UpdateAllResumeReviews), () => {
-    throw new NotImplementedException('PATCH /resume-reviews/:resumeReview');
-});
-router.patch('/resume-reviews/:resumeReview', middleware.authorize(Scope.UpdateMyResumeReviews), () => {
-    throw new NotImplementedException('PATCH /resume-reviews/:resumeReview');
-});
+router.patch('/resume-reviews/:resumeReview', middleware.authorizeAndFallThrough(Scope.UpdateAllResumeReviews), controller.patchAllResumeReview);
+router.patch('/resume-reviews/:resumeReview', middleware.authorize(Scope.UpdateMyResumeReviews), controller.patchMyResumeReview);
 
 export default router;
