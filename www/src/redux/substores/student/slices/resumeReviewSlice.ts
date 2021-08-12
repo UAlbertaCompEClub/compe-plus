@@ -5,13 +5,11 @@ import getMyResumeReviews from '../thunks/getMyResumeReviews';
 
 type InitialState = {
     resumeReviews: ResumeReview[];
-    currentResume: string | null; // base64encoded contents
     isLoading: boolean;
 };
 
 const initialState: InitialState = {
     resumeReviews: [],
-    currentResume: null,
     isLoading: false,
 };
 
