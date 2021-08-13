@@ -19,13 +19,21 @@ describe('StudentResumeReview', () => {
         },
     };
 
-    it('renders correctly', () => {
+    beforeEach(() => {
         useStudentDispatchMock.mockReturnValue(dispatchMock);
         useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
+    });
 
+    it('renders correctly', () => {
         render(<ResumeReview />);
 
         const componentsWithText = screen.getAllByText('Submit resume');
         expect(componentsWithText[0]).toBeInTheDocument();
+    });
+
+    it('calls getMyResumeReviews', () => {
+        render(<ResumeReview />);
+
+        expect(dispatchMock).toBeCalledTimes(1);
     });
 });
