@@ -3,11 +3,15 @@ import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import { useStudentDispatch, useStudentSelector } from '../../redux/substores/student/studentHooks';
+import getMyResumeReviews from '../../redux/substores/student/thunks/getMyResumeReviews';
 import ResumeReview from './ResumeReview';
 
 jest.mock('../../redux/substores/student/studentHooks');
 const useStudentDispatchMock = mocked(useStudentDispatch, true);
 const useStudentSelectorMock = mocked(useStudentSelector, true);
+
+jest.mock('../../redux/substores/student/thunks/getMyResumeReviews');
+const getMyResumeReviewsMock = mocked(getMyResumeReviews, true);
 
 describe('StudentResumeReview', () => {
     const dispatchMock = jest.fn();
@@ -34,6 +38,6 @@ describe('StudentResumeReview', () => {
     it('calls getMyResumeReviews', () => {
         render(<ResumeReview />);
 
-        expect(dispatchMock).toBeCalledTimes(1);
+        expect(getMyResumeReviewsMock).toBeCalled();
     });
 });
