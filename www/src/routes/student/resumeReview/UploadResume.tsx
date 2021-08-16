@@ -2,12 +2,12 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import React, { FC, useEffect } from 'react';
 
-import { useAppDispatch } from '../../../redux/hooks';
-import { AppDispatch } from '../../../redux/store';
 import { resetUploadResume, setDocument } from '../../../redux/substores/student/slices/uploadResumeSlice';
+import { useStudentDispatch } from '../../../redux/substores/student/studentHooks';
+import { StudentDispatch } from '../../../redux/substores/student/studentStore';
 import { arrayBufferToBase64 } from '../../../util/helpers';
 
-const handleOnFileSelected = async (dispatch: AppDispatch, files?: FileList | null) => {
+const handleOnFileSelected = async (dispatch: StudentDispatch, files?: FileList | null) => {
     // TODO: Improve error handling
     if (files === undefined || files === null) {
         alert('No file selected');
@@ -27,7 +27,7 @@ const handleOnFileSelected = async (dispatch: AppDispatch, files?: FileList | nu
 };
 
 const UploadResume: FC = () => {
-    const dispatch = useAppDispatch();
+    const dispatch = useStudentDispatch();
 
     useEffect(() => {
         return () => {
