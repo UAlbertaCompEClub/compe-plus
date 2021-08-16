@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Container, IconButton, makeStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Cancel, CheckCircle } from '@material-ui/icons';
@@ -7,6 +8,7 @@ import PDFViewer from '../../../components/pdf/PDFViewer';
 import { resetUploadResume, setDocument } from '../../../redux/substores/student/slices/uploadResumeSlice';
 import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
 import { StudentDispatch } from '../../../redux/substores/student/studentStore';
+import initiateResumeReview from '../../../redux/substores/student/thunks/initiateResumeReview';
 import { arrayBufferToBase64, base64ToArrayBuffer } from '../../../util/helpers';
 
 const handleOnFileSelected = async (dispatch: StudentDispatch, files?: FileList | null) => {
@@ -34,6 +36,8 @@ const UploadResume: FC = () => {
 
     const dispatch = useStudentDispatch();
 
+    const { user, getAccessTokenSilently } = useAuth0();
+
     const { document } = useStudentSelector((state) => state.uploadResume);
 
     useEffect(() => {
@@ -56,15 +60,26 @@ const UploadResume: FC = () => {
     };
 
     return (
-        <Grid container item xs={12} justify='center'>
+        <Grid container item xs={12} justify='center' style={{ height: '100%' }}>
             <Container className={classes.uploadContainer}>
                 <Typography>Ready to upload?</Typography>
                 <PDFViewer fileName='string' filePromise={filePromise} />
                 <span>
-                    <IconButton aria-label='cancel'>
+                    <IconButton aria-label='cancel' onClick={() => dispatch(resetUploadResume())}>
                         <Cancel />
                     </IconButton>
-                    <IconButton aria-label='confirm'>
+                    <IconButton
+                        aria-label='confirm'
+                        onClick={() =>
+                            dispatch(
+                                initiateResumeReview({
+                                    base64Contents: document,
+                                    tokenAcquirer: getAccessTokenSilently,
+                                    userId: user?.sub ?? '',
+                                }),
+                            )
+                        }
+                    >
                         <CheckCircle />
                     </IconButton>
                 </span>
