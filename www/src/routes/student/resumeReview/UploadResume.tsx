@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Backdrop, CircularProgress, IconButton, makeStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Cancel, CheckCircle } from '@material-ui/icons';
 import React, { FC, useEffect } from 'react';
@@ -34,12 +34,9 @@ const handleOnFileSelected = async (dispatch: StudentDispatch, files?: FileList 
 
 const UploadResume: FC = () => {
     const classes = useStyles();
-
     const dispatch = useStudentDispatch();
-
     const { user, getAccessTokenSilently } = useAuth0();
-
-    const { document } = useStudentSelector((state) => state.uploadResume);
+    const { document, isLoading } = useStudentSelector((state) => state.uploadResume);
 
     useEffect(() => {
         return () => {
@@ -62,6 +59,9 @@ const UploadResume: FC = () => {
 
     return (
         <Grid container item xs={12} spacing={2} justify='center' className={classes.root}>
+            <Backdrop open={isLoading} className={classes.backdrop}>
+                <CircularProgress color='inherit' />
+            </Backdrop>
             <Grid container item xs={12} justify='center'>
                 <Typography>Ready to upload?</Typography>
             </Grid>
@@ -93,13 +93,17 @@ const UploadResume: FC = () => {
     );
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         height: '100%',
     },
     pdfContainer: {
         minHeight: '60vh',
     },
-});
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+}));
 
 export default UploadResume;
