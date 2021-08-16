@@ -14,15 +14,11 @@ const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
     useEffect(() => {
         const viewSDKClient = new ViewSDKClient();
         viewSDKClient.ready().then(() => {
-            /* Invoke file preview */
             viewSDKClient.previewFileUsingFilePromise('adobe-dc-view', props.filePromise(), props.fileName, {
-                /* Control the viewer customization. */
                 showAnnotationTools: true,
                 enableFormFilling: true,
                 showLeftHandPanel: false,
             });
-            /* Register Save API handler */
-            viewSDKClient.registerSaveApiHandler();
         });
     }, []);
 
