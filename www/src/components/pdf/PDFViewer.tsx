@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 import ViewSDKClient from './ViewerSDKClient';
 
 type ViewerConfig = {
-    showAnnotationTools: boolean;
-    enableFormFilling: boolean;
-    showLeftHandPanel: boolean;
+    showAnnotationTools?: boolean;
+    enableFormFilling?: boolean;
+    showLeftHandPanel?: boolean;
 };
 
 export type PDFViewerProps = {
