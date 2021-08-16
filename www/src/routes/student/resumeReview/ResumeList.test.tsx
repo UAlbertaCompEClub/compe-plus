@@ -1,18 +1,22 @@
+import { render } from '@testing-library/react';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
-import { useStudentDispatch, useStudentSelector } from '../../redux/substores/student/studentHooks';
-import { StudentState } from '../../redux/substores/student/studentStore';
-import ResumeReview from './ResumeReview';
-import ResumeList from './resumeReview/ResumeList';
-import UploadResume from './resumeReview/UploadResume';
+import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
+import { StudentState } from '../../../redux/substores/student/studentStore';
+import getMyResumeReviews from '../../../redux/substores/student/thunks/getMyResumeReviews';
+import NoResumes from './NoResumes';
+import ResumeList from './ResumeList';
 
-jest.mock('../../redux/substores/student/studentHooks');
+jest.mock('../../../redux/substores/student/studentHooks');
 const useStudentDispatchMock = mocked(useStudentDispatch, true);
 const useStudentSelectorMock = mocked(useStudentSelector, true);
 
-describe('StudentResumeReview', () => {
+jest.mock('../../../redux/substores/student/thunks/getMyResumeReviews');
+const getMyResumeReviewsMock = mocked(getMyResumeReviews, true);
+
+describe('StudentResumeList', () => {
     const dispatchMock = jest.fn();
     let studentStateMock: StudentState;
 
@@ -33,19 +37,16 @@ describe('StudentResumeReview', () => {
         useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
     });
 
-    it('renders correctly for list', () => {
+    it('renders correctly for no resumes', () => {
         useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
 
-        const result = shallow(<ResumeReview />);
-        expect(result.find(ResumeList)).toHaveLength(1);
+        const result = shallow(<ResumeList />);
+        expect(result.find(NoResumes)).toHaveLength(1);
     });
 
-    it('renders correctly for upload', () => {
-        studentStateMock.resumeReview.isUploading = true;
+    it('calls getMyResumeReviews', () => {
+        render(<ResumeList />);
 
-        useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
-
-        const result = shallow(<ResumeReview />);
-        expect(result.find(UploadResume)).toHaveLength(1);
+        expect(getMyResumeReviewsMock).toBeCalled();
     });
 });
