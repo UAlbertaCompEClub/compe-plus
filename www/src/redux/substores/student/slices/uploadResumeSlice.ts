@@ -12,10 +12,14 @@ const initialState: UploadResumeState = {
     isLoading: false,
 };
 
-export const resumeReviewSlice = createSlice({
+export const uploadResumeSlice = createSlice({
     name: 'resumeReview/upload',
     initialState,
-    reducers: {},
+    reducers: {
+        resetUploadResume: (state) => {
+            state = initialState;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(initiateResumeReview.pending, (state) => {
             state.isLoading = true;
@@ -30,4 +34,6 @@ export const resumeReviewSlice = createSlice({
     },
 });
 
-export default resumeReviewSlice.reducer;
+export const { resetUploadResume } = uploadResumeSlice.actions;
+
+export default uploadResumeSlice.reducer;
