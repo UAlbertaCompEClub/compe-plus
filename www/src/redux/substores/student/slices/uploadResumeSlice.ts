@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import initiateResumeReview from '../thunks/initiateResumeReview';
 
@@ -19,6 +19,9 @@ export const uploadResumeSlice = createSlice({
         resetUploadResume: (state) => {
             state = initialState;
         },
+        setDocument: (state, action: PayloadAction<string>) => {
+            state.document = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(initiateResumeReview.pending, (state) => {
@@ -34,6 +37,6 @@ export const uploadResumeSlice = createSlice({
     },
 });
 
-export const { resetUploadResume } = uploadResumeSlice.actions;
+export const { setDocument, resetUploadResume } = uploadResumeSlice.actions;
 
 export default uploadResumeSlice.reducer;

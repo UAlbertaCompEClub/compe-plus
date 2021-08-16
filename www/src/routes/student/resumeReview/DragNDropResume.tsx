@@ -1,9 +1,11 @@
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { useAppDispatch } from '../../../redux/hooks';
 import { AppDispatch } from '../../../redux/store';
+import { resetUploadResume, setDocument } from '../../../redux/substores/student/slices/uploadResumeSlice';
+import { arrayBufferToBase64 } from '../../../util/helpers';
 
 const handleOnFileSelected = async (dispatch: AppDispatch, files?: FileList | null) => {
     // TODO: Improve error handling
@@ -20,13 +22,18 @@ const handleOnFileSelected = async (dispatch: AppDispatch, files?: FileList | nu
         alert('File selected must be pdf');
     }
 
-    // TODO: encode array buffer to base64 and add to redux slice
     const file = await pdfFile.arrayBuffer();
-    console.debug(file.byteLength);
+    dispatch(setDocument(arrayBufferToBase64(file)));
 };
 
 const DragNDropResume: FC = () => {
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetUploadResume());
+        };
+    }, []);
 
     return (
         <Grid container item spacing={4}>
