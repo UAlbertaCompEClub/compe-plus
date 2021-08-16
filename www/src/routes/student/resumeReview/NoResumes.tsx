@@ -2,13 +2,13 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
 import UploadResumeIcon from '../../../assets/add_resume.svg';
-import { UPLOAD_RESUME_REVIEW_ROUTE } from '../../../util/constants';
+import { setIsUploadingResume } from '../../../redux/substores/student/slices/resumeReviewSlice';
+import { useStudentDispatch } from '../../../redux/substores/student/studentHooks';
 
 const NoResumes: React.FC = () => {
-    const history = useHistory();
+    const dispatch = useStudentDispatch();
 
     return (
         <Grid container item spacing={4}>
@@ -19,7 +19,7 @@ const NoResumes: React.FC = () => {
                 <Typography>You have no resumes submitted</Typography>
             </Grid>
             <Grid container item xs={12} justify='center'>
-                <Button variant='contained' color='primary' onClick={() => history.push(UPLOAD_RESUME_REVIEW_ROUTE)}>
+                <Button variant='contained' color='primary' onClick={() => dispatch(setIsUploadingResume(true))}>
                     Submit resume
                 </Button>
             </Grid>
