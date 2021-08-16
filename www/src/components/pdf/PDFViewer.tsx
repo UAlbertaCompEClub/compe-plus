@@ -4,12 +4,17 @@ import { useEffect } from 'react';
 
 import ViewSDKClient from './ViewerSDKClient';
 
-const PDFViewer: FC = () => {
+export type PDFViewerProps = {
+    filePromise: () => Promise<ArrayBuffer>;
+    fileName: string;
+};
+
+const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
     useEffect(() => {
         const viewSDKClient = new ViewSDKClient();
         viewSDKClient.ready().then(() => {
             /* Invoke file preview */
-            viewSDKClient.previewFile('adobe-dc-view', {
+            viewSDKClient.previewFileUsingFilePromise('adobe-dc-view', props.filePromise(), props.fileName, {
                 /* Control the viewer customization. */
                 showAnnotationTools: true,
                 enableFormFilling: true,

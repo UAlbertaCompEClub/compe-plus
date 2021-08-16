@@ -94,7 +94,7 @@ class ViewSDKClient {
         return previewFilePromise;
     }
 
-    previewFileUsingFilePromise(divId: string, filePromise: Promise<void>, fileName: string) {
+    previewFileUsingFilePromise(divId: string, filePromise: Promise<ArrayBuffer>, fileName: string, viewerConfig: any) {
         /* Initialize the AdobeDC View object */
         this.adobeDCView = new window.AdobeDC.View({
             /* Pass your registered client id */
@@ -117,7 +117,7 @@ class ViewSDKClient {
                     fileName: fileName,
                 },
             },
-            {},
+            { viewerConfig },
         );
     }
 
