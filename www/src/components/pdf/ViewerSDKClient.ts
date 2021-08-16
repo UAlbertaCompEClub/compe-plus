@@ -117,7 +117,7 @@ class ViewSDKClient {
                     fileName: fileName,
                 },
             },
-            { viewerConfig },
+            viewerConfig,
         );
     }
 

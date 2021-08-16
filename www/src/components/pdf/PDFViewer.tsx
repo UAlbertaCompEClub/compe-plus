@@ -15,8 +15,8 @@ const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
         const viewSDKClient = new ViewSDKClient();
         viewSDKClient.ready().then(() => {
             viewSDKClient.previewFileUsingFilePromise('adobe-dc-view', props.filePromise(), props.fileName, {
-                showAnnotationTools: true,
-                enableFormFilling: true,
+                showAnnotationTools: false,
+                enableFormFilling: false,
                 showLeftHandPanel: false,
             });
         });
