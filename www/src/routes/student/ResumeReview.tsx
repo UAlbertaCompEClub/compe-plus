@@ -6,7 +6,7 @@ import NoResumes from './resumeReview/NoResumes';
 import UploadResume from './resumeReview/UploadResume';
 
 const ResumeReview: FC = () => {
-    const { path, url } = useRouteMatch();
+    const { path } = useRouteMatch();
 
     return (
         <div style={{ overflow: 'hidden' }}>
