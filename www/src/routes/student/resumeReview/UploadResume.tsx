@@ -1,5 +1,4 @@
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import React, { FC, useEffect } from 'react';
 
 import { resetUploadResume, setDocument } from '../../../redux/substores/student/slices/uploadResumeSlice';
