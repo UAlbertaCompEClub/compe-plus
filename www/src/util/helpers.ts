@@ -5,7 +5,17 @@ function arrayBufferToBase64(buffer: ArrayBuffer): string {
     for (let i = 0; i < len; i++) {
         binary += String.fromCharCode(bytes[i]);
     }
-    return window.btoa(binary);
+    return btoa(binary);
 }
 
-export { arrayBufferToBase64 };
+function base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binary_string = atob(base64);
+    const len = binary_string.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
+
+export { arrayBufferToBase64, base64ToArrayBuffer };
