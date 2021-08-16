@@ -4,21 +4,24 @@ import { useEffect } from 'react';
 
 import ViewSDKClient from './ViewerSDKClient';
 
+type ViewerConfig = {
+    showAnnotationTools: boolean;
+    enableFormFilling: boolean;
+    showLeftHandPanel: boolean;
+};
+
 export type PDFViewerProps = {
     filePromise: () => Promise<ArrayBuffer>;
     fileName: string;
     className: string;
+    viewerConfig?: ViewerConfig;
 };
 
 const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
     useEffect(() => {
         const viewSDKClient = new ViewSDKClient();
         viewSDKClient.ready().then(() => {
-            viewSDKClient.previewFileUsingFilePromise('adobe-dc-view', props.filePromise(), props.fileName, {
-                showAnnotationTools: false,
-                enableFormFilling: false,
-                showLeftHandPanel: false,
-            });
+            viewSDKClient.previewFileUsingFilePromise('adobe-dc-view', props.filePromise(), props.fileName, props.viewerConfig ?? {});
         });
     }, []);
 

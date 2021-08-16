@@ -74,7 +74,12 @@ const UploadResume: FC = () => {
                 <Typography>Ready to upload?</Typography>
             </Grid>
             <Grid container item sm={12} md={8} justify='center'>
-                <PDFViewer fileName='string' filePromise={filePromise} className={classes.pdfContainer} />
+                <PDFViewer
+                    fileName='string'
+                    filePromise={filePromise}
+                    className={classes.pdfContainer}
+                    viewerConfig={{ showAnnotationTools: false, enableFormFilling: false, showLeftHandPanel: false }}
+                />
             </Grid>
             <Grid container item xs={12} justify='center'>
                 <span>
