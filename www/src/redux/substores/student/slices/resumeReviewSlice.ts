@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { ResumeReview } from '../../../../util/serverResponses';
 import getMyResumeReviews from '../thunks/getMyResumeReviews';
 
-type InitialState = {
+type ResumeReviewState = {
     resumeReviews: ResumeReview[];
     isLoading: boolean;
 };
 
-const initialState: InitialState = {
+const initialState: ResumeReviewState = {
     resumeReviews: [],
     isLoading: false,
 };
