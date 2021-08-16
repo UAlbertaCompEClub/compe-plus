@@ -1,22 +1,17 @@
-import { render } from '@testing-library/react';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
+import PDFViewer from '../../../components/pdf/PDFViewer';
 import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
 import { StudentState } from '../../../redux/substores/student/studentStore';
-import getMyResumeReviews from '../../../redux/substores/student/thunks/getMyResumeReviews';
-import NoResumes from './NoResumes';
-import ResumeList from './ResumeList';
+import UploadResume from './UploadResume';
 
 jest.mock('../../../redux/substores/student/studentHooks');
 const useStudentDispatchMock = mocked(useStudentDispatch, true);
 const useStudentSelectorMock = mocked(useStudentSelector, true);
 
-jest.mock('../../../redux/substores/student/thunks/getMyResumeReviews');
-const getMyResumeReviewsMock = mocked(getMyResumeReviews, true);
-
-describe('StudentResumeList', () => {
+describe('UploadResume', () => {
     const dispatchMock = jest.fn();
     let studentStateMock: StudentState;
 
@@ -37,15 +32,20 @@ describe('StudentResumeList', () => {
         useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
     });
 
-    it('renders correctly for no resumes', () => {
-        const result = shallow(<ResumeList />);
+    it('renders correctly for input step', () => {
+        const result = shallow(<UploadResume />);
 
-        expect(result.find(NoResumes)).toHaveLength(1);
+        expect(result.find('input')).toHaveLength(1);
+        expect(result.find('input').prop('type')).toBe('file');
     });
 
-    it('calls getMyResumeReviews', () => {
-        render(<ResumeList />);
+    it('renders correctly for preview step', () => {
+        studentStateMock.uploadResume.document = 'mockbase64encodeddocument';
+        useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
 
-        expect(getMyResumeReviewsMock).toBeCalled();
+        const result = shallow(<UploadResume />);
+
+        expect(result.text()).toContain('Ready to upload?');
+        expect(result.find(PDFViewer)).toHaveLength(1);
     });
 });
