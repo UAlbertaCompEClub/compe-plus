@@ -5,6 +5,7 @@ import { Cancel, CheckCircle } from '@material-ui/icons';
 import React, { FC, useEffect } from 'react';
 
 import PDFViewer from '../../../components/pdf/PDFViewer';
+import { setIsUploadingResume } from '../../../redux/substores/student/slices/resumeReviewSlice';
 import { resetUploadResume, setDocument } from '../../../redux/substores/student/slices/uploadResumeSlice';
 import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
 import { StudentDispatch } from '../../../redux/substores/student/studentStore';
@@ -65,7 +66,7 @@ const UploadResume: FC = () => {
                 <Typography>Ready to upload?</Typography>
                 <PDFViewer fileName='string' filePromise={filePromise} />
                 <span>
-                    <IconButton aria-label='cancel' onClick={() => dispatch(resetUploadResume())}>
+                    <IconButton aria-label='cancel' onClick={() => dispatch(setIsUploadingResume(false))}>
                         <Cancel />
                     </IconButton>
                     <IconButton
