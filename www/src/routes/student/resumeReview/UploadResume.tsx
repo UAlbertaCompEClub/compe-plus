@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Container, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { IconButton, makeStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Cancel, CheckCircle } from '@material-ui/icons';
 import React, { FC, useEffect } from 'react';
