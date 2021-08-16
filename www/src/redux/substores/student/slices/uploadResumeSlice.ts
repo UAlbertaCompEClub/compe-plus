@@ -16,8 +16,8 @@ export const uploadResumeSlice = createSlice({
     name: 'resumeReview/upload',
     initialState,
     reducers: {
-        resetUploadResume: (state) => {
-            state = initialState;
+        resetUploadResume: () => {
+            return initialState;
         },
         setDocument: (state, action: PayloadAction<string>) => {
             state.document = action.payload;
