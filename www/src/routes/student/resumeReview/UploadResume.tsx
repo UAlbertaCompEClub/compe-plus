@@ -20,6 +20,7 @@ const handleOnFileSelected = async (dispatch: StudentDispatch, files?: FileList 
     const pdfFile = files[0];
     if (pdfFile.type !== 'application/pdf') {
         alert('File selected must be pdf');
+        return;
     }
 
     const file = await pdfFile.arrayBuffer();
