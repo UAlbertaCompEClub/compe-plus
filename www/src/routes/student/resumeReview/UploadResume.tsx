@@ -61,10 +61,14 @@ const UploadResume: FC = () => {
     };
 
     return (
-        <Grid container item xs={12} justify='center' style={{ height: '100%' }}>
-            <Container className={classes.uploadContainer}>
+        <Grid container item xs={12} spacing={2} justify='center' className={classes.root}>
+            <Grid container item xs={12} justify='center'>
                 <Typography>Ready to upload?</Typography>
-                <PDFViewer fileName='string' filePromise={filePromise} />
+            </Grid>
+            <Grid container item sm={12} md={8} justify='center'>
+                <PDFViewer fileName='string' filePromise={filePromise} className={classes.pdfContainer} />
+            </Grid>
+            <Grid container item xs={12} justify='center'>
                 <span>
                     <IconButton aria-label='cancel' onClick={() => dispatch(setIsUploadingResume(false))}>
                         <Cancel />
@@ -84,17 +88,17 @@ const UploadResume: FC = () => {
                         <CheckCircle />
                     </IconButton>
                 </span>
-            </Container>
+            </Grid>
         </Grid>
     );
 };
 
 const useStyles = makeStyles({
-    uploadContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
+    root: {
+        height: '100%',
+    },
+    pdfContainer: {
+        minHeight: '60vh',
     },
 });
 

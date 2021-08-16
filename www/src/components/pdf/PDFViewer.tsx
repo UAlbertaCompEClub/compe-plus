@@ -7,6 +7,7 @@ import ViewSDKClient from './ViewerSDKClient';
 export type PDFViewerProps = {
     filePromise: () => Promise<ArrayBuffer>;
     fileName: string;
+    className: string;
 };
 
 const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
@@ -25,7 +26,7 @@ const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
         });
     }, []);
 
-    return <Grid item id='adobe-dc-view' style={{ height: '100%' }} />;
+    return <Grid item id='adobe-dc-view' style={{ height: '100%' }} className={props.className} />;
 };
 
 export default PDFViewer;
