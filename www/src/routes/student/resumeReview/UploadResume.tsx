@@ -42,9 +42,6 @@ const UploadResume: FC = () => {
                 {/* TODO: Replace with react-dropzone */}
                 <input type='file' aria-label='upload-resume' onChange={(e) => handleOnFileSelected(dispatch, e.target.files)} />
             </Grid>
-            <Grid container justify='center' item xs={12}>
-                <Typography>{"All resume's are removed from our database one week after review"}</Typography>
-            </Grid>
         </Grid>
     );
 };
