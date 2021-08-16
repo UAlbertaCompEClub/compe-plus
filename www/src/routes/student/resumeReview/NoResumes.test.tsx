@@ -4,6 +4,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
 import { StudentState } from '../../../redux/substores/student/studentStore';
+import testConstants from '../../../util/testConstants';
 import NoResumes from './NoResumes';
 
 jest.mock('../../../redux/substores/student/studentHooks');
@@ -15,18 +16,7 @@ describe('NoResumes', () => {
     let studentStateMock: StudentState;
 
     beforeEach(() => {
-        studentStateMock = {
-            resumeReview: {
-                resumeReviews: [],
-                isLoading: false,
-                isUploading: false,
-            },
-            uploadResume: {
-                document: null,
-                isLoading: false,
-                isUploadComplete: false,
-            },
-        };
+        studentStateMock = testConstants.studentStateMock;
         useStudentDispatchMock.mockReturnValue(dispatchMock);
         useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
     });

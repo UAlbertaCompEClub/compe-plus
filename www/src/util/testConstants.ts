@@ -33,4 +33,17 @@ const document1: Document = {
     updatedAt: '2021-06-14T06:09:19.373404+00:00',
 };
 
-export default { user1, resumeReview1, document1 };
+const studentStateMock = {
+    resumeReview: {
+        resumeReviews: [],
+        isLoading: false,
+        isUploading: false,
+    },
+    uploadResume: {
+        document: null,
+        isLoading: false,
+        isUploadComplete: false,
+    },
+};
+
+export default { user1, resumeReview1, document1, studentStateMock };
