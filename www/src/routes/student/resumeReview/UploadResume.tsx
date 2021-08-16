@@ -26,7 +26,7 @@ const handleOnFileSelected = async (dispatch: AppDispatch, files?: FileList | nu
     dispatch(setDocument(arrayBufferToBase64(file)));
 };
 
-const DragNDropResume: FC = () => {
+const UploadResume: FC = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -48,4 +48,4 @@ const DragNDropResume: FC = () => {
     );
 };
 
-export default DragNDropResume;
+export default UploadResume;
