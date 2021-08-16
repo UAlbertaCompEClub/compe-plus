@@ -1,4 +1,6 @@
+import { Container, IconButton, makeStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import { Cancel, CheckCircle } from '@material-ui/icons';
 import React, { FC, useEffect } from 'react';
 
 import PDFViewer from '../../../components/pdf/PDFViewer';
@@ -28,6 +30,8 @@ const handleOnFileSelected = async (dispatch: StudentDispatch, files?: FileList 
 };
 
 const UploadResume: FC = () => {
+    const classes = useStyles();
+
     const dispatch = useStudentDispatch();
 
     const { document } = useStudentSelector((state) => state.uploadResume);
@@ -52,10 +56,30 @@ const UploadResume: FC = () => {
     };
 
     return (
-        <Grid container item xs={12}>
-            <PDFViewer fileName='string' filePromise={filePromise} />
+        <Grid container item xs={12} justify='center'>
+            <Container className={classes.uploadContainer}>
+                <Typography>Ready to upload?</Typography>
+                <PDFViewer fileName='string' filePromise={filePromise} />
+                <span>
+                    <IconButton aria-label='cancel'>
+                        <Cancel />
+                    </IconButton>
+                    <IconButton aria-label='confirm'>
+                        <CheckCircle />
+                    </IconButton>
+                </span>
+            </Container>
         </Grid>
     );
 };
+
+const useStyles = makeStyles({
+    uploadContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+});
 
 export default UploadResume;
