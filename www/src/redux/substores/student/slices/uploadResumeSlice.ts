@@ -5,11 +5,13 @@ import initiateResumeReview from '../thunks/initiateResumeReview';
 type UploadResumeState = {
     document: string | null;
     isLoading: boolean;
+    isUploadComplete: boolean | null;
 };
 
 const initialState: UploadResumeState = {
     document: null,
     isLoading: false,
+    isUploadComplete: null,
 };
 
 export const uploadResumeSlice = createSlice({
@@ -33,6 +35,7 @@ export const uploadResumeSlice = createSlice({
         });
         builder.addCase(initiateResumeReview.fulfilled, (state) => {
             state.isLoading = false;
+            state.isUploadComplete = true;
         });
     },
 });

@@ -36,13 +36,21 @@ const UploadResume: FC = () => {
     const classes = useStyles();
     const dispatch = useStudentDispatch();
     const { user, getAccessTokenSilently } = useAuth0();
-    const { document, isLoading } = useStudentSelector((state) => state.uploadResume);
+    const { document, isLoading, isUploadComplete } = useStudentSelector((state) => state.uploadResume);
 
     useEffect(() => {
+        // Reset when user revisits this page
         return () => {
             dispatch(resetUploadResume());
         };
     }, []);
+
+    useEffect(() => {
+        // Redirect back to resume review list once upload is complete
+        if (isUploadComplete) {
+            dispatch(setIsUploadingResume(false));
+        }
+    }, [dispatch, isUploadComplete]);
 
     if (document === null) {
         return (
