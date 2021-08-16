@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { mocked } from 'ts-jest/utils';
 
 import postWithToken from '../../util/auth0/postWithToken';
-import { users } from '../../util/endpoints';
+import { postUsers } from '../../util/endpoints';
 import { WrappedUser } from '../../util/serverResponses';
 import tc from '../../util/testConstants';
 import { registerUser } from './registerUser';
@@ -27,7 +27,7 @@ it('returns the user if the registration succeeds', async () => {
         tokenAcquirer: getTokenSilentlyMock,
     });
 
-    expect(postWithTokenMock).toBeCalledWith(users, getTokenSilentlyMock, [], userInfo);
+    expect(postWithTokenMock).toBeCalledWith(postUsers, getTokenSilentlyMock, [], userInfo);
     expect(result).toStrictEqual({ user: tc.user1 });
 });
 
@@ -41,6 +41,6 @@ it('null if the registration fails', async () => {
         tokenAcquirer: getTokenSilentlyMock,
     });
 
-    expect(postWithTokenMock).toBeCalledWith(users, getTokenSilentlyMock, [], userInfo);
+    expect(postWithTokenMock).toBeCalledWith(postUsers, getTokenSilentlyMock, [], userInfo);
     expect(result).toBe(null);
 });

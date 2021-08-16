@@ -155,14 +155,10 @@ function jsonParser(): ErrHandledMiddleware {
  */
 function customizedCors(): Middleware {
     const allowedOrigins = config.corsAllowedOrigins;
+    const allowedOriginsRegExp = allowedOrigins.map((allowedOrigin) => new RegExp(allowedOrigin.replace('*', '[\\w-]*')));
 
     return cors({
-        origin: (origin, callback) => {
-            if (allowedOrigins.some((allowedOrigin) => allowedOrigin === origin)) {
-                callback(null, true);
-            }
-            callback(null);
-        },
+        origin: allowedOriginsRegExp,
     });
 }
 

@@ -86,7 +86,7 @@ describe('App', () => {
 
         render(withAuth0(<App />, auth0State));
 
-        const componentsWithRegistrationText = screen.getAllByText('Registration page');
+        const componentsWithRegistrationText = screen.getAllByText('Registration');
         expect(componentsWithRegistrationText[0]).toBeInTheDocument();
     });
 });
