@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { mocked } from 'ts-jest/utils';
 
 import fetchWithToken from '../../util/auth0/fetchWithToken';
-import { me } from '../../util/endpoints';
+import { getMe } from '../../util/endpoints';
 import { WrappedUser } from '../../util/serverResponses';
 import tc from '../../util/testConstants';
 import { checkUserRegistration } from './checkUserRegistration';
@@ -22,7 +22,7 @@ it('returns the user if the user exists', async () => {
 
     const result = await checkUserRegistration(getTokenSilentlyMock);
 
-    expect(fetchWithTokenMock).toBeCalledWith(me, getTokenSilentlyMock);
+    expect(fetchWithTokenMock).toBeCalledWith(getMe, getTokenSilentlyMock);
     expect(result).toStrictEqual({ user: tc.user1 });
 });
 
@@ -31,6 +31,6 @@ it('null if the user does not exist (server returns 404)', async () => {
 
     const result = await checkUserRegistration(getTokenSilentlyMock);
 
-    expect(fetchWithTokenMock).toBeCalledWith(me, getTokenSilentlyMock);
+    expect(fetchWithTokenMock).toBeCalledWith(getMe, getTokenSilentlyMock);
     expect(result).toBe(null);
 });
