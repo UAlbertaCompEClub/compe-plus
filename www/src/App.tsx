@@ -57,11 +57,9 @@ const getContentByRole = (role: string) => {
 };
 
 const App: FC = () => {
-    const history = useHistory();
-
     const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading } = useAuth0();
 
-    const { currentRole, hasRegistered, isLoading } = useAppSelector((state) => state.user);
+    const { currentRole, isLoading } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
 
     const content = getContentByRole(currentRole);
@@ -72,15 +70,10 @@ const App: FC = () => {
         }
     }, [isAuthenticated]);
 
-    if (hasRegistered === false) {
-        // Redirect to registration page if user hasn't registered
-        history.push(REGISTER_ROUTE);
-    }
-
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <LoadingOverlay open={isLoading || isAuth0Loading} />
+            <LoadingOverlay open={isLoading || isAuth0Loading || false} />
             <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
