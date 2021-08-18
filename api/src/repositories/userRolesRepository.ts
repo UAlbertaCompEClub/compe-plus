@@ -5,9 +5,8 @@ import type * as s from 'zapatos/schema';
 import pool from '../util/pool';
 
 /**
- * Get roles associated to user. Filter as necessary.
+ * Get roles associated to user.
  * @param id User id.
- * @returns List of users appropriately filtered.
  */
 const get = async (id: string): Promise<s.user_roles.JSONSelectable[]> => {
     const where: s.user_roles.Whereable = {
