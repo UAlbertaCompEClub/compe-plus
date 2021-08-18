@@ -22,6 +22,7 @@ export const resumeReviewSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(getMyResumeReviews.fulfilled, (state, action) => {
+            state.isLoading = false;
             state.resumeReviews = action.payload.resumeReviews;
         });
     },
