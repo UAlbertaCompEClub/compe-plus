@@ -25,6 +25,10 @@ export type ResumeReview = {
     updatedAt: string;
 };
 
+export type WrappedResumeReviews = {
+    resumeReviews: ResumeReview[];
+};
+
 export type Document = {
     id: string;
     note: string;
