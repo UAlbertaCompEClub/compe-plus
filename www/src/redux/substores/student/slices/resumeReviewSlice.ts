@@ -3,28 +3,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResumeReview } from '../../../../util/serverResponses';
 import getMyResumeReviews from '../thunks/getMyResumeReviews';
 
-type InitialState = {
+type ResumeReviewState = {
     resumeReviews: ResumeReview[];
     isLoading: boolean;
     isUploading: boolean;
 };
 
-const initialState: InitialState = {
-    resumeReviews: [],
-    isLoading: false,
-    isUploading: false,
-};
-
-import { ResumeReview } from '../../../../util/serverResponses';
-import getMyResumeReviews from '../thunks/getMyResumeReviews';
-
-type ResumeReviewState = {
-    resumeReviews: ResumeReview[];
-    isLoading: boolean;
-};
-
 const initialState: ResumeReviewState = {
     resumeReviews: [],
+    isUploading: false,
     isLoading: false,
 };
 

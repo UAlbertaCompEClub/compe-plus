@@ -40,13 +40,14 @@ export const userSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(registerUser.fulfilled, (state, action) => {
+            state.isLoading = false;
+
             const isSuccess = action.payload !== null;
             if (isSuccess) {
                 state.hasRegistered = true;
             } else {
                 // TODO: Display error message
             }
-            state.isLoading = false;
         });
         builder.addCase(checkUserRegistration.pending, (state) => {
             state.isLoading = true;

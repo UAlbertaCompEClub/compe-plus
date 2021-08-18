@@ -8,18 +8,13 @@ import ResumeList from './resumeReview/ResumeList';
 import UploadResume from './resumeReview/UploadResume';
 
 const ResumeReview: FC = () => {
-    const { resumeReviews, isUploading } = useStudentSelector((state) => state.resumeReview);
+    const { isUploading } = useStudentSelector((state) => state.resumeReview);
     const { getAccessTokenSilently } = useAuth0();
     const dispatch = useStudentDispatch();
 
     useEffect(() => {
         dispatch(getMyResumeReviews({ tokenAcquirer: getAccessTokenSilently }));
     }, []);
-
-    useEffect(() => {
-        // TODO: display upload button if there are no resume reviews
-        console.debug(resumeReviews);
-    }, [resumeReviews]);
 
     return (
         <div style={{ overflow: 'hidden' }}>
