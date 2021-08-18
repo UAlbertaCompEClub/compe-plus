@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import { useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, useHistory } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
@@ -13,7 +13,6 @@ import volunteerStore from './redux/substores/volunteeer/volunteerStore';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import MobileLanding from './routes/MobileLanding';
 import StudentApp from './routes/Student';
-import Register from './routes/student/Register';
 import UnauthenticatedApp from './routes/Unauthenticated';
 import theme from './styles/theme';
 import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, REGISTER_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
@@ -57,6 +56,8 @@ const getContentByRole = (role: string) => {
 };
 
 const App: FC = () => {
+    const history = useHistory();
+
     const currentRole = useAppSelector((state) => state.user.currentRole);
     const isUserRegistered = useAppSelector((state) => state.user.hasRegistered);
     const isLoadingUser = useAppSelector((state) => state.user.isLoading);
@@ -71,17 +72,17 @@ const App: FC = () => {
         }
     }, [isAuthenticated]);
 
+    if (!isLoadingUser && isUserRegistered === false) {
+        history.push(REGISTER_ROUTE);
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
-                    <BrowserView renderWithFragment>
-                        <Register />
-                        {content}
-                        {!isLoadingUser && isUserRegistered === false && <Redirect to={REGISTER_ROUTE} />}
-                    </BrowserView>
+                    <BrowserView renderWithFragment>{content}</BrowserView>
                     <MobileView>
                         <MobileLanding />
                     </MobileView>
