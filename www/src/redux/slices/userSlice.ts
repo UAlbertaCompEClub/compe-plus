@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import checkUserRegistration from '../thunks/checkUserRegistration';
-import registerUser, { UserInfo } from '../thunks/registerUser';
 
 type UserState = {
     roles: string[];
@@ -9,7 +8,6 @@ type UserState = {
     hasRegistered: boolean | null;
     isEditRolesDialogOpen: boolean;
     isLoading: boolean;
-    info: UserInfo | null;
 };
 
 const initialState: UserState = {
@@ -18,7 +16,6 @@ const initialState: UserState = {
     hasRegistered: null,
     isEditRolesDialogOpen: false,
     isLoading: false,
-    info: null,
 };
 
 export const userSlice = createSlice({
