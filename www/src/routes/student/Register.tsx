@@ -1,14 +1,14 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Button, Grid, Typography } from '@material-ui/core';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import LoadingOverlay from '../../components/LoadingOverlay';
 import StyledSelect from '../../components/StyledSelect';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { initializeUserInfo, setProgram, setYear } from '../../redux/slices/registerUserSlice';
+import { setProgram, setYear } from '../../redux/slices/registerUserSlice';
 import checkUserRegistration from '../../redux/thunks/checkUserRegistration';
-import registerUser, { UserInfo } from '../../redux/thunks/registerUser';
+import registerUser from '../../redux/thunks/registerUser';
 
 const Registration: FC = () => {
     const history = useHistory();
@@ -16,7 +16,7 @@ const Registration: FC = () => {
     const { user, getAccessTokenSilently } = useAuth0();
 
     const { hasRegistered } = useAppSelector((state) => state.user);
-    const { userInfo, isLoading } = useAppSelector((state) => state.registerUser);
+    const { year, program, isLoading } = useAppSelector((state) => state.registerUser);
 
     const dispatch = useAppDispatch();
 
@@ -27,7 +27,7 @@ const Registration: FC = () => {
     }
 
     const handleRegisterUser = () => {
-        if (userInfo === null || userInfo.year === undefined || userInfo.program === undefined) {
+        if (year <= 0 || program === '' || user === undefined) {
             alert('Form is incomplete, please complete the form');
             return;
         }
@@ -35,23 +35,19 @@ const Registration: FC = () => {
         dispatch(
             registerUser({
                 tokenAcquirer: getAccessTokenSilently,
-                userInfo: userInfo as UserInfo,
+                userInfo: {
+                    ccid: user.email?.split('@')[0] ?? '',
+                    email: user.email ?? '',
+                    familyName: user.family_name ?? '',
+                    fullName: user?.name ?? '',
+                    givenName: user?.given_name ?? '',
+                    id: user?.sub ?? '',
+                    year,
+                    program,
+                },
             }),
         );
     };
-
-    useEffect(() => {
-        dispatch(
-            initializeUserInfo({
-                ccid: user?.email?.split('@')[0] ?? '',
-                email: user?.email ?? '',
-                familyName: user?.family_name ?? '',
-                fullName: user?.name ?? '',
-                givenName: user?.given_name ?? '',
-                id: user?.sub ?? '',
-            }),
-        );
-    }, [user, dispatch]);
 
     const yearChoices = ['1', '2', '3', '4', '5', '6+'];
     const programChoices = ['Computer Co-op', 'Software Co-op', 'Nano Co-op', 'Computer Trad', 'Nano Trad', ' Other'];
@@ -67,8 +63,8 @@ const Registration: FC = () => {
                 <Grid container item spacing={4}>
                     <Grid container item xs={12} justify='center'>
                         <form>
-                            <StyledSelect title='Year' value={userInfo?.year?.toString() ?? ''} onChange={(newYear) => dispatch(setYear(parseInt(newYear)))} choices={yearChoices} />
-                            <StyledSelect title='Speciality' value={userInfo?.program ?? ''} onChange={(newProgram) => dispatch(setProgram(newProgram))} choices={programChoices} />
+                            <StyledSelect title='Year' value={year.toString()} onChange={(newYear) => dispatch(setYear(parseInt(newYear)))} choices={yearChoices} />
+                            <StyledSelect title='Speciality' value={program} onChange={(newProgram) => dispatch(setProgram(newProgram))} choices={programChoices} />
                             <Button onClick={handleRegisterUser}>Submit</Button>
                         </form>
                     </Grid>

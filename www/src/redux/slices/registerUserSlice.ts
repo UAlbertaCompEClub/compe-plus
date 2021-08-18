@@ -1,15 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import registerUser, { UserInfo } from '../thunks/registerUser';
+import registerUser from '../thunks/registerUser';
 
 type RegisterUserState = {
-    userInfo: Partial<UserInfo>;
+    year: number;
+    program: string;
     registrationSuccess: boolean | null;
     isLoading: boolean;
 };
 
 const initialState: RegisterUserState = {
-    userInfo: {},
+    year: 0,
+    program: '',
     registrationSuccess: null,
     isLoading: false,
 };
@@ -18,14 +20,11 @@ export const registerUserSlice = createSlice({
     name: 'registerUser',
     initialState,
     reducers: {
-        initializeUserInfo(state, action: PayloadAction<Omit<UserInfo, 'year' | 'program'>>) {
-            state.userInfo = action.payload;
-        },
         setYear(state, action: PayloadAction<number>) {
-            state.userInfo.year = action.payload;
+            state.year = action.payload;
         },
         setProgram(state, action: PayloadAction<string>) {
-            state.userInfo.program = action.payload;
+            state.program = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -39,6 +38,6 @@ export const registerUserSlice = createSlice({
     },
 });
 
-export const { initializeUserInfo, setYear, setProgram } = registerUserSlice.actions;
+export const { setYear, setProgram } = registerUserSlice.actions;
 
 export default registerUserSlice.reducer;
