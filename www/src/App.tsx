@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, useHistory } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
+import LoadingOverlay from './components/LoadingOverlay';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import adminStore from './redux/substores/admin/adminStore';
 import volunteerStore from './redux/substores/volunteeer/volunteerStore';
@@ -58,12 +59,11 @@ const getContentByRole = (role: string) => {
 const App: FC = () => {
     const history = useHistory();
 
-    const currentRole = useAppSelector((state) => state.user.currentRole);
-    const isUserRegistered = useAppSelector((state) => state.user.hasRegistered);
-    const isLoadingUser = useAppSelector((state) => state.user.isLoading);
+    const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading } = useAuth0();
 
-    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { currentRole, hasRegistered, isLoading } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
+
     const content = getContentByRole(currentRole);
 
     useEffect(() => {
@@ -72,13 +72,15 @@ const App: FC = () => {
         }
     }, [isAuthenticated]);
 
-    if (!isLoadingUser && isUserRegistered === false) {
+    if (hasRegistered === false) {
+        // Redirect to registration page if user hasn't registered
         history.push(REGISTER_ROUTE);
     }
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
+            <LoadingOverlay open={isLoading || isAuth0Loading} />
             <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
