@@ -7,6 +7,7 @@ import { mocked } from 'ts-jest/utils';
 import { useAppDispatch } from '../../redux/hooks';
 import { openEditRolesDialog } from '../../redux/slices/userSlice';
 import { AppDispatch } from '../../redux/store';
+import testConstants from '../../util/testConstants';
 import UserProfile from './UserProfile';
 
 jest.mock('../../redux/hooks');
@@ -26,7 +27,18 @@ describe('UserProfile', () => {
         logoutMock = jest.fn();
         useAuth0Mock.mockReturnValue({
             logout: logoutMock,
+            user: {
+                email: testConstants.user1.email,
+            },
         } as unknown as Auth0ContextInterface<User>);
+    });
+
+    it("extracts the correct ccid portion from the user's email", () => {
+        const result = shallow(<UserProfile />);
+
+        const ccidMenuItem = result.findWhere((component) => component.text() === `Signed in as: ${testConstants.user1.ccid}`).first();
+
+        expect(ccidMenuItem).not.toBeNull();
     });
 
     it('opens the edit roles dialog when the settings option is clicked', () => {
