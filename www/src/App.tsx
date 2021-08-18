@@ -14,7 +14,6 @@ import volunteerStore from './redux/substores/volunteeer/volunteerStore';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import MobileLanding from './routes/MobileLanding';
 import StudentApp from './routes/Student';
-import Register from './routes/student/Register';
 import UnauthenticatedApp from './routes/Unauthenticated';
 import theme from './styles/theme';
 import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, REGISTER_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
@@ -79,7 +78,6 @@ const App: FC = () => {
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
                     <BrowserView renderWithFragment>
-                        <Register />
                         {content}
                         {!isLoadingUser && isUserRegistered === false && <Redirect to={REGISTER_ROUTE} />}
                         <EditRolesDialog />

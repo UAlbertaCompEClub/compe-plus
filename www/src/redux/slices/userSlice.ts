@@ -23,11 +23,7 @@ const initialState: UserState = {
 
 export const userSlice = createSlice({
     name: 'user',
-    initialState: {
-        roles: [],
-        currentRole: '',
-        isEditRolesDialogOpen: false,
-    },
+    initialState,
     reducers: {
         setCurrentRole(state, action: PayloadAction<string>) {
             state.currentRole = action.payload;
@@ -38,6 +34,27 @@ export const userSlice = createSlice({
         closeEditRolesDialog(state) {
             state.isEditRolesDialogOpen = false;
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(registerUser.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(registerUser.fulfilled, (state, action) => {
+            const isSuccess = action.payload !== null;
+            if (isSuccess) {
+                state.hasRegistered = true;
+            } else {
+                // TODO: Display error message
+            }
+            state.isLoading = false;
+        });
+        builder.addCase(checkUserRegistration.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(checkUserRegistration.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.hasRegistered = action.payload !== null;
+        });
     },
 });
 

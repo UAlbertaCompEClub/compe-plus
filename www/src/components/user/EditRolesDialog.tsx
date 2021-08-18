@@ -1,4 +1,4 @@
-import { Button, DialogContent } from '@material-ui/core';
+import { DialogContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { DialogContentText } from '@material-ui/core';
 import { Switch } from '@material-ui/core';
@@ -7,39 +7,28 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import React, { FC } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { closeEditRolesDialog, openEditRolesDialog, setCurrentRole } from '../../redux/slices/userSlice';
+import { closeEditRolesDialog, setCurrentRole } from '../../redux/slices/userSlice';
 import theme from '../../styles/theme';
 
 const EditRolesDialog: FC = () => {
     const dispatch = useAppDispatch();
 
-    const isEditRolesDialogOpen = useAppSelector((state) => state.user.isEditRolesDialogOpen);
+    const { isEditRolesDialogOpen, currentRole } = useAppSelector((state) => state.user);
 
-    const [isStudent, setIsStudent] = useState(false);
-    const [isVolunteer, setIsVolunteer] = useState(false);
     const classes = useStyles();
 
     return (
-        <>
-            <Dialog onClose={() => dispatch(closeEditRolesDialog())} aria-labelledby='simple-dialog-title' open={isEditRolesDialogOpen}>
-                <DialogTitle id='simple-dialog-title'>Edit Roles</DialogTitle>
-                <DialogContent>
-                    <DialogContentText className={classes.dialog_content} id='simple-dialog-title'>
-                        Resume Reviewer
-                    </DialogContentText>
-                </DialogContent>
-                <Switch checked={isStudent} onChange={(e) => setIsStudent(e.target.checked)} inputProps={{ 'aria-label': 'Toggle reviewer role' }} />
-                <DialogContent>
-                    <DialogContentText className={classes.dialog_content} id='simple-dialog-title'>
-                        Interviwer
-                    </DialogContentText>
-                </DialogContent>
-                <Switch checked={isVolunteer} onChange={(e) => setIsVolunteer(e.target.checked)} inputProps={{ 'aria-label': 'Toggle interviewer role' }} />
-            </Dialog>
-            <Button variant='contained' onClick={() => dispatch(openEditRolesDialog())}>
-                Edit Roles
-            </Button>
-        </>
+        <Dialog onClose={() => dispatch(closeEditRolesDialog())} open={isEditRolesDialogOpen}>
+            <DialogTitle>Edit Roles</DialogTitle>
+            <DialogContent>
+                <DialogContentText className={classes.dialog_content}>Resume Reviewer</DialogContentText>
+            </DialogContent>
+            <Switch checked={currentRole === 'student'} onChange={() => dispatch(setCurrentRole('student'))} inputProps={{ 'aria-label': 'Toggle student role' }} />
+            <DialogContent>
+                <DialogContentText className={classes.dialog_content}>Interviwer</DialogContentText>
+            </DialogContent>
+            <Switch checked={currentRole === 'volunteer'} onChange={() => dispatch(setCurrentRole('volunteer'))} inputProps={{ 'aria-label': 'Toggle volunteer role' }} />
+        </Dialog>
     );
 };
 const useStyles = makeStyles(() => ({
