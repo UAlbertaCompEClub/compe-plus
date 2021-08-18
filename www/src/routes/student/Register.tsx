@@ -50,7 +50,7 @@ const Registration: FC = () => {
         );
     }, []);
 
-    const yearChoices = ['1', '2', '3', '4', '5', '5+'];
+    const yearChoices = ['1', '2', '3', '4', '5', '6+'];
     const programChoices = ['Computer Co-op', 'Software Co-op', 'Nano Co-op', 'Computer Trad', 'Nano Trad', ' Other'];
 
     return (
