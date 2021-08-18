@@ -3,6 +3,7 @@ import { mocked } from 'ts-jest/utils';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
 import * as userRepository from '../../repositories/userRepository';
+import { toCamelCase } from '../../util/helper';
 import tc from '../../util/testConstants';
 import postResumeReview from './postResumeReview';
 
@@ -54,5 +55,5 @@ it('works on happy path', async () => {
     expect(mockResumeReviewRepository.create).toBeCalledWith('67e8ff47-8c31-4725-885c-e0e40455e7f5', 'seeking_reviewer');
     expect(next).not.toBeCalled();
     expect(res.status).toBeCalledWith(201);
-    expect(res.json).toBeCalledWith({ resumeReview: tc.resumeReview1 });
+    expect(res.json).toBeCalledWith({ resumeReview: toCamelCase(tc.resumeReview1) });
 });

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { mocked } from 'ts-jest/utils';
 
 import * as userRepository from '../../repositories/userRepository';
+import { toCamelCase } from '../../util/helper';
 import testConstants from '../../util/testConstants';
 import getMe from './getMe';
 
@@ -39,5 +40,5 @@ it('works on happy path', async () => {
     await getMe(req as Request<Params>, res as Response, next);
 
     expect(res.status).toBeCalledWith(200);
-    expect(res.json).toBeCalledWith({ user: testConstants.user1 });
+    expect(res.json).toBeCalledWith({ user: toCamelCase(testConstants.user1) });
 });

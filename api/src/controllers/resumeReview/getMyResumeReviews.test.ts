@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { mocked } from 'ts-jest/utils';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
+import { manyToCamelCase } from '../../util/helper';
 import tc from '../../util/testConstants';
 import getMyResumeReviews from './getMyResumeReviews';
 
@@ -58,5 +59,5 @@ it('works on the happy path where reviewee matches', async () => {
     expect(mockResumeReviewRepository.get).toBeCalledWith(undefined, tc.resumeReview1.reviewee_id, '52c2cbdc-e0a8-48e7-9302-92a37e016ab0', 'seeking_reviewer');
     expect(next).not.toBeCalled();
     expect(res.status).toBeCalledWith(200);
-    expect(res.json).toBeCalledWith({ resumeReviews: [tc.resumeReview1] });
+    expect(res.json).toBeCalledWith({ resumeReviews: manyToCamelCase([tc.resumeReview1]) });
 });
