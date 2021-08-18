@@ -73,7 +73,7 @@ const App: FC = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <LoadingOverlay open={isLoading || isAuth0Loading || false} />
+            <LoadingOverlay open={isLoading || isAuth0Loading} />
             <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />

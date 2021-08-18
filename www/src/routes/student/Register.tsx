@@ -3,6 +3,7 @@ import { Button, Grid, Typography } from '@material-ui/core';
 import React, { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import LoadingOverlay from '../../components/LoadingOverlay';
 import StyledSelect from '../../components/StyledSelect';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { initializeUserInfo, setProgram, setYear } from '../../redux/slices/registerUserSlice';
@@ -15,7 +16,7 @@ const Registration: FC = () => {
     const { user, getAccessTokenSilently } = useAuth0();
 
     const { hasRegistered } = useAppSelector((state) => state.user);
-    const { userInfo } = useAppSelector((state) => state.registerUser);
+    const { userInfo, isLoading } = useAppSelector((state) => state.registerUser);
 
     const dispatch = useAppDispatch();
 
@@ -57,6 +58,7 @@ const Registration: FC = () => {
 
     return (
         <div style={{ overflow: 'hidden' }}>
+            <LoadingOverlay open={isLoading} />
             <Grid container justify='center' alignItems='center' spacing={8} style={{ marginTop: '10px', minHeight: '75vh' }}>
                 <Grid container item justify='center'>
                     <Typography variant='h1'>Registration</Typography>
