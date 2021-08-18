@@ -21,6 +21,10 @@ beforeEach(() => {
     next = jest.fn();
 });
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
 it('rejects improperly encoded reviewee for reviewee', async () => {
     req.body = { reviewee: '%E0%A4%A' };
 

@@ -39,4 +39,27 @@ const create = async (reviewee: string, state: s.resume_review_state): Promise<s
     return db.insert('resume_reviews', { reviewee_id: reviewee, state: state }).run(pool);
 };
 
-export { create, get };
+/**
+ * Update a resume review.
+ * @param id Id of resume review to update.
+ * @param reviewee Value to update reviewee to.
+ * @param reviewer Value to update reviewer to.
+ * @param state Value to update state to.
+ * @returns Updated resume review.
+ */
+const update = async (id: string, reviewee?: string, reviewer?: string, state?: s.resume_review_state): Promise<s.resume_reviews.JSONSelectable[]> => {
+    const where: s.resume_reviews.Whereable = { id: dc.eq(id) };
+    const colOptions: s.resume_reviews.Updatable = {};
+    if (reviewee !== undefined && reviewee !== null) {
+        colOptions.reviewee_id = reviewee;
+    }
+    if (reviewer !== undefined && reviewer !== null) {
+        colOptions.reviewer_id = reviewer;
+    }
+    if (state !== undefined && state !== null) {
+        colOptions.state = state;
+    }
+    return db.update('resume_reviews', colOptions, where).run(pool);
+};
+
+export { create, get, update };

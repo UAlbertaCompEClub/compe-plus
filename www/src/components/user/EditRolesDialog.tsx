@@ -1,14 +1,13 @@
-import { DialogContent } from '@material-ui/core';
+import { Button, DialogContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { DialogContentText } from '@material-ui/core';
 import { Switch } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { closeEditRolesDialog, openEditRolesDialog } from '../../redux/slices/userSlice';
+import { closeEditRolesDialog, openEditRolesDialog, setCurrentRole } from '../../redux/slices/userSlice';
 import theme from '../../styles/theme';
 
 const EditRolesDialog: FC = () => {

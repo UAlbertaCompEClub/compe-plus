@@ -1,20 +1,23 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 import React, { FC } from 'react';
+import { useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import EditRolesDialog from './components/user/EditRolesDialog';
-import { useAppSelector } from './redux/hooks';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 import adminStore from './redux/substores/admin/adminStore';
 import volunteerStore from './redux/substores/volunteeer/volunteerStore';
+import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import MobileLanding from './routes/MobileLanding';
 import StudentApp from './routes/Student';
+import Register from './routes/student/Register';
 import UnauthenticatedApp from './routes/Unauthenticated';
 import theme from './styles/theme';
-import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
+import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, REGISTER_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
 
 const header_sections: Section[] = [
     { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
@@ -47,25 +50,38 @@ const getContentByRole = (role: string) => {
         case 'reviewer':
         case 'interviewer':
             return <VolunteerApp />;
-        default:
+        case 'student':
             return <StudentApp />;
+        default:
+            return <UnauthenticatedApp />;
     }
 };
 
 const App: FC = () => {
     const currentRole = useAppSelector((state) => state.user.currentRole);
+    const isUserRegistered = useAppSelector((state) => state.user.hasRegistered);
+    const isLoadingUser = useAppSelector((state) => state.user.isLoading);
 
-    const { isAuthenticated } = useAuth0();
-    const content = isAuthenticated ? getContentByRole(currentRole) : <UnauthenticatedApp />;
+    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const dispatch = useAppDispatch();
+    const content = getContentByRole(currentRole);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            dispatch(checkUserRegistration(getAccessTokenSilently));
+        }
+    }, [isAuthenticated]);
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Container maxWidth={false} style={{ padding: 0 }}>
+            <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
-                    <BrowserView>
+                    <BrowserView renderWithFragment>
+                        <Register />
                         {content}
+                        {!isLoadingUser && isUserRegistered === false && <Redirect to={REGISTER_ROUTE} />}
                         <EditRolesDialog />
                     </BrowserView>
                     <MobileView>

@@ -2,6 +2,7 @@ import { AsyncValidator as AsyncFluentValidator } from 'fluentvalidation-ts';
 import { validate as uuidValidate } from 'uuid';
 
 import ValidationException from '../exceptions/ValidationException';
+import * as documentRepository from '../repositories/documentRepository';
 import * as resumeReviewRepository from '../repositories/resumeReviewRepository';
 import * as userRepository from '../repositories/userRepository';
 
@@ -132,5 +133,19 @@ const beAValidResumeReview = {
     message: 'Must be a resume review that already exists',
 };
 
-export { beAResumeReviewState, beAValidResumeReview, beAValidUrl, beAValidUser, beAValidUuid, beProperlyBase64Encoded, beProperlyUriEncoded };
+/**
+ * Test whether a document already exists in the database.
+ */
+const beAValidDocument = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        if (field === undefined || field === null) {
+            return false;
+        }
+        const matches = await documentRepository.get(field);
+        return matches.length == 1;
+    },
+    message: 'Must be a document that already exists',
+};
+
+export { beAResumeReviewState, beAValidDocument, beAValidResumeReview, beAValidUrl, beAValidUser, beAValidUuid, beProperlyBase64Encoded, beProperlyUriEncoded };
 export default Validator;
