@@ -22,9 +22,13 @@ export type RegisterUserParameters = {
     tokenAcquirer: TokenAcquirer;
 };
 
-export const registerUser = async ({ userInfo, tokenAcquirer }: RegisterUserParameters): Promise<User | undefined | null> => {
+type PostUserResponse = {
+    user: Omit<User, 'updatedAt' | 'createdAt'>;
+};
+
+export const registerUser = async ({ userInfo, tokenAcquirer }: RegisterUserParameters): Promise<PostUserResponse | undefined | null> => {
     try {
-        const response = await postWithToken<UserInfo, User>(postUsers, tokenAcquirer, [], userInfo);
+        const response = await postWithToken<UserInfo, PostUserResponse>(postUsers, tokenAcquirer, [], userInfo);
         return response?.data;
     } catch (e) {
         return null;

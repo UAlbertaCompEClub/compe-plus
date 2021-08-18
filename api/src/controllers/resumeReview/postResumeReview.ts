@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
+import { CamelCasedProperties } from 'type-fest';
 import type * as s from 'zapatos/schema';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
+import { toCamelCase } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAValidUser, beProperlyUriEncoded } from '../validation';
 
@@ -19,7 +21,7 @@ class ReqBodyValidator extends Validator<ReqBody> {
     }
 }
 
-type ResBody = { resumeReview: s.resume_reviews.JSONSelectable };
+type ResBody = { resumeReview: CamelCasedProperties<s.resume_reviews.JSONSelectable> };
 
 /**
  * Create a new resume review.
@@ -34,7 +36,7 @@ const postResumeReview = controller(async (req: Request<unknown, ResBody, ReqBod
 
     const newResumeReview = await resumeReviewRepository.create(reviewee, 'seeking_reviewer');
 
-    res.status(201).json({ resumeReview: newResumeReview });
+    res.status(201).json({ resumeReview: toCamelCase(newResumeReview) });
 });
 
 export default postResumeReview;

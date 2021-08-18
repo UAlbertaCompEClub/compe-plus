@@ -1,12 +1,25 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Grid, Typography } from '@material-ui/core';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 
-import { useStudentSelector } from '../../redux/substores/student/studentHooks';
+import { useStudentDispatch, useStudentSelector } from '../../redux/substores/student/studentHooks';
+import getMyResumeReviews from '../../redux/substores/student/thunks/getMyResumeReviews';
 import ResumeList from './resumeReview/ResumeList';
 import UploadResume from './resumeReview/UploadResume';
 
 const ResumeReview: FC = () => {
-    const { isUploading } = useStudentSelector((state) => state.resumeReview);
+    const { resumeReviews, isUploading } = useStudentSelector((state) => state.resumeReview);
+    const { getAccessTokenSilently } = useAuth0();
+    const dispatch = useStudentDispatch();
+
+    useEffect(() => {
+        dispatch(getMyResumeReviews({ tokenAcquirer: getAccessTokenSilently }));
+    }, []);
+
+    useEffect(() => {
+        // TODO: display upload button if there are no resume reviews
+        console.debug(resumeReviews);
+    }, [resumeReviews]);
 
     return (
         <div style={{ overflow: 'hidden' }}>

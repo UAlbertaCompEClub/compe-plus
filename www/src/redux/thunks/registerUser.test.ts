@@ -20,7 +20,7 @@ it('returns the user if the registration succeeds', async () => {
     };
     postWithTokenMock.mockResolvedValueOnce(mockResponse as AxiosResponse<WrappedUser>);
 
-    const userInfo = { ...tc.user1, givenName: tc.user1.given_name, familyName: tc.user1.family_name, fullName: tc.user1.full_name };
+    const userInfo = { ...tc.user1, givenName: tc.user1.givenName, familyName: tc.user1.familyName, fullName: tc.user1.fullName };
     const result = await registerUser({
         // TODO: Update once camelcase has been standardized in backend responses
         userInfo,
@@ -34,7 +34,7 @@ it('returns the user if the registration succeeds', async () => {
 it('null if the registration fails', async () => {
     postWithTokenMock.mockRejectedValueOnce({});
 
-    const userInfo = { ...tc.user1, givenName: tc.user1.given_name, familyName: tc.user1.family_name, fullName: tc.user1.full_name };
+    const userInfo = { ...tc.user1, givenName: tc.user1.givenName, familyName: tc.user1.familyName, fullName: tc.user1.fullName };
     const result = await registerUser({
         // TODO: Update once camelcase has been standardized in backend responses
         userInfo,

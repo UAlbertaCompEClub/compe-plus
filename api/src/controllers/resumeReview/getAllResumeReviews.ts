@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
+import { CamelCasedProperties } from 'type-fest';
 import type * as s from 'zapatos/schema';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
-import { decodeQueryToUser } from '../../util/helper';
+import { decodeQueryToUser, manyToCamelCase } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAResumeReviewState, beAValidUuid, beProperlyUriEncoded } from '../validation';
 
@@ -36,7 +37,7 @@ class ReqQueryValidator extends Validator<ReqQuery> {
 }
 
 type ResBody = {
-    resumeReviews: s.resume_reviews.JSONSelectable[];
+    resumeReviews: CamelCasedProperties<s.resume_reviews.JSONSelectable>[];
 };
 
 /**
@@ -54,7 +55,7 @@ const getAllResumeReviews = controller(async (req: Request<unknown, ResBody, unk
 
     const allResumeReviews = await resumeReviewRepository.get(id, reviewee, reviewer, req.query.state);
 
-    res.status(200).json({ resumeReviews: allResumeReviews });
+    res.status(200).json({ resumeReviews: manyToCamelCase(allResumeReviews) });
 });
 
 export default getAllResumeReviews;

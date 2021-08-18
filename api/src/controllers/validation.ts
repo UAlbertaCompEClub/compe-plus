@@ -89,7 +89,7 @@ const beProperlyUriEncoded = {
  * Test whether a field is a valid url.
  */
 const beAValidUrl = {
-    predicate: async (field: string | undefined): Promise<boolean> => {
+    predicate: async (field: string | undefined | null): Promise<boolean> => {
         if (field === undefined || field === null) {
             return false;
         }

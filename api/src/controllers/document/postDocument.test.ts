@@ -6,6 +6,7 @@ import * as documentRepository from '../../repositories/documentRepository';
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
 import * as s3Repository from '../../repositories/s3Repository';
 import * as userRepository from '../../repositories/userRepository';
+import { toCamelCase } from '../../util/helper';
 import testConstants from '../../util/testConstants';
 import postDocument from './postDocument';
 
@@ -144,5 +145,5 @@ it('works on the happy path', async () => {
     await postDocument(req as Request<Params>, res as Response, next);
 
     expect(res.status).toBeCalledWith(201);
-    expect(res.json).toBeCalledWith({ document: testConstants.document1 });
+    expect(res.json).toBeCalledWith({ document: toCamelCase(testConstants.document1) });
 });
