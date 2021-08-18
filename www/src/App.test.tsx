@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import App from './App';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import { RootState } from './redux/store';
+import { AppDispatch, RootState } from './redux/store';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import TokenAcquirer from './util/auth0/TokenAcquirer';
 import { WrappedUser } from './util/serverResponses';
@@ -29,10 +29,14 @@ jest.mock('react-router-dom', () => ({
 
 describe('App', () => {
     let globalStoreMock: RootState;
+    let dispatchMock: jest.MockedFunction<AppDispatch>;
 
     beforeEach(() => {
         setupIntersectionObserverMock();
         globalStoreMock = testConstants.globalStoreMock;
+
+        dispatchMock = jest.fn();
+        useAppDispatchMock.mockReturnValue(dispatchMock);
     });
 
     it.each`
@@ -42,9 +46,6 @@ describe('App', () => {
         ${'interviewer'} | ${'🚧 Work in progress 🚧'} | ${'an interviewer'}
         ${'admin'}       | ${'🚧 Work in progress 🚧'} | ${'an admin'}
     `('renders correctly for $friendlyName', ({ role, containsString }) => {
-        const dispatchMock = jest.fn();
-        useAppDispatchMock.mockReturnValue(dispatchMock);
-
         globalStoreMock.user.currentRole = role;
         const auth0State = { isAuthenticated: true };
 
@@ -61,9 +62,6 @@ describe('App', () => {
         ${true}         | ${'calls check user registration on authenticated'}
         ${false}        | ${'does not call check user registration if user is not authenticated'}
     `('$friendlyName', (isAuthenticated) => {
-        const dispatchMock = jest.fn();
-        useAppDispatchMock.mockReturnValue(dispatchMock);
-
         const auth0State = { isAuthenticated };
 
         const actionMock = {};
