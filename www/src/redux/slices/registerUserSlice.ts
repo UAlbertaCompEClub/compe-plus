@@ -14,7 +14,7 @@ const initialState: RegisterUserState = {
     isLoading: false,
 };
 
-export const registerUserslice = createSlice({
+export const registerUserSlice = createSlice({
     name: 'registerUser',
     initialState,
     reducers: {
@@ -39,6 +39,6 @@ export const registerUserslice = createSlice({
     },
 });
 
-export const { initializeUserInfo, setYear, setProgram } = registerUserslice.actions;
+export const { initializeUserInfo, setYear, setProgram } = registerUserSlice.actions;
 
-export default registerUserslice.reducer;
+export default registerUserSlice.reducer;

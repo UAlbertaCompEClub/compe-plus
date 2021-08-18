@@ -7,14 +7,16 @@ import StyledSelect from '../../components/StyledSelect';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { initializeUserInfo, setProgram, setYear } from '../../redux/slices/registerUserSlice';
 import checkUserRegistration from '../../redux/thunks/checkUserRegistration';
-import registerUser from '../../redux/thunks/registerUser';
+import registerUser, { UserInfo } from '../../redux/thunks/registerUser';
 
 const Registration: FC = () => {
     const history = useHistory();
 
     const { user, getAccessTokenSilently } = useAuth0();
 
-    const { hasRegistered, info } = useAppSelector((state) => state.user);
+    const { hasRegistered } = useAppSelector((state) => state.user);
+    const { userInfo } = useAppSelector((state) => state.registerUser);
+
     const dispatch = useAppDispatch();
 
     // Redirect back to home once register finishes
@@ -24,7 +26,7 @@ const Registration: FC = () => {
     }
 
     const handleRegisterUser = () => {
-        if (info === null || info.year === undefined || info.program === undefined) {
+        if (userInfo === null || userInfo.year === undefined || userInfo.program === undefined) {
             alert('Form is incomplete, please complete the form');
             return;
         }
@@ -32,7 +34,7 @@ const Registration: FC = () => {
         dispatch(
             registerUser({
                 tokenAcquirer: getAccessTokenSilently,
-                userInfo: info,
+                userInfo: userInfo as UserInfo,
             }),
         );
     };
@@ -48,7 +50,7 @@ const Registration: FC = () => {
                 id: user?.sub ?? '',
             }),
         );
-    }, []);
+    }, [user, dispatch]);
 
     const yearChoices = ['1', '2', '3', '4', '5', '6+'];
     const programChoices = ['Computer Co-op', 'Software Co-op', 'Nano Co-op', 'Computer Trad', 'Nano Trad', ' Other'];
@@ -63,8 +65,8 @@ const Registration: FC = () => {
                 <Grid container item spacing={4}>
                     <Grid container item xs={12} justify='center'>
                         <form>
-                            <StyledSelect title='Year' value={info?.year.toString() ?? ''} onChange={(newYear) => dispatch(setYear(parseInt(newYear)))} choices={yearChoices} />
-                            <StyledSelect title='Speciality' value={info?.program ?? ''} onChange={(newProgram) => dispatch(setProgram(newProgram))} choices={programChoices} />
+                            <StyledSelect title='Year' value={userInfo?.year?.toString() ?? ''} onChange={(newYear) => dispatch(setYear(parseInt(newYear)))} choices={yearChoices} />
+                            <StyledSelect title='Speciality' value={userInfo?.program ?? ''} onChange={(newProgram) => dispatch(setProgram(newProgram))} choices={programChoices} />
                             <Button onClick={handleRegisterUser}>Submit</Button>
                         </form>
                     </Grid>

@@ -42,6 +42,11 @@ const globalStoreMock: RootState = {
         hasRegistered: true,
         isEditRolesDialogOpen: false,
     },
+    registerUser: {
+        userInfo: {},
+        registrationSuccess: null,
+        isLoading: false,
+    },
 };
 
 export default { user1, resumeReview1, document1, globalStoreMock };
