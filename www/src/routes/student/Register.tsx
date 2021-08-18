@@ -17,8 +17,8 @@ const Registration: FC = () => {
     const { hasRegistered, info } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
 
+    // Redirect back to home once register finishes
     if (hasRegistered) {
-        // Redirect back to home once register finishes
         dispatch(checkUserRegistration(getAccessTokenSilently));
         history.replace('/');
     }
