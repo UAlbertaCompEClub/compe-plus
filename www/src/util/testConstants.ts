@@ -43,7 +43,8 @@ const globalStoreMock: RootState = {
         isEditRolesDialogOpen: false,
     },
     registerUser: {
-        userInfo: {},
+        year: 0,
+        program: '',
         registrationSuccess: null,
         isLoading: false,
     },

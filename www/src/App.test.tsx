@@ -47,7 +47,7 @@ describe('App', () => {
         ${'admin'}       | ${'🚧 Work in progress 🚧'} | ${'an admin'}
     `('renders correctly for $friendlyName', ({ role, containsString }) => {
         globalStoreMock.user.currentRole = role;
-        const auth0State = { isAuthenticated: true };
+        const auth0State = { isAuthenticated: true, isLoading: false };
 
         useAppSelectorMock.mockImplementation((selector) => selector(globalStoreMock));
 
@@ -62,7 +62,7 @@ describe('App', () => {
         ${true}         | ${'calls check user registration on authenticated'}
         ${false}        | ${'does not call check user registration if user is not authenticated'}
     `('$friendlyName', (isAuthenticated) => {
-        const auth0State = { isAuthenticated };
+        const auth0State = { isAuthenticated, isLoading: false };
 
         const actionMock = {};
         checkUserRegistrationMock.mockReturnValueOnce(actionMock as AsyncThunkAction<WrappedUser | null | undefined, TokenAcquirer, never>);
