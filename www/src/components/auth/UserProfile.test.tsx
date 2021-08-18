@@ -1,5 +1,4 @@
 import { Auth0ContextInterface, useAuth0, User } from '@auth0/auth0-react';
-import { IconButton } from '@material-ui/core';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
