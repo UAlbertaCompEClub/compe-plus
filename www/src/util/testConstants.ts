@@ -2,7 +2,7 @@ import { Document, ResumeReview, User } from './serverResponses';
 
 const user1: User = {
     id: 'google-oauth2|999937999992352499990',
-    email: 'email@domain.com',
+    email: 'myccid@domain.com',
     ccid: 'myccid',
     program: 'compe',
     year: 4,
