@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import type * as s from 'zapatos/schema';
 
 import InternalServerErrorException from '../../exceptions/InternalServerErrorException';
 import NotAuthorizedException from '../../exceptions/NotAuthorizedException';
@@ -39,15 +38,13 @@ class ReqBodyValidator extends Validator<ReqBody> {
     }
 }
 
-type ResBody = { document: s.documents.JSONSelectable };
-
 /**
  * Update my document.
  * @param req HTTP request.
  * @param res HTTP response.
  * @returns Nothing.
  */
-const patchMyDocument = controller(async (req: Request<Params, ResBody, ReqBody>, res: Response<ResBody>): Promise<void> => {
+const patchMyDocument = controller(async (req: Request<Params, unknown, ReqBody>, res: Response): Promise<void> => {
     await new ParamsValidator().validateAndThrow(req.params);
     await new ReqBodyValidator().validateAndThrow(req.body);
 

@@ -4,12 +4,12 @@ export type User = {
     ccid: string;
     program: string;
     year: number;
-    given_name: string;
-    family_name: string;
-    full_name: string;
-    photo_url: string | null;
-    created_at: string;
-    updated_at: string;
+    givenName: string;
+    familyName: string;
+    fullName: string;
+    photoUrl?: string;
+    createdAt: string;
+    updatedAt: string;
 };
 
 export type WrappedUser = {
@@ -23,6 +23,10 @@ export type ResumeReview = {
     state: 'canceled' | 'finished' | 'reviewing' | 'seeking_reviewer';
     createdAt: string;
     updatedAt: string;
+};
+
+export type WrappedResumeReviews = {
+    resumeReviews: ResumeReview[];
 };
 
 export type Document = {

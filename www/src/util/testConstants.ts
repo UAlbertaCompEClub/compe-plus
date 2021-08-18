@@ -6,12 +6,12 @@ const user1: User = {
     ccid: 'myccid',
     program: 'compe',
     year: 4,
-    given_name: 'bob',
-    family_name: 'saggit',
-    full_name: 'bob saggit',
-    photo_url: 'asdf.com',
-    created_at: '2021-06-14T06:09:19.373404+00:00',
-    updated_at: '2021-06-14T06:09:19.373404+00:00',
+    givenName: 'bob',
+    familyName: 'saggit',
+    fullName: 'bob saggit',
+    photoUrl: 'asdf.com',
+    createdAt: '2021-06-14T06:09:19.373404+00:00',
+    updatedAt: '2021-06-14T06:09:19.373404+00:00',
 };
 
 const resumeReview1: ResumeReview = {
