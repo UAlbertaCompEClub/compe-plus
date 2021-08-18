@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import checkUserRegistration from '../thunks/checkUserRegistration';
-import registerUser from '../thunks/registerUser';
+import registerUser, { UserInfo } from '../thunks/registerUser';
 
 type UserState = {
     roles: string[];
@@ -9,6 +9,7 @@ type UserState = {
     hasRegistered: boolean | null;
     isEditRolesDialogOpen: boolean;
     isLoading: boolean;
+    info: UserInfo | null;
 };
 
 const initialState: UserState = {
@@ -17,6 +18,7 @@ const initialState: UserState = {
     hasRegistered: null,
     isEditRolesDialogOpen: false,
     isLoading: false,
+    info: null,
 };
 
 export const userSlice = createSlice({
@@ -34,18 +36,6 @@ export const userSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(registerUser.pending, (state) => {
-            state.isLoading = true;
-        });
-        builder.addCase(registerUser.fulfilled, (state, action) => {
-            const isSuccess = action.payload !== null;
-            if (isSuccess) {
-                state.hasRegistered = true;
-            } else {
-                // TODO: Display error message
-            }
-            state.isLoading = false;
-        });
         builder.addCase(checkUserRegistration.pending, (state) => {
             state.isLoading = true;
         });

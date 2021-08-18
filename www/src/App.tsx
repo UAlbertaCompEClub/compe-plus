@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import { useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import LoadingOverlay from './components/LoadingOverlay';
@@ -16,7 +16,7 @@ import MobileLanding from './routes/MobileLanding';
 import StudentApp from './routes/Student';
 import UnauthenticatedApp from './routes/Unauthenticated';
 import theme from './styles/theme';
-import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, REGISTER_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
+import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
 
 const header_sections: Section[] = [
     { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
