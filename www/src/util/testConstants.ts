@@ -1,3 +1,4 @@
+import { RootState } from '../redux/store';
 import { Document, ResumeReview, User } from './serverResponses';
 
 const user1: User = {
@@ -33,4 +34,20 @@ const document1: Document = {
     updatedAt: '2021-06-14T06:09:19.373404+00:00',
 };
 
-export default { user1, resumeReview1, document1 };
+const globalStoreMock: RootState = {
+    user: {
+        roles: [],
+        currentRole: '',
+        isLoading: false,
+        hasRegistered: true,
+        isEditRolesDialogOpen: false,
+    },
+    registerUser: {
+        year: 0,
+        program: '',
+        registrationSuccess: null,
+        isLoading: false,
+    },
+};
+
+export default { user1, resumeReview1, document1, globalStoreMock };

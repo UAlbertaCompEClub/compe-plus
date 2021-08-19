@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 
+import { useAppSelector } from '../redux/hooks';
 import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, REGISTER_ROUTE, RESUME_REVIEW_ROUTE } from '../util/constants';
 import Community from './Community';
 import Landing from './Landing';
@@ -9,6 +10,14 @@ import Register from './student/Register';
 import ResumeReview from './unauthenticated/ResumeReview';
 
 const UnauthenticatedApp: FC = () => {
+    const history = useHistory();
+
+    const { hasRegistered } = useAppSelector((state) => state.user);
+
+    if (hasRegistered === false) {
+        history.push(REGISTER_ROUTE);
+    }
+
     return (
         <Switch>
             <Route path={RESUME_REVIEW_ROUTE}>
