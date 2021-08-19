@@ -33,12 +33,14 @@ it('returns 404 on user that does not exist', async () => {
 
     await getMe(req as Request<Params>, res as Response, next);
 
+    expect(res.status).toBeCalledTimes(1);
     expect(res.status).toBeCalledWith(404);
 });
 
 it('works on happy path', async () => {
     await getMe(req as Request<Params>, res as Response, next);
 
+    expect(res.status).toBeCalledTimes(1);
     expect(res.status).toBeCalledWith(200);
     expect(res.json).toBeCalledWith({ user: toCamelCase(testConstants.user1) });
 });

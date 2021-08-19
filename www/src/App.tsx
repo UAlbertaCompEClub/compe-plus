@@ -4,19 +4,19 @@ import React, { FC } from 'react';
 import { useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
+import LoadingOverlay from './components/LoadingOverlay';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import adminStore from './redux/substores/admin/adminStore';
 import volunteerStore from './redux/substores/volunteeer/volunteerStore';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import MobileLanding from './routes/MobileLanding';
 import StudentApp from './routes/Student';
-import Register from './routes/student/Register';
 import UnauthenticatedApp from './routes/Unauthenticated';
 import theme from './styles/theme';
-import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, REGISTER_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
+import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
 
 const header_sections: Section[] = [
     { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
@@ -57,12 +57,11 @@ const getContentByRole = (role: string) => {
 };
 
 const App: FC = () => {
-    const currentRole = useAppSelector((state) => state.user.currentRole);
-    const isUserRegistered = useAppSelector((state) => state.user.hasRegistered);
-    const isLoadingUser = useAppSelector((state) => state.user.isLoading);
+    const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading } = useAuth0();
 
-    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { currentRole, isLoading } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
+
     const content = getContentByRole(currentRole);
 
     useEffect(() => {
@@ -74,14 +73,11 @@ const App: FC = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
+            <LoadingOverlay open={isLoading || isAuth0Loading} />
             <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
-                    <BrowserView renderWithFragment>
-                        <Register />
-                        {content}
-                        {!isLoadingUser && isUserRegistered === false && <Redirect to={REGISTER_ROUTE} />}
-                    </BrowserView>
+                    <BrowserView renderWithFragment>{content}</BrowserView>
                     <MobileView>
                         <MobileLanding />
                     </MobileView>
