@@ -1,3 +1,4 @@
+import { RootState } from '../redux/store';
 import { Document, ResumeReview, User } from './serverResponses';
 
 const user1: User = {
@@ -46,4 +47,20 @@ const studentStateMock = {
     },
 };
 
-export default { user1, resumeReview1, document1, studentStateMock };
+const globalStoreMock: RootState = {
+    user: {
+        roles: [],
+        currentRole: '',
+        isLoading: false,
+        hasRegistered: true,
+        isEditRolesDialogOpen: false,
+    },
+    registerUser: {
+        year: 0,
+        program: '',
+        registrationSuccess: null,
+        isLoading: false,
+    },
+};
+
+export default { user1, resumeReview1, document1, globalStoreMock, studentStateMock };
