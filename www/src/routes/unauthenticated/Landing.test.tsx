@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 
-import { shallowWithAuth0 } from '../util/testWithAuth0';
+import { shallowWithAuth0 } from '../../util/testWithAuth0';
 import Landing, { Intro } from './Landing';
 
 describe('Landing', () => {

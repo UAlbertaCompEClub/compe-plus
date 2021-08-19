@@ -4,8 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 
 import studentStore from '../redux/substores/student/studentStore';
 import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW_ROUTE } from '../util/constants';
-import Landing from './Landing';
 import ResumeReview from './student/ResumeReview';
+import Landing from './unauthenticated/Landing';
 
 const StudentApp: FC = () => {
     return (
