@@ -56,6 +56,7 @@ describe('App', () => {
 
         mockAuth0State = {
             isAuthenticated: false,
+            isLoading: false,
         } as unknown as Auth0ContextInterface<User>;
         mockUseAuth0.mockReturnValue(mockAuth0State);
     });
