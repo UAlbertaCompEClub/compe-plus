@@ -3,13 +3,12 @@ import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 import React, { FC } from 'react';
 import { useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
-import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import adminStore from './redux/substores/admin/adminStore';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
+import AdminApp from './routes/Admin';
 import StudentApp from './routes/Student';
 import Register from './routes/student/Register';
 import UnauthenticatedApp from './routes/Unauthenticated';
@@ -23,15 +22,6 @@ const header_sections: Section[] = [
     { title: MOCK_INTERVIEW, url: MOCK_INTERVIEW_ROUTE },
     { title: COMMUNITY, url: COMMUNITY_ROUTE },
 ];
-
-const AdminApp: FC = () => {
-    // TODO: Update components accordingly
-    return (
-        <Provider store={adminStore}>
-            <p>🚧 Work in progress 🚧</p>
-        </Provider>
-    );
-};
 
 const getContentByRole = (role: string) => {
     switch (role) {
