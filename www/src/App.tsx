@@ -6,6 +6,7 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
+import LoadingOverlay from './components/LoadingOverlay';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import AdminApp from './routes/Admin';
@@ -37,10 +38,11 @@ const getContentByRole = (role: string) => {
 };
 
 const App: FC = () => {
-    const { currentRole } = useAppSelector((state) => state.user);
+    const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading } = useAuth0();
 
-    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { currentRole, isLoading } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
+
     const content = getContentByRole(currentRole);
 
     useEffect(() => {
@@ -52,6 +54,7 @@ const App: FC = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
+            <LoadingOverlay open={isLoading || isAuth0Loading} />
             <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />

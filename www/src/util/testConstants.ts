@@ -42,7 +42,12 @@ const globalState: RootState = {
         isLoading: false,
         hasRegistered: true,
         isEditRolesDialogOpen: false,
-        info: null,
+    },
+    registerUser: {
+        year: 0,
+        program: '',
+        registrationSuccess: null,
+        isLoading: false,
     },
 };
 

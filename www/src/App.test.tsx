@@ -33,6 +33,13 @@ const mockUseAppSelector = mocked(useAppSelector, true);
 jest.mock('./redux/thunks/checkUserRegistration');
 const mockCheckUserRegistration = mocked(checkUserRegistration);
 
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useHistory: () => ({
+        push: jest.fn(),
+    }),
+}));
+
 describe('App', () => {
     let mockGlobalStore: RootState;
     let mockDispatch: jest.MockedFunction<AppDispatch>;

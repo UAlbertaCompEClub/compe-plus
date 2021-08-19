@@ -9,7 +9,7 @@ import testConstants from '../util/testConstants';
 import UnauthenticatedApp from './Unauthenticated';
 
 jest.mock('../redux/hooks');
-const useAppSelectorMock = mocked(useAppSelector, true);
+const mockUseAppSelector = mocked(useAppSelector, true);
 
 const mockHistoryPush = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -20,16 +20,16 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('Unauthenticated', () => {
-    let globalStoreMock: RootState;
+    let mockGlobalState: RootState;
 
     beforeEach(() => {
-        globalStoreMock = testConstants.globalState;
+        mockGlobalState = testConstants.globalState;
 
-        useAppSelectorMock.mockImplementation((selector) => selector(globalStoreMock));
+        mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalState));
     });
 
     it('redirects to register page if the user has not registered', () => {
-        globalStoreMock.user.hasRegistered = false;
+        mockGlobalState.user.hasRegistered = false;
 
         shallow(<UnauthenticatedApp />);
 
@@ -37,7 +37,7 @@ describe('Unauthenticated', () => {
     });
 
     it('does not redirect if the user is registered', () => {
-        globalStoreMock.user.hasRegistered = true;
+        mockGlobalState.user.hasRegistered = true;
 
         shallow(<UnauthenticatedApp />);
 
