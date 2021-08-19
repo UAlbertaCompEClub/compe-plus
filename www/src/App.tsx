@@ -10,12 +10,11 @@ import { useAppDispatch, useAppSelector } from './redux/hooks';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import AdminApp from './routes/Admin';
 import StudentApp from './routes/Student';
-import Register from './routes/student/Register';
 import UnauthenticatedApp from './routes/Unauthenticated';
 import MobileLanding from './routes/unauthenticated/MobileLanding';
 import VolunteerApp from './routes/Volunteer';
 import theme from './styles/theme';
-import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, REGISTER_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
+import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
 
 const header_sections: Section[] = [
     { title: RESUME_REVIEW, url: RESUME_REVIEW_ROUTE },
@@ -38,9 +37,7 @@ const getContentByRole = (role: string) => {
 };
 
 const App: FC = () => {
-    const currentRole = useAppSelector((state) => state.user.currentRole);
-    const isUserRegistered = useAppSelector((state) => state.user.hasRegistered);
-    const isLoadingUser = useAppSelector((state) => state.user.isLoading);
+    const { currentRole } = useAppSelector((state) => state.user);
 
     const { isAuthenticated, getAccessTokenSilently } = useAuth0();
     const dispatch = useAppDispatch();
@@ -58,11 +55,7 @@ const App: FC = () => {
             <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
-                    <BrowserView renderWithFragment>
-                        <Register />
-                        {content}
-                        {!isLoadingUser && isUserRegistered === false && <Redirect to={REGISTER_ROUTE} />}
-                    </BrowserView>
+                    <BrowserView renderWithFragment>{content}</BrowserView>
                     <MobileView>
                         <MobileLanding />
                     </MobileView>

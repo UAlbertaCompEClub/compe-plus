@@ -19,6 +19,13 @@ import { withAuth0 } from './util/testWithAuth0';
 jest.mock('@auth0/auth0-react');
 const mockUseAuth0 = mocked(useAuth0);
 
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useHistory: () => ({
+        push: jest.fn(),
+    }),
+}));
+
 jest.mock('./redux/hooks');
 const mockUseAppDispatch = mocked(useAppDispatch, true);
 const mockUseAppSelector = mocked(useAppSelector, true);
@@ -79,20 +86,5 @@ describe('App', () => {
         } else {
             expect(mockDispatch).not.toBeCalled();
         }
-    });
-
-    it('redirects to registration page if user is authenticated but not registered', () => {
-        mockGlobalStore.user.hasRegistered = false;
-        mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
-
-        const auth0State = { isAuthenticated: true };
-
-        const mockAction = {};
-        mockCheckUserRegistration.mockReturnValueOnce(mockAction as AsyncThunkAction<WrappedUser | null | undefined, TokenAcquirer, never>);
-
-        render(withAuth0(<App />, auth0State));
-
-        const componentsWithRegistrationText = screen.getAllByText('Registration');
-        expect(componentsWithRegistrationText[0]).toBeInTheDocument();
     });
 });
