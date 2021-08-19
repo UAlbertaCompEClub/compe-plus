@@ -11,7 +11,9 @@ const pool: pg.Pool = new pg.Pool({
     log: (...messages: unknown[]): void => {
         logger.trace('pg: %s', messages);
     },
-    ssl: true,
+    ssl: {
+        rejectUnauthorized: false,
+    },
 });
 
 // Don't let a pg restart kill the app
