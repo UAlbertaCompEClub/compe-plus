@@ -28,15 +28,15 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('App', () => {
-    let globalStoreMock: RootState;
-    let dispatchMock: jest.MockedFunction<AppDispatch>;
+    let mockGlobalStore: RootState;
+    let mockDispatch: jest.MockedFunction<AppDispatch>;
 
     beforeEach(() => {
         setupIntersectionObserverMock();
-        globalStoreMock = testConstants.globalStoreMock;
+        mockGlobalStore = testConstants.globalStoreMock;
 
-        dispatchMock = jest.fn();
-        useAppDispatchMock.mockReturnValue(dispatchMock);
+        mockDispatch = jest.fn();
+        useAppDispatchMock.mockReturnValue(mockDispatch);
     });
 
     it.each`
@@ -46,10 +46,10 @@ describe('App', () => {
         ${'interviewer'} | ${'🚧 Work in progress 🚧'} | ${'an interviewer'}
         ${'admin'}       | ${'🚧 Work in progress 🚧'} | ${'an admin'}
     `('renders correctly for $friendlyName', ({ role, containsString }) => {
-        globalStoreMock.user.currentRole = role;
+        mockGlobalStore.user.currentRole = role;
         const auth0State = { isAuthenticated: true, isLoading: false };
 
-        useAppSelectorMock.mockImplementation((selector) => selector(globalStoreMock));
+        useAppSelectorMock.mockImplementation((selector) => selector(mockGlobalStore));
 
         render(withAuth0(<App />, auth0State));
 
@@ -67,14 +67,14 @@ describe('App', () => {
         const actionMock = {};
         checkUserRegistrationMock.mockReturnValueOnce(actionMock as AsyncThunkAction<WrappedUser | null | undefined, TokenAcquirer, never>);
 
-        useAppSelectorMock.mockImplementation((selector) => selector(globalStoreMock));
+        useAppSelectorMock.mockImplementation((selector) => selector(mockGlobalStore));
 
         render(withAuth0(<App />, auth0State));
 
         if (isAuthenticated) {
-            expect(dispatchMock).toBeCalledWith(actionMock);
+            expect(mockDispatch).toBeCalledWith(actionMock);
         } else {
-            expect(dispatchMock).not.toBeCalled();
+            expect(mockDispatch).not.toBeCalled();
         }
     });
 });
