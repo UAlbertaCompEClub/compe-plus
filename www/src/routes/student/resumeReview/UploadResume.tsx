@@ -18,18 +18,27 @@ const handleOnFileSelected = async (dispatch: StudentDispatch, files?: FileList 
         alert('No file selected');
         return;
     }
+
     if (files?.length !== 1) {
         alert('You can only select 1 file');
         return;
     }
+
     const pdfFile = files[0];
+
     if (pdfFile.type !== 'application/pdf') {
         alert('File selected must be pdf');
         return;
     }
 
     const file = await pdfFile.arrayBuffer();
-    dispatch(setDocument(arrayBufferToBase64(file)));
+
+    dispatch(
+        setDocument({
+            name: pdfFile.name,
+            base64Contents: arrayBufferToBase64(file),
+        }),
+    );
 };
 
 const UploadResume: FC = () => {
@@ -62,7 +71,7 @@ const UploadResume: FC = () => {
     }
 
     const filePromise = async () => {
-        return base64ToArrayBuffer(document);
+        return base64ToArrayBuffer(document.base64Contents);
     };
 
     return (
@@ -75,7 +84,7 @@ const UploadResume: FC = () => {
             </Grid>
             <Grid container item sm={12} md={8} justify='center'>
                 <PDFViewer
-                    fileName='string'
+                    fileName={document.name}
                     filePromise={filePromise}
                     className={classes.pdfContainer}
                     viewerConfig={{ showAnnotationTools: false, enableFormFilling: false, showLeftHandPanel: false }}
@@ -91,7 +100,7 @@ const UploadResume: FC = () => {
                         onClick={() =>
                             dispatch(
                                 initiateResumeReview({
-                                    base64Contents: document,
+                                    base64Contents: document.base64Contents,
                                     tokenAcquirer: getAccessTokenSilently,
                                     userId: user?.sub ?? '',
                                 }),

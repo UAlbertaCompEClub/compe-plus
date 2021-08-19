@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import initiateResumeReview from '../thunks/initiateResumeReview';
 
 type UploadResumeState = {
-    document: string | null;
+    document: Document | null;
     isLoading: boolean;
     isUploadComplete: boolean | null;
 };
@@ -14,6 +14,11 @@ const initialState: UploadResumeState = {
     isUploadComplete: null,
 };
 
+type Document = {
+    name: string;
+    base64Contents: string;
+};
+
 export const uploadResumeSlice = createSlice({
     name: 'resumeReview/upload',
     initialState,
@@ -21,7 +26,7 @@ export const uploadResumeSlice = createSlice({
         resetUploadResume: () => {
             return initialState;
         },
-        setDocument: (state, action: PayloadAction<string>) => {
+        setDocument: (state, action: PayloadAction<Document>) => {
             state.document = action.payload;
         },
     },
