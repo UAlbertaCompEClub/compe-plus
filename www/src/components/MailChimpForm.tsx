@@ -6,7 +6,7 @@ import validator from 'validator';
 import config from '../util/config';
 import { Form } from './Form';
 
-export const MailChimpForm: FC = () => {
+const MailChimpForm: FC = () => {
     const getMessage = (status: string | null): string => {
         if (status == 'error') {
             return 'Something went wrong 😔 Please try again';
@@ -51,3 +51,5 @@ export const MailChimpForm: FC = () => {
         </Grid>
     );
 };
+
+export default MailChimpForm;

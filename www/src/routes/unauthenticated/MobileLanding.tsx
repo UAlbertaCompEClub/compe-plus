@@ -1,11 +1,11 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 
-import { MailChimpForm } from '../../components/MailChimpForm';
-import BlackLogo from '../assets/logo_black.svg';
-import LightGreenLogo from '../assets/logo_light_green.svg';
-import Wave1 from '../assets/wave_1.svg';
-import Wave4 from '../assets/wave_4.svg';
+import BlackLogo from '../../assets/logo_black.svg';
+import LightGreenLogo from '../../assets/logo_light_green.svg';
+import Wave1 from '../../assets/wave_1.svg';
+import Wave4 from '../../assets/wave_4.svg';
+import MailChimpForm from '../../components/MailChimpForm';
 
 const MobileLanding: FC = () => {
     const classes = useStyles();
