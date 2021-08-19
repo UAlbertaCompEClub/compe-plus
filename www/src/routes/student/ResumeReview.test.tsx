@@ -7,16 +7,16 @@ import getMyResumeReviews from '../../redux/substores/student/thunks/getMyResume
 import ResumeReview from './ResumeReview';
 
 jest.mock('../../redux/substores/student/studentHooks');
-const useStudentDispatchMock = mocked(useStudentDispatch, true);
-const useStudentSelectorMock = mocked(useStudentSelector, true);
+const mockUseStudentDispatch = mocked(useStudentDispatch, true);
+const mockUseStudentSelector = mocked(useStudentSelector, true);
 
 jest.mock('../../redux/substores/student/thunks/getMyResumeReviews');
-const getMyResumeReviewsMock = mocked(getMyResumeReviews, true);
+const mockGetMyResumeReviews = mocked(getMyResumeReviews, true);
 
 describe('StudentResumeReview', () => {
-    const dispatchMock = jest.fn();
+    const mockDispatch = jest.fn();
 
-    const studentStateMock = {
+    const mockStudentState = {
         resumeReview: {
             resumeReviews: [],
             isLoading: false,
@@ -24,8 +24,8 @@ describe('StudentResumeReview', () => {
     };
 
     beforeEach(() => {
-        useStudentDispatchMock.mockReturnValue(dispatchMock);
-        useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
+        mockUseStudentDispatch.mockReturnValue(mockDispatch);
+        mockUseStudentSelector.mockImplementation((selector) => selector(mockStudentState));
     });
 
     it('renders correctly', () => {
@@ -38,6 +38,6 @@ describe('StudentResumeReview', () => {
     it('calls getMyResumeReviews', () => {
         render(<ResumeReview />);
 
-        expect(getMyResumeReviewsMock).toBeCalled();
+        expect(mockGetMyResumeReviews).toBeCalled();
     });
 });

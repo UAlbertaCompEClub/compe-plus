@@ -67,34 +67,28 @@ describe('App', () => {
         ${true}         | ${'calls check user registration on authenticated'}
         ${false}        | ${'does not call check user registration if user is not authenticated'}
     `('$friendlyName', (isAuthenticated) => {
-        const dispatchMock = jest.fn();
-        mockUseAppDispatch.mockReturnValue(dispatchMock);
-
         mockAuth0State.isAuthenticated = isAuthenticated;
 
-        const actionMock = {};
-        mockCheckUserRegistration.mockReturnValueOnce(actionMock as AsyncThunkAction<WrappedUser | null | undefined, TokenAcquirer, never>);
+        const mockAction = {};
+        mockCheckUserRegistration.mockReturnValueOnce(mockAction as AsyncThunkAction<WrappedUser | null | undefined, TokenAcquirer, never>);
 
         render(withAuth0(<App />, mockAuth0State));
 
         if (isAuthenticated) {
-            expect(dispatchMock).toBeCalledWith(actionMock);
+            expect(mockDispatch).toBeCalledWith(mockAction);
         } else {
-            expect(dispatchMock).not.toBeCalled();
+            expect(mockDispatch).not.toBeCalled();
         }
     });
 
     it('redirects to registration page if user is authenticated but not registered', () => {
-        const dispatchMock = jest.fn();
-        mockUseAppDispatch.mockReturnValue(dispatchMock);
-
         mockGlobalStore.user.hasRegistered = false;
         mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
 
         const auth0State = { isAuthenticated: true };
 
-        const actionMock = {};
-        mockCheckUserRegistration.mockReturnValueOnce(actionMock as AsyncThunkAction<WrappedUser | null | undefined, TokenAcquirer, never>);
+        const mockAction = {};
+        mockCheckUserRegistration.mockReturnValueOnce(mockAction as AsyncThunkAction<WrappedUser | null | undefined, TokenAcquirer, never>);
 
         render(withAuth0(<App />, auth0State));
 
