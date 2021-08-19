@@ -14,7 +14,7 @@ const router = express();
 router.use(middleware.logRequest());
 
 /** Allow cross origin requests */
-router.use(middleware.cors());
+router.options('*', middleware.cors());
 
 /** Parse the request */
 router.use(middleware.jsonParser());
