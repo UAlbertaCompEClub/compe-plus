@@ -22,6 +22,7 @@ const BUCKETEER_AWS_SECRET_ACCESS_KEY = process.env.BUCKETEER_AWS_SECRET_ACCESS_
 const BUCKETEER_AWS_REGION = process.env.BUCKETEER_AWS_REGION || 'us-east-1';
 const BUCKETEER_BUCKET_NAME = process.env.BUCKETEER_BUCKET_NAME || 'documents';
 const BUCKETEER_ENDPOINT = process.env.BUCKETEER_ENDPOINT || '';
+const USE_SSL = process.env.USE_SSL || false;
 
 /**
  * Configuration for authentication.
@@ -69,6 +70,7 @@ const config = {
     databaseUrl: DATABASE_URL,
     managementApi: MANAGEMENT_API,
     s3: S3,
+    useSsl: USE_SSL,
 };
 
 export default config;
