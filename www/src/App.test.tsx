@@ -1,6 +1,6 @@
 import { Auth0ContextInterface, useAuth0, User } from '@auth0/auth0-react';
 import { AsyncThunkAction } from '@reduxjs/toolkit';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';

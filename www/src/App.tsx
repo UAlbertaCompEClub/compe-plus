@@ -3,7 +3,7 @@ import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 import React, { FC } from 'react';
 import { useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
-import { BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
