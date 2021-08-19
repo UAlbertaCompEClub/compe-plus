@@ -15,4 +15,6 @@ router.post('/users', controller.postUser);
 
 router.get('/users/me', controller.getMe);
 
+router.get('/users/:userId/roles', middleware.authorize(Scope.ReadRoles), controller.getRoles);
+
 export default router;
