@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 
 import adminStore from '../redux/substores/admin/adminStore';
 import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW_ROUTE } from '../util/constants';
+import MockInterview from './admin/MockInterview';
+import ResumeReview from './admin/ResumeReview';
 import Landing from './unauthenticated/Landing';
 
 const AdminApp: FC = () => {
@@ -11,10 +13,10 @@ const AdminApp: FC = () => {
         <Provider store={adminStore}>
             <Switch>
                 <Route path={RESUME_REVIEW_ROUTE}>
-                    <p>🚧 Work in progress 🚧</p>
+                    <ResumeReview />
                 </Route>
                 <Route path={MOCK_INTERVIEW_ROUTE}>
-                    <p>🚧 Work in progress 🚧</p>
+                    <MockInterview />
                 </Route>
                 <Route path={COMMUNITY_ROUTE}>
                     <p>🚧 Work in progress 🚧</p>
