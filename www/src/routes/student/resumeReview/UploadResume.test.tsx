@@ -9,17 +9,17 @@ import testConstants from '../../../util/testConstants';
 import UploadResume from './UploadResume';
 
 jest.mock('../../../redux/substores/student/studentHooks');
-const useStudentDispatchMock = mocked(useStudentDispatch, true);
-const useStudentSelectorMock = mocked(useStudentSelector, true);
+const mockUseStudentDispatch = mocked(useStudentDispatch, true);
+const mockUseStudentSelector = mocked(useStudentSelector, true);
 
 describe('UploadResume', () => {
-    const dispatchMock = jest.fn();
+    const mockDispatch = jest.fn();
     let studentStateMock: StudentState;
 
     beforeEach(() => {
         studentStateMock = testConstants.studentStateMock;
-        useStudentDispatchMock.mockReturnValue(dispatchMock);
-        useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
+        mockUseStudentDispatch.mockReturnValue(mockDispatch);
+        mockUseStudentSelector.mockImplementation((selector) => selector(studentStateMock));
     });
 
     it('renders correctly for input step', () => {
@@ -31,7 +31,7 @@ describe('UploadResume', () => {
 
     it('renders correctly for preview step', () => {
         studentStateMock.uploadResume.document = 'mockbase64encodeddocument';
-        useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
+        mockUseStudentSelector.mockImplementation((selector) => selector(studentStateMock));
 
         const result = shallow(<UploadResume />);
 
