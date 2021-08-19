@@ -3,7 +3,9 @@ import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import { useStudentDispatch, useStudentSelector } from '../../redux/substores/student/studentHooks';
+import { StudentState } from '../../redux/substores/student/studentStore';
 import getMyResumeReviews from '../../redux/substores/student/thunks/getMyResumeReviews';
+import testConstants from '../../util/testConstants';
 import ResumeReview from './ResumeReview';
 
 jest.mock('../../redux/substores/student/studentHooks');
@@ -15,13 +17,11 @@ const mockGetMyResumeReviews = mocked(getMyResumeReviews, true);
 
 describe('StudentResumeReview', () => {
     const mockDispatch = jest.fn();
+    let mockStudentState: StudentState;
 
-    const mockStudentState = {
-        resumeReview: {
-            resumeReviews: [],
-            isLoading: false,
-        },
-    };
+    beforeEach(() => {
+        mockStudentState = testConstants.studentState;
+    });
 
     beforeEach(() => {
         mockUseStudentDispatch.mockReturnValue(mockDispatch);

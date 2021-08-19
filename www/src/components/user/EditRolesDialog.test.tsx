@@ -19,7 +19,7 @@ mockUseAppDispatch.mockReturnValue(mockDispatch);
 describe('EditRolesDialog', () => {
     let mockGlobalStore: RootState;
     beforeEach(() => {
-        mockGlobalStore = testConstants.globalStore;
+        mockGlobalStore = testConstants.globalState;
 
         mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
     });

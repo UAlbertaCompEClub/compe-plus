@@ -37,7 +37,7 @@ describe('App', () => {
         mockDispatch = jest.fn();
         mockUseAppDispatch.mockReturnValue(mockDispatch);
 
-        mockGlobalStore = testConstants.globalStore;
+        mockGlobalStore = testConstants.globalState;
         mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
 
         mockAuth0State = {
