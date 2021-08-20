@@ -77,4 +77,6 @@ describe('App', () => {
             expect(mockDispatch).not.toBeCalled();
         }
     });
+
+    it.todo('fetches user role');
 });
