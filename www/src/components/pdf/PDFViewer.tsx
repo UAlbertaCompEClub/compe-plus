@@ -4,23 +4,28 @@ import { useEffect } from 'react';
 
 import ViewSDKClient from './ViewerSDKClient';
 
-const PDFViewer: FC = () => {
+type ViewerConfig = {
+    showAnnotationTools?: boolean;
+    enableFormFilling?: boolean;
+    showLeftHandPanel?: boolean;
+};
+
+export type PDFViewerProps = {
+    filePromise: () => Promise<ArrayBuffer>;
+    fileName: string;
+    className: string;
+    viewerConfig?: ViewerConfig;
+};
+
+const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
     useEffect(() => {
         const viewSDKClient = new ViewSDKClient();
         viewSDKClient.ready().then(() => {
-            /* Invoke file preview */
-            viewSDKClient.previewFile('adobe-dc-view', {
-                /* Control the viewer customization. */
-                showAnnotationTools: true,
-                enableFormFilling: true,
-                showLeftHandPanel: false,
-            });
-            /* Register Save API handler */
-            viewSDKClient.registerSaveApiHandler();
+            viewSDKClient.previewFileUsingFilePromise('adobe-dc-view', props.filePromise(), props.fileName, props.viewerConfig ?? {});
         });
     }, []);
 
-    return <Grid item id='adobe-dc-view' style={{ height: '100%' }} />;
+    return <Grid item id='adobe-dc-view' style={{ height: '100%' }} className={props.className} />;
 };
 
 export default PDFViewer;
