@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import checkUserRegistration from '../thunks/checkUserRegistration';
+import getUserRole from '../thunks/getUserRole';
 
 type UserState = {
     roles: string[];
@@ -39,6 +40,13 @@ export const userSlice = createSlice({
         builder.addCase(checkUserRegistration.fulfilled, (state, action) => {
             state.isLoading = false;
             state.hasRegistered = action.payload !== null;
+        });
+        builder.addCase(getUserRole.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getUserRole.fulfilled, (state, action) => {
+            state.roles = action.payload?.roles.map((roleObject) => roleObject.role) ?? [];
+            state.currentRole = 'student';
         });
     },
 });
