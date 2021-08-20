@@ -22,7 +22,7 @@ describe('StudentResumeList', () => {
     let studentStateMock: StudentState;
 
     beforeEach(() => {
-        studentStateMock = testConstants.studentStateMock;
+        studentStateMock = testConstants.studentState;
         mockUseStudentDispatch.mockReturnValue(dispatchMock);
         mockUseStudentSelector.mockImplementation((selector) => selector(studentStateMock));
     });

@@ -12,33 +12,36 @@ import ResumeList from './resumeReview/ResumeList';
 import UploadResume from './resumeReview/UploadResume';
 
 jest.mock('../../redux/substores/student/studentHooks');
-const useStudentDispatchMock = mocked(useStudentDispatch, true);
-const useStudentSelectorMock = mocked(useStudentSelector, true);
+const mockUseStudentDispatch = mocked(useStudentDispatch, true);
+const mockUseStudentSelector = mocked(useStudentSelector, true);
 
 jest.mock('../../redux/substores/student/thunks/getMyResumeReviews');
-const getMyResumeReviewsMock = mocked(getMyResumeReviews, true);
+const mockGetMyResumeReviews = mocked(getMyResumeReviews, true);
 
 describe('StudentResumeReview', () => {
-    const dispatchMock = jest.fn();
-    let studentStateMock: StudentState;
+    const mockDispatch = jest.fn();
+    let mockStudentState: StudentState;
 
     beforeEach(() => {
-        studentStateMock = testConstants.studentStateMock;
-        useStudentDispatchMock.mockReturnValue(dispatchMock);
-        useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
+        mockStudentState = testConstants.studentState;
+    });
+
+    beforeEach(() => {
+        mockUseStudentDispatch.mockReturnValue(mockDispatch);
+        mockUseStudentSelector.mockImplementation((selector) => selector(mockStudentState));
     });
 
     it('renders correctly for list', () => {
-        useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
+        mockUseStudentSelector.mockImplementation((selector) => selector(mockStudentState));
 
         const result = shallow(<ResumeReview />);
         expect(result.find(ResumeList)).toHaveLength(1);
     });
 
     it('renders correctly for upload', () => {
-        studentStateMock.resumeReview.isUploading = true;
+        mockStudentState.resumeReview.isUploading = true;
 
-        useStudentSelectorMock.mockImplementation((selector) => selector(studentStateMock));
+        mockUseStudentSelector.mockImplementation((selector) => selector(mockStudentState));
 
         const result = shallow(<ResumeReview />);
         expect(result.find(UploadResume)).toHaveLength(1);
@@ -47,6 +50,6 @@ describe('StudentResumeReview', () => {
     it('calls getMyResumeReviews', () => {
         render(<ResumeReview />);
 
-        expect(getMyResumeReviewsMock).toBeCalled();
+        expect(mockGetMyResumeReviews).toBeCalled();
     });
 });

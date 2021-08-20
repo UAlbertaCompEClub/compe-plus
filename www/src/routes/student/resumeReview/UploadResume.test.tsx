@@ -14,12 +14,12 @@ const mockUseStudentSelector = mocked(useStudentSelector, true);
 
 describe('UploadResume', () => {
     const mockDispatch = jest.fn();
-    let studentStateMock: StudentState;
+    let mockStudentState: StudentState;
 
     beforeEach(() => {
-        studentStateMock = testConstants.studentStateMock;
+        mockStudentState = testConstants.studentState;
         mockUseStudentDispatch.mockReturnValue(mockDispatch);
-        mockUseStudentSelector.mockImplementation((selector) => selector(studentStateMock));
+        mockUseStudentSelector.mockImplementation((selector) => selector(mockStudentState));
     });
 
     it('renders correctly for input step', () => {
@@ -30,8 +30,8 @@ describe('UploadResume', () => {
     });
 
     it('renders correctly for preview step', () => {
-        studentStateMock.uploadResume.document = 'mockbase64encodeddocument';
-        mockUseStudentSelector.mockImplementation((selector) => selector(studentStateMock));
+        mockStudentState.uploadResume.document = 'mockbase64encodeddocument';
+        mockUseStudentSelector.mockImplementation((selector) => selector(mockStudentState));
 
         const result = shallow(<UploadResume />);
 

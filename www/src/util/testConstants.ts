@@ -1,4 +1,5 @@
 import { RootState } from '../redux/store';
+import { StudentState } from '../redux/substores/student/studentStore';
 import { Document, ResumeReview, User } from './serverResponses';
 
 const user1: User = {
@@ -34,20 +35,7 @@ const document1: Document = {
     updatedAt: '2021-06-14T06:09:19.373404+00:00',
 };
 
-const studentStateMock = {
-    resumeReview: {
-        resumeReviews: [],
-        isLoading: false,
-        isUploading: false,
-    },
-    uploadResume: {
-        document: null,
-        isLoading: false,
-        isUploadComplete: false,
-    },
-};
-
-const globalStoreMock: RootState = {
+const globalState: RootState = {
     user: {
         roles: [],
         currentRole: '',
@@ -63,4 +51,17 @@ const globalStoreMock: RootState = {
     },
 };
 
-export default { user1, resumeReview1, document1, globalStoreMock, studentStateMock };
+const studentState: StudentState = {
+    resumeReview: {
+        resumeReviews: [],
+        isLoading: false,
+        isUploading: false,
+    },
+    uploadResume: {
+        document: null,
+        isLoading: false,
+        isUploadComplete: null,
+    },
+};
+
+export default { user1, resumeReview1, document1, globalState, studentState };

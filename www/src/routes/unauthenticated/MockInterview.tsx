@@ -1,8 +1,8 @@
 import { Grid, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 
-import BookInterviewIcon from '../assets/book_interview.svg';
-import MockInterviewIcon from '../assets/mock_interview1.svg';
+import BookInterviewIcon from '../../assets/book_interview.svg';
+import MockInterviewIcon from '../../assets/mock_interview1.svg';
 
 const MockInterview: FC = () => {
     return (
