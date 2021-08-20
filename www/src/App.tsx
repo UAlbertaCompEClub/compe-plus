@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from './redux/hooks';
 import adminStore from './redux/substores/admin/adminStore';
 import volunteerStore from './redux/substores/volunteeer/volunteerStore';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
+import getUserRole from './redux/thunks/getUserRole';
 import MobileLanding from './routes/MobileLanding';
 import StudentApp from './routes/Student';
 import UnauthenticatedApp from './routes/Unauthenticated';
@@ -57,9 +58,9 @@ const getContentByRole = (role: string) => {
 };
 
 const App: FC = () => {
-    const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading } = useAuth0();
+    const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading, user } = useAuth0();
 
-    const { currentRole, isLoading } = useAppSelector((state) => state.user);
+    const { currentRole, isLoading, hasRegistered } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
 
     const content = getContentByRole(currentRole);
@@ -69,6 +70,12 @@ const App: FC = () => {
             dispatch(checkUserRegistration(getAccessTokenSilently));
         }
     }, [isAuthenticated]);
+
+    useEffect(() => {
+        if (hasRegistered && user?.sub !== undefined) {
+            dispatch(getUserRole({ userId: user.sub, tokenAcquirer: getAccessTokenSilently }));
+        }
+    }, [hasRegistered]);
 
     return (
         <ThemeProvider theme={theme}>
