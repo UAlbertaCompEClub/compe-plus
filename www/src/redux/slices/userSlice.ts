@@ -45,6 +45,7 @@ export const userSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(getUserRole.fulfilled, (state, action) => {
+            state.isLoading = false;
             state.roles = action.payload?.roles.map((roleObject) => roleObject.role) ?? [];
             state.currentRole = 'student';
         });
