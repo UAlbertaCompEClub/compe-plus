@@ -6,16 +6,16 @@ import { getUserRole as getUserRoleEndpoint } from '../../util/endpoints';
 import Scope from '../../util/scopes';
 import { Role } from '../../util/serverResponses';
 
-export type getUserRoleParameters = {
+export type GetUserRoleParameters = {
     userId: string;
     tokenAcquirer: TokenAcquirer;
 };
 
-type GetUserRolesResponse = {
+export type GetUserRolesResponse = {
     roles: Role[];
 };
 
-export const getUserRole = async ({ userId, tokenAcquirer }: getUserRoleParameters): Promise<GetUserRolesResponse | undefined | null> => {
+export const getUserRole = async ({ userId, tokenAcquirer }: GetUserRoleParameters): Promise<GetUserRolesResponse | undefined | null> => {
     try {
         const response = await fetchWithToken<GetUserRolesResponse>(getUserRoleEndpoint(userId), tokenAcquirer, [Scope.ReadRoles]);
         return response?.data;

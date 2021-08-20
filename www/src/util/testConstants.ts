@@ -1,5 +1,5 @@
 import { RootState } from '../redux/store';
-import { Document, ResumeReview, User } from './serverResponses';
+import { Document, ResumeReview, Role, User } from './serverResponses';
 
 const user1: User = {
     id: 'google-oauth2|999937999992352499990',
@@ -34,6 +34,12 @@ const document1: Document = {
     updatedAt: '2021-06-14T06:09:19.373404+00:00',
 };
 
+const studentRole: Role = {
+    userId: user1.id,
+    role: 'student',
+    createdAt: '2021-06-14T06:09:19.373404+00:00',
+};
+
 const globalStoreMock: RootState = {
     user: {
         roles: [],
@@ -50,4 +56,4 @@ const globalStoreMock: RootState = {
     },
 };
 
-export default { user1, resumeReview1, document1, globalStoreMock };
+export default { user1, resumeReview1, document1, globalStoreMock, studentRole };
