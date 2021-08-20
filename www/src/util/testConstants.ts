@@ -55,6 +55,12 @@ const studentState: StudentState = {
     resumeReview: {
         resumeReviews: [],
         isLoading: false,
+        isUploading: false,
+    },
+    uploadResume: {
+        document: null,
+        isLoading: false,
+        isUploadComplete: null,
     },
 };
 
