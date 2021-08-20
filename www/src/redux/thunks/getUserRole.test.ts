@@ -24,7 +24,7 @@ it('returns the user role when the user is registered', async () => {
     const result = await getUserRole({ userId: testConstants.user1.id, tokenAcquirer: mockGetTokenSilently });
 
     expect(mockFetchWithToken).toBeCalledWith(getUserRoleEndpoint(testConstants.user1.id), mockGetTokenSilently, [Scope.ReadRoles]);
-    expect(result).toStrictEqual({ user: tc.user1 });
+    expect(result).toStrictEqual({ roles: [testConstants.studentRole] });
 });
 
 it('null if the user is not registered', async () => {
