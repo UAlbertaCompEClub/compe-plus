@@ -8,9 +8,9 @@ import tc from '../../util/testConstants';
 import { checkUserRegistration } from './checkUserRegistration';
 
 jest.mock('../../util/auth0/fetchWithToken');
-const fetchWithTokenMock = mocked(fetchWithToken, true);
+const mockFetchWithToken = mocked(fetchWithToken, true);
 
-const getTokenSilentlyMock = jest.fn();
+const mockGetTokenSilently = jest.fn();
 
 it('returns the user if the user exists', async () => {
     const mockResponse = {
@@ -18,19 +18,19 @@ it('returns the user if the user exists', async () => {
             user: tc.user1,
         },
     };
-    fetchWithTokenMock.mockResolvedValueOnce(mockResponse as AxiosResponse<WrappedUser>);
+    mockFetchWithToken.mockResolvedValueOnce(mockResponse as AxiosResponse<WrappedUser>);
 
-    const result = await checkUserRegistration(getTokenSilentlyMock);
+    const result = await checkUserRegistration(mockGetTokenSilently);
 
-    expect(fetchWithTokenMock).toBeCalledWith(getMe, getTokenSilentlyMock);
+    expect(mockFetchWithToken).toBeCalledWith(getMe, mockGetTokenSilently);
     expect(result).toStrictEqual({ user: tc.user1 });
 });
 
 it('null if the user does not exist (server returns 404)', async () => {
-    fetchWithTokenMock.mockRejectedValueOnce({});
+    mockFetchWithToken.mockRejectedValueOnce({});
 
-    const result = await checkUserRegistration(getTokenSilentlyMock);
+    const result = await checkUserRegistration(mockGetTokenSilently);
 
-    expect(fetchWithTokenMock).toBeCalledWith(getMe, getTokenSilentlyMock);
+    expect(mockFetchWithToken).toBeCalledWith(getMe, mockGetTokenSilently);
     expect(result).toBe(null);
 });

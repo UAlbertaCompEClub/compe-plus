@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 
-import CommunityIcon from '../assets/community.svg';
+import CommunityIcon from '../../assets/community.svg';
 
 const Community: FC = () => {
     return (

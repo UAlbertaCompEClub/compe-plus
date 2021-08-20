@@ -5,41 +5,43 @@ import { mocked } from 'ts-jest/utils';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
+import testConstants from '../../util/testConstants';
 import EditRolesDialog from './EditRolesDialog';
 
 jest.mock('../../redux/hooks');
 
-const useAppDispatchMock = mocked(useAppDispatch);
-const useAppSelectorMock = mocked(useAppSelector);
-const dispatchMock = jest.fn();
+const mockUseAppDispatch = mocked(useAppDispatch);
+const mockUseAppSelector = mocked(useAppSelector);
+const mockDispatch = jest.fn();
 
-useAppDispatchMock.mockReturnValue(dispatchMock);
+mockUseAppDispatch.mockReturnValue(mockDispatch);
 
-it.each([true, false])('gets the proper dialog state from redux state', (isEditRolesDialogOpen) => {
-    const state = {
-        user: {
-            isEditRolesDialogOpen,
-        },
-    } as RootState;
+describe('EditRolesDialog', () => {
+    let mockGlobalStore: RootState;
+    beforeEach(() => {
+        mockGlobalStore = testConstants.globalState;
 
-    useAppSelectorMock.mockImplementationOnce((selector) => selector(state));
+        mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
+    });
 
-    const result = shallow(<EditRolesDialog />);
+    it.each([true, false])('gets the proper dialog state from redux state', (isEditRolesDialogOpen) => {
+        mockGlobalStore.user.isEditRolesDialogOpen = isEditRolesDialogOpen;
+        mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
 
-    const dialog = result.find(Dialog);
-    expect(dialog.props()['open']).toBe(isEditRolesDialogOpen);
-});
+        const result = shallow(<EditRolesDialog />);
 
-it.each(['student', 'volunteer'])('gets the proper user role from redux state', (currentRole) => {
-    const state = {
-        user: { currentRole },
-    } as RootState;
+        const dialog = result.find(Dialog);
+        expect(dialog.props()['open']).toBe(isEditRolesDialogOpen);
+    });
 
-    useAppSelectorMock.mockImplementationOnce((selector) => selector(state));
+    it.each(['student', 'volunteer'])('gets the proper user role from redux state', (currentRole) => {
+        mockGlobalStore.user.currentRole = currentRole;
+        mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
 
-    const result = shallow(<EditRolesDialog />);
+        const result = shallow(<EditRolesDialog />);
 
-    // TODO: Update selector once UI has been refactored to use keys
-    const roleSwitch = result.find({ inputProps: { 'aria-label': `Toggle ${currentRole} role` } });
-    expect(roleSwitch.props()['checked']).toBe(true);
+        // TODO: Update selector once UI has been refactored to use keys
+        const roleSwitch = result.find({ inputProps: { 'aria-label': `Toggle ${currentRole} role` } });
+        expect(roleSwitch.props()['checked']).toBe(true);
+    });
 });

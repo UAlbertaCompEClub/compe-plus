@@ -20,16 +20,16 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('Unauthenticated', () => {
-    let globalStoreMock: RootState;
+    let mockGlobalState: RootState;
 
     beforeEach(() => {
-        globalStoreMock = testConstants.globalStoreMock;
+        mockGlobalState = testConstants.globalState;
 
-        mockUseAppSelector.mockImplementation((selector) => selector(globalStoreMock));
+        mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalState));
     });
 
     it('redirects to register page if the user has not registered', () => {
-        globalStoreMock.user.hasRegistered = false;
+        mockGlobalState.user.hasRegistered = false;
 
         shallow(<UnauthenticatedApp />);
 
@@ -37,7 +37,7 @@ describe('Unauthenticated', () => {
     });
 
     it('does not redirect if the user is registered', () => {
-        globalStoreMock.user.hasRegistered = true;
+        mockGlobalState.user.hasRegistered = true;
 
         shallow(<UnauthenticatedApp />);
 
