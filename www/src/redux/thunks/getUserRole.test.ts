@@ -5,7 +5,6 @@ import fetchWithToken from '../../util/auth0/fetchWithToken';
 import { getUserRole as getUserRoleEndpoint } from '../../util/endpoints';
 import Scope from '../../util/scopes';
 import testConstants from '../../util/testConstants';
-import tc from '../../util/testConstants';
 import { getUserRole, GetUserRolesResponse } from './getUserRole';
 
 jest.mock('../../util/auth0/fetchWithToken');
