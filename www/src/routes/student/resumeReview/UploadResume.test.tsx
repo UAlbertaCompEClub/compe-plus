@@ -30,7 +30,10 @@ describe('UploadResume', () => {
     });
 
     it('renders correctly for preview step', () => {
-        mockStudentState.uploadResume.document = 'mockbase64encodeddocument';
+        mockStudentState.uploadResume.document = {
+            base64Contents: 'mockbase64encodeddocument',
+            name: 'mockdocumentname',
+        };
         mockUseStudentSelector.mockImplementation((selector) => selector(mockStudentState));
 
         const result = shallow(<UploadResume />);
