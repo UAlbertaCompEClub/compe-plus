@@ -3,18 +3,17 @@ import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 import React, { FC } from 'react';
 import { useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
-import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import LoadingOverlay from './components/LoadingOverlay';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import adminStore from './redux/substores/admin/adminStore';
-import volunteerStore from './redux/substores/volunteeer/volunteerStore';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
-import MobileLanding from './routes/MobileLanding';
+import AdminApp from './routes/Admin';
 import StudentApp from './routes/Student';
 import UnauthenticatedApp from './routes/Unauthenticated';
+import MobileLanding from './routes/unauthenticated/MobileLanding';
+import VolunteerApp from './routes/Volunteer';
 import theme from './styles/theme';
 import { COMMUNITY, COMMUNITY_ROUTE, COMPE_PLUS, MOCK_INTERVIEW, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW, RESUME_REVIEW_ROUTE } from './util/constants';
 
@@ -23,24 +22,6 @@ const header_sections: Section[] = [
     { title: MOCK_INTERVIEW, url: MOCK_INTERVIEW_ROUTE },
     { title: COMMUNITY, url: COMMUNITY_ROUTE },
 ];
-
-const VolunteerApp: FC = () => {
-    // TODO: Update components accordingly
-    return (
-        <Provider store={volunteerStore}>
-            <p>🚧 Work in progress 🚧</p>
-        </Provider>
-    );
-};
-
-const AdminApp: FC = () => {
-    // TODO: Update components accordingly
-    return (
-        <Provider store={adminStore}>
-            <p>🚧 Work in progress 🚧</p>
-        </Provider>
-    );
-};
 
 const getContentByRole = (role: string) => {
     switch (role) {

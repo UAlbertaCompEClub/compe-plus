@@ -3,10 +3,10 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 
 import { useAppSelector } from '../redux/hooks';
 import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, REGISTER_ROUTE, RESUME_REVIEW_ROUTE } from '../util/constants';
-import Community from './Community';
-import Landing from './Landing';
-import MockInterview from './MockInterview';
 import Register from './student/Register';
+import Community from './unauthenticated/Community';
+import Landing from './unauthenticated/Landing';
+import MockInterview from './unauthenticated/MockInterview';
 import ResumeReview from './unauthenticated/ResumeReview';
 
 const UnauthenticatedApp: FC = () => {
