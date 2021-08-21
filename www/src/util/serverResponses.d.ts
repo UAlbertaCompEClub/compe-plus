@@ -38,3 +38,9 @@ export type Document = {
     createdAt: string;
     updatedAt: string;
 };
+
+export type Role = {
+    userId: string;
+    role: string;
+    createdAt: string;
+};
