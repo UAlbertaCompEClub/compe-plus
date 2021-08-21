@@ -9,6 +9,7 @@ import App from './App';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { AppDispatch, RootState } from './redux/store';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
+import getUserRole, { GetUserRoleParameters, GetUserRolesResponse } from './redux/thunks/getUserRole';
 import Landing from './routes/unauthenticated/Landing';
 import TokenAcquirer from './util/auth0/TokenAcquirer';
 import { WrappedUser } from './util/serverResponses';
@@ -33,6 +34,9 @@ const mockUseAppSelector = mocked(useAppSelector, true);
 jest.mock('./redux/thunks/checkUserRegistration');
 const mockCheckUserRegistration = mocked(checkUserRegistration);
 
+jest.mock('./redux/thunks/getUserRole');
+const mockGetUserRole = mocked(getUserRole);
+
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useHistory: () => ({
@@ -43,6 +47,7 @@ jest.mock('react-router-dom', () => ({
 describe('App', () => {
     let mockGlobalStore: RootState;
     let mockDispatch: jest.MockedFunction<AppDispatch>;
+    let mockGetAccessTokenSilently: jest.MockedFunction<() => Promise<string>>;
     let mockAuth0State: Auth0ContextInterface<User>;
 
     beforeEach(() => {
@@ -54,9 +59,14 @@ describe('App', () => {
         mockGlobalStore = testConstants.globalState;
         mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
 
+        mockGetAccessTokenSilently = jest.fn();
         mockAuth0State = {
             isAuthenticated: false,
             isLoading: false,
+            user: {
+                sub: testConstants.user1.id,
+            },
+            getAccessTokenSilently: mockGetAccessTokenSilently,
         } as unknown as Auth0ContextInterface<User>;
         mockUseAuth0.mockReturnValue(mockAuth0State);
     });
@@ -74,6 +84,7 @@ describe('App', () => {
         mockAuth0State.isAuthenticated = true;
 
         const result = shallow(<App />);
+
         expect(result.find(Landing)).not.toBeNull();
     });
 
@@ -81,7 +92,7 @@ describe('App', () => {
         isAuthenticated | friendlyName
         ${true}         | ${'calls check user registration on authenticated'}
         ${false}        | ${'does not call check user registration if user is not authenticated'}
-    `('$friendlyName', (isAuthenticated) => {
+    `('$friendlyName', ({ isAuthenticated }) => {
         mockAuth0State.isAuthenticated = isAuthenticated;
 
         const mockAction = {};
@@ -92,9 +103,26 @@ describe('App', () => {
         if (isAuthenticated) {
             expect(mockDispatch).toBeCalledWith(mockAction);
         } else {
-            expect(mockDispatch).not.toBeCalled();
+            expect(mockDispatch).not.toBeCalledWith(mockAction);
         }
     });
 
-    it.todo('fetches user role');
+    it.each`
+        hasRegistered | friendlyName
+        ${true}       | ${'fetches user role on registered'}
+        ${false}      | ${'does not fetch user role if user is not registered'}
+    `('$friendlyName', ({ hasRegistered }) => {
+        mockGlobalStore.user.hasRegistered = hasRegistered;
+
+        const mockAction = {};
+        mockGetUserRole.mockReturnValueOnce(mockAction as AsyncThunkAction<GetUserRolesResponse | null | undefined, GetUserRoleParameters, never>);
+
+        render(withAuth0(<App />, mockAuth0State));
+
+        if (hasRegistered) {
+            expect(mockDispatch).toBeCalledWith(mockAction);
+        } else {
+            expect(mockDispatch).not.toBeCalledWith(mockAction);
+        }
+    });
 });
