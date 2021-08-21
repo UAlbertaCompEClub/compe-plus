@@ -10,9 +10,7 @@ const ResumeReview: FC = () => {
     const dispatch = useVolunteerDispatch();
 
     useEffect(() => {
-        console.log('do something');
         dispatch(getAvailableResumeReviews({ tokenAcquirer: getAccessTokenSilently }));
-        console.log('dispatched');
     }, []);
 
     return (

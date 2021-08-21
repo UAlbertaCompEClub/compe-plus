@@ -18,10 +18,9 @@ type AsyncThunkConfig = {
 };
 
 export const getAvailableResumeReviews = async (params: InitiateResumeReviewParams): Promise<WrappedResumeReviews> => {
-    const resumeReviewResult = await fetchWithToken<WrappedResumeReviews>(getResumeReviews, params.tokenAcquirer, [Scope.ReadMyResumeReviews], { state: 'seeking_reviewer' }).catch(() => {
+    const resumeReviewResult = await fetchWithToken<WrappedResumeReviews>(getResumeReviews, params.tokenAcquirer, [Scope.ReadAllResumeReviews], { state: 'seeking_reviewer' }).catch(() => {
         throw new Error('Unable to fetch available resume reviews');
     });
-    console.log('hi');
     return resumeReviewResult?.data ?? { resumeReviews: [] };
 };
 
