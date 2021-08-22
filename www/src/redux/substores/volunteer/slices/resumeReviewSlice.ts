@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { ResumeReview } from '../../../../util/serverResponses';
 import getAvailableResumeReviews from '../thunks/getAvailableResumeReviews';
+import getReviewingResumeReviews from '../thunks/getReviewingResumeReviews';
 
 type ResumeReviewState = {
     availableResumes: ResumeReview[];
@@ -26,6 +27,13 @@ export const resumeReviewSlice = createSlice({
         builder.addCase(getAvailableResumeReviews.fulfilled, (state, action) => {
             state.isLoading = false;
             state.availableResumes = action.payload.resumeReviews;
+        });
+        builder.addCase(getReviewingResumeReviews.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getReviewingResumeReviews.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.reviewingResumes = action.payload.resumeReviews;
         });
     },
 });

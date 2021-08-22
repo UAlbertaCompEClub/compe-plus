@@ -7,8 +7,9 @@ import Scope from '../../../../util/scopes';
 import { WrappedResumeReviews } from '../../../../util/serverResponses';
 import { VolunteerDispatch, VolunteerState } from '../volunteerStore';
 
-export type GetAvailableResumeReviewParams = {
+export type GetReviewingResumeReviewParams = {
     tokenAcquirer: TokenAcquirer;
+    userId: string;
 };
 
 type AsyncThunkConfig = {
@@ -17,16 +18,19 @@ type AsyncThunkConfig = {
     rejectValue: string;
 };
 
-export const getAvailableResumeReviews = async (params: GetAvailableResumeReviewParams): Promise<WrappedResumeReviews> => {
-    const resumeReviewResult = await fetchWithToken<WrappedResumeReviews>(getResumeReviews, params.tokenAcquirer, [Scope.ReadAllResumeReviews], { state: 'seeking_reviewer' }).catch(() => {
-        throw new Error('Unable to fetch available resume reviews');
+export const getReviewingResumeReviews = async (params: GetReviewingResumeReviewParams): Promise<WrappedResumeReviews> => {
+    const resumeReviewResult = await fetchWithToken<WrappedResumeReviews>(getResumeReviews, params.tokenAcquirer, [Scope.ReadAllResumeReviews], {
+        state: 'reviewing',
+        reviewer: encodeURIComponent(params.userId),
+    }).catch(() => {
+        throw new Error('Unable to fetch reviewing resume reviews');
     });
     return resumeReviewResult?.data ?? { resumeReviews: [] };
 };
 
-export default createAsyncThunk<WrappedResumeReviews, GetAvailableResumeReviewParams, AsyncThunkConfig>('resumeReview/getAvailableResumeReviews', (params, thunkApi) => {
+export default createAsyncThunk<WrappedResumeReviews, GetReviewingResumeReviewParams, AsyncThunkConfig>('resumeReview/getReviewingResumeReviews', (params, thunkApi) => {
     try {
-        return getAvailableResumeReviews(params);
+        return getReviewingResumeReviews(params);
     } catch (e) {
         return thunkApi.rejectWithValue(e);
     }
