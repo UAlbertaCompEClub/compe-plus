@@ -5,8 +5,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Authentication set-up
 
 1. Copy `www/.env.sample` to `www/.env`
-2. Navigate to `compe-plus` application in ![Auth0](https://manage.auth0.com/dashboard)
+2. Using the `compe-plus-dev` tenant in ![Auth0](https://manage.auth0.com/dashboard), expand _Applications_ on the left sidebar and click on _Compe+ Web Application_
 3. In the settings page, copy the domain and client ID to their respective fields in the `.env` file
+4. Copy the non-localhost _Allowed Callback URLs_ to `/etc/hosts` as follows
+    ```
+    127.0.0.1     <NON_LOCALHOST_CALLBACK_URL_HERE>
+    ```
 
 ## Available Scripts
 
@@ -15,7 +19,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [https://<NON_LOCALHOST_CALLBACK_URL_HERE>:3000](https://<NON_LOCALHOST_CALLBACK_URL_HERE>:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
