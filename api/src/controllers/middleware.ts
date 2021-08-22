@@ -99,7 +99,7 @@ function authenticate(): ErrHandledMiddleware {
  */
 function authorize(scope: Scope): ErrHandledMiddleware {
     // Check that the caller has the proper scopes
-    const checkAuthorization = jwtAuthz([scope], { failWithError: true, customScopeKey: 'permissions' });
+    const checkAuthorization = jwtAuthz([scope], { failWithError: true });
 
     // Catch errors thrown off by jwtAuthz and convert to NotAuthorizedException
     const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
@@ -119,7 +119,7 @@ function authorize(scope: Scope): ErrHandledMiddleware {
  */
 function authorizeAndFallThrough(scope: Scope): ErrHandledMiddleware {
     // Check that the caller has the proper scopes
-    const checkAuthorization = jwtAuthz([scope], { failWithError: true, customScopeKey: 'permissions' });
+    const checkAuthorization = jwtAuthz([scope], { failWithError: true });
 
     // Catch errors thrown off by jwtAuthz and fallthrough
     const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
