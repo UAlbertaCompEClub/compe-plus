@@ -5,7 +5,7 @@ import getAvailableResumeReviews from '../../redux/substores/volunteer/thunks/ge
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 
 const ResumeReview: FC = () => {
-    const { availableResumes, reviewingResumes, isLoading } = useVolunteerSelector((state) => state.resumeReview);
+    const { availableResumes, isLoading } = useVolunteerSelector((state) => state.resumeReview);
     const { getAccessTokenSilently } = useAuth0();
     const dispatch = useVolunteerDispatch();
 
