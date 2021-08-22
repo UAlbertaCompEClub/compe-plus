@@ -8,8 +8,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Header, Section } from './components/Header';
 import LoadingOverlay from './components/LoadingOverlay';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import adminStore from './redux/substores/admin/adminStore';
-import volunteerStore from './redux/substores/volunteer/volunteerStore';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import getUserRole from './redux/thunks/getUserRole';
 import AdminApp from './routes/Admin';
