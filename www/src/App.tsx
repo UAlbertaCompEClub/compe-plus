@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import LoadingOverlay from './components/LoadingOverlay';
+import EditRolesDialog from './components/user/EditRolesDialog';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import getUserRole from './redux/thunks/getUserRole';
@@ -65,7 +66,10 @@ const App: FC = () => {
             <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
-                    <BrowserView renderWithFragment>{content}</BrowserView>
+                    <BrowserView renderWithFragment>
+                        {content}
+                        <EditRolesDialog />
+                    </BrowserView>
                     <MobileView>
                         <MobileLanding />
                     </MobileView>

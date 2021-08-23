@@ -1,16 +1,20 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Divider, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import { AccountCircle } from '@material-ui/icons';
 import React, { FC, useRef, useState } from 'react';
+
+import { useAppDispatch } from '../../redux/hooks';
+import { openEditRolesDialog } from '../../redux/slices/userSlice';
 
 const UserProfile: FC = () => {
     const classes = useStyles();
     const userProfileIcon = useRef(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { logout } = useAuth0();
-    const { user } = useAuth0();
+    const { logout, user } = useAuth0();
     const ccid = user?.email?.split('@')[0] ?? '';
+
+    const dispatch = useAppDispatch();
 
     return (
         <>
@@ -40,13 +44,14 @@ const UserProfile: FC = () => {
                 }}
                 open={isMenuOpen}
                 onClose={() => setIsMenuOpen(false)}
-                className={classes.menu}
+                classes={{ paper: classes.menuPaper }}
             >
-                <Typography className={classes.menu_text}> Signed in as: {ccid} </Typography>
-                <MenuItem onClick={() => logout()} className={classes.menu_text} style={{ marginBottom: '100px' }}>
+                <MenuItem className={classes.menuItem}>Signed in as: {ccid}</MenuItem>
+                <MenuItem className={classes.menuItem} onClick={() => dispatch(openEditRolesDialog())}>
                     Settings
                 </MenuItem>
-                <MenuItem onClick={() => logout()} className={classes.menu_text}>
+                <Divider className={classes.menuDivider} />
+                <MenuItem className={classes.menuItem} onClick={() => logout()}>
                     Log out
                 </MenuItem>
             </Menu>
@@ -55,16 +60,16 @@ const UserProfile: FC = () => {
 };
 
 const useStyles = makeStyles((theme) => ({
-    menu: {
-        '& .MuiPaper-root': {
-            backgroundColor: theme.palette.primary.dark,
-        },
+    menuPaper: {
+        backgroundColor: theme.palette.primary.dark,
     },
-    menu_text: {
-        color: theme.palette.text.secondary,
+    menuItem: {
+        color: theme.palette.primary.contrastText,
         fontSize: 20,
         fontWeight: 500,
-        padding: '15px',
+    },
+    menuDivider: {
+        backgroundColor: fade(theme.palette.primary.contrastText, 0.12),
     },
 }));
 
