@@ -15,4 +15,12 @@ const get = async (id: string): Promise<s.user_roles.JSONSelectable[]> => {
     return db.select('user_roles', where).run(pool);
 };
 
-export { get };
+/**
+ * Give a user a new role.
+ * @param user_role User id and role.
+ */
+const assign = async (user_role: s.user_roles.Insertable): Promise<s.user_roles.JSONSelectable> => {
+    return db.insert('user_roles', { user_id: user_role.user_id, role: user_role.role }).run(pool);
+};
+
+export { assign, get };
