@@ -24,23 +24,43 @@ describe('Settings', () => {
         mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
     });
 
-    it.each([true, false])('gets the proper dialog state from redux state', (isEditRolesDialogOpen) => {
-        mockGlobalStore.user.isSettingsDialogOpen = isEditRolesDialogOpen;
+    it.each([true, false])('gets the proper dialog state from redux state', (isSettingsDialogOpen) => {
+        mockGlobalStore.user.isSettingsDialogOpen = isSettingsDialogOpen;
         mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
 
         const result = shallow(<SettingsDialog />);
 
         const dialog = result.find(Dialog);
-        expect(dialog.props()['open']).toBe(isEditRolesDialogOpen);
+        expect(dialog.props()['open']).toBe(isSettingsDialogOpen);
     });
 
-    it.each(['student', 'volunteer'])('gets the proper user role from redux state', (currentRole) => {
+    it.each(['student', 'volunteer', 'admin'])('gets the proper user role from redux state', (currentRole) => {
         mockGlobalStore.user.currentRole = currentRole;
         mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
 
         const result = shallow(<SettingsDialog />);
 
-        const roleSwitch = result.find({ inputProps: { 'aria-label': `Toggle ${currentRole} role` } });
-        expect(roleSwitch.props()['checked']).toBe(true);
+        const roleToLabelMap = new Map([
+            ['student', 'Student'],
+            ['volunteer', 'Volunteer'],
+            ['admin', 'Admin'],
+        ]);
+
+        const roleSwitch = result.find({ label: roleToLabelMap.get(currentRole) });
+        expect(roleSwitch.prop('control').props['checked']).toBe(true);
+    });
+
+    it('disables the reviewer and admin switches if user is a student', () => {
+        mockGlobalStore.user.currentRole = 'student';
+        mockGlobalStore.user.roles = ['student'];
+        mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
+
+        const result = shallow(<SettingsDialog />);
+
+        const volunteerSwitch = result.find({ label: 'Volunteer' });
+        expect(volunteerSwitch.prop('control').props['disabled']).toBe(true);
+
+        const adminSwitch = result.find({ label: 'Admin' });
+        expect(adminSwitch.prop('control').props['disabled']).toBe(true);
     });
 });
