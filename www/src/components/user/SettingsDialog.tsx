@@ -7,7 +7,7 @@ import React, { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { closeEditRolesDialog, setCurrentRole } from '../../redux/slices/userSlice';
 
-const SettingsDialoog: FC = () => {
+const SettingsDialog: FC = () => {
     const dispatch = useAppDispatch();
 
     const { isEditRolesDialogOpen, currentRole, roles } = useAppSelector((state) => state.user);
@@ -59,4 +59,4 @@ const SettingsDialoog: FC = () => {
     );
 };
 
-export default SettingsDialoog;
+export default SettingsDialog;

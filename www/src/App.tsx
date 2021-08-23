@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import LoadingOverlay from './components/LoadingOverlay';
-import SettingsDialoog from './components/user/SettingsDialog';
+import SettingsDialog from './components/user/SettingsDialog';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import checkUserRegistration from './redux/thunks/checkUserRegistration';
 import getUserRole from './redux/thunks/getUserRole';
@@ -68,7 +68,7 @@ const App: FC = () => {
                     <Header sections={header_sections} title={COMPE_PLUS} />
                     <BrowserView renderWithFragment>
                         {content}
-                        <SettingsDialoog />
+                        <SettingsDialog />
                     </BrowserView>
                     <MobileView>
                         <MobileLanding />
