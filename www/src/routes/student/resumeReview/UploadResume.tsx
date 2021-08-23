@@ -31,6 +31,11 @@ const handleOnFileSelected = async (dispatch: StudentDispatch, files?: FileList 
         return;
     }
 
+    if (pdfFile.size >= 3_000_000) {
+        alert('File size must be less than 3MB');
+        return;
+    }
+
     const file = await pdfFile.arrayBuffer();
 
     dispatch(
