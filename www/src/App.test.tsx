@@ -72,11 +72,10 @@ describe('App', () => {
     });
 
     it.each`
-        role             | friendlyName
-        ${'student'}     | ${'a student'}
-        ${'reviewer'}    | ${'a reviewer'}
-        ${'interviewer'} | ${'an interviewer'}
-        ${'admin'}       | ${'an admin'}
+        role           | friendlyName
+        ${'student'}   | ${'a student'}
+        ${'volunteer'} | ${'a reviewer/interviewer'}
+        ${'admin'}     | ${'an admin'}
     `('renders Landing by default for $friendlyName', ({ role }) => {
         mockGlobalStore.user.currentRole = role;
 
