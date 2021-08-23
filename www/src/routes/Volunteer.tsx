@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
-import volunteerStore from '../redux/substores/volunteeer/volunteerStore';
+import volunteerStore from '../redux/substores/volunteer/volunteerStore';
 import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW_ROUTE } from '../util/constants';
 import Landing from './unauthenticated/Landing';
 import MockInterview from './volunteer/MockInterview';
