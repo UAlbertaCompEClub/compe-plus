@@ -7,14 +7,14 @@ import React, { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { closeEditRolesDialog, setCurrentRole } from '../../redux/slices/userSlice';
 
-const EditRolesDialog: FC = () => {
+const SettingsDialoog: FC = () => {
     const dispatch = useAppDispatch();
 
     const { isEditRolesDialogOpen, currentRole, roles } = useAppSelector((state) => state.user);
 
     return (
         <Dialog onClose={() => dispatch(closeEditRolesDialog())} open={isEditRolesDialogOpen}>
-            <DialogTitle>Edit Roles</DialogTitle>
+            <DialogTitle>Settings</DialogTitle>
             <DialogContent>
                 <FormGroup row>
                     <FormControlLabel
@@ -59,4 +59,4 @@ const EditRolesDialog: FC = () => {
     );
 };
 
-export default EditRolesDialog;
+export default SettingsDialoog;
