@@ -10,10 +10,10 @@ import { resetUploadResume, setDocument } from '../../../redux/substores/student
 import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
 import { StudentDispatch } from '../../../redux/substores/student/studentStore';
 import initiateResumeReview from '../../../redux/substores/student/thunks/initiateResumeReview';
+import config from '../../../util/config';
 import { arrayBufferToBase64, base64ToArrayBuffer } from '../../../util/helpers';
 
 const handleOnFileSelected = async (dispatch: StudentDispatch, files?: FileList | null) => {
-    // TODO: Improve error handling
     if (files === undefined || files === null) {
         alert('No file selected');
         return;
@@ -31,8 +31,8 @@ const handleOnFileSelected = async (dispatch: StudentDispatch, files?: FileList 
         return;
     }
 
-    if (pdfFile.size >= 3_000_000) {
-        alert('File size must be less than 3MB');
+    if (pdfFile.size >= config.maxResumeSizeBytes) {
+        alert('File is too large');
         return;
     }
 
