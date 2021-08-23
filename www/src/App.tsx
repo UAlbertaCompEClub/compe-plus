@@ -29,8 +29,7 @@ const getContentByRole = (role: string) => {
     switch (role) {
         case 'admin':
             return <AdminApp />;
-        case 'reviewer':
-        case 'interviewer':
+        case 'volunteer':
             return <VolunteerApp />;
         case 'student':
             return <StudentApp />;
