@@ -10,10 +10,10 @@ import { closeEditRolesDialog, setCurrentRole } from '../../redux/slices/userSli
 const SettingsDialog: FC = () => {
     const dispatch = useAppDispatch();
 
-    const { isEditRolesDialogOpen, currentRole, roles } = useAppSelector((state) => state.user);
+    const { isSettingsDialogOpen, currentRole, roles } = useAppSelector((state) => state.user);
 
     return (
-        <Dialog onClose={() => dispatch(closeEditRolesDialog())} open={isEditRolesDialogOpen}>
+        <Dialog onClose={() => dispatch(closeEditRolesDialog())} open={isSettingsDialogOpen}>
             <DialogTitle>Settings</DialogTitle>
             <DialogContent>
                 <FormGroup row>

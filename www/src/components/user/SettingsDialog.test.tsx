@@ -16,7 +16,7 @@ const mockDispatch = jest.fn();
 
 mockUseAppDispatch.mockReturnValue(mockDispatch);
 
-describe('EditRolesDialog', () => {
+describe('Settings', () => {
     let mockGlobalStore: RootState;
     beforeEach(() => {
         mockGlobalStore = testConstants.globalState;
@@ -25,7 +25,7 @@ describe('EditRolesDialog', () => {
     });
 
     it.each([true, false])('gets the proper dialog state from redux state', (isEditRolesDialogOpen) => {
-        mockGlobalStore.user.isEditRolesDialogOpen = isEditRolesDialogOpen;
+        mockGlobalStore.user.isSettingsDialogOpen = isEditRolesDialogOpen;
         mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
 
         const result = shallow(<SettingsDialog />);
@@ -40,7 +40,6 @@ describe('EditRolesDialog', () => {
 
         const result = shallow(<SettingsDialog />);
 
-        // TODO: Update selector once UI has been refactored to use keys
         const roleSwitch = result.find({ inputProps: { 'aria-label': `Toggle ${currentRole} role` } });
         expect(roleSwitch.props()['checked']).toBe(true);
     });
