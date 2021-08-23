@@ -136,7 +136,7 @@ function authorizeAndFallThrough(scope: Scope): ErrHandledMiddleware {
 function jsonParser(): ErrHandledMiddleware {
     // Parse a json body
     const parseBody = express.json({
-        limit: '3mb',
+        limit: config.maxJsonSize,
     });
 
     // Catch parsing errors
