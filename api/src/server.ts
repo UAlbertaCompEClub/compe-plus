@@ -2,6 +2,7 @@ import express from 'express';
 import http from 'http';
 
 import middleware from './controllers/middleware';
+import adminRoutes from './routes/adminRoutes';
 import documentRoutes from './routes/documentRoutes';
 import resumeReviewRoutes from './routes/resumeReviewRoutes';
 import roleRoutes from './routes/roleRoutes';
@@ -28,6 +29,7 @@ router.use('/api/v1', userRoutes);
 router.use('/api/v1', resumeReviewRoutes);
 router.use('/api/v1', documentRoutes);
 router.use('/api/v1', roleRoutes);
+router.use('/api/v1', adminRoutes);
 
 /** Not found */
 router.use(middleware.notFound());
