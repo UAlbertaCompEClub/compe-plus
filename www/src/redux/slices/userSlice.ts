@@ -7,7 +7,7 @@ type UserState = {
     roles: string[];
     currentRole: string;
     hasRegistered: boolean | null;
-    isEditRolesDialogOpen: boolean;
+    isSettingsDialogOpen: boolean;
     isLoading: boolean;
 };
 
@@ -15,7 +15,7 @@ const initialState: UserState = {
     roles: [],
     currentRole: '',
     hasRegistered: null,
-    isEditRolesDialogOpen: false,
+    isSettingsDialogOpen: false,
     isLoading: false,
 };
 
@@ -27,10 +27,10 @@ export const userSlice = createSlice({
             state.currentRole = action.payload;
         },
         openEditRolesDialog(state) {
-            state.isEditRolesDialogOpen = true;
+            state.isSettingsDialogOpen = true;
         },
         closeEditRolesDialog(state) {
-            state.isEditRolesDialogOpen = false;
+            state.isSettingsDialogOpen = false;
         },
     },
     extraReducers: (builder) => {

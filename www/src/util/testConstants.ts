@@ -47,7 +47,7 @@ const globalState: RootState = {
         currentRole: '',
         isLoading: false,
         hasRegistered: true,
-        isEditRolesDialogOpen: false,
+        isSettingsDialogOpen: false,
     },
     registerUser: {
         year: 0,
