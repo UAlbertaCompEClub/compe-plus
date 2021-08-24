@@ -4,6 +4,7 @@ import http from 'http';
 import middleware from './controllers/middleware';
 import documentRoutes from './routes/documentRoutes';
 import resumeReviewRoutes from './routes/resumeReviewRoutes';
+import roleRoutes from './routes/roleRoutes';
 import userRoutes from './routes/userRoutes';
 import config from './util/config';
 import logger from './util/logger';
@@ -26,6 +27,7 @@ router.use(middleware.authenticate());
 router.use('/api/v1', userRoutes);
 router.use('/api/v1', resumeReviewRoutes);
 router.use('/api/v1', documentRoutes);
+router.use('/api/v1', roleRoutes);
 
 /** Not found */
 router.use(middleware.notFound());

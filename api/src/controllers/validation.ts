@@ -147,5 +147,16 @@ const beAValidDocument = {
     message: 'Must be a document that already exists',
 };
 
-export { beAResumeReviewState, beAValidDocument, beAValidResumeReview, beAValidUrl, beAValidUser, beAValidUuid, beProperlyBase64Encoded, beProperlyUriEncoded };
+/**
+ * Test whether a document already exists in the database.
+ */
+const beAValidRole = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        const validRoles = ['admin', 'interviewer', 'reviewer', 'student'];
+        return field !== undefined && validRoles.includes(field);
+    },
+    message: 'Must be a valid role',
+};
+
+export { beAResumeReviewState, beAValidDocument, beAValidResumeReview, beAValidRole, beAValidUrl, beAValidUser, beAValidUuid, beProperlyBase64Encoded, beProperlyUriEncoded };
 export default Validator;

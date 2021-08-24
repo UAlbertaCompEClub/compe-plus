@@ -39,10 +39,16 @@ const document1: s.documents.JSONSelectable = {
     updated_at: '2021-06-14T06:09:19.373404+00:00',
 };
 
-const role1: s.user_roles.JSONSelectable = {
+const userRole: s.user_roles.JSONSelectable = {
     user_id: 'google-oauth2|999937999992352499990',
     created_at: '2021-06-14T06:09:19.373404+00:00',
     role: 'student',
 };
 
-export default { user1, resumeReview1, userRole1, document1, role1 };
+const volunteerRole: s.user_roles.JSONSelectable = {
+    user_id: 'google-oauth2|999937999992352499990',
+    created_at: '2021-06-14T06:09:19.373404+00:00',
+    role: 'reviewer',
+};
+
+export default { user1, resumeReview1, userRole1, document1, role1: userRole, role2: volunteerRole };
