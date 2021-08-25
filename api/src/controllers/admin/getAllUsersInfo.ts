@@ -3,7 +3,7 @@ import { CamelCasedProperties } from 'type-fest';
 
 import * as adminRepository from '../../repositories/adminRepository';
 import { userRoleSelectable } from '../../repositories/adminRepository';
-import { toCamelCase } from '../../util/helper';
+import { manyToCamelCase } from '../../util/helper';
 import controller from '../controllerUtil';
 
 type ResBody = { users: CamelCasedProperties<userRoleSelectable>[] };
@@ -17,7 +17,7 @@ type ResBody = { users: CamelCasedProperties<userRoleSelectable>[] };
 const getAllUsersInfo = controller(async (_req: Request, res: Response<ResBody>): Promise<void> => {
     const users = await adminRepository.getUsersInfo();
 
-    res.status(200).json({ users: users.map((user) => toCamelCase(user)) });
+    res.status(200).json({ users: manyToCamelCase(users) });
 });
 
 export default getAllUsersInfo;
