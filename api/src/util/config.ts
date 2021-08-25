@@ -23,7 +23,7 @@ const BUCKETEER_AWS_REGION = process.env.BUCKETEER_AWS_REGION || 'us-east-1';
 const BUCKETEER_BUCKET_NAME = process.env.BUCKETEER_BUCKET_NAME || 'documents';
 const BUCKETEER_ENDPOINT = process.env.BUCKETEER_ENDPOINT || '';
 const USE_SSL = process.env.USE_SSL || false;
-const MAX_JSON_SIZE = process.env.MAX_JSON_SIZE || '100kb';
+const MAX_JSON_SIZE = process.env.MAX_JSON_SIZE || '10mb';
 
 /**
  * Configuration for authentication.
