@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { mocked } from 'ts-jest/utils';
 
 import * as adminRepository from '../../repositories/adminRepository';
+import { toCamelCase } from '../../util/helper';
 import testConstants from '../../util/testConstants';
 import getAllUsersInfo from './getAllUsersInfo';
 
@@ -20,10 +21,11 @@ beforeEach(() => {
 
 it('gets all users', async () => {
     const user1AndRole = { ...testConstants.user1, user_role: testConstants.userRole1.role };
+    const users = { users: [toCamelCase(user1AndRole)] };
     mockAdminRepository.getUsersInfo.mockResolvedValueOnce([user1AndRole]);
 
     await getAllUsersInfo(req as Request, res as Response, next);
 
     expect(res.status).toBeCalledWith(200);
-    expect(res.json).toBeCalledWith(user1AndRole);
+    expect(res.json).toBeCalledWith(users);
 });
