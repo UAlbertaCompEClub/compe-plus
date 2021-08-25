@@ -6,6 +6,6 @@ import Scope from '../types/scopes';
 
 export const router = express.Router();
 
-router.get('/admin/allUsers', middleware.authorize(Scope.ReadUsers), controller.getAllUsersInfo);
+router.get('/admin/allUsers', middleware.authorize(Scope.ReadAllUsersRoles), controller.getAllUsersInfo);
 
 export default router;
