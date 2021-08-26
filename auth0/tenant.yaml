@@ -50,6 +50,8 @@ resourceServers:
             description: Create interviews
           - value: 'delete:interviews'
             description: Delete interviews
+          - value: 'read:all_users_roles'
+            description: 'Read all users and their roles'
       signing_alg: RS256
       skip_consent_for_verifiable_first_party_clients: true
       token_dialect: access_token_authz
@@ -113,10 +115,10 @@ clients:
     - name: Compe+ Web Application
       allowed_clients: []
       allowed_logout_urls:
-          - 'http://localhost:3000'
+          - 'https://local.compe.plus:3000'
       app_type: spa
       callbacks:
-          - 'http://localhost:3000'
+          - 'https://local.compe.plus:3000'
       client_aliases: []
       cross_origin_auth: false
       custom_login_page_on: true
@@ -147,7 +149,7 @@ clients:
       sso_disabled: false
       token_endpoint_auth_method: none
       web_origins:
-          - 'http://localhost:3000'
+          - 'https://local.compe.plus:3000'
     - name: Deploy CLI Application
       app_type: non_interactive
       cross_origin_auth: false
@@ -451,6 +453,8 @@ roles:
           - permission_name: 'read:roles'
             resource_server_identifier: 'https://compe.plus/api'
           - permission_name: 'read:users'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update_all:resume_reviews'
             resource_server_identifier: 'https://compe.plus/api'
           - permission_name: 'update_my:documents'
             resource_server_identifier: 'https://compe.plus/api'
