@@ -51,7 +51,7 @@ resourceServers:
           - value: 'delete:interviews'
             description: Delete interviews
           - value: 'read:all_users_roles'
-            description: 'Read all users and their roles'
+            description: Read all users and their roles
       signing_alg: RS256
       skip_consent_for_verifiable_first_party_clients: true
       token_dialect: access_token_authz
@@ -413,6 +413,8 @@ roles:
           - permission_name: 'read_all:interviews'
             resource_server_identifier: 'https://compe.plus/api'
           - permission_name: 'read_all:resume_reviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'read:all_users_roles'
             resource_server_identifier: 'https://compe.plus/api'
           - permission_name: 'read:roles'
             resource_server_identifier: 'https://compe.plus/api'
