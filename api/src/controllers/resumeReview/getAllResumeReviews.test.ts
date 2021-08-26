@@ -2,12 +2,17 @@ import { NextFunction, Request, Response } from 'express';
 import { mocked } from 'ts-jest/utils';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
+import * as userRepository from '../../repositories/userRepository';
 import { toCamelCase } from '../../util/helper';
+import testConstants from '../../util/testConstants';
 import tc from '../../util/testConstants';
 import getAllResumeReviews from './getAllResumeReviews';
 
 jest.mock('../../repositories/resumeReviewRepository');
 const mockResumeReviewRepository = mocked(resumeReviewRepository, true);
+
+jest.mock('../../repositories/userRepository');
+const mockUserRepository = mocked(userRepository, true);
 
 let req: Partial<Request>;
 let res: Partial<Response>;
@@ -62,11 +67,12 @@ it('rejects invalid state query parameter', async () => {
 it('works on the happy path', async () => {
     req.query = { state: 'seeking_reviewer', reviewer: '52c2cbdc-e0a8-48e7-9302-92a37e016ab0' };
     mockResumeReviewRepository.get.mockResolvedValueOnce([tc.resumeReview1]);
+    mockUserRepository.get.mockResolvedValueOnce([testConstants.user1]);
 
     await getAllResumeReviews(req as Request, res as Response, next);
 
     expect(mockResumeReviewRepository.get).toBeCalledWith(undefined, undefined, '52c2cbdc-e0a8-48e7-9302-92a37e016ab0', 'seeking_reviewer');
     expect(next).not.toBeCalled();
     expect(res.status).toBeCalledWith(200);
-    expect(res.json).toBeCalledWith({ resumeReviews: [toCamelCase(tc.resumeReview1)] });
+    expect(res.json).toBeCalledWith({ resumeReviews: [toCamelCase({ ...tc.resumeReview1, revieweeName: testConstants.user1.full_name })] });
 });
