@@ -14,7 +14,7 @@
 
 1. Set-up a dummy tenant (follow all the steps above)
 2. Make your changes to the tenant
-3. Import the tenant configuration with the following command
+3. Export the tenant configuration with the following command
 
     ```bash
     npx a0deploy export --debug --config_file config.json --format yaml --output_folder .
