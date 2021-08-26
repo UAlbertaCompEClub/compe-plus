@@ -7,7 +7,7 @@
 4. Run the following bash command to import the tenant configuration from `tenant.yaml`
 
     ```bash
-    npx a0deploy export --config_file config.json --format yaml --output_folder .  --debug
+    npx a0deploy export --debug --config_file config.json --format yaml --output_folder .
     ```
 
 # How to change Auth0 configuration
