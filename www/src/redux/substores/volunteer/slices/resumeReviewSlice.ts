@@ -1,19 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { ResumeReview } from '../../../../util/serverResponses';
+import { ResumeReviewWithName } from '../../../../util/serverResponses';
+import claimResumeReviews from '../thunks/claimResumeReviews';
 import getAvailableResumeReviews from '../thunks/getAvailableResumeReviews';
 import getReviewingResumeReviews from '../thunks/getReviewingResumeReviews';
+import unclaimResumeReviews from '../thunks/unclaimResumeReviews';
 
 type ResumeReviewState = {
-    availableResumes: ResumeReview[];
-    reviewingResumes: ResumeReview[];
-    isLoading: boolean;
+    availableResumes: ResumeReviewWithName[];
+    reviewingResumes: ResumeReviewWithName[];
+    availableIsLoading: boolean;
+    reviewingIsLoading: boolean;
+    shouldReload: boolean;
 };
 
 const initialState: ResumeReviewState = {
     availableResumes: [],
     reviewingResumes: [],
-    isLoading: false,
+    availableIsLoading: false,
+    reviewingIsLoading: false,
+    shouldReload: false,
 };
 
 export const resumeReviewSlice = createSlice({
@@ -22,18 +28,26 @@ export const resumeReviewSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getAvailableResumeReviews.pending, (state) => {
-            state.isLoading = true;
+            state.availableIsLoading = true;
         });
         builder.addCase(getAvailableResumeReviews.fulfilled, (state, action) => {
-            state.isLoading = false;
+            state.availableIsLoading = false;
+            state.shouldReload = false;
             state.availableResumes = action.payload.resumeReviews;
         });
         builder.addCase(getReviewingResumeReviews.pending, (state) => {
-            state.isLoading = true;
+            state.reviewingIsLoading = true;
         });
         builder.addCase(getReviewingResumeReviews.fulfilled, (state, action) => {
-            state.isLoading = false;
+            state.reviewingIsLoading = false;
+            state.shouldReload = false;
             state.reviewingResumes = action.payload.resumeReviews;
+        });
+        builder.addCase(claimResumeReviews.fulfilled, (state) => {
+            state.shouldReload = true;
+        });
+        builder.addCase(unclaimResumeReviews.fulfilled, (state) => {
+            state.shouldReload = true;
         });
     },
 });
