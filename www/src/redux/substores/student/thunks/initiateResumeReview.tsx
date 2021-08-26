@@ -4,7 +4,7 @@ import postWithToken from '../../../../util/auth0/postWithToken';
 import TokenAcquirer from '../../../../util/auth0/TokenAcquirer';
 import { postDocuments, postResumeReviews } from '../../../../util/endpoints';
 import Scope from '../../../../util/scopes';
-import { Document, ResumeReview } from '../../../../util/serverResponses';
+import { Document, ResumeReview, WrappedDocument, WrappedResumeReview } from '../../../../util/serverResponses';
 import { StudentDispatch, StudentState } from '../studentStore';
 
 export type InitiateResumeReviewParams = {
@@ -36,13 +36,13 @@ type PayloadCreatorReturn = {
 };
 
 export const initiateResumeReview = async (params: InitiateResumeReviewParams): Promise<PayloadCreatorReturn> => {
-    const resumeReviewResult = await postWithToken<ResumeReviewBody, ResumeReview>(postResumeReviews, params.tokenAcquirer, [Scope.CreateResumeReviews], {
+    const resumeReviewResult = await postWithToken<ResumeReviewBody, WrappedResumeReview>(postResumeReviews, params.tokenAcquirer, [Scope.CreateResumeReviews], {
         reviewee: params.userId,
     }).catch(() => {
         throw new Error('Unable to create resume review object');
     });
 
-    const documentResult = await postWithToken<DocumentBody, Document>(postDocuments(resumeReviewResult?.data.id ?? ''), params.tokenAcquirer, [Scope.CreateDocuments], {
+    const documentResult = await postWithToken<DocumentBody, WrappedDocument>(postDocuments(resumeReviewResult?.data.resumeReview.id ?? ''), params.tokenAcquirer, [Scope.CreateDocuments], {
         note: '',
         isReview: false,
         userId: params.userId,
@@ -52,8 +52,8 @@ export const initiateResumeReview = async (params: InitiateResumeReviewParams): 
     });
 
     return {
-        resumeReview: resumeReviewResult?.data,
-        document: documentResult?.data,
+        resumeReview: resumeReviewResult?.data.resumeReview,
+        document: documentResult?.data.document,
     };
 };
 

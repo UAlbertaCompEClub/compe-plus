@@ -4,6 +4,7 @@ const SERVER_ENDPOINT = process.env.REACT_APP_SERVER_ENDPOINT || 'http://localho
 const SERVER_AUDIENCE = process.env.REACT_APP_SERVER_AUDIENCE || '';
 const MAILCHIMP_URL = process.env.REACT_APP_MAILCHIMP_URL || '';
 const ADOBE_PDF_ID = process.env.REACT_APP_ADOBE_PDF_ID || '';
+const MAX_RESUME_SIZE_BYTES = process.env.REACT_APP_MAX_RESUME_SIZE_BYTES || '7500000';
 
 const AUTH0 = {
     domain: AUTH0_DOMAIN,
@@ -20,6 +21,7 @@ const config = {
     server: SERVER,
     mailchimpUrl: MAILCHIMP_URL,
     adobePdfId: ADOBE_PDF_ID,
+    maxResumeSizeBytes: parseFloat(MAX_RESUME_SIZE_BYTES),
 };
 
 export default config;

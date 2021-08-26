@@ -4,7 +4,7 @@ import { mocked } from 'ts-jest/utils';
 import postWithToken from '../../../../util/auth0/postWithToken';
 import { postDocuments, postResumeReviews } from '../../../../util/endpoints';
 import Scope from '../../../../util/scopes';
-import { Document, ResumeReview } from '../../../../util/serverResponses';
+import { WrappedDocument, WrappedResumeReview } from '../../../../util/serverResponses';
 import tc from '../../../../util/testConstants';
 import { initiateResumeReview, InitiateResumeReviewParams } from './initiateResumeReview';
 
@@ -25,13 +25,13 @@ describe('initiateResumeReview', () => {
 
     it('works on happy path', async () => {
         const postResumeReviewMockResponse = {
-            data: tc.resumeReview1,
+            data: { resumeReview: tc.resumeReview1 },
         };
         const postDocumentMockResponse = {
-            data: tc.document1,
+            data: { document: tc.document1 },
         };
-        mockPostWithToken.mockResolvedValueOnce(postResumeReviewMockResponse as AxiosResponse<ResumeReview>);
-        mockPostWithToken.mockResolvedValueOnce(postDocumentMockResponse as AxiosResponse<Document>);
+        mockPostWithToken.mockResolvedValueOnce(postResumeReviewMockResponse as AxiosResponse<WrappedResumeReview>);
+        mockPostWithToken.mockResolvedValueOnce(postDocumentMockResponse as AxiosResponse<WrappedDocument>);
 
         const result = await initiateResumeReview(params);
 
@@ -68,10 +68,10 @@ describe('initiateResumeReview', () => {
 
     it('throws an error if create document failed', async () => {
         const postResumeReviewMockResponse = {
-            data: tc.resumeReview1,
+            data: { resumeReview: tc.resumeReview1 },
         };
 
-        mockPostWithToken.mockResolvedValueOnce(postResumeReviewMockResponse as AxiosResponse<ResumeReview>);
+        mockPostWithToken.mockResolvedValueOnce(postResumeReviewMockResponse as AxiosResponse<WrappedResumeReview>);
         mockPostWithToken.mockRejectedValueOnce({});
 
         mockPostWithToken.mockRejectedValueOnce({});
