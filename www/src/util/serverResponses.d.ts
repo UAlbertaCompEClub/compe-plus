@@ -33,7 +33,7 @@ export type ResumeReviewWithName = {
     createdAt: string;
     updatedAt: string;
     revieweeName: string;
-}
+};
 
 export type WrappedResumeReview = {
     resumeReview: ResumeReview;
