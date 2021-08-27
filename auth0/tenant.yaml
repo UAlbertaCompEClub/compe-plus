@@ -115,10 +115,10 @@ clients:
     - name: Compe+ Web Application
       allowed_clients: []
       allowed_logout_urls:
-          - 'https://local.compe.plus:3000'
+          - '##VALID_REDIRECT_URIS##'
       app_type: spa
       callbacks:
-          - 'https://local.compe.plus:3000'
+          - '##VALID_REDIRECT_URIS##'
       client_aliases: []
       cross_origin_auth: false
       custom_login_page_on: true
@@ -149,7 +149,7 @@ clients:
       sso_disabled: false
       token_endpoint_auth_method: none
       web_origins:
-          - 'https://local.compe.plus:3000'
+          - '##VALID_REDIRECT_URIS##'
     - name: Deploy CLI Application
       app_type: non_interactive
       cross_origin_auth: false
