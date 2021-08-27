@@ -20,7 +20,7 @@ beforeEach(() => {
 });
 
 it('gets all users', async () => {
-    const user1AndRole = { ...testConstants.user1, user_role: testConstants.userRole1.role };
+    const user1AndRole = { ...testConstants.user1, roles: [testConstants.userRole1.role] };
     const users = { users: [toCamelCase(user1AndRole)] };
     mockAdminRepository.getUsersInfo.mockResolvedValueOnce([user1AndRole]);
 
