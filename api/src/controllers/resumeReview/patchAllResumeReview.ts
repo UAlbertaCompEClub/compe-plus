@@ -34,7 +34,7 @@ class ReqBodyValidator extends Validator<ReqBody> {
 
         this.ruleFor('reviewer')
             .mustAsync(beAValidUser)
-            .when((reqBody) => reqBody.reviewer !== undefined);
+            .when((reqBody) => reqBody.reviewer !== undefined && reqBody.reviewer !== null);
 
         this.ruleFor('state')
             .mustAsync(beAResumeReviewState)

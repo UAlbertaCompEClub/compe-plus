@@ -4,7 +4,7 @@ import fetchWithToken from '../../../../util/auth0/fetchWithToken';
 import TokenAcquirer from '../../../../util/auth0/TokenAcquirer';
 import { getResumeReviews } from '../../../../util/endpoints';
 import Scope from '../../../../util/scopes';
-import { WrappedResumeReviews } from '../../../../util/serverResponses';
+import { WrappedResumeReviewWithNames } from '../../../../util/serverResponses';
 import { VolunteerDispatch, VolunteerState } from '../volunteerStore';
 
 export type GetReviewingResumeReviewParams = {
@@ -18,8 +18,8 @@ type AsyncThunkConfig = {
     rejectValue: string;
 };
 
-export const getReviewingResumeReviews = async (params: GetReviewingResumeReviewParams): Promise<WrappedResumeReviews> => {
-    const resumeReviewResult = await fetchWithToken<WrappedResumeReviews>(getResumeReviews, params.tokenAcquirer, [Scope.ReadAllResumeReviews], {
+export const getReviewingResumeReviews = async (params: GetReviewingResumeReviewParams): Promise<WrappedResumeReviewWithNames> => {
+    const resumeReviewResult = await fetchWithToken<WrappedResumeReviewWithNames>(getResumeReviews, params.tokenAcquirer, [Scope.ReadAllResumeReviews], {
         state: 'reviewing',
         reviewer: encodeURIComponent(params.userId),
     }).catch(() => {
@@ -28,7 +28,7 @@ export const getReviewingResumeReviews = async (params: GetReviewingResumeReview
     return resumeReviewResult?.data ?? { resumeReviews: [] };
 };
 
-export default createAsyncThunk<WrappedResumeReviews, GetReviewingResumeReviewParams, AsyncThunkConfig>('resumeReview/getReviewingResumeReviews', (params, thunkApi) => {
+export default createAsyncThunk<WrappedResumeReviewWithNames, GetReviewingResumeReviewParams, AsyncThunkConfig>('resumeReview/getReviewingResumeReviews', (params, thunkApi) => {
     try {
         return getReviewingResumeReviews(params);
     } catch (e) {
