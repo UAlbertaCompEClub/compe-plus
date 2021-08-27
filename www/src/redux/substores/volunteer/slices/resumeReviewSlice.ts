@@ -19,7 +19,7 @@ const initialState: ResumeReviewState = {
     reviewingResumes: [],
     availableIsLoading: false,
     reviewingIsLoading: false,
-    shouldReload: false,
+    shouldReload: true,
 };
 
 export const resumeReviewSlice = createSlice({

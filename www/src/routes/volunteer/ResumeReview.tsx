@@ -85,11 +85,13 @@ const ResumeReview: FC = () => {
     const history = useHistory();
 
     useEffect(() => {
-        dispatch(getAvailableResumeReviews({ tokenAcquirer: getAccessTokenSilently }));
+        if (shouldReload) {
+            dispatch(getAvailableResumeReviews({ tokenAcquirer: getAccessTokenSilently }));
+        }
     }, [shouldReload]);
 
     useEffect(() => {
-        if (user?.sub !== undefined) {
+        if (user?.sub !== undefined && shouldReload) {
             dispatch(getReviewingResumeReviews({ tokenAcquirer: getAccessTokenSilently, userId: user.sub }));
         }
     }, [user, shouldReload]);
