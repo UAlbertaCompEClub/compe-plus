@@ -23,6 +23,7 @@ enum Scope {
     ReadAllInterviews = 'read_all:interviews',
     CreateInterviews = 'create:interviews',
     DeleteInterviews = 'delete:interviews',
+    ReadAllUsersRoles = 'read:all_users_roles',
 }
 
 export default Scope;
