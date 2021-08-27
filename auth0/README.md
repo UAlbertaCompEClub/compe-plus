@@ -12,10 +12,23 @@
 
 # How to change Auth0 configuration
 
-1. Set-up a dummy tenant (follow all the steps above)
-2. Make your changes to the tenant
-3. Export the tenant configuration with the following command
+1.  Set-up a dummy tenant (follow all the steps above)
+2.  Make your changes to the tenant
+3.  Export the tenant configuration with the following command
 
     ```bash
     npx a0deploy export --debug --config_file config.json --format yaml --output_folder .
     ```
+
+4.  Publish the changes to the main tenants by either:
+
+    1.  Modifying the `config.json` file for each environment, or
+    2.  Create 3 different config files, fill them in with their corresponding field values,
+        (e.g.)
+
+        ```bash
+        npx a0deploy import --debug --config_file dev-config.json --format yaml --input_file tenant.yaml
+        npx a0deploy import --debug --config_file staging-config.json --format yaml --input_file tenant.yaml
+        npx a0deploy import --debug --config_file prod-config.json --format yaml --input_file tenant.yaml
+
+        ```
