@@ -5,7 +5,7 @@ import { role_type } from 'zapatos/schema';
 import pool from '../util/pool';
 
 type userRoleSQL = s.users.SQL | s.user_roles.SQL;
-export type userRoleSelectable = s.users.JSONSelectable & { user_role: role_type };
+export type userRoleSelectable = s.users.JSONSelectable & { roles: role_type[] };
 
 /**
  * Gets all users and their roles.
@@ -13,10 +13,11 @@ export type userRoleSelectable = s.users.JSONSelectable & { user_role: role_type
  */
 const getUsersInfo = async (): Promise<userRoleSelectable[]> => {
     return db.sql<userRoleSQL, userRoleSelectable[]>`
-    SELECT ${'users'}.*
+    SELECT ${'users'}.*, jsonb_agg(${'user_roles'}.${'role'}) as roles
     FROM ${'users'}
-    JOIN ${'user_roles'}
-    ON ${'users'}.${'id'} = ${'user_roles'}.${'id'}
+    INNER JOIN ${'user_roles'}
+    ON ${'users'}.${'id'} = ${'user_roles'}.${'user_id'}
+    GROUP BY ${'users'}.${'id'}
     `.run(pool);
 };
 
