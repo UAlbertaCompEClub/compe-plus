@@ -4,9 +4,9 @@ import { Route, Switch } from 'react-router-dom';
 
 import adminStore from '../redux/substores/admin/adminStore';
 import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW_ROUTE } from '../util/constants';
+import Landing from './admin/Landing';
 import MockInterview from './admin/MockInterview';
 import ResumeReview from './admin/ResumeReview';
-import Landing from './unauthenticated/Landing';
 
 const AdminApp: FC = () => {
     return (

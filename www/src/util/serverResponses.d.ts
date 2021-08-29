@@ -71,3 +71,5 @@ export type Role = {
 export type WrappedDocuments = {
     documents: Document[];
 };
+
+export type UserRole = User & { roles: string[] };
