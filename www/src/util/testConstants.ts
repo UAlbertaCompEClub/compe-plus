@@ -1,5 +1,6 @@
 import { RootState } from '../redux/store';
 import { StudentState } from '../redux/substores/student/studentStore';
+import { VolunteerState } from '../redux/substores/volunteer/volunteerStore';
 import { Document, ResumeReview, Role, User } from './serverResponses';
 
 const user1: User = {
@@ -33,6 +34,7 @@ const document1: Document = {
     resumeReviewId: '123e4567-e89b-12d3-a456-426614174000',
     createdAt: '2021-06-14T06:09:19.373404+00:00',
     updatedAt: '2021-06-14T06:09:19.373404+00:00',
+    base64Contents: 'base64Contents',
 };
 
 const studentRole: Role = {
@@ -56,6 +58,7 @@ const globalState: RootState = {
         isLoading: false,
     },
 };
+
 const studentState: StudentState = {
     resumeReview: {
         resumeReviews: [],
@@ -69,4 +72,20 @@ const studentState: StudentState = {
     },
 };
 
-export default { user1, resumeReview1, document1, globalState, studentState, studentRole };
+const volunteerState: VolunteerState = {
+    resumeReview: {
+        availableResumes: [],
+        availableIsLoading: false,
+        reviewingIsLoading: false,
+        shouldReload: false,
+        reviewingResumes: [],
+    },
+    resumeReviewEditor: {
+        currentDocument: null,
+        currentDocumentFromBackend: null,
+        documents: null,
+        isLoading: false,
+    },
+};
+
+export default { user1, resumeReview1, document1, globalState, studentState, volunteerState, studentRole };

@@ -55,6 +55,7 @@ export type Document = {
     resumeReviewId: string;
     createdAt: string;
     updatedAt: string;
+    base64Contents: string;
 };
 
 export type WrappedDocument = {
@@ -65,4 +66,8 @@ export type Role = {
     userId: string;
     role: string;
     createdAt: string;
+};
+
+export type WrappedDocuments = {
+    documents: Document[];
 };
