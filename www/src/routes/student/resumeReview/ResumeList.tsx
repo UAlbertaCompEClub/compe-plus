@@ -28,7 +28,7 @@ const ResumeList: FC = () => {
     const submittedResumes = resumeReviews.filter((resumeReview) => resumeReview.state === 'finished' || resumeReview.state === 'canceled');
 
     return (
-        <Box display='flex' flexDirection='column' width='100'>
+        <Box display='flex' flexDirection='column' width='100%'>
             <section className={classes.section}>
                 <Typography variant='h2' className={classes.sectionTitle}>
                     Current resume
