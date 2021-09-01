@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import resumeReviewReducer from './slices/resumeReviewSlice';
+import userRolesReducer from './slices/userRoleSlice';
 
 const store = configureStore({
     reducer: {
         resumeReview: resumeReviewReducer,
+        userRoles: userRolesReducer,
     },
 });
 

@@ -47,6 +47,10 @@ export type WrappedResumeReviewWithNames = {
     resumeReviews: ResumeReviewWithName[];
 };
 
+export type WrappedUserRoles = {
+    userRoles: UserRole[];
+};
+
 export type Document = {
     id: string;
     note: string;

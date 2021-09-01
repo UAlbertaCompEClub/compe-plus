@@ -1,6 +1,5 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import {
-    Button,
-    ButtonGroup,
     Checkbox,
     CircularProgress,
     FormControl,
@@ -18,8 +17,10 @@ import {
     Typography,
     withStyles,
 } from '@material-ui/core';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
+import { useAdminDispatch, useAdminSelector } from '../../redux/substores/admin/adminHooks';
+import getAllUserRoles from '../../redux/substores/admin/thunks/getAllUserRoles';
 import { UserRole } from '../../util/serverResponses';
 
 const StyledTableCell = withStyles((theme) => ({
@@ -39,11 +40,11 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 interface UserTableProps {
-    users: UserRole[];
+    userRoles: UserRole[];
     action: (user: UserRole, isChecked: boolean, role: string) => void;
 }
 
-const UserTable: FC<UserTableProps> = (props: UserTableProps) => {
+const UserRoleTable: FC<UserTableProps> = (props: UserTableProps) => {
     const classes = useStyles();
     return (
         <TableContainer component={Paper}>
@@ -55,16 +56,16 @@ const UserTable: FC<UserTableProps> = (props: UserTableProps) => {
                     </StyledTableRow>
                 </TableHead>
                 <TableBody>
-                    {props.users.map((user) => {
+                    {props.userRoles.map((userRole) => {
                         return (
-                            <StyledTableRow key={user.id}>
+                            <StyledTableRow key={userRole.id}>
                                 <StyledTableCell component='th' scope='row'>
-                                    {user.fullName}
+                                    {userRole.fullName}
                                 </StyledTableCell>
                                 <StyledTableCell align='right'>
                                     <FormControl>
                                         <FormGroup>
-                                            {props.users.map((user) => {
+                                            {props.userRoles.map((user) => {
                                                 <>
                                                     <FormControlLabel
                                                         control={
@@ -109,15 +110,39 @@ type userRoleState = {
 const initialUserRoleState: userRoleState[] = [];
 
 const Landing: FC = () => {
-    // TODO: get users
-    const [userRoles, setUserRoles] = useState(initialUserRoleState);
+    const classes = useStyles();
+    const { userRoles, userRolesIsLoading, shouldReload } = useAdminSelector((state) => state.userRoles);
+    const { getAccessTokenSilently } = useAuth0();
+    const dispatch = useAdminDispatch();
+
+    const [updatedUserRoles, setUpdatedUserRoles] = useState(initialUserRoleState);
+
+    useEffect(() => {
+        if (shouldReload) {
+            dispatch(getAllUserRoles({ tokenAcquirer: getAccessTokenSilently }));
+        }
+    }, [shouldReload]);
 
     const assignRole = (user: UserRole, isAssigned: boolean, role: string) => {
-        setUserRoles([...userRoles, { id: user.id, isAssigned: isAssigned, role: role }]);
+        setUpdatedUserRoles([...updatedUserRoles, { id: user.id, isAssigned: isAssigned, role: role }]);
     };
 
-    // TODO: render table (paginate??)
-    return <div></div>;
+    return (
+        <Grid container justify='center' alignItems='center' direction='column' className={classes.pageGrid}>
+            <Grid container justify='flex-start' alignItems='flex-start' direction='column'>
+                <Typography variant='h1'>Users</Typography>
+                <Grid container justify='flex-start' alignItems='flex-start' className={classes.wrapper}>
+                    {userRolesIsLoading && (
+                        <Grid container justify='center' alignItems='flex-start'>
+                            <CircularProgress />
+                        </Grid>
+                    )}
+                    {!userRolesIsLoading && userRoles.length == 0 && <Typography>There are no users in CompE+, something is wrong :(</Typography>}
+                    {!userRolesIsLoading && userRoles.length > 0 && <UserRoleTable userRoles={userRoles} action={assignRole} />}
+                </Grid>
+            </Grid>
+        </Grid>
+    );
 };
 
 const useStyles = makeStyles({
