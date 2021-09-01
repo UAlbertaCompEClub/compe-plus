@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Box, Card, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { FC, useEffect } from 'react';
 
@@ -28,7 +28,7 @@ const ResumeList: FC = () => {
     const submittedResumes = resumeReviews.filter((resumeReview) => resumeReview.state === 'finished' || resumeReview.state === 'canceled');
 
     return (
-        <Box display='flex' flexDirection='column'>
+        <Box display='flex' flexDirection='column' width='100'>
             <section className={classes.section}>
                 <Typography variant='h2' className={classes.sectionTitle}>
                     Current resume
