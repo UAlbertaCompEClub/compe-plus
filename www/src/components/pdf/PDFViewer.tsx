@@ -13,8 +13,9 @@ type ViewerConfig = {
 export type PDFViewerProps = {
     filePromise: () => Promise<ArrayBuffer>;
     fileName: string;
-    className: string;
+    className?: string;
     viewerConfig?: ViewerConfig;
+    onSave?: (arrayBuffer: ArrayBuffer) => void;
 };
 
 const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
@@ -22,10 +23,13 @@ const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
         const viewSDKClient = new ViewSDKClient();
         viewSDKClient.ready().then(() => {
             viewSDKClient.previewFileUsingFilePromise('adobe-dc-view', props.filePromise(), props.fileName, props.viewerConfig ?? {});
+            if (props.onSave !== undefined) {
+                viewSDKClient.onSave(props.onSave);
+            }
         });
     }, []);
 
-    return <Grid item id='adobe-dc-view' style={{ height: '100%' }} className={props.className} />;
+    return <Grid item id='adobe-dc-view' style={{ height: '100%', width: '100%' }} className={props.className} />;
 };
 
 export default PDFViewer;

@@ -10,10 +10,9 @@ it. If you have received this file from a source other than Adobe,
 then your use, modification, or distribution of it requires the prior
 written permission of Adobe.
 */
-import axios from 'axios';
 
 import config from '../../util/config';
-import { arrayBufferToBase64 } from '../../util/helpers';
+
 declare global {
     interface Window {
         AdobeDC: any;
@@ -121,22 +120,15 @@ class ViewSDKClient {
         );
     }
 
-    registerSaveApiHandler() {
-        /* Define Save API Handler */
-        const saveApiHandler = (metaData: any, content: any) => {
-            return new Promise<saveAPIResponse | void>((resolve) => {
-                const formData = new FormData();
-                formData.append('file', arrayBufferToBase64(content));
-
-                // TODO: replace empty string with POST endpoint for updating pdf
-                axios
-                    .post('', formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                        },
-                    })
-                    .then(() => resolve());
-            });
+    onSave(onSaveHandler: (newArrayBuffer: ArrayBuffer) => void) {
+        const saveApiHandler = async (metaData: any, content: ArrayBuffer): Promise<saveAPIResponse> => {
+            onSaveHandler(content);
+            return {
+                code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
+                data: {
+                    metaData,
+                },
+            };
         };
 
         this.adobeDCView.registerCallback(window.AdobeDC.View.Enum.CallbackType.SAVE_API, saveApiHandler, {});
