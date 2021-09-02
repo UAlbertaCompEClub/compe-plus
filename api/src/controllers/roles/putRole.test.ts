@@ -13,7 +13,7 @@ const mockUserRolesRepository = mocked(userRolesRepository, true);
 jest.mock('../../repositories/userRepository');
 const mockUserRepository = mocked(userRepository, true);
 jest.mock('../../repositories/auth0Repository');
-const mocAuth0Repository = mocked(auth0Repository, true);
+const mockAuth0Repository = mocked(auth0Repository, true);
 
 type Params = {
     userId: string;
@@ -33,7 +33,7 @@ beforeEach(() => {
     };
     res = { status: jest.fn().mockReturnThis(), json: jest.fn().mockReturnThis() };
     next = jest.fn();
-    mocAuth0Repository.giveUserRole.mockResolvedValue();
+    mockAuth0Repository.giveUserRole.mockResolvedValue();
     mockUserRepository.get.mockResolvedValue([testConstants.user1]);
     mockUserRolesRepository.get.mockResolvedValue([testConstants.role1]);
     mockUserRolesRepository.assign.mockResolvedValue(testConstants.role2);
