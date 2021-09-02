@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import LoadingOverlay from '../../components/LoadingOverlay';
 import PDFViewer from '../../components/pdf/PDFViewer';
-import { updateCurrentDocumentContents } from '../../redux/substores/volunteer/slices/resumeReviewEditorSlice';
+import { resetResumeReviewEditor, updateCurrentDocumentContents } from '../../redux/substores/volunteer/slices/resumeReviewEditorSlice';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 import { RESUME_REVIEW_ROUTE } from '../../util/constants';
 import { arrayBufferToBase64, base64ToArrayBuffer } from '../../util/helpers';
@@ -37,6 +37,12 @@ const ResumeReviewEditor: React.FC = () => {
             history.push(RESUME_REVIEW_ROUTE);
         }
     }, [isDone]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetResumeReviewEditor());
+        };
+    }, []);
 
     const filePromise = async () => {
         if (currentDocument === null) {

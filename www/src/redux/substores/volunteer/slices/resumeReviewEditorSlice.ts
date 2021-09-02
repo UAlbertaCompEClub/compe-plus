@@ -32,6 +32,7 @@ export const resumeReviewEditorSlice = createSlice({
             state.currentDocument.base64Contents = action.payload;
         },
         cancelReviewResume: () => initialState,
+        resetResumeReviewEditor: () => initialState,
     },
     extraReducers: (builder) => {
         builder.addCase(getMyDocuments.pending, (state) => {
@@ -53,6 +54,6 @@ export const resumeReviewEditorSlice = createSlice({
     },
 });
 
-export const { updateCurrentDocumentContents } = resumeReviewEditorSlice.actions;
+export const { updateCurrentDocumentContents, resetResumeReviewEditor } = resumeReviewEditorSlice.actions;
 
 export default resumeReviewEditorSlice.reducer;
