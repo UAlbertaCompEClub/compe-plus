@@ -23,8 +23,8 @@ const ResumeList: FC = () => {
         return <NoResumes />;
     }
 
-    const activeResumes = resumeReviews.filter((resumeReview) => resumeReview.state === 'seeking_reviewer' || resumeReview.state === 'reviewing');
-    const activeResume = activeResumes.length > 0 ? activeResumes[0] : null;
+    const currentResumes = resumeReviews.filter((resumeReview) => resumeReview.state === 'seeking_reviewer' || resumeReview.state === 'reviewing');
+    const currentResume = currentResumes.length > 0 ? currentResumes[0] : null;
     const submittedResumes = resumeReviews.filter((resumeReview) => resumeReview.state === 'finished' || resumeReview.state === 'canceled');
 
     return (
@@ -33,7 +33,7 @@ const ResumeList: FC = () => {
                 <Typography variant='h2' className={classes.sectionTitle}>
                     Current resume
                 </Typography>
-                {activeResume !== null ? <ResumeReviewCard resumeReview={activeResume} /> : <Typography>You have not submitted any resume for review</Typography>}
+                {currentResume !== null ? <ResumeReviewCard resumeReview={currentResume} /> : <Typography>You have not submitted any resume for review</Typography>}
             </section>
             <section className={classes.section}>
                 <Typography variant='h2' className={classes.sectionTitle}>
