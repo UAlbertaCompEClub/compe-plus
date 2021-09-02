@@ -12,3 +12,4 @@ export const patchMyResumeReview = (resumeReviewId: string): string => `${config
 
 export const postDocument = (resumeReviewId: string): string => `${config.server.endpoint}/api/v1/resume-reviews/${resumeReviewId}/documents`;
 export const getMyDocuments = (resumeReviewId: string): string => `${config.server.endpoint}/api/v1/resume-reviews/${resumeReviewId}/documents`;
+export const patchMyDocument = (resumeReviewId: string, documentId: string): string => `${config.server.endpoint}/api/v1/resume-reviews/${resumeReviewId}/documents/${documentId}`;
