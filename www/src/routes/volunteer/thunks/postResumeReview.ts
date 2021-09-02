@@ -4,7 +4,7 @@ import { VolunteerDispatch, VolunteerState } from '../../../redux/substores/volu
 import patchWithToken from '../../../util/auth0/patchWithToken';
 import postWithToken from '../../../util/auth0/postWithToken';
 import TokenAcquirer from '../../../util/auth0/TokenAcquirer';
-import { patchMyResumeReview as patchMyResumeReviewEndpoint, postDocuments as postDocumentEndpoint } from '../../../util/endpoints';
+import { patchMyResumeReview as patchMyResumeReviewEndpoint, postDocument as postDocumentEndpoint } from '../../../util/endpoints';
 import Scope from '../../../util/scopes';
 import { WrappedDocument } from '../../../util/serverResponses';
 

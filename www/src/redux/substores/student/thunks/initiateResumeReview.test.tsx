@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { mocked } from 'ts-jest/utils';
 
 import postWithToken from '../../../../util/auth0/postWithToken';
-import { postDocuments, postResumeReviews } from '../../../../util/endpoints';
+import { postDocument, postResumeReviews } from '../../../../util/endpoints';
 import Scope from '../../../../util/scopes';
 import { WrappedDocument, WrappedResumeReview } from '../../../../util/serverResponses';
 import tc from '../../../../util/testConstants';
@@ -38,7 +38,7 @@ describe('initiateResumeReview', () => {
         expect(mockPostWithToken).toBeCalledWith(postResumeReviews, mockGetTokenSilently, [Scope.CreateResumeReviews], {
             reviewee: params.userId,
         });
-        expect(mockPostWithToken).toBeCalledWith(postDocuments(tc.resumeReview1.id), mockGetTokenSilently, [Scope.CreateDocuments], {
+        expect(mockPostWithToken).toBeCalledWith(postDocument(tc.resumeReview1.id), mockGetTokenSilently, [Scope.CreateDocuments], {
             note: '',
             isReview: false,
             userId: params.userId,
@@ -58,7 +58,7 @@ describe('initiateResumeReview', () => {
         expect(mockPostWithToken).toBeCalledWith(postResumeReviews, mockGetTokenSilently, [Scope.CreateResumeReviews], {
             reviewee: params.userId,
         });
-        expect(mockPostWithToken).not.toBeCalledWith(postDocuments(tc.resumeReview1.id), mockGetTokenSilently, [Scope.CreateDocuments], {
+        expect(mockPostWithToken).not.toBeCalledWith(postDocument(tc.resumeReview1.id), mockGetTokenSilently, [Scope.CreateDocuments], {
             note: '',
             isReview: false,
             userId: params.userId,
@@ -81,7 +81,7 @@ describe('initiateResumeReview', () => {
         expect(mockPostWithToken).toBeCalledWith(postResumeReviews, mockGetTokenSilently, [Scope.CreateResumeReviews], {
             reviewee: params.userId,
         });
-        expect(mockPostWithToken).toBeCalledWith(postDocuments(tc.resumeReview1.id), mockGetTokenSilently, [Scope.CreateDocuments], {
+        expect(mockPostWithToken).toBeCalledWith(postDocument(tc.resumeReview1.id), mockGetTokenSilently, [Scope.CreateDocuments], {
             note: '',
             isReview: false,
             userId: params.userId,

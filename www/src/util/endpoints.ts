@@ -10,5 +10,5 @@ export const postResumeReviews = `${config.server.endpoint}/api/v1/resume-review
 export const patchResumeReviews = (resumeReviewId: string): string => `${config.server.endpoint}/api/v1/resume-reviews/${resumeReviewId}`;
 export const patchMyResumeReview = (resumeReviewId: string): string => `${config.server.endpoint}/api/v1/resume-reviews/${resumeReviewId}`;
 
-export const postDocuments = (resumeReviewId: string): string => `${config.server.endpoint}/api/v1/resume-reviews/${resumeReviewId}/documents`;
+export const postDocument = (resumeReviewId: string): string => `${config.server.endpoint}/api/v1/resume-reviews/${resumeReviewId}/documents`;
 export const getMyDocuments = (resumeReviewId: string): string => `${config.server.endpoint}/api/v1/resume-reviews/${resumeReviewId}/documents`;

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import postWithToken from '../../../../util/auth0/postWithToken';
 import TokenAcquirer from '../../../../util/auth0/TokenAcquirer';
-import { postDocuments, postResumeReviews } from '../../../../util/endpoints';
+import { postDocument, postResumeReviews } from '../../../../util/endpoints';
 import Scope from '../../../../util/scopes';
 import { Document, ResumeReview, WrappedDocument, WrappedResumeReview } from '../../../../util/serverResponses';
 import { StudentDispatch, StudentState } from '../studentStore';
@@ -42,7 +42,7 @@ export const initiateResumeReview = async (params: InitiateResumeReviewParams): 
         throw new Error('Unable to create resume review object');
     });
 
-    const documentResult = await postWithToken<DocumentBody, WrappedDocument>(postDocuments(resumeReviewResult?.data.resumeReview.id ?? ''), params.tokenAcquirer, [Scope.CreateDocuments], {
+    const documentResult = await postWithToken<DocumentBody, WrappedDocument>(postDocument(resumeReviewResult?.data.resumeReview.id ?? ''), params.tokenAcquirer, [Scope.CreateDocuments], {
         note: '',
         isReview: false,
         userId: params.userId,
