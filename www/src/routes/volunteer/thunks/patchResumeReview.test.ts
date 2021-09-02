@@ -5,7 +5,7 @@ import patchWithToken from '../../../util/auth0/patchWithToken';
 import { patchMyDocument, patchMyResumeReview } from '../../../util/endpoints';
 import Scope from '../../../util/scopes';
 import testConstants from '../../../util/testConstants';
-import { postResumeReview } from './postResumeReview';
+import { patchResumeReview } from './patchResumeReview';
 
 jest.mock('../../../util/auth0/patchWithToken');
 const mockPatchWithToken = mocked(patchWithToken, true);
@@ -16,7 +16,7 @@ it('works on happy path', async () => {
     mockPatchWithToken.mockResolvedValueOnce({} as AxiosResponse<void>);
     mockPatchWithToken.mockResolvedValueOnce({} as AxiosResponse<void>);
 
-    const result = await postResumeReview({
+    const result = await patchResumeReview({
         resumeReviewId: testConstants.document1.resumeReviewId,
         tokenAcquirer: mockGetTokenSilently,
         documentId: testConstants.document1.id,
@@ -42,14 +42,14 @@ it('throws an error if patch document fails', async () => {
     mockPatchWithToken.mockRejectedValueOnce({});
 
     await expect(
-        postResumeReview({
+        patchResumeReview({
             resumeReviewId: testConstants.document1.resumeReviewId,
             tokenAcquirer: mockGetTokenSilently,
             documentId: testConstants.document1.id,
             document: testConstants.document1.base64Contents,
             userId: testConstants.user1.id,
         }),
-    ).rejects.toThrow('Unable to post resume review');
+    ).rejects.toThrow('Unable to patch document');
 
     expect(mockPatchWithToken).toBeCalledWith(
         patchMyDocument(testConstants.document1.resumeReviewId, testConstants.document1.id),
@@ -67,7 +67,7 @@ it('throws an error if patch resume review fails', async () => {
     mockPatchWithToken.mockRejectedValueOnce({});
 
     await expect(
-        postResumeReview({
+        patchResumeReview({
             resumeReviewId: testConstants.document1.resumeReviewId,
             tokenAcquirer: mockGetTokenSilently,
             documentId: testConstants.document1.id,

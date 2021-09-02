@@ -21,7 +21,7 @@ export type AsyncThunkConfig = {
     rejectValue: string;
 };
 
-export const postResumeReview = async (params: PostResumeReviewParams): Promise<void> => {
+export const patchResumeReview = async (params: PostResumeReviewParams): Promise<void> => {
     await patchWithToken<void>(
         patchMyDocumentEndpoint(params.resumeReviewId, params.documentId),
         params.tokenAcquirer,
@@ -31,7 +31,7 @@ export const postResumeReview = async (params: PostResumeReviewParams): Promise<
         },
         [Scope.UpdateMyDocuments],
     ).catch(() => {
-        throw new Error('Unable to post resume review');
+        throw new Error('Unable to patch document');
     });
 
     await patchWithToken<WrappedDocument>(
@@ -46,9 +46,9 @@ export const postResumeReview = async (params: PostResumeReviewParams): Promise<
     });
 };
 
-export default createAsyncThunk<void, PostResumeReviewParams, AsyncThunkConfig>('reviewResume/postResumeReview', (params, thunkApi) => {
+export default createAsyncThunk<void, PostResumeReviewParams, AsyncThunkConfig>('reviewResume/patchResumeReview', (params, thunkApi) => {
     try {
-        postResumeReview(params);
+        patchResumeReview(params);
     } catch (e) {
         return thunkApi.rejectWithValue(e);
     }
