@@ -6,7 +6,7 @@ import { userRoleSelectable } from '../../repositories/adminRepository';
 import { manyToCamelCase } from '../../util/helper';
 import controller from '../controllerUtil';
 
-type ResBody = { users: CamelCasedProperties<userRoleSelectable>[] };
+type ResBody = { userRoles: CamelCasedProperties<userRoleSelectable>[] };
 
 /**
  * Get all users and their roles.
@@ -17,7 +17,7 @@ type ResBody = { users: CamelCasedProperties<userRoleSelectable>[] };
 const getAllUsersInfo = controller(async (_req: Request, res: Response<ResBody>): Promise<void> => {
     const users = await adminRepository.getUsersInfo();
 
-    res.status(200).json({ users: manyToCamelCase(users) });
+    res.status(200).json({ userRoles: manyToCamelCase(users) });
 });
 
 export default getAllUsersInfo;

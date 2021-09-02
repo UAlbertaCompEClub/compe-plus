@@ -65,30 +65,34 @@ const UserRoleTable: FC<UserTableProps> = (props: UserTableProps) => {
                                 <StyledTableCell align='right'>
                                     <FormControl>
                                         <FormGroup>
-                                            {props.userRoles.map((user) => {
-                                                <>
-                                                    <FormControlLabel
-                                                        control={
-                                                            <Checkbox checked={user.roles.includes('student')} onChange={(e) => props.action(user, e.target.checked, e.target.name)} name='Student' />
-                                                        }
-                                                        label='Student'
-                                                    />
-                                                    <FormControlLabel
-                                                        control={
-                                                            <Checkbox
-                                                                checked={user.roles.includes('reviewer') && user.roles.includes('interviewer')}
-                                                                onChange={(e) => props.action(user, e.target.checked, e.target.name)}
-                                                                name='Volunteer'
-                                                            />
-                                                        }
-                                                        label='Volunteer'
-                                                    />
-                                                    <FormControlLabel
-                                                        control={<Checkbox checked={user.roles.includes('admin')} onChange={(e) => props.action(user, e.target.checked, e.target.name)} name='Admin' />}
-                                                        label='Admin'
-                                                    />
-                                                </>;
-                                            })}
+                                            <>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={userRole.roles.includes('student')}
+                                                            onChange={(e) => props.action(userRole, e.target.checked, e.target.name)}
+                                                            name='Student'
+                                                        />
+                                                    }
+                                                    label='Student'
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={userRole.roles.includes('reviewer') && userRole.roles.includes('interviewer')}
+                                                            onChange={(e) => props.action(userRole, e.target.checked, e.target.name)}
+                                                            name='Volunteer'
+                                                        />
+                                                    }
+                                                    label='Volunteer'
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox checked={userRole.roles.includes('admin')} onChange={(e) => props.action(userRole, e.target.checked, e.target.name)} name='Admin' />
+                                                    }
+                                                    label='Admin'
+                                                />
+                                            </>
                                         </FormGroup>
                                     </FormControl>
                                 </StyledTableCell>
