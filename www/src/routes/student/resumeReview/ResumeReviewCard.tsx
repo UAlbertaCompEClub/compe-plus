@@ -24,7 +24,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
     ]);
 
     return (
-        <Card className={classes.currentResumeCard}>
+        <Card className={classes.currentResumeCard} elevation={0}>
             <Grid container>
                 <Grid container alignItems='center' item xs={6}>
                     <Typography>{dateFormat(new Date(resumeReview.createdAt), 'dddd, mmmm dS yyyy')}</Typography>
