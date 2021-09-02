@@ -7,7 +7,7 @@ import { patchMyDocument as patchMyDocumentEndpoint, patchMyResumeReview as patc
 import Scope from '../../../util/scopes';
 import { WrappedDocument } from '../../../util/serverResponses';
 
-export type PostResumeReviewParams = {
+export type PatchResumeReviewParams = {
     tokenAcquirer: TokenAcquirer;
     resumeReviewId: string;
     documentId: string;
@@ -21,7 +21,7 @@ export type AsyncThunkConfig = {
     rejectValue: string;
 };
 
-export const patchResumeReview = async (params: PostResumeReviewParams): Promise<void> => {
+export const patchResumeReview = async (params: PatchResumeReviewParams): Promise<void> => {
     await patchWithToken<void>(
         patchMyDocumentEndpoint(params.resumeReviewId, params.documentId),
         params.tokenAcquirer,
@@ -46,7 +46,7 @@ export const patchResumeReview = async (params: PostResumeReviewParams): Promise
     });
 };
 
-export default createAsyncThunk<void, PostResumeReviewParams, AsyncThunkConfig>('reviewResume/patchResumeReview', (params, thunkApi) => {
+export default createAsyncThunk<void, PatchResumeReviewParams, AsyncThunkConfig>('reviewResume/patchResumeReview', (params, thunkApi) => {
     try {
         patchResumeReview(params);
     } catch (e) {
