@@ -29,7 +29,7 @@ type PostDocumentBody = {
 };
 
 export const postResumeReview = async (params: PostResumeReviewParams): Promise<void> => {
-    postWithToken<PostDocumentBody, WrappedDocument>(postDocumentEndpoint(params.resumeReviewId), params.tokenAcquirer, [Scope.UpdateMyDocuments], {
+    await postWithToken<PostDocumentBody, WrappedDocument>(postDocumentEndpoint(params.resumeReviewId), params.tokenAcquirer, [Scope.UpdateMyDocuments], {
         note: '',
         isReview: true,
         userId: params.userId,
@@ -38,7 +38,7 @@ export const postResumeReview = async (params: PostResumeReviewParams): Promise<
         throw new Error('Unable to post resume review');
     });
 
-    patchWithToken<WrappedDocument>(
+    await patchWithToken<WrappedDocument>(
         patchMyResumeReviewEndpoint(params.resumeReviewId),
         params.tokenAcquirer,
         {
