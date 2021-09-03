@@ -39,6 +39,7 @@ const deleteRole = controller(async (req: Request<Params, ResBody>, res: Respons
     const indexOfAssignedRole = assignedRoles.findIndex((assignedRole) => assignedRole.role === role);
     if (indexOfAssignedRole < 0) {
         res.status(409).json({ message: 'User with id: ' + userId + ' did not have role: ' + role });
+        return;
     }
 
     await auth0Repository.removeUserRole(userId, role);
