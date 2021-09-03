@@ -24,7 +24,6 @@ enum Scope {
     CreateInterviews = 'create:interviews',
     DeleteInterviews = 'delete:interviews',
     ReadAllUsersRoles = 'read:all_users_roles',
-    DeleteUsersRole = 'delete:users_role',
 }
 
 export default Scope;

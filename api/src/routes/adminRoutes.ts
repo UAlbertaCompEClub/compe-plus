@@ -8,6 +8,6 @@ export const router = express.Router();
 
 router.get('/admin/allUsers', middleware.authorize(Scope.ReadAllUsersRoles), controller.getAllUsersInfo);
 
-router.delete('/admin/userRole', middleware.authorize(Scope.DeleteUsersRole), controller.deleteRole);
+router.delete('/admin/userRole', middleware.authorize(Scope.DeleteRoles), controller.deleteRole);
 
 export default router;
