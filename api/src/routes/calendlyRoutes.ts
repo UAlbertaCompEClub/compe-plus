@@ -4,7 +4,8 @@ import * as controller from '../controllers/calendly/index';
 
 export const router = express.Router();
 
-// TODO protect this with authorization
+// TODO protect these with authorization
+router.get('/calendlys', controller.getCalendlys);
 router.post('/calendlys/', controller.postCalendly);
 
 export default router;
