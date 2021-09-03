@@ -10,4 +10,6 @@ router.get('/users/:userId/roles', middleware.authorize(Scope.ReadRoles), contro
 
 router.put('/users/:userId/roles/:role', middleware.authorize(Scope.CreateRoles), controller.putRole);
 
+router.delete('/users/:userId/roles/:role', middleware.authorize(Scope.DeleteRoles), controller.deleteRole);
+
 export default router;
