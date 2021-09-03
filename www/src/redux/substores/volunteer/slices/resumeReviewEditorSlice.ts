@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import getMyDocuments from '../../../../routes/volunteer/thunks/getMyDocuments';
+import patchResumeReview from '../../../../routes/volunteer/thunks/patchResumeReview';
 import { Document } from '../../../../util/serverResponses';
 
 type ResumeReviewEditorState = {
@@ -8,6 +9,7 @@ type ResumeReviewEditorState = {
     currentDocument: Document | null;
     currentDocumentFromBackend: Document | null;
     isLoading: boolean;
+    isDone: boolean;
 };
 
 const initialState: ResumeReviewEditorState = {
@@ -15,6 +17,7 @@ const initialState: ResumeReviewEditorState = {
     currentDocument: null,
     currentDocumentFromBackend: null,
     isLoading: false,
+    isDone: false,
 };
 
 export const resumeReviewEditorSlice = createSlice({
@@ -29,6 +32,7 @@ export const resumeReviewEditorSlice = createSlice({
             state.currentDocument.base64Contents = action.payload;
         },
         cancelReviewResume: () => initialState,
+        resetResumeReviewEditor: () => initialState,
     },
     extraReducers: (builder) => {
         builder.addCase(getMyDocuments.pending, (state) => {
@@ -40,9 +44,16 @@ export const resumeReviewEditorSlice = createSlice({
             state.currentDocumentFromBackend = action.payload.documents[0];
             state.currentDocument = action.payload.documents[0];
         });
+        builder.addCase(patchResumeReview.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(patchResumeReview.fulfilled, (state) => {
+            state.isLoading = false;
+            state.isDone = true;
+        });
     },
 });
 
-export const { updateCurrentDocumentContents } = resumeReviewEditorSlice.actions;
+export const { updateCurrentDocumentContents, resetResumeReviewEditor } = resumeReviewEditorSlice.actions;
 
 export default resumeReviewEditorSlice.reducer;

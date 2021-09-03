@@ -3,14 +3,16 @@ import { Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import DoneIcon from '@material-ui/icons/Done';
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import LoadingOverlay from '../../components/LoadingOverlay';
 import PDFViewer from '../../components/pdf/PDFViewer';
-import { updateCurrentDocumentContents } from '../../redux/substores/volunteer/slices/resumeReviewEditorSlice';
+import { resetResumeReviewEditor, updateCurrentDocumentContents } from '../../redux/substores/volunteer/slices/resumeReviewEditorSlice';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
+import { RESUME_REVIEW_ROUTE } from '../../util/constants';
 import { arrayBufferToBase64, base64ToArrayBuffer } from '../../util/helpers';
 import getMyDocuments from './thunks/getMyDocuments';
+import patchResumeReview from './thunks/patchResumeReview';
 
 type ResumeReviewParams = {
     resumeReviewId: string;
@@ -21,13 +23,26 @@ const ResumeReviewEditor: React.FC = () => {
 
     const { resumeReviewId } = useParams<ResumeReviewParams>();
 
-    const { currentDocument, isLoading } = useVolunteerSelector((state) => state.resumeReviewEditor);
-    const { getAccessTokenSilently } = useAuth0();
+    const { currentDocument, isLoading, isDone } = useVolunteerSelector((state) => state.resumeReviewEditor);
+    const { getAccessTokenSilently, user } = useAuth0();
+    const history = useHistory();
     const dispatch = useVolunteerDispatch();
 
     useEffect(() => {
         dispatch(getMyDocuments({ tokenAcquirer: getAccessTokenSilently, resumeReviewId: resumeReviewId }));
     }, [resumeReviewId]);
+
+    useEffect(() => {
+        if (isDone) {
+            history.push(RESUME_REVIEW_ROUTE);
+        }
+    }, [isDone]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetResumeReviewEditor());
+        };
+    }, []);
 
     const filePromise = async () => {
         if (currentDocument === null) {
@@ -43,7 +58,22 @@ const ResumeReviewEditor: React.FC = () => {
                 <Typography>{resumeReviewId}</Typography>
             </Grid>
             <Grid container item xs={4} justify='flex-end' className={classes.gridItem}>
-                <Button variant='contained' color='primary' endIcon={<DoneIcon />}>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    endIcon={<DoneIcon />}
+                    onClick={() =>
+                        dispatch(
+                            patchResumeReview({
+                                document: currentDocument?.base64Contents ?? '',
+                                documentId: currentDocument?.id ?? '',
+                                resumeReviewId,
+                                tokenAcquirer: getAccessTokenSilently,
+                                userId: user?.sub ?? '',
+                            }),
+                        )
+                    }
+                >
                     Complete review
                 </Button>
             </Grid>

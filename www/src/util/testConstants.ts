@@ -85,6 +85,7 @@ const volunteerState: VolunteerState = {
         currentDocumentFromBackend: null,
         documents: null,
         isLoading: false,
+        isDone: false,
     },
 };
 

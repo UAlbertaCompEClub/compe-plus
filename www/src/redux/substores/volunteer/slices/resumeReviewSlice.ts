@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import patchResumeReview from '../../../../routes/volunteer/thunks/patchResumeReview';
 import { ResumeReviewWithName } from '../../../../util/serverResponses';
 import claimResumeReviews from '../thunks/claimResumeReviews';
 import getAvailableResumeReviews from '../thunks/getAvailableResumeReviews';
@@ -47,6 +48,9 @@ export const resumeReviewSlice = createSlice({
             state.shouldReload = true;
         });
         builder.addCase(unclaimResumeReviews.fulfilled, (state) => {
+            state.shouldReload = true;
+        });
+        builder.addCase(patchResumeReview.fulfilled, (state) => {
             state.shouldReload = true;
         });
     },
