@@ -28,12 +28,6 @@ describe('StudentResumeList', () => {
         mockUseStudentSelector.mockImplementation((selector) => selector(studentStateMock));
     });
 
-    it('renders correctly for no resumes', () => {
-        const result = shallow(<ResumeList />);
-
-        expect(result.find(NoResumes)).toHaveLength(1);
-    });
-
     it('calls getMyResumeReviews', () => {
         render(<ResumeList />);
 
@@ -56,7 +50,7 @@ describe('StudentResumeList', () => {
             expect(result.text()).toContain('You have no submitted resumes');
         } else {
             // Submitted resumes
-            expect(result.text()).toContain('You have not submitted any resume for review');
+            expect(result.find(NoResumes)).toHaveLength(1);
         }
     });
 });
