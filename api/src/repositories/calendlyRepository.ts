@@ -36,4 +36,28 @@ const create = async (link: string, interviewer: string): Promise<s.calendlys.JS
     return db.insert('calendlys', { link, interviewer }).run(pool);
 };
 
-export { create, get };
+/**
+ * Update a calendly.
+ * @param id Id of calendly to update.
+ * @param link Value to update Calendly link.
+ * @param interviewer Value to update interviewer to.
+ * @param interviewee Value to update interviewee to.
+ * @returns Updated calendly.
+ */
+const update = async (id: string, link?: string, interviewer?: string, interviewee?: string): Promise<s.calendlys.JSONSelectable[]> => {
+    const where: s.calendlys.Whereable = { id: dc.eq(id) };
+    const colOptions: s.calendlys.Updatable = {};
+    if (link !== undefined && link !== null) {
+        colOptions.link = link;
+    }
+    if (interviewer !== undefined && interviewer !== null) {
+        colOptions.interviewer = interviewer;
+    }
+    if (interviewee !== undefined && interviewee !== null) {
+        colOptions.interviewee = interviewee;
+    }
+    console.log(db.update('calendlys', colOptions, where).compile());
+    return db.update('calendlys', colOptions, where).run(pool);
+};
+
+export { create, get, update };
