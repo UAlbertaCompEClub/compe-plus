@@ -82,6 +82,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
 const useStyles = makeStyles((theme) => ({
     currentResumeCard: {
         padding: theme.spacing(2),
+        marginBottom: theme.spacing(2),
     },
     expand: {
         transform: 'rotate(0deg)',
