@@ -11,7 +11,7 @@ function emailDomainWhitelist(user, context, callback) {
     });
 
     if (!userHasAccess) {
-        return callback(new UnauthorizedError('You can only use CompE+ with your ualberta.ca account'));
+        return callback(new UnauthorizedError('You can only use CompE+ with your ualberta.ca account. You might need to clear your cookies to choose another account.'));
     }
 
     return callback(null, user, context);

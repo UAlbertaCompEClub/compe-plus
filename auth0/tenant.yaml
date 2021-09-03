@@ -1,6 +1,6 @@
 rules:
     - name: Email domain whitelist
-      script: ./rules/Email domain whitelist.js
+      script: ./rules/domainWhitelist.js
       stage: login_success
       enabled: true
       order: 1
