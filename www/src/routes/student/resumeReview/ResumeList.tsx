@@ -19,10 +19,6 @@ const ResumeList: FC = () => {
         dispatch(getMyResumeReviews({ tokenAcquirer: getAccessTokenSilently }));
     }, []);
 
-    if (resumeReviews.length === 0) {
-        return <NoResumes />;
-    }
-
     const currentResumes = resumeReviews.filter((resumeReview) => resumeReview.state === 'seeking_reviewer' || resumeReview.state === 'reviewing');
     const currentResume = currentResumes.length > 0 ? currentResumes[0] : null;
     const submittedResumes = resumeReviews.filter((resumeReview) => resumeReview.state === 'finished' || resumeReview.state === 'canceled');
@@ -33,7 +29,7 @@ const ResumeList: FC = () => {
                 <Typography variant='h2' className={classes.sectionTitle}>
                     Current resume
                 </Typography>
-                {currentResume !== null ? <ResumeReviewCard resumeReview={currentResume} /> : <Typography>You have not submitted any resume for review</Typography>}
+                {currentResume !== null ? <ResumeReviewCard resumeReview={currentResume} /> : <NoResumes />}
             </section>
             <section className={classes.section}>
                 <Typography variant='h2' className={classes.sectionTitle}>
