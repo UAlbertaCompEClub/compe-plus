@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     },
     expand: {
         transform: 'rotate(0deg)',
-        margin: theme.spacing(2),
+        marginLeft: theme.spacing(1),
         transition: theme.transitions.create('transform', {
             duration: theme.transitions.duration.shortest,
         }),
