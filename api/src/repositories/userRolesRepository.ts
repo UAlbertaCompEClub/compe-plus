@@ -23,4 +23,8 @@ const assign = async (user_role: s.user_roles.Insertable): Promise<s.user_roles.
     return db.insert('user_roles', { user_id: user_role.user_id, role: user_role.role }).run(pool);
 };
 
-export { assign, get };
+const remove = async (user_role: s.user_roles.Insertable): Promise<s.user_roles.JSONSelectable[]> => {
+    return db.deletes('user_roles', { user_id: user_role.user_id, role: user_role.role }).run(pool);
+};
+
+export { assign, get, remove };

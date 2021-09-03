@@ -70,4 +70,39 @@ const giveUserRole = async (user: string, role: Role): Promise<void> => {
     }
 };
 
-export { giveUserRole };
+const removeUserRole = async (user: string, role: Role): Promise<void> => {
+    const accessToken = await getAccessToken();
+    let roleId = '';
+    switch (role) {
+        case Role.Admin:
+            roleId = config.managementApi.adminRoleId;
+            break;
+        case Role.Interviewer:
+            roleId = config.managementApi.interviewerRoleId;
+            break;
+        case Role.Reviewer:
+            roleId = config.managementApi.reviewerRoleId;
+            break;
+        case Role.Student:
+            roleId = config.managementApi.studentRoleId;
+            break;
+    }
+
+    let result;
+    try {
+        result = await axios.delete(`https://${config.managementApi.domain}/api/v2/users/${user}/roles`, {
+            headers: { 'content-type': 'application/json', authorization: `Bearer ${accessToken}`, 'cache-control': 'no-cache' },
+            data: {
+                roles: [roleId],
+            },
+        });
+    } catch (e) {
+        throw new InternalServerErrorException({ issue: 'Failed to remove role from user' }, e);
+    }
+
+    if (result.status != 204) {
+        throw new InternalServerErrorException({ issue: 'Failed to remove role from' }, new Error('Did not get expected 204 status code'));
+    }
+};
+
+export { giveUserRole, removeUserRole };
