@@ -83,5 +83,4 @@ it('returns 204 and deletes the role from user', async () => {
     await deleteRole(req as Request<Params>, res as Response, next);
 
     expect(res.status).toBeCalledWith(204);
-    expect(res.json).toBeCalledWith({ users: manyToCamelCase([testConstants.role2]) });
 });

@@ -43,9 +43,9 @@ const deleteRole = controller(async (req: Request<Params, ResBody>, res: Respons
     }
 
     await auth0Repository.removeUserRole(userId, role);
-    const result = await userRolesRepository.remove({ user_id: userId, role: role });
+    await userRolesRepository.remove({ user_id: userId, role: role });
 
-    res.status(204).json({ users: manyToCamelCase(result) });
+    res.status(204).end();
 });
 
 export default deleteRole;
