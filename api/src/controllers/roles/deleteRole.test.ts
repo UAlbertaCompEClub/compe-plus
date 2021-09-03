@@ -4,7 +4,6 @@ import { mocked } from 'ts-jest/utils';
 import * as auth0Repository from '../../repositories/auth0Repository';
 import * as userRepository from '../../repositories/userRepository';
 import * as userRolesRepository from '../../repositories/userRolesRepository';
-import { manyToCamelCase } from '../../util/helper';
 import testConstants from '../../util/testConstants';
 import deleteRole from './deleteRole';
 

@@ -5,7 +5,7 @@ import type * as s from 'zapatos/schema';
 import * as auth0Repository from '../../repositories/auth0Repository';
 import * as userRolesRepository from '../../repositories/userRolesRepository';
 import Role from '../../types/roles';
-import { decodeQueryToUser, manyToCamelCase } from '../../util/helper';
+import { decodeQueryToUser } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAValidRole, beAValidUser } from '../validation';
 
