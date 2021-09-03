@@ -54,9 +54,6 @@ const patchAllResumeReview = controller(async (req: Request<Params, unknown, Req
     await new ParamsValidator().validateAndThrow(req.params);
     await new ReqBodyValidator().validateAndThrow(req.body);
 
-    console.log('body\n\n\n\n\n');
-    console.log(req.body);
-
     try {
         await calendlyRepository.update(req.params.calendly, req.body.link, req.body.interviewer, req.body.interviewee);
     } catch (err) {
