@@ -39,7 +39,7 @@ const getContentByRole = (role: string) => {
 };
 
 const App: FC = () => {
-    const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading, user } = useAuth0();
+    const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading, user, error } = useAuth0();
 
     const { currentRole, isLoading, hasRegistered } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
@@ -57,6 +57,12 @@ const App: FC = () => {
             dispatch(getUserRole({ userId: user.sub, tokenAcquirer: getAccessTokenSilently }));
         }
     }, [hasRegistered]);
+
+    useEffect(() => {
+        if (error !== undefined) {
+            alert(error.message);
+        }
+    }, [error]);
 
     return (
         <ThemeProvider theme={theme}>

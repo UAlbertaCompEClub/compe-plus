@@ -1,4 +1,9 @@
-rules: []
+rules:
+    - name: Email domain whitelist
+      script: ./rules/domainWhitelist.js
+      stage: login_success
+      enabled: true
+      order: 1
 rulesConfigs: []
 hooks: []
 pages: []
