@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import {
+    Button,
     Checkbox,
     CircularProgress,
     FormControl,
@@ -21,6 +22,7 @@ import React, { FC, useEffect, useState } from 'react';
 
 import { useAdminDispatch, useAdminSelector } from '../../redux/substores/admin/adminHooks';
 import getAllUserRoles from '../../redux/substores/admin/thunks/getAllUserRoles';
+import useGlobalStyles from '../../styles/style';
 import { UserRole } from '../../util/serverResponses';
 
 const StyledTableCell = withStyles((theme) => ({
@@ -40,8 +42,8 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 interface UserTableProps {
-    userRoles: UserRole[];
-    action: (user: UserRole, isChecked: boolean, role: string) => void;
+    userRoles: userRoleTableEntries;
+    action: (id: string, isUnassigned: boolean, role: string) => void;
 }
 
 const UserRoleTable: FC<UserTableProps> = (props: UserTableProps) => {
@@ -56,11 +58,11 @@ const UserRoleTable: FC<UserTableProps> = (props: UserTableProps) => {
                     </StyledTableRow>
                 </TableHead>
                 <TableBody>
-                    {props.userRoles.map((userRole) => {
+                    {Object.entries(props.userRoles).map(([id, userRole]) => {
                         return (
-                            <StyledTableRow key={userRole.id}>
+                            <StyledTableRow key={id}>
                                 <StyledTableCell component='th' scope='row'>
-                                    {userRole.fullName}
+                                    {userRole.name}
                                 </StyledTableCell>
                                 <StyledTableCell align='right'>
                                     <FormControl>
@@ -70,8 +72,9 @@ const UserRoleTable: FC<UserTableProps> = (props: UserTableProps) => {
                                                     control={
                                                         <Checkbox
                                                             checked={userRole.roles.includes('student')}
-                                                            onChange={(e) => props.action(userRole, e.target.checked, e.target.name)}
-                                                            name='Student'
+                                                            onChange={(e) => props.action(id, !e.target.checked, e.target.name)}
+                                                            name='student'
+                                                            color='primary'
                                                         />
                                                     }
                                                     label='Student'
@@ -79,16 +82,33 @@ const UserRoleTable: FC<UserTableProps> = (props: UserTableProps) => {
                                                 <FormControlLabel
                                                     control={
                                                         <Checkbox
-                                                            checked={userRole.roles.includes('reviewer') && userRole.roles.includes('interviewer')}
-                                                            onChange={(e) => props.action(userRole, e.target.checked, e.target.name)}
-                                                            name='Volunteer'
+                                                            checked={userRole.roles.includes('reviewer')}
+                                                            onChange={(e) => props.action(id, !e.target.checked, e.target.name)}
+                                                            name='reviewer'
+                                                            color='primary'
                                                         />
                                                     }
-                                                    label='Volunteer'
+                                                    label='Reviewer'
                                                 />
                                                 <FormControlLabel
                                                     control={
-                                                        <Checkbox checked={userRole.roles.includes('admin')} onChange={(e) => props.action(userRole, e.target.checked, e.target.name)} name='Admin' />
+                                                        <Checkbox
+                                                            checked={userRole.roles.includes('interviewer')}
+                                                            onChange={(e) => props.action(id, !e.target.checked, e.target.name)}
+                                                            name='interviewer'
+                                                            color='primary'
+                                                        />
+                                                    }
+                                                    label='Interviewer'
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={userRole.roles.includes('admin')}
+                                                            onChange={(e) => props.action(id, !e.target.checked, e.target.name)}
+                                                            name='admin'
+                                                            color='primary'
+                                                        />
                                                     }
                                                     label='Admin'
                                                 />
@@ -105,21 +125,71 @@ const UserRoleTable: FC<UserTableProps> = (props: UserTableProps) => {
     );
 };
 
-type userRoleState = {
-    id: string;
-    isAssigned: boolean;
-    role: string;
+type userRoleTableEntries = {
+    [key: string]: {
+        roles: string[];
+        name: string;
+    };
 };
 
-const initialUserRoleState: userRoleState[] = [];
+type SuperSet = {
+    [key: string]: number;
+};
+
+const initialUserRoleTableState: userRoleTableEntries = {};
+const initialUpdatedUserRolesState: string[] = [];
+
+// https://stackoverflow.com/questions/6229197/how-to-know-if-two-arrays-have-the-same-values/55614659#55614659
+function areArraysEqualSets(a1: string[], a2: string[]) {
+    const superSet: SuperSet = {};
+    for (const i of a1) {
+        const e = i + typeof i;
+        superSet[e] = 1;
+    }
+
+    for (const i of a2) {
+        const e = i + typeof i;
+        if (!superSet[e]) {
+            return false;
+        }
+        superSet[e] = 2;
+    }
+
+    for (const e in superSet) {
+        if (superSet[e] === 1) {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 const Landing: FC = () => {
     const classes = useStyles();
+    const globalClasses = useGlobalStyles();
     const { userRoles, userRolesIsLoading, shouldReload } = useAdminSelector((state) => state.userRoles);
     const { getAccessTokenSilently } = useAuth0();
     const dispatch = useAdminDispatch();
 
-    const [updatedUserRoles, setUpdatedUserRoles] = useState(initialUserRoleState);
+    const [userRolesTable, setUserRolesTable] = useState(initialUserRoleTableState);
+    const [originalUserRoles, setOriginalUserRoles] = useState(initialUserRoleTableState);
+    const [updatedUserRoles, setUpdatedUserRoles] = useState(initialUpdatedUserRolesState);
+
+    const createUserRolesTable = (userRoles: UserRole[]) => {
+        return userRoles.reduce((accum, userRole) => ({ ...accum, [userRole.id]: { roles: userRole.roles, name: userRole.fullName } }), {});
+    };
+
+    const updateRole = (id: string, isUnassigned: boolean, role: string) => {
+        const updatedRoles = isUnassigned ? userRolesTable[id].roles.filter((userRole) => userRole !== role) : [...userRolesTable[id].roles, role];
+
+        if (areArraysEqualSets(originalUserRoles[id].roles, updatedRoles)) {
+            setUpdatedUserRoles(updatedUserRoles.filter((userId) => userId !== id));
+        } else if (!updatedUserRoles.includes(id)) {
+            setUpdatedUserRoles([...updatedUserRoles, id]);
+        }
+
+        setUserRolesTable({ ...userRolesTable, [id]: { ...userRolesTable[id], roles: updatedRoles } });
+    };
 
     useEffect(() => {
         if (shouldReload) {
@@ -127,14 +197,20 @@ const Landing: FC = () => {
         }
     }, [shouldReload]);
 
-    const assignRole = (user: UserRole, isAssigned: boolean, role: string) => {
-        setUpdatedUserRoles([...updatedUserRoles, { id: user.id, isAssigned: isAssigned, role: role }]);
-    };
+    useEffect(() => {
+        if (userRoles.length > 0) {
+            setUserRolesTable(createUserRolesTable(userRoles));
+            setOriginalUserRoles(createUserRolesTable(userRoles));
+        }
+    }, [userRoles]);
 
     return (
         <Grid container justify='center' alignItems='center' direction='column' className={classes.pageGrid}>
             <Grid container justify='flex-start' alignItems='flex-start' direction='column'>
                 <Typography variant='h1'>Users</Typography>
+                <Button disabled={updatedUserRoles.length <= 0} className={globalClasses.main_button}>
+                    Update Roles
+                </Button>
                 <Grid container justify='flex-start' alignItems='flex-start' className={classes.wrapper}>
                     {userRolesIsLoading && (
                         <Grid container justify='center' alignItems='flex-start'>
@@ -142,7 +218,7 @@ const Landing: FC = () => {
                         </Grid>
                     )}
                     {!userRolesIsLoading && userRoles.length == 0 && <Typography>There are no users in CompE+, something is wrong :(</Typography>}
-                    {!userRolesIsLoading && userRoles.length > 0 && <UserRoleTable userRoles={userRoles} action={assignRole} />}
+                    {!userRolesIsLoading && userRoles.length > 0 && <UserRoleTable userRoles={userRolesTable} action={updateRole} />}
                 </Grid>
             </Grid>
         </Grid>
