@@ -34,14 +34,14 @@ const ResumeList: FC = () => {
                 <Typography variant='h2' className={classes.sectionTitle}>
                     Current resume
                 </Typography>
-                {currentResume !== null ? <ResumeReviewCard resumeReview={currentResume} tokenAcquirer={getAccessTokenSilently} /> : <NoResumes />}
+                {currentResume !== null ? <ResumeReviewCard resumeReview={currentResume} /> : <NoResumes />}
             </section>
             <section className={classes.section}>
                 <Typography variant='h2' className={classes.sectionTitle}>
                     Submitted resumes
                 </Typography>
                 {submittedResumes.length > 0 ? (
-                    submittedResumes.map((submittedResume) => <ResumeReviewCard key={submittedResume.id} resumeReview={submittedResume} tokenAcquirer={getAccessTokenSilently} />)
+                    submittedResumes.map((submittedResume) => <ResumeReviewCard key={submittedResume.id} resumeReview={submittedResume} />)
                 ) : (
                     <Typography>You have no submitted resumes</Typography>
                 )}

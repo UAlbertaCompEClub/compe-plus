@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Button, Card, Collapse, Grid, IconButton, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -14,7 +15,6 @@ import { ResumeReview, WrappedDocuments } from '../../../util/serverResponses';
 
 type ResumeReviewCardProps = {
     resumeReview: ResumeReview;
-    tokenAcquirer: TokenAcquirer;
 };
 
 const downloadReviewedResume = async (resumeReviewId: string, tokenAcquirer: TokenAcquirer) => {
@@ -37,9 +37,11 @@ const downloadReviewedResume = async (resumeReviewId: string, tokenAcquirer: Tok
     document.body.removeChild(documentLink);
 };
 
-const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview, tokenAcquirer }: ResumeReviewCardProps) => {
+const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeReviewCardProps) => {
     const classes = useStyles();
     const [isExpanded, setIsExpanded] = useState(false);
+
+    const { getAccessTokenSilently } = useAuth0();
 
     const stateToDisplayNameMap = new Map([
         ['canceled', 'Canceled'],
@@ -99,7 +101,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview, tokenAcquir
                                     </Typography>
                                 </Grid>
                                 <Grid container justify='flex-end' alignItems='center' item xs={3}>
-                                    <Button startIcon={<GetAppIcon />} variant='contained' color='primary' onClick={() => downloadReviewedResume(resumeReview.id, tokenAcquirer)}>
+                                    <Button startIcon={<GetAppIcon />} variant='contained' color='primary' onClick={() => downloadReviewedResume(resumeReview.id, getAccessTokenSilently)}>
                                         Download resume
                                     </Button>
                                 </Grid>
