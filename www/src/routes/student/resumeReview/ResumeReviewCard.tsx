@@ -6,13 +6,38 @@ import clsx from 'clsx';
 import dateFormat from 'dateformat';
 import React, { FC, useState } from 'react';
 
-import { ResumeReview } from '../../../util/serverResponses';
+import fetchWithToken from '../../../util/auth0/fetchWithToken';
+import TokenAcquirer from '../../../util/auth0/TokenAcquirer';
+import { getMyDocuments as getMyDocumentsEndpoint } from '../../../util/endpoints';
+import Scope from '../../../util/scopes';
+import { ResumeReview, WrappedDocuments } from '../../../util/serverResponses';
 
 type ResumeReviewCardProps = {
     resumeReview: ResumeReview;
+    tokenAcquirer: TokenAcquirer;
 };
 
-const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeReviewCardProps) => {
+const downloadReviewedResume = async (resumeReviewId: string, tokenAcquirer: TokenAcquirer) => {
+    const result = await fetchWithToken<WrappedDocuments>(getMyDocumentsEndpoint(resumeReviewId), tokenAcquirer, [Scope.ReadMyDocuments]).catch(() => {
+        alert('Unable to download resume');
+    });
+
+    const reviewedResume = result?.data.documents[0];
+    if (reviewedResume === undefined) {
+        return;
+    }
+
+    const reviewedResumeUrl = `data:application/pdf;base64, ${reviewedResume.base64Contents}`;
+
+    const documentLink = document.createElement('a');
+    documentLink.href = reviewedResumeUrl;
+    documentLink.download = reviewedResume.id;
+    document.body.appendChild(documentLink);
+    documentLink.click();
+    document.body.removeChild(documentLink);
+};
+
+const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview, tokenAcquirer }: ResumeReviewCardProps) => {
     const classes = useStyles();
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -74,7 +99,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
                                     </Typography>
                                 </Grid>
                                 <Grid container justify='flex-end' alignItems='center' item xs={3}>
-                                    <Button startIcon={<GetAppIcon />} variant='contained' color='primary'>
+                                    <Button startIcon={<GetAppIcon />} variant='contained' color='primary' onClick={() => downloadReviewedResume(resumeReview.id, tokenAcquirer)}>
                                         Download resume
                                     </Button>
                                 </Grid>
