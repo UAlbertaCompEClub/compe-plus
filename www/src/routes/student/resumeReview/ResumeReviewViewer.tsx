@@ -15,7 +15,7 @@ type ResumeReviewParams = {
     resumeReviewId: string;
 };
 
-const ResumeReviewEditor: React.FC = () => {
+const ResumeReviewViewer: React.FC = () => {
     const classes = useStyles();
 
     const { resumeReviewId } = useParams<ResumeReviewParams>();
@@ -74,4 +74,4 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default ResumeReviewEditor;
+export default ResumeReviewViewer;
