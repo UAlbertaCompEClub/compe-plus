@@ -29,6 +29,169 @@ declare module 'zapatos/schema' {
 
   /* --- tables --- */
 
+  export namespace calendlys {
+    export type Table = 'calendlys';
+    export interface Selectable {
+      /**
+      * **calendlys.id**
+      * - `uuid` in database
+      * - `NOT NULL`, default: `uuid_generate_v4()`
+      */
+      id: string;
+      /**
+      * **calendlys.link**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      link: string;
+      /**
+      * **calendlys.interviewees**
+      * - `_text` in database
+      * - Nullable, no default
+      */
+      interviewees: string[] | null;
+      /**
+      * **calendlys.interviewer**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      interviewer: string;
+      /**
+      * **calendlys.created_at**
+      * - `timestamptz` in database
+      * - `NOT NULL`, default: `now()`
+      */
+      created_at: Date;
+      /**
+      * **calendlys.updated_at**
+      * - `timestamptz` in database
+      * - `NOT NULL`, default: `now()`
+      */
+      updated_at: Date;
+    }
+    export interface JSONSelectable {
+      /**
+      * **calendlys.id**
+      * - `uuid` in database
+      * - `NOT NULL`, default: `uuid_generate_v4()`
+      */
+      id: string;
+      /**
+      * **calendlys.link**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      link: string;
+      /**
+      * **calendlys.interviewees**
+      * - `_text` in database
+      * - Nullable, no default
+      */
+      interviewees: string[] | null;
+      /**
+      * **calendlys.interviewer**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      interviewer: string;
+      /**
+      * **calendlys.created_at**
+      * - `timestamptz` in database
+      * - `NOT NULL`, default: `now()`
+      */
+      created_at: db.TimestampTzString;
+      /**
+      * **calendlys.updated_at**
+      * - `timestamptz` in database
+      * - `NOT NULL`, default: `now()`
+      */
+      updated_at: db.TimestampTzString;
+    }
+    export interface Whereable {
+      /**
+      * **calendlys.id**
+      * - `uuid` in database
+      * - `NOT NULL`, default: `uuid_generate_v4()`
+      */
+      id?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
+      /**
+      * **calendlys.link**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      link?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
+      /**
+      * **calendlys.interviewees**
+      * - `_text` in database
+      * - Nullable, no default
+      */
+      interviewees?: string[] | db.Parameter<string[]> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string[] | db.Parameter<string[]> | db.SQLFragment | db.ParentColumn>;
+      /**
+      * **calendlys.interviewer**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      interviewer?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
+      /**
+      * **calendlys.created_at**
+      * - `timestamptz` in database
+      * - `NOT NULL`, default: `now()`
+      */
+      created_at?: (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment | db.ParentColumn>;
+      /**
+      * **calendlys.updated_at**
+      * - `timestamptz` in database
+      * - `NOT NULL`, default: `now()`
+      */
+      updated_at?: (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment | db.ParentColumn>;
+    }
+    export interface Insertable {
+      /**
+      * **calendlys.link**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      link: string | db.Parameter<string> | db.SQLFragment;
+      /**
+      * **calendlys.interviewees**
+      * - `_text` in database
+      * - Nullable, no default
+      */
+      interviewees?: string[] | db.Parameter<string[]> | null | db.DefaultType | db.SQLFragment;
+      /**
+      * **calendlys.interviewer**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      interviewer: string | db.Parameter<string> | db.SQLFragment;
+    }
+    export interface Updatable {
+      /**
+      * **calendlys.link**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      link?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
+      /**
+      * **calendlys.interviewees**
+      * - `_text` in database
+      * - Nullable, no default
+      */
+      interviewees?: string[] | db.Parameter<string[]> | null | db.DefaultType | db.SQLFragment | db.SQLFragment<any, string[] | db.Parameter<string[]> | null | db.DefaultType | db.SQLFragment>;
+      /**
+      * **calendlys.interviewer**
+      * - `text` in database
+      * - `NOT NULL`, no default
+      */
+      interviewer?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
+    }
+    export type UniqueIndex = 'calendlys_pkey';
+    export type Column = keyof Selectable;
+    export type OnlyCols<T extends readonly Column[]> = Pick<Selectable, T[number]>;
+    export type SQLExpression = db.GenericSQLExpression | db.ColumnNames<Updatable | (keyof Updatable)[]> | db.ColumnValues<Updatable> | Table | Whereable | Column;
+    export type SQL = SQLExpression | SQLExpression[];
+  }
+
   export namespace documents {
     export type Table = 'documents';
     export interface Selectable {
@@ -1058,19 +1221,20 @@ declare module 'zapatos/schema' {
 
   /* === cross-table types === */
 
-  export type Table = documents.Table | interviews.Table | resume_reviews.Table | time_slots.Table | user_roles.Table | users.Table;
-  export type Selectable = documents.Selectable | interviews.Selectable | resume_reviews.Selectable | time_slots.Selectable | user_roles.Selectable | users.Selectable;
-  export type JSONSelectable = documents.JSONSelectable | interviews.JSONSelectable | resume_reviews.JSONSelectable | time_slots.JSONSelectable | user_roles.JSONSelectable | users.JSONSelectable;
-  export type Whereable = documents.Whereable | interviews.Whereable | resume_reviews.Whereable | time_slots.Whereable | user_roles.Whereable | users.Whereable;
-  export type Insertable = documents.Insertable | interviews.Insertable | resume_reviews.Insertable | time_slots.Insertable | user_roles.Insertable | users.Insertable;
-  export type Updatable = documents.Updatable | interviews.Updatable | resume_reviews.Updatable | time_slots.Updatable | user_roles.Updatable | users.Updatable;
-  export type UniqueIndex = documents.UniqueIndex | interviews.UniqueIndex | resume_reviews.UniqueIndex | time_slots.UniqueIndex | user_roles.UniqueIndex | users.UniqueIndex;
-  export type Column = documents.Column | interviews.Column | resume_reviews.Column | time_slots.Column | user_roles.Column | users.Column;
-  export type AllTables = [documents.Table, interviews.Table, resume_reviews.Table, time_slots.Table, user_roles.Table, users.Table];
+  export type Table = calendlys.Table | documents.Table | interviews.Table | resume_reviews.Table | time_slots.Table | user_roles.Table | users.Table;
+  export type Selectable = calendlys.Selectable | documents.Selectable | interviews.Selectable | resume_reviews.Selectable | time_slots.Selectable | user_roles.Selectable | users.Selectable;
+  export type JSONSelectable = calendlys.JSONSelectable | documents.JSONSelectable | interviews.JSONSelectable | resume_reviews.JSONSelectable | time_slots.JSONSelectable | user_roles.JSONSelectable | users.JSONSelectable;
+  export type Whereable = calendlys.Whereable | documents.Whereable | interviews.Whereable | resume_reviews.Whereable | time_slots.Whereable | user_roles.Whereable | users.Whereable;
+  export type Insertable = calendlys.Insertable | documents.Insertable | interviews.Insertable | resume_reviews.Insertable | time_slots.Insertable | user_roles.Insertable | users.Insertable;
+  export type Updatable = calendlys.Updatable | documents.Updatable | interviews.Updatable | resume_reviews.Updatable | time_slots.Updatable | user_roles.Updatable | users.Updatable;
+  export type UniqueIndex = calendlys.UniqueIndex | documents.UniqueIndex | interviews.UniqueIndex | resume_reviews.UniqueIndex | time_slots.UniqueIndex | user_roles.UniqueIndex | users.UniqueIndex;
+  export type Column = calendlys.Column | documents.Column | interviews.Column | resume_reviews.Column | time_slots.Column | user_roles.Column | users.Column;
+  export type AllTables = [calendlys.Table, documents.Table, interviews.Table, resume_reviews.Table, time_slots.Table, user_roles.Table, users.Table];
   export type AllMaterializedViews = [];
 
 
   export type SelectableForTable<T extends Table> = {
+    calendlys: calendlys.Selectable;
     documents: documents.Selectable;
     interviews: interviews.Selectable;
     resume_reviews: resume_reviews.Selectable;
@@ -1080,6 +1244,7 @@ declare module 'zapatos/schema' {
   }[T];
 
   export type JSONSelectableForTable<T extends Table> = {
+    calendlys: calendlys.JSONSelectable;
     documents: documents.JSONSelectable;
     interviews: interviews.JSONSelectable;
     resume_reviews: resume_reviews.JSONSelectable;
@@ -1089,6 +1254,7 @@ declare module 'zapatos/schema' {
   }[T];
 
   export type WhereableForTable<T extends Table> = {
+    calendlys: calendlys.Whereable;
     documents: documents.Whereable;
     interviews: interviews.Whereable;
     resume_reviews: resume_reviews.Whereable;
@@ -1098,6 +1264,7 @@ declare module 'zapatos/schema' {
   }[T];
 
   export type InsertableForTable<T extends Table> = {
+    calendlys: calendlys.Insertable;
     documents: documents.Insertable;
     interviews: interviews.Insertable;
     resume_reviews: resume_reviews.Insertable;
@@ -1107,6 +1274,7 @@ declare module 'zapatos/schema' {
   }[T];
 
   export type UpdatableForTable<T extends Table> = {
+    calendlys: calendlys.Updatable;
     documents: documents.Updatable;
     interviews: interviews.Updatable;
     resume_reviews: resume_reviews.Updatable;
@@ -1116,6 +1284,7 @@ declare module 'zapatos/schema' {
   }[T];
 
   export type UniqueIndexForTable<T extends Table> = {
+    calendlys: calendlys.UniqueIndex;
     documents: documents.UniqueIndex;
     interviews: interviews.UniqueIndex;
     resume_reviews: resume_reviews.UniqueIndex;
@@ -1125,6 +1294,7 @@ declare module 'zapatos/schema' {
   }[T];
 
   export type ColumnForTable<T extends Table> = {
+    calendlys: calendlys.Column;
     documents: documents.Column;
     interviews: interviews.Column;
     resume_reviews: resume_reviews.Column;
@@ -1134,6 +1304,7 @@ declare module 'zapatos/schema' {
   }[T];
 
   export type SQLForTable<T extends Table> = {
+    calendlys: calendlys.SQL;
     documents: documents.SQL;
     interviews: interviews.SQL;
     resume_reviews: resume_reviews.SQL;
