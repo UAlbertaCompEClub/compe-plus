@@ -4,17 +4,13 @@ import { Document } from '../../../../util/serverResponses';
 import getMyDocuments from '../thunks/getMyDocuments';
 
 type ResumeReviewViewerState = {
-    documents: Document[] | null;
     currentDocument: Document | null;
-    currentDocumentFromBackend: Document | null;
     isLoading: boolean;
     isDone: boolean;
 };
 
 const initialState: ResumeReviewViewerState = {
-    documents: null,
     currentDocument: null,
-    currentDocumentFromBackend: null,
     isLoading: false,
     isDone: false,
 };
@@ -31,8 +27,6 @@ export const resumeReviewSlice = createSlice({
         });
         builder.addCase(getMyDocuments.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.documents = action.payload.documents;
-            state.currentDocumentFromBackend = action.payload.documents[0];
             state.currentDocument = action.payload.documents[0];
         });
     },
