@@ -52,7 +52,7 @@ const update = async (id: string, link?: string, interviewer?: string, interview
     if (interviewees !== undefined && interviewees !== null) {
         colOptions.interviewees = interviewees;
     }
-    console.log(db.update('calendlys', colOptions, where).compile());
+
     return db.update('calendlys', colOptions, where).run(pool);
 };
 
