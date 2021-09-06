@@ -6,13 +6,11 @@ import getMyDocuments from '../thunks/getMyDocuments';
 type ResumeReviewViewerState = {
     currentDocument: Document | null;
     isLoading: boolean;
-    isDone: boolean;
 };
 
 const initialState: ResumeReviewViewerState = {
     currentDocument: null,
     isLoading: false,
-    isDone: false,
 };
 
 export const resumeReviewSlice = createSlice({
