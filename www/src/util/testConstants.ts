@@ -92,6 +92,10 @@ const volunteerState: VolunteerState = {
         isLoading: false,
         isDone: false,
     },
+    mockInterview: {
+        calendlyLink: undefined,
+        isLoading: false,
+    },
 };
 
 export default { user1, resumeReview1, document1, globalState, studentState, volunteerState, studentRole };

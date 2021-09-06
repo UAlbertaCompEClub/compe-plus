@@ -71,3 +71,16 @@ export type Role = {
 export type WrappedDocuments = {
     documents: Document[];
 };
+
+export type Calendly = {
+    id: string;
+    link: string;
+    interviewees?: string[];
+    interviewer: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type WrappedCalendlys = {
+    calendlys: Calendly[];
+};

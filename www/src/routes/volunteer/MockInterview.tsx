@@ -1,13 +1,22 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Button, Grid, Link, makeStyles, TextField, Typography } from '@material-ui/core';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import GiveAvailabilityIcon from '../../assets/give_availability.svg';
+import getCalendlyLink from '../../redux/substores/volunteer/thunks/getCalendlyLink';
+import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 
 const MockInterview: FC = () => {
     const classes = useStyles();
+    const { calendlyLink, isLoading } = useVolunteerSelector((state) => state.mockInterview);
+    const dispatch = useVolunteerDispatch();
+    const { getAccessTokenSilently, user } = useAuth0();
 
-    // TODO hit backend to see if the volunteer has uploaded a Calendly link
-    const calendlyLink = '';
+    useEffect(() => {
+        if (user?.sub !== undefined) {
+            dispatch(getCalendlyLink({ tokenAcquirer: getAccessTokenSilently, interviewerId: user.sub }));
+        }
+    }, [user]);
 
     const submitLink = (
         <>
