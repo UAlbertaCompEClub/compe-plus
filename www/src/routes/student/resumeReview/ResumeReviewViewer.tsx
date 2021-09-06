@@ -51,7 +51,7 @@ const ResumeReviewViewer: React.FC = () => {
                         filePromise={filePromise}
                         viewerConfig={{
                             enableFormFilling: false,
-                            showAnnotationTools: true,
+                            showAnnotationTools: false,
                             showLeftHandPanel: false,
                         }}
                         className={classes.pdfContainer}
