@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Grid, Typography } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -44,17 +44,14 @@ const ResumeReviewViewer: React.FC = () => {
     return (
         <Grid container>
             <LoadingOverlay open={isLoading} />
-            <Grid item xs={8} className={classes.gridItem}>
-                <Typography>{resumeReviewId}</Typography>
-            </Grid>
-            <Grid container item xs={12}>
+            <Grid item xs={12}>
                 {currentDocument !== null && (
                     <PDFViewer
                         fileName={currentDocument.id}
                         filePromise={filePromise}
                         viewerConfig={{
                             enableFormFilling: false,
-                            showAnnotationTools: false,
+                            showAnnotationTools: true,
                             showLeftHandPanel: false,
                         }}
                         className={classes.pdfContainer}
