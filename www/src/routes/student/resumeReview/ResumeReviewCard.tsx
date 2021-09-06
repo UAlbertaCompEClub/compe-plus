@@ -32,7 +32,15 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
                     </Typography>
                 </Grid>
                 <Grid container justify='space-around' item xs={3}>
-                    {resumeReview.state !== 'finished' && <Button>View</Button>}
+                    {resumeReview.state !== 'finished' && (
+                        <Button
+                            onClick={() => {
+                                window.open(`/resume-review/${resumeReview.id}`, '_blank');
+                            }}
+                        >
+                            View
+                        </Button>
+                    )}
                     {resumeReview.state === 'seeking_reviewer' && <Button>Cancel review</Button>}
                 </Grid>
                 <Grid container alignItems='center' justify='flex-end' item xs={3}>
