@@ -2,6 +2,7 @@ import { AsyncValidator as AsyncFluentValidator } from 'fluentvalidation-ts';
 import { validate as uuidValidate } from 'uuid';
 
 import ValidationException from '../exceptions/ValidationException';
+import * as calendlyRepository from '../repositories/calendlyRepository';
 import * as documentRepository from '../repositories/documentRepository';
 import * as resumeReviewRepository from '../repositories/resumeReviewRepository';
 import * as userRepository from '../repositories/userRepository';
@@ -158,5 +159,19 @@ const beAValidRole = {
     message: 'Must be a valid role',
 };
 
-export { beAResumeReviewState, beAValidDocument, beAValidResumeReview, beAValidRole, beAValidUrl, beAValidUser, beAValidUuid, beProperlyBase64Encoded, beProperlyUriEncoded };
+/**
+ * Test whether a calendly already exists in the database.
+ */
+const beAValidCalendly = {
+    predicate: async (field: string | undefined): Promise<boolean> => {
+        if (field === undefined || field === null) {
+            return false;
+        }
+        const matches = await calendlyRepository.get(field);
+        return matches.length == 1;
+    },
+    message: 'Must be a calendly that already exists',
+};
+
+export { beAResumeReviewState, beAValidCalendly, beAValidDocument, beAValidResumeReview, beAValidRole, beAValidUrl, beAValidUser, beAValidUuid, beProperlyBase64Encoded, beProperlyUriEncoded };
 export default Validator;

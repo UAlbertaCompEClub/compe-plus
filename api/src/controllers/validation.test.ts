@@ -13,7 +13,7 @@ jest.mock('../repositories/userRepository');
 const mockUserRepository = mocked(userRepository, true);
 
 jest.mock('../repositories/resumeReviewRepository');
-const mockresumeReviewRepository = mocked(resumeReviewRepository, true);
+const mockResumeReviewRepository = mocked(resumeReviewRepository, true);
 
 jest.mock('../repositories/documentRepository');
 const mockDocumentRepository = mocked(documentRepository, true);
@@ -238,13 +238,13 @@ describe('beAValidUser helper', () => {
     const v = new TestValidResumeReviewValidator();
 
     it('does not throw if resume review exists', async () => {
-        mockresumeReviewRepository.get.mockResolvedValueOnce([testConstants.resumeReview1]);
+        mockResumeReviewRepository.get.mockResolvedValueOnce([testConstants.resumeReview1]);
 
         await expect(v.validateAndThrow({ a: '67e8ff47-8c31-4725-885c-e0e40455e7f5' })).resolves.not.toThrowError(ValidationException);
     });
 
     it('throws if resume review does not exist', async () => {
-        mockresumeReviewRepository.get.mockResolvedValueOnce([]);
+        mockResumeReviewRepository.get.mockResolvedValueOnce([]);
 
         await expect(v.validateAndThrow({ a: '67e8ff47-8c31-4725-885c-e0e40455e7f5' })).rejects.toThrowError(ValidationException);
     });
@@ -277,3 +277,5 @@ describe('beAValidDocument helper', () => {
         await expect(v.validateAndThrow({ a: '67e8ff47-8c31-4725-885c-e0e40455e7f5' })).rejects.toThrowError(ValidationException);
     });
 });
+
+it.todo('test beAValidCalendly helper');
