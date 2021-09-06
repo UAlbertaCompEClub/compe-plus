@@ -3,6 +3,7 @@ import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { FC, useEffect } from 'react';
 
+import Loading from '../../../components/Loading';
 import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
 import getMyResumeReviews from '../../../redux/substores/student/thunks/getMyResumeReviews';
 import NoResumes from './NoResumes';
@@ -11,7 +12,7 @@ import ResumeReviewCard from './ResumeReviewCard';
 const ResumeList: FC = () => {
     const classes = useStyles();
 
-    const { resumeReviews } = useStudentSelector((state) => state.resumeReview);
+    const { resumeReviews, isLoading } = useStudentSelector((state) => state.resumeReview);
     const { getAccessTokenSilently } = useAuth0();
     const dispatch = useStudentDispatch();
 
@@ -22,6 +23,10 @@ const ResumeList: FC = () => {
     const currentResumes = resumeReviews.filter((resumeReview) => resumeReview.state === 'seeking_reviewer' || resumeReview.state === 'reviewing');
     const currentResume = currentResumes.length > 0 ? currentResumes[0] : null;
     const submittedResumes = resumeReviews.filter((resumeReview) => resumeReview.state === 'finished' || resumeReview.state === 'canceled');
+
+    if (isLoading) {
+        return <Loading open={isLoading} />;
+    }
 
     return (
         <Box display='flex' flexDirection='column' width='100%'>
