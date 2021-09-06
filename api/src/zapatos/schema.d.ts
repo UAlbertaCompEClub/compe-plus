@@ -45,11 +45,11 @@ declare module 'zapatos/schema' {
       */
       link: string;
       /**
-      * **calendlys.interviewee**
-      * - `text` in database
+      * **calendlys.interviewees**
+      * - `_text` in database
       * - Nullable, no default
       */
-      interviewee: string | null;
+      interviewees: string[] | null;
       /**
       * **calendlys.interviewer**
       * - `text` in database
@@ -83,11 +83,11 @@ declare module 'zapatos/schema' {
       */
       link: string;
       /**
-      * **calendlys.interviewee**
-      * - `text` in database
+      * **calendlys.interviewees**
+      * - `_text` in database
       * - Nullable, no default
       */
-      interviewee: string | null;
+      interviewees: string[] | null;
       /**
       * **calendlys.interviewer**
       * - `text` in database
@@ -121,11 +121,11 @@ declare module 'zapatos/schema' {
       */
       link?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
       /**
-      * **calendlys.interviewee**
-      * - `text` in database
+      * **calendlys.interviewees**
+      * - `_text` in database
       * - Nullable, no default
       */
-      interviewee?: string | db.Parameter<string> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment | db.ParentColumn>;
+      interviewees?: string[] | db.Parameter<string[]> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, string[] | db.Parameter<string[]> | db.SQLFragment | db.ParentColumn>;
       /**
       * **calendlys.interviewer**
       * - `text` in database
@@ -153,11 +153,11 @@ declare module 'zapatos/schema' {
       */
       link: string | db.Parameter<string> | db.SQLFragment;
       /**
-      * **calendlys.interviewee**
-      * - `text` in database
+      * **calendlys.interviewees**
+      * - `_text` in database
       * - Nullable, no default
       */
-      interviewee?: string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment;
+      interviewees?: string[] | db.Parameter<string[]> | null | db.DefaultType | db.SQLFragment;
       /**
       * **calendlys.interviewer**
       * - `text` in database
@@ -173,11 +173,11 @@ declare module 'zapatos/schema' {
       */
       link?: string | db.Parameter<string> | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | db.SQLFragment>;
       /**
-      * **calendlys.interviewee**
-      * - `text` in database
+      * **calendlys.interviewees**
+      * - `_text` in database
       * - Nullable, no default
       */
-      interviewee?: string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment>;
+      interviewees?: string[] | db.Parameter<string[]> | null | db.DefaultType | db.SQLFragment | db.SQLFragment<any, string[] | db.Parameter<string[]> | null | db.DefaultType | db.SQLFragment>;
       /**
       * **calendlys.interviewer**
       * - `text` in database
