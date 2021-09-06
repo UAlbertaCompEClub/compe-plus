@@ -10,7 +10,6 @@ import Validator, { beAValidUuid, beProperlyUriEncoded } from '../validation';
 type ReqQuery = {
     id?: string;
     interviewer?: string;
-    interviewee?: string;
 };
 
 class ReqQueryValidator extends Validator<ReqQuery> {
@@ -24,10 +23,6 @@ class ReqQueryValidator extends Validator<ReqQuery> {
         this.ruleFor('interviewer')
             .mustAsync(beProperlyUriEncoded)
             .when((reqQuery) => reqQuery.interviewer !== undefined);
-
-        this.ruleFor('interviewee')
-            .mustAsync(beProperlyUriEncoded)
-            .when((reqQuery) => reqQuery.interviewee !== undefined);
     }
 }
 
@@ -46,9 +41,8 @@ const getCalendlys = controller(async (req: Request<unknown, ResBody, unknown, R
 
     const id = req.query.id;
     const interviewer = decodeQueryToUser(req.query.interviewer);
-    const interviewee = decodeQueryToUser(req.query.interviewee);
 
-    const calendlys = await calendlyRepository.get(id, interviewer, interviewee);
+    const calendlys = await calendlyRepository.get(id, interviewer);
 
     res.status(200).json({ calendlys: manyToCamelCase(calendlys) });
 });

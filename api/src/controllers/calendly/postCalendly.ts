@@ -7,7 +7,7 @@ import { toCamelCase } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAValidUser, beProperlyUriEncoded } from '../validation';
 
-// Can't define interviewee at creation b/c the assumption is that a interviewee is selected later
+// Can't define interviewees at creation b/c the assumption is that a interviewee is selected later
 type ReqBody = {
     link: string;
     interviewer: string;

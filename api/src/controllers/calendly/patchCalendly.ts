@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
-import type * as s from 'zapatos/schema';
 
 import InternalServerErrorException from '../../exceptions/InternalServerErrorException';
 import * as calendlyRepository from '../../repositories/calendlyRepository';
 import controller from '../controllerUtil';
-import Validator, { beAValidCalendly, beAValidUser, beAValidUuid, beProperlyUriEncoded } from '../validation';
+import Validator, { beAValidCalendly, beAValidUser, beAValidUuid } from '../validation';
 
 type Params = {
     calendly: string;
@@ -21,7 +20,7 @@ class ParamsValidator extends Validator<Params> {
 type ReqBody = {
     link?: string;
     interviewer?: string;
-    interviewee?: string;
+    interviewees?: string[];
 };
 
 class ReqBodyValidator extends Validator<ReqBody> {
@@ -33,19 +32,17 @@ class ReqBodyValidator extends Validator<ReqBody> {
             .when((reqBody) => reqBody.link !== undefined);
 
         this.ruleFor('interviewer')
-            .mustAsync(beProperlyUriEncoded)
             .mustAsync(beAValidUser)
             .when((reqBody) => reqBody.interviewer !== undefined);
 
-        this.ruleFor('interviewee')
-            .mustAsync(beProperlyUriEncoded)
+        this.ruleForEach('interviewees')
             .mustAsync(beAValidUser)
-            .when((reqBody) => reqBody.interviewee !== undefined);
+            .when((reqBody) => reqBody.interviewees !== undefined);
     }
 }
 
 /**
- * Update any calendly.
+ * Update any calendly. Note for simplicities sake that the interviewees value will be entirely overwritten. All appending must happen client side.
  * @param req HTTP request.
  * @param res HTTP response.
  * @returns Nothing.
@@ -55,9 +52,9 @@ const patchAllResumeReview = controller(async (req: Request<Params, unknown, Req
     await new ReqBodyValidator().validateAndThrow(req.body);
 
     try {
-        await calendlyRepository.update(req.params.calendly, req.body.link, req.body.interviewer, req.body.interviewee);
+        await calendlyRepository.update(req.params.calendly, req.body.link, req.body.interviewer, req.body.interviewees);
     } catch (err) {
-        throw new InternalServerErrorException({ issue: 'Failed to update link, interviewer, or interviewee. Try again with same data.' }, err);
+        throw new InternalServerErrorException({ issue: 'Failed to update link, interviewer, or interviewees. Try again with same data.' }, err);
     }
 
     res.status(204).end();
