@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button, ButtonGroup, CircularProgress, Grid, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, withStyles } from '@material-ui/core';
-import dateFormat from 'dateformat';
+import { CircularProgress, Grid, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -10,72 +10,7 @@ import getReviewingResumeReviews from '../../redux/substores/volunteer/thunks/ge
 import unclaimResumeReviews from '../../redux/substores/volunteer/thunks/unclaimResumeReviews';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 import { ResumeReviewWithName as RRWN } from '../../util/serverResponses';
-
-const StyledTableCell = withStyles((theme) => ({
-    head: {
-        backgroundColor: theme.palette.primary.dark,
-        color: theme.palette.common.white,
-        fontSize: 18,
-    },
-}))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-    root: {
-        '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.secondary.main,
-        },
-    },
-}))(TableRow);
-
-interface Action {
-    name: string;
-    func: (resumeReview: RRWN) => void;
-}
-
-interface ResumeReviewTableProps {
-    resumes: RRWN[];
-    actions: Action[];
-}
-
-const ResumeReviewTable: FC<ResumeReviewTableProps> = (props: ResumeReviewTableProps) => {
-    const classes = useStyles();
-    return (
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label='simple table'>
-                <TableHead>
-                    <StyledTableRow>
-                        <StyledTableCell>Name</StyledTableCell>
-                        <StyledTableCell>Uploaded On</StyledTableCell>
-                        <StyledTableCell align='right'>Actions</StyledTableCell>
-                    </StyledTableRow>
-                </TableHead>
-                <TableBody>
-                    {props.resumes.map((resume) => {
-                        return (
-                            <StyledTableRow key={resume.id}>
-                                <StyledTableCell component='th' scope='row'>
-                                    {resume.revieweeName}
-                                </StyledTableCell>
-                                <StyledTableCell>{dateFormat(new Date(resume.createdAt), 'dddd, mmmm dS yyyy')}</StyledTableCell>
-                                <StyledTableCell align='right'>
-                                    <ButtonGroup>
-                                        {props.actions.map((action) => {
-                                            return (
-                                                <Button key={action.name} onClick={() => action.func(resume)}>
-                                                    {action.name}
-                                                </Button>
-                                            );
-                                        })}
-                                    </ButtonGroup>
-                                </StyledTableCell>
-                            </StyledTableRow>
-                        );
-                    })}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
-};
+import ResumeReviewTable from './ResumeReviewTable';
 
 const ResumeReview: FC = () => {
     const { availableResumes, reviewingResumes, availableIsLoading, reviewingIsLoading, shouldReload } = useVolunteerSelector((state) => state.resumeReview);
@@ -96,7 +31,7 @@ const ResumeReview: FC = () => {
         }
     }, [user, shouldReload]);
 
-    const availableTableActions: Action[] = [
+    const availableTableActions = [
         {
             name: 'Claim',
             func: (resumeReview: RRWN) => {
@@ -110,7 +45,8 @@ const ResumeReview: FC = () => {
             },
         },
     ];
-    const reviewingTableActions: Action[] = [
+
+    const reviewingTableActions = [
         { name: 'Review resume', func: (resumeReview: RRWN) => history.push(`/resume-review/${resumeReview.id}`) },
         { name: 'Unclaim', func: (resumeReview: RRWN) => dispatch(unclaimResumeReviews({ tokenAcquirer: getAccessTokenSilently, resumeReviewId: resumeReview.id })) },
     ];
