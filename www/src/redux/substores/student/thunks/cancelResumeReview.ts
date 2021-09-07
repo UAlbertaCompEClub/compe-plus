@@ -27,7 +27,7 @@ export const cancelMyResumeReview = async (params: CancelResumeReviewParams): Pr
         },
         [Scope.UpdateMyResumeReviews],
     ).catch(() => {
-        alert('Unable to download resume');
+        alert('Unable to cancel resume review');
     });
 };
 
