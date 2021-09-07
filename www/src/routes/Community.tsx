@@ -1,7 +1,7 @@
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Link, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 
-import CommunityIcon from '../../assets/community.svg';
+import CommunityIcon from '../assets/community.svg';
 
 const Community: FC = () => {
     return (
@@ -18,7 +18,15 @@ const Community: FC = () => {
                     </Grid>
                     <Grid item xs={3}>
                         <Typography variant='body1' align='center'>
-                            Gain access to crowd-sourced resources for interview prep, resume building, and internship applications
+                            Gain access to crowd-sourced resources for interview prep, resume building, and internship applications{' '}
+                            <Link href='https://github.com/UAlbertaCompEClub/CompE_Resources/blob/main/README.md' target='_blank'>
+                                here
+                            </Link>
+                            .
+                        </Typography>
+                        <br />
+                        <Typography variant='body1' align='center'>
+                            If you would like to contribute please contact external@compeclub.com
                         </Typography>
                     </Grid>
                 </Grid>

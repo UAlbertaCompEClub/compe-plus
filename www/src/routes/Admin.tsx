@@ -6,6 +6,7 @@ import adminStore from '../redux/substores/admin/adminStore';
 import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW_ROUTE } from '../util/constants';
 import MockInterview from './admin/MockInterview';
 import ResumeReview from './admin/ResumeReview';
+import Community from './Community';
 import Landing from './unauthenticated/Landing';
 
 const AdminApp: FC = () => {
@@ -19,7 +20,7 @@ const AdminApp: FC = () => {
                     <MockInterview />
                 </Route>
                 <Route path={COMMUNITY_ROUTE}>
-                    <p>🚧 Work in progress 🚧</p>
+                    <Community />
                 </Route>
                 <Route path='/'>
                     <Landing />

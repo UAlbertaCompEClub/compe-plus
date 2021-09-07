@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import volunteerStore from '../redux/substores/volunteer/volunteerStore';
 import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW_EDITOR_ROUTE, RESUME_REVIEW_ROUTE } from '../util/constants';
+import Community from './Community';
 import Landing from './unauthenticated/Landing';
 import MockInterview from './volunteer/MockInterview';
 import ResumeReview from './volunteer/ResumeReview';
@@ -23,7 +24,7 @@ const VolunteerApp: FC = () => {
                     <MockInterview />
                 </Route>
                 <Route path={COMMUNITY_ROUTE}>
-                    <p>🚧 Work in progress 🚧</p>
+                    <Community />
                 </Route>
                 <Route path='/'>
                     <Landing />
