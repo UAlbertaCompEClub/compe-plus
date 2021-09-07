@@ -64,6 +64,7 @@ const studentState: StudentState = {
         resumeReviews: [],
         isLoading: false,
         isUploading: false,
+        shouldReload: true,
     },
     resumeReviewViewer: {
         currentDocument: null,
