@@ -2,6 +2,7 @@ import { Button, Grid, Link, makeStyles, TextField, Typography } from '@material
 import React, { FC } from 'react';
 
 import GiveAvailabilityIcon from '../../assets/give_availability.svg';
+import TitledPage from '../../components/TitledPage';
 
 const MockInterview: FC = () => {
     const classes = useStyles();
@@ -35,11 +36,8 @@ const MockInterview: FC = () => {
     );
 
     return (
-        <div style={{ overflow: 'hidden' }}>
-            <Grid container justify='center' alignItems='center' style={{ marginTop: '10px', minHeight: '75vh' }}>
-                <Grid container item justify='center'>
-                    <Typography variant='h1'>Mock Interviews</Typography>
-                </Grid>
+        <TitledPage title='Mock Interviews'>
+            <Grid container justify='center' alignItems='center'>
                 <Grid container item spacing={4} justify='center'>
                     <Grid container item xs={12} justify='center'>
                         <img src={GiveAvailabilityIcon} />
@@ -47,7 +45,7 @@ const MockInterview: FC = () => {
                     {calendlyLink ? showLink : submitLink}
                 </Grid>
             </Grid>
-        </div>
+        </TitledPage>
     );
 };
 
