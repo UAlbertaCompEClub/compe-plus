@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Button, Card, Collapse, Grid, IconButton, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -6,15 +7,41 @@ import clsx from 'clsx';
 import dateFormat from 'dateformat';
 import React, { FC, useState } from 'react';
 
-import { ResumeReview } from '../../../util/serverResponses';
+import fetchWithToken from '../../../util/auth0/fetchWithToken';
+import TokenAcquirer from '../../../util/auth0/TokenAcquirer';
+import { getMyDocuments as getMyDocumentsEndpoint } from '../../../util/endpoints';
+import Scope from '../../../util/scopes';
+import { ResumeReview, WrappedDocuments } from '../../../util/serverResponses';
 
 type ResumeReviewCardProps = {
     resumeReview: ResumeReview;
 };
 
+const downloadReviewedResume = async (resumeReviewId: string, tokenAcquirer: TokenAcquirer) => {
+    const result = await fetchWithToken<WrappedDocuments>(getMyDocumentsEndpoint(resumeReviewId), tokenAcquirer, [Scope.ReadMyDocuments]).catch(() => {
+        alert('Unable to download resume');
+    });
+
+    const reviewedResume = result?.data.documents[0];
+    if (reviewedResume === undefined) {
+        return;
+    }
+
+    const reviewedResumeUrl = `data:application/pdf;base64, ${reviewedResume.base64Contents}`;
+
+    const documentLink = document.createElement('a');
+    documentLink.href = reviewedResumeUrl;
+    documentLink.download = reviewedResume.id;
+    document.body.appendChild(documentLink);
+    documentLink.click();
+    document.body.removeChild(documentLink);
+};
+
 const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeReviewCardProps) => {
     const classes = useStyles();
     const [isExpanded, setIsExpanded] = useState(false);
+
+    const { getAccessTokenSilently } = useAuth0();
 
     const stateToDisplayNameMap = new Map([
         ['canceled', 'Canceled'],
@@ -32,7 +59,15 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
                     </Typography>
                 </Grid>
                 <Grid container justify='space-around' item xs={3}>
-                    {resumeReview.state !== 'finished' && <Button>View</Button>}
+                    {resumeReview.state !== 'finished' && (
+                        <Button
+                            onClick={() => {
+                                window.open(`/resume-review/${resumeReview.id}`, '_blank');
+                            }}
+                        >
+                            View
+                        </Button>
+                    )}
                     {resumeReview.state === 'seeking_reviewer' && <Button>Cancel review</Button>}
                 </Grid>
                 <Grid container alignItems='center' justify='flex-end' item xs={3}>
@@ -66,7 +101,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
                                     </Typography>
                                 </Grid>
                                 <Grid container justify='flex-end' alignItems='center' item xs={3}>
-                                    <Button startIcon={<GetAppIcon />} variant='contained' color='primary'>
+                                    <Button startIcon={<GetAppIcon />} variant='contained' color='primary' onClick={() => downloadReviewedResume(resumeReview.id, getAccessTokenSilently)}>
                                         Download resume
                                     </Button>
                                 </Grid>

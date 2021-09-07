@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import resumeReviewReducer from './slices/resumeReviewSlice';
+import resumeReviewViewerReducer from './slices/resumeReviewViewerSlice';
 import uploadResumeReducer from './slices/uploadResumeSlice';
 
 const store = configureStore({
     reducer: {
         resumeReview: resumeReviewReducer,
+        resumeReviewViewer: resumeReviewViewerReducer,
         uploadResume: uploadResumeReducer,
     },
 });
