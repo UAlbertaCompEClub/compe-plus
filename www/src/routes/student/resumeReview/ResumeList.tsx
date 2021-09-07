@@ -12,13 +12,15 @@ import ResumeReviewCard from './ResumeReviewCard';
 const ResumeList: FC = () => {
     const classes = useStyles();
 
-    const { resumeReviews, isLoading } = useStudentSelector((state) => state.resumeReview);
+    const { resumeReviews, isLoading, shouldReload } = useStudentSelector((state) => state.resumeReview);
     const { getAccessTokenSilently } = useAuth0();
     const dispatch = useStudentDispatch();
 
     useEffect(() => {
-        dispatch(getMyResumeReviews({ tokenAcquirer: getAccessTokenSilently }));
-    }, []);
+        if (shouldReload) {
+            dispatch(getMyResumeReviews({ tokenAcquirer: getAccessTokenSilently }));
+        }
+    }, [shouldReload]);
 
     const currentResumes = resumeReviews.filter((resumeReview) => resumeReview.state === 'seeking_reviewer' || resumeReview.state === 'reviewing');
     const currentResume = currentResumes.length > 0 ? currentResumes[0] : null;

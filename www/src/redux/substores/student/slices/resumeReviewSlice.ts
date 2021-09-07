@@ -1,18 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ResumeReview } from '../../../../util/serverResponses';
+import cancelMyResumeReview from '../thunks/cancelResumeReview';
 import getMyResumeReviews from '../thunks/getMyResumeReviews';
 
 type ResumeReviewState = {
     resumeReviews: ResumeReview[];
     isLoading: boolean;
     isUploading: boolean;
+    shouldReload: boolean;
 };
 
 const initialState: ResumeReviewState = {
     resumeReviews: [],
     isUploading: false,
     isLoading: false,
+    shouldReload: true,
 };
 
 export const resumeReviewSlice = createSlice({
@@ -30,6 +33,14 @@ export const resumeReviewSlice = createSlice({
         builder.addCase(getMyResumeReviews.fulfilled, (state, action) => {
             state.isLoading = false;
             state.resumeReviews = action.payload.resumeReviews;
+            state.shouldReload = false;
+        });
+        builder.addCase(cancelMyResumeReview.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(cancelMyResumeReview.fulfilled, (state) => {
+            state.isLoading = false;
+            state.shouldReload = true;
         });
     },
 });

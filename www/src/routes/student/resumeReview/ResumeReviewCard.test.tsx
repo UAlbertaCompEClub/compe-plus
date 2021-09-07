@@ -1,9 +1,22 @@
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { shallow } from 'enzyme';
 import React from 'react';
+import { mocked } from 'ts-jest/utils';
 
+import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
 import testConstants from '../../../util/testConstants';
 import ResumeReviewCard from './ResumeReviewCard';
+
+jest.mock('../../../redux/substores/student/studentHooks');
+const mockUseStudentDispatch = mocked(useStudentDispatch, true);
+const mockUseStudentSelector = mocked(useStudentSelector, true);
+
+beforeEach(() => {
+    const mockStudentState = testConstants.studentState;
+    mockUseStudentSelector.mockImplementation((selector) => selector(mockStudentState));
+
+    mockUseStudentDispatch.mockReturnValue(jest.fn());
+});
 
 it.each(['cancelled', 'finished', 'reviewing', 'seeking_reviewer'])('displays the View button only when a review is not finished', (state) => {
     const mockResumeReview = testConstants.resumeReview1;
