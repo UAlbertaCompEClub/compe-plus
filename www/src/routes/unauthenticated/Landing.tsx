@@ -257,10 +257,10 @@ const CallToAction: FC = () => {
                 <Fade>
                     <Grid container item justify='center' alignItems='center' xs={8} spacing={5}>
                         <Grid container item alignItems='center'>
-                            <Grid item>
+                            <Grid item xs={12}>
                                 <Typography variant='h1'>Mailing List</Typography>
                             </Grid>
-                            <Grid item>
+                            <Grid item xs={12}>
                                 <Typography variant='body1' style={{ fontWeight: 200 }}>
                                     <br />
                                     CompE+ is still in development 🔧 <br /> Enter your email below to sign up for our mailing list to get up-to-date information on CompE+
