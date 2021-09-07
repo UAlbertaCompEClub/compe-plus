@@ -7,6 +7,8 @@ import clsx from 'clsx';
 import dateFormat from 'dateformat';
 import React, { FC, useState } from 'react';
 
+import { useStudentDispatch } from '../../../redux/substores/student/studentHooks';
+import cancelResumeReview from '../../../redux/substores/student/thunks/cancelResumeReview';
 import fetchWithToken from '../../../util/auth0/fetchWithToken';
 import TokenAcquirer from '../../../util/auth0/TokenAcquirer';
 import { getMyDocuments as getMyDocumentsEndpoint } from '../../../util/endpoints';
@@ -40,6 +42,7 @@ const downloadReviewedResume = async (resumeReviewId: string, tokenAcquirer: Tok
 const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeReviewCardProps) => {
     const classes = useStyles();
     const [isExpanded, setIsExpanded] = useState(false);
+    const dispatch = useStudentDispatch();
 
     const { getAccessTokenSilently } = useAuth0();
 
@@ -68,7 +71,15 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
                             View
                         </Button>
                     )}
-                    {resumeReview.state === 'seeking_reviewer' && <Button>Cancel review</Button>}
+                    {resumeReview.state === 'seeking_reviewer' && (
+                        <Button
+                            onClick={() => {
+                                dispatch(cancelResumeReview({ resumeReviewId: resumeReview.id, tokenAcquirer: getAccessTokenSilently }));
+                            }}
+                        >
+                            Cancel review
+                        </Button>
+                    )}
                 </Grid>
                 <Grid container alignItems='center' justify='flex-end' item xs={3}>
                     <Typography align='right'>{stateToDisplayNameMap.get(resumeReview.state)}</Typography>
