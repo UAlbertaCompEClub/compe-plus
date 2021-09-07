@@ -22,6 +22,9 @@ const useGlobalStyles = makeStyles((theme) => ({
             color: theme.palette.primary.light,
             outlineColor: theme.palette.primary.light,
         },
+        transition: theme.transitions.create(['background-color', 'color'], {
+            duration: theme.transitions.duration.short,
+        }),
     },
 }));
 
