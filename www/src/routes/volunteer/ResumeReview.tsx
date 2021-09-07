@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React, { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import TitledPage from '../../components/TitledPage';
 import claimResumeReviews from '../../redux/substores/volunteer/thunks/claimResumeReviews';
 import getAvailableResumeReviews from '../../redux/substores/volunteer/thunks/getAvailableResumeReviews';
 import getReviewingResumeReviews from '../../redux/substores/volunteer/thunks/getReviewingResumeReviews';
@@ -52,35 +53,37 @@ const ResumeReview: FC = () => {
     ];
 
     return (
-        <Grid container justify='center' alignItems='center' direction='column' className={classes.pageGrid}>
-            <Grid container justify='flex-start' alignItems='flex-start' direction='column'>
-                <Typography variant='h1'>Currently Reviewing</Typography>
-                <Grid container justify='flex-start' alignItems='flex-start' className={classes.wrapper}>
-                    {reviewingIsLoading && (
-                        <Grid container justify='center' alignItems='flex-start'>
-                            <CircularProgress />
-                        </Grid>
-                    )}
-                    {!reviewingIsLoading && reviewingResumes.length == 0 && (
-                        <Typography>You haven&apos;t claimed any resumes to review yet. Claim one of the available resumes below to get started.</Typography>
-                    )}
-                    {!reviewingIsLoading && reviewingResumes.length > 0 && <ResumeReviewTable resumes={reviewingResumes} actions={reviewingTableActions} />}
+        <TitledPage title='Resume Review'>
+            <Grid container justify='center' alignItems='center' direction='column'>
+                <Grid container justify='flex-start' alignItems='flex-start' direction='column'>
+                    <Typography variant='h2'>Currently Reviewing</Typography>
+                    <Grid container justify='flex-start' alignItems='flex-start' className={classes.wrapper}>
+                        {reviewingIsLoading && (
+                            <Grid container justify='center' alignItems='flex-start'>
+                                <CircularProgress />
+                            </Grid>
+                        )}
+                        {!reviewingIsLoading && reviewingResumes.length == 0 && (
+                            <Typography>You haven&apos;t claimed any resumes to review yet. Claim one of the available resumes below to get started.</Typography>
+                        )}
+                        {!reviewingIsLoading && reviewingResumes.length > 0 && <ResumeReviewTable resumes={reviewingResumes} actions={reviewingTableActions} />}
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid container justify='flex-start' alignItems='flex-start' direction='column'>
-                <Typography variant='h1'>Available Resumes</Typography>
+                <Grid container justify='flex-start' alignItems='flex-start' direction='column'>
+                    <Typography variant='h2'>Available Resumes</Typography>
 
-                <Grid container justify='flex-start' alignItems='flex-start' className={classes.wrapper}>
-                    {availableIsLoading && (
-                        <Grid container justify='center' alignItems='flex-start'>
-                            <CircularProgress />
-                        </Grid>
-                    )}
-                    {!availableIsLoading && availableResumes.length == 0 && <Typography>There are no available resumes to review. Check back later.</Typography>}
-                    {!availableIsLoading && availableResumes.length > 0 && <ResumeReviewTable resumes={availableResumes} actions={availableTableActions} />}
+                    <Grid container justify='flex-start' alignItems='flex-start' className={classes.wrapper}>
+                        {availableIsLoading && (
+                            <Grid container justify='center' alignItems='flex-start'>
+                                <CircularProgress />
+                            </Grid>
+                        )}
+                        {!availableIsLoading && availableResumes.length == 0 && <Typography>There are no available resumes to review. Check back later.</Typography>}
+                        {!availableIsLoading && availableResumes.length > 0 && <ResumeReviewTable resumes={availableResumes} actions={availableTableActions} />}
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </TitledPage>
     );
 };
 
@@ -91,9 +94,6 @@ const useStyles = makeStyles({
     wrapper: {
         marginTop: 25,
         marginBottom: 25,
-    },
-    pageGrid: {
-        padding: 50,
     },
 });
 
