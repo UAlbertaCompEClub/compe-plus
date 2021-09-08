@@ -6,6 +6,7 @@ export const getUserRole = (userId: string): string => `${config.server.endpoint
 export const getCalendlys = `${config.server.endpoint}/api/v1/calendlys`;
 
 export const postUsers = `${config.server.endpoint}/api/v1/users`;
+export const postCalendly = `${config.server.endpoint}/api/v1/calendlys`;
 
 export const postResumeReviews = `${config.server.endpoint}/api/v1/resume-reviews`;
 export const patchResumeReviews = (resumeReviewId: string): string => `${config.server.endpoint}/api/v1/resume-reviews/${resumeReviewId}`;

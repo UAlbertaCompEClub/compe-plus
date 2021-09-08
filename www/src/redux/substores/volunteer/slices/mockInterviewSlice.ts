@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import getCalendlyLink from '../thunks/getCalendlyLink';
+import setCalendlyLink from '../thunks/setCalendlyLink';
 
 type MockInterviewState = {
     calendlyLink: string | undefined;
@@ -23,6 +24,13 @@ export const mockInterviewSlice = createSlice({
         builder.addCase(getCalendlyLink.fulfilled, (state, action) => {
             state.isLoading = false;
             state.calendlyLink = action.payload.calendlys[0]?.link;
+        });
+        builder.addCase(setCalendlyLink.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(setCalendlyLink.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.calendlyLink = action.payload?.calendly?.link;
         });
     },
 });

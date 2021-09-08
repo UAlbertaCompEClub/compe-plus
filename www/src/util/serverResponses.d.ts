@@ -81,6 +81,10 @@ export type Calendly = {
     updatedAt: string;
 };
 
+export type WrappedCalendly = {
+    calendly: Calendly;
+};
+
 export type WrappedCalendlys = {
     calendlys: Calendly[];
 };
