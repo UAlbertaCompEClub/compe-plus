@@ -75,6 +75,10 @@ const studentState: StudentState = {
         isLoading: false,
         isUploadComplete: null,
     },
+    mockInterview: {
+        calendlyLink: undefined,
+        isLoading: false,
+    },
 };
 
 const volunteerState: VolunteerState = {
