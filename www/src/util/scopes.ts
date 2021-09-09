@@ -20,6 +20,9 @@ enum Scope {
     ReadAllInterviews = 'read_all:interviews',
     CreateInterviews = 'create:interviews',
     DeleteInterviews = 'delete:interviews',
+    ReadCalendlys = 'read:calendlys',
+    CreateCalendlys = 'create:calendlys',
+    UpdateCalendlys = 'update:calendlys',
 }
 
 export default Scope;

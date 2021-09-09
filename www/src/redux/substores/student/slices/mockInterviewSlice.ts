@@ -20,6 +20,9 @@ export const mockInterviewSlice = createSlice({
         builder.addCase(getCalendlys.pending, (state) => {
             state.isLoading = true;
         });
+        builder.addCase(getCalendlys.rejected, (state) => {
+            state.isLoading = false;
+        });
         builder.addCase(getCalendlys.fulfilled, (state, action) => {
             // Search for the interviewee in the fetched calendlys
             state.calendlyLink = action.payload.calendlys.filter((calendly) => calendly.interviewees?.includes(action.payload.intervieweeId)).map((calendly) => calendly.link)[0];

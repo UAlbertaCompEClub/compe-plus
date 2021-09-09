@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import fetchWithToken from '../../../../util/auth0/fetchWithToken';
 import TokenAcquirer from '../../../../util/auth0/TokenAcquirer';
 import { getCalendlys as endpoint } from '../../../../util/endpoints';
+import Scope from '../../../../util/scopes';
 import { WrappedCalendlys } from '../../../../util/serverResponses';
 import { StudentDispatch, StudentState } from '../studentStore';
 
@@ -20,8 +21,7 @@ type AsyncThunkConfig = {
 type Output = WrappedCalendlys & { intervieweeId: string };
 
 export const getCalendlys = async (params: GetCalendlysParams): Promise<Output> => {
-    // TODO pass through scopes for auth
-    const calendlysResult = await fetchWithToken<WrappedCalendlys>(endpoint, params.tokenAcquirer, []).catch(() => {
+    const calendlysResult = await fetchWithToken<WrappedCalendlys>(endpoint, params.tokenAcquirer, [Scope.ReadCalendlys]).catch(() => {
         throw new Error('Unable to fetch calendlys');
     });
 
