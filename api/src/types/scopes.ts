@@ -24,6 +24,9 @@ enum Scope {
     CreateInterviews = 'create:interviews',
     DeleteInterviews = 'delete:interviews',
     ReadAllUsersRoles = 'read:all_users_roles',
+    ReadCalendlys = 'read:calendlys',
+    CreateCalendlys = 'create:calendlys',
+    UpdateCalendlys = 'update:calendlys',
 }
 
 export default Scope;
