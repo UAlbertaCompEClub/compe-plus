@@ -1,13 +1,25 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Button, Grid, Link, makeStyles, TextField, Typography } from '@material-ui/core';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import GiveAvailabilityIcon from '../../assets/give_availability.svg';
+import LoadingOverlay from '../../components/LoadingOverlay';
+import getCalendlyLink from '../../redux/substores/volunteer/thunks/getCalendlyLink';
+import setCalendlyLink from '../../redux/substores/volunteer/thunks/setCalendlyLink';
+import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 
 const MockInterview: FC = () => {
     const classes = useStyles();
+    const { calendlyLink, isLoading } = useVolunteerSelector((state) => state.mockInterview);
+    const dispatch = useVolunteerDispatch();
+    const { getAccessTokenSilently, user } = useAuth0();
+    const [calendlyInput, setCalendlyInput] = useState<string>('');
 
-    // TODO hit backend to see if the volunteer has uploaded a Calendly link
-    const calendlyLink = '';
+    useEffect(() => {
+        if (user?.sub !== undefined) {
+            dispatch(getCalendlyLink({ tokenAcquirer: getAccessTokenSilently, interviewerId: user.sub }));
+        }
+    }, [user]);
 
     const submitLink = (
         <>
@@ -17,8 +29,24 @@ const MockInterview: FC = () => {
                 </Typography>
             </Grid>
             <Grid container item xs={12} justify='center'>
-                <TextField id='outlined-basic' label='Calendly Link' variant='outlined' className={classes.textField} InputLabelProps={{ className: classes.label }} />
-                <Button variant='contained' color='primary' onClick={() => console.log('TODO')}>
+                <TextField
+                    id='outlined-basic'
+                    label='Calendly Link'
+                    variant='outlined'
+                    className={classes.textField}
+                    InputLabelProps={{ className: classes.label }}
+                    value={calendlyInput}
+                    onChange={(e) => setCalendlyInput(e.target.value)}
+                />
+                <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={() => {
+                        if (user?.sub !== undefined) {
+                            dispatch(setCalendlyLink({ tokenAcquirer: getAccessTokenSilently, interviewerId: user.sub, link: calendlyInput }));
+                        }
+                    }}
+                >
                     Submit
                 </Button>
             </Grid>
@@ -36,6 +64,7 @@ const MockInterview: FC = () => {
 
     return (
         <div style={{ overflow: 'hidden' }}>
+            <LoadingOverlay open={isLoading} />
             <Grid container justify='center' alignItems='center' style={{ marginTop: '10px', minHeight: '75vh' }}>
                 <Grid container item justify='center'>
                     <Typography variant='h1'>Mock Interviews</Typography>

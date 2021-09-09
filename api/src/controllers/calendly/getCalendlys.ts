@@ -3,7 +3,7 @@ import { CamelCasedProperties } from 'type-fest';
 import type * as s from 'zapatos/schema';
 
 import * as calendlyRepository from '../../repositories/calendlyRepository';
-import { decodeQueryToUser, manyToCamelCase } from '../../util/helper';
+import { decodeQueryToUser } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAValidUuid, beProperlyUriEncoded } from '../validation';
 
@@ -44,7 +44,18 @@ const getCalendlys = controller(async (req: Request<unknown, ResBody, unknown, R
 
     const calendlys = await calendlyRepository.get(id, interviewer);
 
-    res.status(200).json({ calendlys: manyToCamelCase(calendlys) });
+    res.status(200).json({
+        calendlys: calendlys.map((calendly) => {
+            return {
+                id: calendly.id,
+                link: calendly.link,
+                interviewer: calendly.interviewer,
+                interviewees: calendly.interviewees,
+                createdAt: calendly.created_at,
+                updatedAt: calendly.updated_at,
+            };
+        }),
+    });
 });
 
 export default getCalendlys;

@@ -75,6 +75,10 @@ const studentState: StudentState = {
         isLoading: false,
         isUploadComplete: null,
     },
+    mockInterview: {
+        calendlyLink: undefined,
+        isLoading: false,
+    },
 };
 
 const volunteerState: VolunteerState = {
@@ -91,6 +95,10 @@ const volunteerState: VolunteerState = {
         documents: null,
         isLoading: false,
         isDone: false,
+    },
+    mockInterview: {
+        calendlyLink: undefined,
+        isLoading: false,
     },
 };
 
