@@ -10,7 +10,7 @@ import getAvailableResumeReviews from '../../redux/substores/volunteer/thunks/ge
 import getReviewingResumeReviews from '../../redux/substores/volunteer/thunks/getReviewingResumeReviews';
 import unclaimResumeReviews from '../../redux/substores/volunteer/thunks/unclaimResumeReviews';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
-import { ResumeReviewWithName as RRWN } from '../../util/serverResponses';
+import { ResumeReviewWithUserDetails as RRWUD } from '../../util/serverResponses';
 import ResumeReviewTable from './ResumeReviewTable';
 
 const ResumeReview: FC = () => {
@@ -35,7 +35,7 @@ const ResumeReview: FC = () => {
     const availableTableActions = [
         {
             name: 'Claim',
-            func: (resumeReview: RRWN) => {
+            func: (resumeReview: RRWUD) => {
                 if (reviewingResumes.length + 1 > 3) {
                     alert("You can't claim more than 3 resumes at once. Start reviewing some of them.");
                     return;
@@ -48,8 +48,8 @@ const ResumeReview: FC = () => {
     ];
 
     const reviewingTableActions = [
-        { name: 'Review resume', func: (resumeReview: RRWN) => history.push(`/resume-review/${resumeReview.id}`) },
-        { name: 'Unclaim', func: (resumeReview: RRWN) => dispatch(unclaimResumeReviews({ tokenAcquirer: getAccessTokenSilently, resumeReviewId: resumeReview.id })) },
+        { name: 'Review resume', func: (resumeReview: RRWUD) => history.push(`/resume-review/${resumeReview.id}`) },
+        { name: 'Unclaim', func: (resumeReview: RRWUD) => dispatch(unclaimResumeReviews({ tokenAcquirer: getAccessTokenSilently, resumeReviewId: resumeReview.id })) },
     ];
 
     return (

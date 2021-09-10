@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ResumeReview } from '../../../../util/serverResponses';
+import { ResumeReviewWithUserDetails } from '../../../../util/serverResponses';
 import cancelMyResumeReview from '../thunks/cancelResumeReview';
 import getMyResumeReviews from '../thunks/getMyResumeReviews';
 
 type ResumeReviewState = {
-    resumeReviews: ResumeReview[];
+    resumeReviews: ResumeReviewWithUserDetails[];
     isLoading: boolean;
     isUploading: boolean;
     shouldReload: boolean;

@@ -3,15 +3,15 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import dateFormat from 'dateformat';
 import React, { FC } from 'react';
 
-import { ResumeReviewWithName as RRWN } from '../../util/serverResponses';
+import { ResumeReviewWithUserDetails as RRWUD } from '../../util/serverResponses';
 
 interface Action {
     name: string;
-    func: (resumeReview: RRWN) => void;
+    func: (resumeReview: RRWUD) => void;
 }
 
 interface ResumeReviewTableProps {
-    resumes: RRWN[];
+    resumes: RRWUD[];
     actions: Action[];
 }
 
@@ -33,7 +33,7 @@ const ResumeReviewTable: FC<ResumeReviewTableProps> = (props: ResumeReviewTableP
                         return (
                             <StyledTableRow key={resume.id}>
                                 <StyledTableCell component='th' scope='row'>
-                                    {resume.revieweeName}
+                                    {resume.reviewee.fullName}
                                 </StyledTableCell>
                                 <StyledTableCell>{dateFormat(new Date(resume.createdAt), 'dddd, mmmm dS yyyy')}</StyledTableCell>
                                 <StyledTableCell align='right'>

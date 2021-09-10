@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import patchResumeReview from '../../../../routes/volunteer/thunks/patchResumeReview';
-import { ResumeReviewWithName } from '../../../../util/serverResponses';
+import { ResumeReviewWithUserDetails } from '../../../../util/serverResponses';
 import claimResumeReviews from '../thunks/claimResumeReviews';
 import getAvailableResumeReviews from '../thunks/getAvailableResumeReviews';
 import getReviewingResumeReviews from '../thunks/getReviewingResumeReviews';
 import unclaimResumeReviews from '../thunks/unclaimResumeReviews';
 
 type ResumeReviewState = {
-    availableResumes: ResumeReviewWithName[];
-    reviewingResumes: ResumeReviewWithName[];
+    availableResumes: ResumeReviewWithUserDetails[];
+    reviewingResumes: ResumeReviewWithUserDetails[];
     availableIsLoading: boolean;
     reviewingIsLoading: boolean;
     shouldReload: boolean;

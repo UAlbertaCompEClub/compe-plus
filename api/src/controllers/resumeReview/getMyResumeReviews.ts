@@ -31,8 +31,10 @@ class ReqQueryValidator extends Validator<ReqQuery> {
     }
 }
 
+type ResumeReviewWithDetails = CamelCasedProperties<s.resume_reviews.JSONSelectable & { reviewer: s.users.JSONSelectable; reviewee: s.users.JSONSelectable }>;
+
 type ResBody = {
-    resumeReviews: CamelCasedProperties<s.resume_reviews.JSONSelectable>[];
+    resumeReviews: ResumeReviewWithDetails[];
 };
 
 /**
@@ -50,9 +52,9 @@ const getMyResumeReviews = controller(async (req: Request<unknown, ResBody, unkn
     // Reviewee must be same as requesting user
     const reviewee = req.user.sub;
 
-    const myResumeReviews = await resumeReviewRepository.get(id, reviewee, reviewer, req.query.state);
+    const allResumeReviews = await resumeReviewRepository.getWithUserDetails(id, reviewee, reviewer, req.query.state);
 
-    res.status(200).json({ resumeReviews: manyToCamelCase(myResumeReviews) });
+    res.status(200).json({ resumeReviews: manyToCamelCase(allResumeReviews) });
 });
 
 export default getMyResumeReviews;

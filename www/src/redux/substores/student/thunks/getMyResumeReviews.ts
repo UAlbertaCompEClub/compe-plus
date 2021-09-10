@@ -4,7 +4,7 @@ import fetchWithToken from '../../../../util/auth0/fetchWithToken';
 import TokenAcquirer from '../../../../util/auth0/TokenAcquirer';
 import { getResumeReviews } from '../../../../util/endpoints';
 import Scope from '../../../../util/scopes';
-import { WrappedResumeReviews } from '../../../../util/serverResponses';
+import { WrappedResumeReviewsWithDetails } from '../../../../util/serverResponses';
 import { StudentDispatch, StudentState } from '../studentStore';
 
 export type InitiateResumeReviewParams = {
@@ -17,14 +17,14 @@ type AsyncThunkConfig = {
     rejectValue: string;
 };
 
-export const getMyResumeReviews = async (params: InitiateResumeReviewParams): Promise<WrappedResumeReviews> => {
-    const resumeReviewResult = await fetchWithToken<WrappedResumeReviews>(getResumeReviews, params.tokenAcquirer, [Scope.ReadMyResumeReviews]).catch(() => {
+export const getMyResumeReviews = async (params: InitiateResumeReviewParams): Promise<WrappedResumeReviewsWithDetails> => {
+    const resumeReviewResult = await fetchWithToken<WrappedResumeReviewsWithDetails>(getResumeReviews, params.tokenAcquirer, [Scope.ReadMyResumeReviews]).catch(() => {
         throw new Error('Unable to fetch resume reviews');
     });
     return resumeReviewResult?.data ?? { resumeReviews: [] };
 };
 
-export default createAsyncThunk<WrappedResumeReviews, InitiateResumeReviewParams, AsyncThunkConfig>('resumeReview/getMyResumeReviews', (params, thunkApi) => {
+export default createAsyncThunk<WrappedResumeReviewsWithDetails, InitiateResumeReviewParams, AsyncThunkConfig>('resumeReview/getMyResumeReviews', (params, thunkApi) => {
     try {
         return getMyResumeReviews(params);
     } catch (e) {

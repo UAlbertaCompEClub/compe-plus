@@ -23,6 +23,12 @@ const resumeReview1: s.resume_reviews.JSONSelectable = {
     reviewer_id: '97cf8fdc-884d-442a-ac71-9922b8f1ee5e',
 };
 
+const resumeReviewWithUserDetails1 = {
+    ...resumeReview1,
+    reviewer: user1,
+    reviewee: user1,
+};
+
 const userRole1: s.user_roles.JSONSelectable = {
     user_id: 'google-oauth2|999937999992352499990',
     role: 'student',
@@ -51,4 +57,4 @@ const volunteerRole: s.user_roles.JSONSelectable = {
     role: 'reviewer',
 };
 
-export default { user1, resumeReview1, userRole1, document1, role1: userRole, role2: volunteerRole };
+export default { user1, resumeReview1, resumeReviewWithUserDetails1, userRole1, document1, role1: userRole, role2: volunteerRole };
