@@ -25,16 +25,6 @@ export type ResumeReview = {
     updatedAt: string;
 };
 
-export type ResumeReviewWithName = {
-    id: string;
-    revieweeId: string;
-    reviewerId: string | null;
-    state: 'canceled' | 'finished' | 'reviewing' | 'seeking_reviewer';
-    createdAt: string;
-    updatedAt: string;
-    revieweeName: string;
-};
-
 export type ResumeReviewWithUserDetails = {
     id: string;
     revieweeId: string;
@@ -57,10 +47,6 @@ export type WrappedResumeReviews = {
 
 export type WrappedResumeReviewsWithDetails = {
     resumeReviews: ResumeReviewWithUserDetails[];
-};
-
-export type WrappedResumeReviewWithNames = {
-    resumeReviews: ResumeReviewWithName[];
 };
 
 export type Document = {
