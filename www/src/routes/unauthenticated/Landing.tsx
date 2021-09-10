@@ -28,7 +28,6 @@ const Landing: FC = () => {
             <img src={Wave1} className={classes.wave} />
             <Services />
             <Info />
-            {/* <CallToAction /> */}
             <Values />
             <img src={Wave4} className={classes.wave} />
             <Footer />
@@ -103,7 +102,7 @@ const Info: FC = () => {
                                 insight on what it&apos;s like to work in the tech industry.
                             </Typography>
                             <br />
-                            <Typography variant='body1'>The CompE+ pilot program is will run from September 13 - November 8 2021 to target Winter and Summer 2022 recruitment.</Typography>
+                            <Typography variant='body1'>The CompE+ pilot program is will run from September 13 - November 8, 2021 to target Winter and Summer 2022 recruitment.</Typography>
                         </Grid>
                         <Grid container item justify='center' alignItems='center' direction='column'>
                             <Typography variant='body1' style={{ fontWeight: 600 }}>
