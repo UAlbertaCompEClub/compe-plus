@@ -17,7 +17,6 @@ import Wave2 from '../../assets/wave_2.svg';
 import Wave3 from '../../assets/wave_3.svg';
 import Wave4 from '../../assets/wave_4.svg';
 import { Fade } from '../../components/Fade';
-import MailChimpForm from '../../components/MailChimpForm';
 import useGlobalStyles from '../../styles/style';
 
 const Landing: FC = () => {
@@ -233,34 +232,6 @@ const Services: FC = () => {
                 </Grid>
             </Grid>
         </Fade>
-    );
-};
-
-const CallToAction: FC = () => {
-    const classes = useStyles();
-
-    return (
-        <>
-            <Grid container item className={`${classes.wave_pattern} `} style={{ minHeight: '50vh' }}>
-                <Fade>
-                    <Grid container item justify='center' alignItems='center' xs={8} spacing={5}>
-                        <Grid container item alignItems='center'>
-                            <Grid item xs={12}>
-                                <Typography variant='h1'>Mailing List</Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography variant='body1' style={{ fontWeight: 200 }}>
-                                    <br />
-                                    CompE+ is still in development 🔧 <br /> Enter your email below to sign up for our mailing list to get up-to-date information on CompE+
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                        <MailChimpForm />
-                    </Grid>
-                </Fade>
-            </Grid>
-            <img src={Wave3} className={classes.wave} />
-        </>
     );
 };
 
