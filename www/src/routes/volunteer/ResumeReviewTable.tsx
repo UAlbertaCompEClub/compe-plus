@@ -33,7 +33,7 @@ const ResumeReviewTable: FC<ResumeReviewTableProps> = (props: ResumeReviewTableP
                         return (
                             <StyledTableRow key={resume.id}>
                                 <StyledTableCell component='th' scope='row'>
-                                    {resume.revieweeName}
+                                    {resume.reviewee.fullName}
                                 </StyledTableCell>
                                 <StyledTableCell>{dateFormat(new Date(resume.createdAt), 'dddd, mmmm dS yyyy')}</StyledTableCell>
                                 <StyledTableCell align='right'>

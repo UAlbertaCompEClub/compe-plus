@@ -32,7 +32,6 @@ export type ResumeReviewWithUserDetails = {
     state: 'canceled' | 'finished' | 'reviewing' | 'seeking_reviewer';
     createdAt: string;
     updatedAt: string;
-    revieweeName: string;
     reviewer: User | null;
     reviewee: User;
 };
