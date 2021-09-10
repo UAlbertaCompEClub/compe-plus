@@ -13,10 +13,10 @@ import fetchWithToken from '../../../util/auth0/fetchWithToken';
 import TokenAcquirer from '../../../util/auth0/TokenAcquirer';
 import { getMyDocuments as getMyDocumentsEndpoint } from '../../../util/endpoints';
 import Scope from '../../../util/scopes';
-import { ResumeReview, WrappedDocuments } from '../../../util/serverResponses';
+import { ResumeReviewWithUserDetails, WrappedDocuments } from '../../../util/serverResponses';
 
 type ResumeReviewCardProps = {
-    resumeReview: ResumeReview;
+    resumeReview: ResumeReviewWithUserDetails;
 };
 
 const downloadReviewedResume = async (resumeReviewId: string, tokenAcquirer: TokenAcquirer) => {
@@ -107,8 +107,10 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
                                         <b>Review completed on:</b> {dateFormat(new Date(resumeReview.updatedAt), 'dddd, mmmm dS yyyy')}
                                     </Typography>
                                     <Typography>
-                                        {/* // TODO: Update to reviewer name */}
-                                        <b>Reviewer ID:</b> {resumeReview.reviewerId}
+                                        <b>Reviewer name:</b> {resumeReview.reviewer?.fullName}
+                                    </Typography>
+                                    <Typography>
+                                        <b>Reviewer email:</b> {resumeReview.reviewer?.email}
                                     </Typography>
                                 </Grid>
                                 <Grid container justify='flex-end' alignItems='center' item xs={3}>

@@ -43,7 +43,7 @@ export type ResumeReviewWithUserDetails = {
     createdAt: string;
     updatedAt: string;
     revieweeName: string;
-    reviewer: User;
+    reviewer: User | null;
     reviewee: User;
 };
 
