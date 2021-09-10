@@ -2,9 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { mocked } from 'ts-jest/utils';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
-import * as userRepository from '../../repositories/userRepository';
 import { toCamelCase } from '../../util/helper';
-import testConstants from '../../util/testConstants';
 import tc from '../../util/testConstants';
 import getAllResumeReviews from './getAllResumeReviews';
 
