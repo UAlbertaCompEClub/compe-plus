@@ -92,4 +92,4 @@ const update = async (id: string, reviewee?: string, reviewer?: string, state?: 
     return db.update('resume_reviews', colOptions, where).run(pool);
 };
 
-export { create, get, getWithUserDetails as getWithName, update };
+export { create, get, getWithUserDetails, update };

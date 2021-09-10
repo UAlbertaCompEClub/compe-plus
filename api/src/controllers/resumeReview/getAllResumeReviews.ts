@@ -3,7 +3,6 @@ import { CamelCasedProperties } from 'type-fest';
 import type * as s from 'zapatos/schema';
 
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
-import * as userRepository from '../../repositories/userRepository';
 import { decodeQueryToUser, manyToCamelCase } from '../../util/helper';
 import controller from '../controllerUtil';
 import Validator, { beAResumeReviewState, beAValidUuid, beProperlyUriEncoded } from '../validation';
@@ -56,7 +55,7 @@ const getAllResumeReviews = controller(async (req: Request<unknown, ResBody, unk
     const reviewee = decodeQueryToUser(req.query.reviewee);
     const reviewer = decodeQueryToUser(req.query.reviewer);
 
-    const allResumeReviews = await resumeReviewRepository.getWithName(id, reviewee, reviewer, req.query.state);
+    const allResumeReviews = await resumeReviewRepository.getWithUserDetails(id, reviewee, reviewer, req.query.state);
 
     const camelCasedResumeReviews = manyToCamelCase(allResumeReviews);
 
