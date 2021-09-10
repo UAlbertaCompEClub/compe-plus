@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import postWithToken from '../../../../util/auth0/postWithToken';
 import TokenAcquirer from '../../../../util/auth0/TokenAcquirer';
 import { postCalendly } from '../../../../util/endpoints';
+import Scope from '../../../../util/scopes';
 import { WrappedCalendly } from '../../../../util/serverResponses';
 import { VolunteerDispatch, VolunteerState } from '../volunteerStore';
 
@@ -19,8 +20,7 @@ type AsyncThunkConfig = {
 };
 
 export const setCalendlyLink = async (params: SetCalendlyLinkParams): Promise<WrappedCalendly | undefined> => {
-    // TODO pass through scopes for auth
-    const calendlyResult = await postWithToken<{ interviewer: string; link: string }, WrappedCalendly>(postCalendly, params.tokenAcquirer, [], {
+    const calendlyResult = await postWithToken<{ interviewer: string; link: string }, WrappedCalendly>(postCalendly, params.tokenAcquirer, [Scope.CreateCalendlys], {
         interviewer: params.interviewerId,
         link: params.link,
     });

@@ -21,12 +21,18 @@ export const mockInterviewSlice = createSlice({
         builder.addCase(getCalendlyLink.pending, (state) => {
             state.isLoading = true;
         });
+        builder.addCase(getCalendlyLink.rejected, (state) => {
+            state.isLoading = false;
+        });
         builder.addCase(getCalendlyLink.fulfilled, (state, action) => {
             state.isLoading = false;
             state.calendlyLink = action.payload.calendlys[0]?.link;
         });
         builder.addCase(setCalendlyLink.pending, (state) => {
             state.isLoading = true;
+        });
+        builder.addCase(setCalendlyLink.rejected, (state) => {
+            state.isLoading = false;
         });
         builder.addCase(setCalendlyLink.fulfilled, (state, action) => {
             state.isLoading = false;
