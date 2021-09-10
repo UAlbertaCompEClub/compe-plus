@@ -57,9 +57,7 @@ const getAllResumeReviews = controller(async (req: Request<unknown, ResBody, unk
 
     const allResumeReviews = await resumeReviewRepository.getWithUserDetails(id, reviewee, reviewer, req.query.state);
 
-    const camelCasedResumeReviews = manyToCamelCase(allResumeReviews);
-
-    res.status(200).json({ resumeReviews: camelCasedResumeReviews });
+    res.status(200).json({ resumeReviews: manyToCamelCase(allResumeReviews) });
 });
 
 export default getAllResumeReviews;
