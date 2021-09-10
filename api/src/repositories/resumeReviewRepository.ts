@@ -29,12 +29,12 @@ const get = async (id?: string, reviewee?: string, reviewer?: string, state?: s.
     return db.select('resume_reviews', where).run(pool);
 };
 
-type ResumeReviewWithDetails = s.resume_reviews.JSONSelectable & {
+type ResumeReviewWithUserDetails = s.resume_reviews.JSONSelectable & {
     reviewer: s.users.JSONSelectable;
     reviewee: s.users.JSONSelectable;
 };
 
-const getWithName = async (id?: string, reviewee?: string, reviewer?: string, state?: s.resume_review_state): Promise<ResumeReviewWithDetails[]> => {
+const getWithUserDetails = async (id?: string, reviewee?: string, reviewer?: string, state?: s.resume_review_state): Promise<ResumeReviewWithUserDetails[]> => {
     const where: s.resume_reviews.Whereable = {};
     if (id) {
         where.id = dc.eq(id);
@@ -92,4 +92,4 @@ const update = async (id: string, reviewee?: string, reviewer?: string, state?: 
     return db.update('resume_reviews', colOptions, where).run(pool);
 };
 
-export { create, get, getWithName, update };
+export { create, get, getWithUserDetails as getWithName, update };
