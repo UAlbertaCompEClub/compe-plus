@@ -29,7 +29,7 @@ const Landing: FC = () => {
             <img src={Wave1} className={classes.wave} />
             <Services />
             <Info />
-            <CallToAction />
+            {/* <CallToAction /> */}
             <Values />
             <img src={Wave4} className={classes.wave} />
             <Footer />
@@ -87,45 +87,34 @@ export const Intro: FC = () => {
 };
 
 const Info: FC = () => {
-    const global = useGlobalStyles();
-
+    const classes = useStyles();
     return (
         <Fade>
-            <Grid container item style={{ height: '100vh' }} justify='center' id='info'>
-                <Grid container item justify='center' alignItems='center' xs={8}>
-                    <Grid container item alignItems='center'>
-                        <Typography variant='h1'>What’s CompE+ ?</Typography>
-                    </Grid>
-                    <Grid container item>
-                        <Typography variant='body1'>
-                            CompE+ is a student led pilot program to provide students with support to find internships in the tech industry. Finding an internship within the tech industry can be
-                            difficult and daunting - that’s where CompE+ comes in! CompE+ strives to provide students with services that will aid them on their internship hunt and to provide insight
-                            on what it&apos;s like to work in the tech industry.
-                        </Typography>
-                        <br />
-                        <Typography variant='body1'>
-                            The CompE+ pilot program is currently under development and is slated to launch Fall 2021 for the Summer 2022 recruitment. The program will run from September - October
-                            2021.
-                        </Typography>
-                    </Grid>
-                    <Grid container item justify='center' alignItems='center' direction='column' spacing={5}>
-                        <Grid container item justify='center' alignItems='center'>
-                            <Typography variant='body1' style={{ fontWeight: 600 }}>
-                                We are currently looking for volunteers: Resume Reviewers and Interviewers! <br />
-                            </Typography>
+            <>
+                <img src={Wave2} className={classes.wave} id='call-to-action' />
+                <Grid container item style={{ height: '100vh' }} className={classes.wave_pattern} justify='center' id='info'>
+                    <Grid container item justify='center' alignItems='center' xs={8}>
+                        <Grid container item alignItems='center'>
+                            <Typography variant='h1'>What’s CompE+ ?</Typography>
                         </Grid>
-
+                        <Grid container item>
+                            <Typography variant='body1'>
+                                CompE+ is a student led pilot program to provide students with support to find internships in the tech industry. Finding an internship within the tech industry can be
+                                difficult and daunting - that’s where CompE+ comes in! CompE+ strives to provide students with services that will aid them on their internship hunt and to provide
+                                insight on what it&apos;s like to work in the tech industry.
+                            </Typography>
+                            <br />
+                            <Typography variant='body1'>The CompE+ pilot program is will run from September 13 - November 8 2021 to target Winter and Summer 2022 recruitment.</Typography>
+                        </Grid>
                         <Grid container item justify='center' alignItems='center' direction='column'>
                             <Typography variant='body1' style={{ fontWeight: 600 }}>
-                                If you&apos;re interested:
+                                If you&apos;re interested in volunteering as a Resume Reviewer or Interviewer, contact external@compeclub.com
                             </Typography>
-                            <Button size='medium' variant='contained' className={global.main_button} onClick={() => window.location.replace('/#call-to-action')}>
-                                Sign up for our mailing list!
-                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
+                <img src={Wave3} className={classes.wave} id='call-to-action' />
+            </>
         </Fade>
     );
 };
@@ -252,7 +241,6 @@ const CallToAction: FC = () => {
 
     return (
         <>
-            <img src={Wave2} className={classes.wave} id='call-to-action' />
             <Grid container item className={`${classes.wave_pattern} `} style={{ minHeight: '50vh' }}>
                 <Fade>
                     <Grid container item justify='center' alignItems='center' xs={8} spacing={5}>
@@ -301,14 +289,21 @@ const Footer: FC = () => {
                     <Grid container item xs={4} alignItems='center' justify='center'>
                         <img src={LightGreenLogo} className={classes.footer_logo} />
                     </Grid>
-                    <Grid item xs={4}>
-                        <Typography className={classes.footer_text} align='right'>
-                            Curious how we&apos;re building CompE+? Checkout the Github{' '}
-                            <Link href='https://github.com/UAlbertaCompEClub/compe-plus' color='inherit' underline='always'>
-                                repo
-                            </Link>{' '}
-                            😎
-                        </Typography>
+                    <Grid container item xs={4} direction='column'>
+                        <Grid item>
+                            <Typography className={classes.footer_text} align='right'>
+                                Curious how we&apos;re building CompE+? Checkout the Github{' '}
+                                <Link href='https://github.com/UAlbertaCompEClub/compe-plus' color='inherit' underline='always'>
+                                    repo
+                                </Link>{' '}
+                                😎
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography className={classes.footer_text} align='right'>
+                                If you notice a bug, please don&apos;t get mad. Feel free to file an issue.
+                            </Typography>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
