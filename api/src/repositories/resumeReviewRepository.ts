@@ -29,6 +29,36 @@ const get = async (id?: string, reviewee?: string, reviewer?: string, state?: s.
     return db.select('resume_reviews', where).run(pool);
 };
 
+type ResumeReviewWithDetails = s.resume_reviews.JSONSelectable & {
+    reviewer: s.users.JSONSelectable;
+    reviewee: s.users.JSONSelectable;
+};
+
+const getWithName = async (id?: string, reviewee?: string, reviewer?: string, state?: s.resume_review_state): Promise<ResumeReviewWithDetails[]> => {
+    const where: s.resume_reviews.Whereable = {};
+    if (id) {
+        where.id = dc.eq(id);
+    }
+    if (reviewee) {
+        where.reviewee_id = dc.eq(reviewee);
+    }
+    if (reviewer) {
+        where.reviewer_id = dc.eq(reviewer);
+    }
+    if (state) {
+        where.state = dc.eq(state);
+    }
+
+    return db
+        .select('resume_reviews', where, {
+            lateral: {
+                reviewee: db.selectExactlyOne('users', { id: db.parent('reviewee_id') }),
+                reviewer: db.selectExactlyOne('users', { id: db.parent('reviewer_id') }),
+            },
+        })
+        .run(pool);
+};
+
 /**
  * Create a new resume review.
  * @param reviewee Reviewee id for new resume review.
@@ -62,4 +92,4 @@ const update = async (id: string, reviewee?: string, reviewer?: string, state?: 
     return db.update('resume_reviews', colOptions, where).run(pool);
 };
 
-export { create, get, update };
+export { create, get, getWithName, update };
