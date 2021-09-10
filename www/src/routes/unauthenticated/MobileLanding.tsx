@@ -2,10 +2,7 @@ import { Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 
 import BlackLogo from '../../assets/logo_black.svg';
-import LightGreenLogo from '../../assets/logo_light_green.svg';
 import Wave1 from '../../assets/wave_1.svg';
-import Wave4 from '../../assets/wave_4.svg';
-import MailChimpForm from '../../components/MailChimpForm';
 
 const MobileLanding: FC = () => {
     const classes = useStyles();
@@ -21,35 +18,14 @@ const MobileLanding: FC = () => {
                         </Grid>
                         <Grid item>
                             <Typography align='center' variant='body1' style={{ fontWeight: 200 }}>
-                                The developers are working very hard to build CompE+ with limited time so some functionality had to be deferred. <br />
-                                As such, this site is not optimized for mobile 😞 please open compe.plus on desktop
+                                The developers are worked very hard to build CompE+ with limited time so some functionality had to be deferred. <br />
+                                As such, this site is not optimized for mobile 😞 please open www.compe.plus on desktop
                             </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
             <img src={Wave1} className={classes.wave} />
-            <Grid container item justify='center' style={{ minHeight: '50vh' }}>
-                <Grid container item justify='center' xs={10} spacing={2}>
-                    <Grid container item alignItems='center' justify='center' spacing={2}>
-                        <Grid item>
-                            <Typography variant='h1'>Mailing List</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography align='center' variant='body1' style={{ fontWeight: 200 }}>
-                                For updates on CompE+ or if you would like to volunteer to review resumes or hold mock interviews, sign up for our mailing list:
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <MailChimpForm />
-                </Grid>
-            </Grid>
-            <img src={Wave4} className={classes.wave} />
-            <Grid container item className={classes.footer}>
-                <Grid container item className={classes.wave_pattern} justify='center' direction='column' alignItems='center'>
-                    <img src={LightGreenLogo} className={classes.footer_logo} />
-                </Grid>
-            </Grid>
         </Grid>
     );
 };

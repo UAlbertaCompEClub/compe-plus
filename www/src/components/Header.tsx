@@ -1,6 +1,7 @@
 import { AppBar, Hidden, Link, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { FC } from 'react';
+import { isBrowser } from 'react-device-detect';
 import { Link as RouterLink } from 'react-router-dom';
 
 import logo from '../assets/logo_white.svg';
@@ -51,7 +52,7 @@ export const Header: FC<HeaderProps> = (props: HeaderProps) => {
                         </Link>
                     ))}
                 </Hidden>
-                <AuthButton />
+                {isBrowser && <AuthButton />}
             </Toolbar>
         </AppBar>
     );
