@@ -12,6 +12,7 @@ import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substore
 import { RESUME_REVIEW_ROUTE } from '../../util/constants';
 import { arrayBufferToBase64, base64ToArrayBuffer } from '../../util/helpers';
 import getMyDocuments from './thunks/getMyDocuments';
+import patchDocument from './thunks/patchDocument';
 import patchResumeReview from './thunks/patchResumeReview';
 
 type ResumeReviewParams = {
@@ -65,8 +66,6 @@ const ResumeReviewEditor: React.FC = () => {
                     onClick={() =>
                         dispatch(
                             patchResumeReview({
-                                document: currentDocument?.base64Contents ?? '',
-                                documentId: currentDocument?.id ?? '',
                                 resumeReviewId,
                                 tokenAcquirer: getAccessTokenSilently,
                                 userId: user?.sub ?? '',
@@ -89,7 +88,15 @@ const ResumeReviewEditor: React.FC = () => {
                         }}
                         onSave={(arrayBuffer) => {
                             const base64Contents = arrayBufferToBase64(arrayBuffer);
-                            dispatch(updateCurrentDocumentContents(base64Contents));
+                            dispatch(
+                                patchDocument({
+                                    document: base64Contents,
+                                    documentId: currentDocument?.id ?? '',
+                                    resumeReviewId,
+                                    tokenAcquirer: getAccessTokenSilently,
+                                    userId: user?.sub ?? '',
+                                }),
+                            );
                         }}
                         saveOptions={{
                             enableFocusPolling: true, // Auto-saves on focus loss
