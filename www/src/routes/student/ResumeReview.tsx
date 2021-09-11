@@ -8,6 +8,7 @@ import UploadResume from './resumeReview/UploadResume';
 
 const ResumeReview: FC = () => {
     const { isUploading } = useStudentSelector((state) => state.resumeReview);
+
     return (
         <TitledPage title='Resume Review'>
             <Grid container item justify='center'>
