@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import LoadingOverlay from '../../components/LoadingOverlay';
 import PDFViewer from '../../components/pdf/PDFViewer';
-import { resetResumeReviewEditor, updateCurrentDocumentContents } from '../../redux/substores/volunteer/slices/resumeReviewEditorSlice';
+import { resetResumeReviewEditor } from '../../redux/substores/volunteer/slices/resumeReviewEditorSlice';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 import { RESUME_REVIEW_ROUTE } from '../../util/constants';
 import { arrayBufferToBase64, base64ToArrayBuffer } from '../../util/helpers';
