@@ -36,7 +36,7 @@ export const patchDocument = async (params: PatchDocumentParams): Promise<void> 
 
 export default createAsyncThunk<void, PatchDocumentParams, AsyncThunkConfig>('reviewResume/patchDocument', (params, thunkApi) => {
     try {
-        patchDocument(params);
+        return patchDocument(params);
     } catch (e) {
         return thunkApi.rejectWithValue(e);
     }

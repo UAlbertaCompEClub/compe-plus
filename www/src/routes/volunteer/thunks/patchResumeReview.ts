@@ -34,7 +34,7 @@ export const patchResumeReview = async (params: PatchResumeReviewParams): Promis
 
 export default createAsyncThunk<void, PatchResumeReviewParams, AsyncThunkConfig>('reviewResume/patchResumeReview', (params, thunkApi) => {
     try {
-        patchResumeReview(params);
+        return patchResumeReview(params);
     } catch (e) {
         return thunkApi.rejectWithValue(e);
     }
