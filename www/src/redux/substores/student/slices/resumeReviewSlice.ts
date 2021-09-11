@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResumeReviewWithUserDetails } from '../../../../util/serverResponses';
 import cancelMyResumeReview from '../thunks/cancelResumeReview';
 import getMyResumeReviews from '../thunks/getMyResumeReviews';
+import initiateResumeReview from '../thunks/initiateResumeReview';
 
 type ResumeReviewState = {
     resumeReviews: ResumeReviewWithUserDetails[];
@@ -40,6 +41,9 @@ export const resumeReviewSlice = createSlice({
         });
         builder.addCase(cancelMyResumeReview.fulfilled, (state) => {
             state.isLoading = false;
+            state.shouldReload = true;
+        });
+        builder.addCase(initiateResumeReview.fulfilled, (state) => {
             state.shouldReload = true;
         });
     },
