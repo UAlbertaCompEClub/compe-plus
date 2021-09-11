@@ -2,7 +2,7 @@ import { Grid } from '@material-ui/core';
 import React, { FC } from 'react';
 import { useEffect } from 'react';
 
-import ViewSDKClient from './ViewerSDKClient';
+import ViewSDKClient, { SaveOptions } from './ViewerSDKClient';
 
 type ViewerConfig = {
     showAnnotationTools?: boolean;
@@ -15,6 +15,7 @@ export type PDFViewerProps = {
     fileName: string;
     className?: string;
     viewerConfig?: ViewerConfig;
+    saveOptions?: SaveOptions;
     onSave?: (arrayBuffer: ArrayBuffer) => void;
 };
 
@@ -24,7 +25,7 @@ const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
         viewSDKClient.ready().then(() => {
             viewSDKClient.previewFileUsingFilePromise('adobe-dc-view', props.filePromise(), props.fileName, props.viewerConfig ?? {});
             if (props.onSave !== undefined) {
-                viewSDKClient.onSave(props.onSave);
+                viewSDKClient.onSave(props.onSave, props.saveOptions);
             }
         });
     }, []);

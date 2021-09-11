@@ -91,6 +91,9 @@ const ResumeReviewEditor: React.FC = () => {
                             const base64Contents = arrayBufferToBase64(arrayBuffer);
                             dispatch(updateCurrentDocumentContents(base64Contents));
                         }}
+                        saveOptions={{
+                            enableFocusPolling: true, // Auto-saves on focus loss
+                        }}
                         className={classes.pdfContainer}
                     />
                 )}
