@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { mocked } from 'ts-jest/utils';
 
 import patchWithToken from '../../../util/auth0/patchWithToken';
-import { patchMyDocument, patchMyResumeReview } from '../../../util/endpoints';
+import { patchMyResumeReview } from '../../../util/endpoints';
 import Scope from '../../../util/scopes';
 import testConstants from '../../../util/testConstants';
 import { patchResumeReview } from './patchResumeReview';
