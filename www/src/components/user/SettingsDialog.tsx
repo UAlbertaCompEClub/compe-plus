@@ -12,6 +12,10 @@ const SettingsDialog: FC = () => {
 
     const { isSettingsDialogOpen, currentRole, roles } = useAppSelector((state) => state.user);
 
+    const handleOnChange = (role: string) => {
+        dispatch(closeEditRolesDialog());
+        dispatch(setCurrentRole(role));
+    };
     return (
         <Dialog onClose={() => dispatch(closeEditRolesDialog())} open={isSettingsDialogOpen}>
             <DialogTitle>Settings</DialogTitle>
@@ -22,7 +26,7 @@ const SettingsDialog: FC = () => {
                         control={
                             <Switch
                                 checked={currentRole === 'student'}
-                                onChange={() => dispatch(setCurrentRole('student'))}
+                                onChange={() => handleOnChange('student')}
                                 inputProps={{ 'aria-label': 'Toggle student role' }}
                                 disabled={!roles.includes('student')}
                             />
@@ -34,7 +38,7 @@ const SettingsDialog: FC = () => {
                         control={
                             <Switch
                                 checked={currentRole === 'volunteer'}
-                                onChange={() => dispatch(setCurrentRole('volunteer'))}
+                                onChange={() => handleOnChange('volunteer')}
                                 inputProps={{ 'aria-label': 'Toggle volunteer role' }}
                                 disabled={!roles.includes('reviewer' || !roles.includes('interviewer'))}
                             />
@@ -44,12 +48,7 @@ const SettingsDialog: FC = () => {
                     <FormControlLabel
                         labelPlacement='start'
                         control={
-                            <Switch
-                                checked={currentRole === 'admin'}
-                                onChange={() => dispatch(setCurrentRole('admin'))}
-                                inputProps={{ 'aria-label': 'Toggle admin role' }}
-                                disabled={!roles.includes('admin')}
-                            />
+                            <Switch checked={currentRole === 'admin'} onChange={() => handleOnChange('admin')} inputProps={{ 'aria-label': 'Toggle admin role' }} disabled={!roles.includes('admin')} />
                         }
                         label='Admin'
                     />
