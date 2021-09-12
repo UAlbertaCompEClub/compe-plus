@@ -1,10 +1,10 @@
 import { Auth0ContextInterface, useAuth0, User } from '@auth0/auth0-react';
-import Button from '@material-ui/core/Button';
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
+import LoadingOverlay from '../../components/LoadingOverlay';
 import PDFViewer from '../../components/pdf/PDFViewer';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 import { VolunteerState } from '../../redux/substores/volunteer/volunteerStore';
@@ -13,7 +13,6 @@ import { WrappedDocuments } from '../../util/serverResponses';
 import mockConstants from '../../util/testConstants';
 import ResumeReviewEditor from './ResumeReviewEditor';
 import getMyDocuments, { AsyncThunkConfig, GetMyDocumentsParams } from './thunks/getMyDocuments';
-import patchResumeReview, { PatchResumeReviewParams } from './thunks/patchResumeReview';
 
 jest.mock('@auth0/auth0-react');
 const mockUseAuth0 = mocked(useAuth0, true);
@@ -37,9 +36,6 @@ const mockUseVolunteerDispatch = mocked(useVolunteerDispatch, true);
 
 jest.mock('./thunks/getMyDocuments');
 const mockGetMyDocuments = mocked(getMyDocuments, true);
-
-jest.mock('./thunks/patchResumeReview');
-const mockPatchResumeReview = mocked(patchResumeReview, true);
 
 describe('ReviewResume', () => {
     let mockVolunteerState: VolunteerState;
@@ -86,7 +82,8 @@ describe('ReviewResume', () => {
     });
 
     it('redirects user to resume reviews page on complete', () => {
-        mockVolunteerState.resumeReviewEditor.isDone = true;
+        mockVolunteerState.resumeReviewEditor.isResumeReviewPatched = true;
+        mockVolunteerState.resumeReviewEditor.isDocumentPatched = true;
 
         mockUseVolunteerSelector.mockImplementation((selector) => selector(mockVolunteerState));
 
@@ -95,19 +92,25 @@ describe('ReviewResume', () => {
         expect(mockHistoryPush).toBeCalledWith(RESUME_REVIEW_ROUTE);
     });
 
-    it('patches resume review when complete review is clicked', () => {
-        const mockAction = {};
-        mockPatchResumeReview.mockReturnValueOnce(mockAction as AsyncThunkAction<void, PatchResumeReviewParams, AsyncThunkConfig>);
+    it('does not redirect when still saving even when the resume review has been patched', () => {
+        mockVolunteerState.resumeReviewEditor.isResumeReviewPatched = true;
+        mockVolunteerState.resumeReviewEditor.isDocumentPatched = false;
+
+        mockUseVolunteerSelector.mockImplementation((selector) => selector(mockVolunteerState));
+
+        mount(<ResumeReviewEditor />);
+
+        expect(mockHistoryPush).not.toBeCalledWith(RESUME_REVIEW_ROUTE);
+    });
+
+    it('displays loading overlay when resume review has been patched but is still uploading reviewed document', () => {
+        mockVolunteerState.resumeReviewEditor.isResumeReviewPatched = true;
+        mockVolunteerState.resumeReviewEditor.isDocumentPatched = false;
+
+        mockUseVolunteerSelector.mockImplementation((selector) => selector(mockVolunteerState));
 
         const result = shallow(<ResumeReviewEditor />);
 
-        const completeReviewButtonOnClickHandler = result.find(Button).prop('onClick');
-        if (completeReviewButtonOnClickHandler === undefined) {
-            fail('no onClick handler for completeReviewButton');
-        }
-
-        completeReviewButtonOnClickHandler({} as never);
-
-        expect(mockDispatch).toBeCalledWith(mockAction);
+        expect(result.find(LoadingOverlay).props()['open']).toBe(true);
     });
 });

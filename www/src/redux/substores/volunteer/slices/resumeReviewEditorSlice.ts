@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import getMyDocuments from '../../../../routes/volunteer/thunks/getMyDocuments';
+import patchDocument from '../../../../routes/volunteer/thunks/patchDocument';
 import patchResumeReview from '../../../../routes/volunteer/thunks/patchResumeReview';
 import { Document } from '../../../../util/serverResponses';
 
@@ -9,7 +10,8 @@ type ResumeReviewEditorState = {
     currentDocument: Document | null;
     currentDocumentFromBackend: Document | null;
     isLoading: boolean;
-    isDone: boolean;
+    isResumeReviewPatched: boolean;
+    isDocumentPatched: boolean;
 };
 
 const initialState: ResumeReviewEditorState = {
@@ -17,20 +19,14 @@ const initialState: ResumeReviewEditorState = {
     currentDocument: null,
     currentDocumentFromBackend: null,
     isLoading: false,
-    isDone: false,
+    isResumeReviewPatched: false,
+    isDocumentPatched: false,
 };
 
 export const resumeReviewEditorSlice = createSlice({
     name: 'resumeReview/editor',
     initialState,
     reducers: {
-        updateCurrentDocumentContents: (state, action: PayloadAction<string>) => {
-            if (state.currentDocument === null) {
-                return;
-            }
-
-            state.currentDocument.base64Contents = action.payload;
-        },
         cancelReviewResume: () => initialState,
         resetResumeReviewEditor: () => initialState,
     },
@@ -49,11 +45,17 @@ export const resumeReviewEditorSlice = createSlice({
         });
         builder.addCase(patchResumeReview.fulfilled, (state) => {
             state.isLoading = false;
-            state.isDone = true;
+            state.isResumeReviewPatched = true;
+        });
+        builder.addCase(patchDocument.pending, (state) => {
+            state.isDocumentPatched = false;
+        });
+        builder.addCase(patchDocument.fulfilled, (state) => {
+            state.isDocumentPatched = true;
         });
     },
 });
 
-export const { updateCurrentDocumentContents, resetResumeReviewEditor } = resumeReviewEditorSlice.actions;
+export const { resetResumeReviewEditor } = resumeReviewEditorSlice.actions;
 
 export default resumeReviewEditorSlice.reducer;

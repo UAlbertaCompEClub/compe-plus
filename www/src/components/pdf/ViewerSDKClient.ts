@@ -26,6 +26,12 @@ type saveAPIResponse = {
     };
 };
 
+export type SaveOptions = {
+    autoSaveFrequency?: number;
+    enableFocusPolling?: boolean;
+    showSaveButton?: boolean;
+};
+
 class ViewSDKClient {
     readyPromise: Promise<void>;
     adobeDCView: any;
@@ -120,7 +126,7 @@ class ViewSDKClient {
         );
     }
 
-    onSave(onSaveHandler: (newArrayBuffer: ArrayBuffer) => void) {
+    onSave(onSaveHandler: (newArrayBuffer: ArrayBuffer) => void, saveOptions?: SaveOptions) {
         const saveApiHandler = async (metaData: any, content: ArrayBuffer): Promise<saveAPIResponse> => {
             onSaveHandler(content);
             return {
@@ -131,7 +137,7 @@ class ViewSDKClient {
             };
         };
 
-        this.adobeDCView.registerCallback(window.AdobeDC.View.Enum.CallbackType.SAVE_API, saveApiHandler, {});
+        this.adobeDCView.registerCallback(window.AdobeDC.View.Enum.CallbackType.SAVE_API, saveApiHandler, saveOptions ?? {});
     }
 
     registerEventsHandler() {

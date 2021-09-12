@@ -95,7 +95,8 @@ const volunteerState: VolunteerState = {
         currentDocumentFromBackend: null,
         documents: null,
         isLoading: false,
-        isDone: false,
+        isResumeReviewPatched: false,
+        isDocumentPatched: false,
     },
     mockInterview: {
         calendlyLink: undefined,

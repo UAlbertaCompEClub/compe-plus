@@ -7,11 +7,12 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import LoadingOverlay from '../../components/LoadingOverlay';
 import PDFViewer from '../../components/pdf/PDFViewer';
-import { resetResumeReviewEditor, updateCurrentDocumentContents } from '../../redux/substores/volunteer/slices/resumeReviewEditorSlice';
+import { resetResumeReviewEditor } from '../../redux/substores/volunteer/slices/resumeReviewEditorSlice';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 import { RESUME_REVIEW_ROUTE } from '../../util/constants';
 import { arrayBufferToBase64, base64ToArrayBuffer } from '../../util/helpers';
 import getMyDocuments from './thunks/getMyDocuments';
+import patchDocument from './thunks/patchDocument';
 import patchResumeReview from './thunks/patchResumeReview';
 
 type ResumeReviewParams = {
@@ -23,7 +24,7 @@ const ResumeReviewEditor: React.FC = () => {
 
     const { resumeReviewId } = useParams<ResumeReviewParams>();
 
-    const { currentDocument, isLoading, isDone } = useVolunteerSelector((state) => state.resumeReviewEditor);
+    const { currentDocument, isLoading, isResumeReviewPatched, isDocumentPatched } = useVolunteerSelector((state) => state.resumeReviewEditor);
     const { getAccessTokenSilently, user } = useAuth0();
     const history = useHistory();
     const dispatch = useVolunteerDispatch();
@@ -33,10 +34,10 @@ const ResumeReviewEditor: React.FC = () => {
     }, [resumeReviewId]);
 
     useEffect(() => {
-        if (isDone) {
+        if (isResumeReviewPatched && isDocumentPatched) {
             history.push(RESUME_REVIEW_ROUTE);
         }
-    }, [isDone]);
+    }, [isResumeReviewPatched, isDocumentPatched]);
 
     useEffect(() => {
         return () => {
@@ -53,7 +54,7 @@ const ResumeReviewEditor: React.FC = () => {
 
     return (
         <Grid container>
-            <LoadingOverlay open={isLoading} />
+            <LoadingOverlay open={isLoading || (isResumeReviewPatched && !isDocumentPatched)} />
             <Grid item xs={8} className={classes.gridItem}>
                 <Typography>{resumeReviewId}</Typography>
             </Grid>
@@ -65,8 +66,6 @@ const ResumeReviewEditor: React.FC = () => {
                     onClick={() =>
                         dispatch(
                             patchResumeReview({
-                                document: currentDocument?.base64Contents ?? '',
-                                documentId: currentDocument?.id ?? '',
                                 resumeReviewId,
                                 tokenAcquirer: getAccessTokenSilently,
                                 userId: user?.sub ?? '',
@@ -89,7 +88,18 @@ const ResumeReviewEditor: React.FC = () => {
                         }}
                         onSave={(arrayBuffer) => {
                             const base64Contents = arrayBufferToBase64(arrayBuffer);
-                            dispatch(updateCurrentDocumentContents(base64Contents));
+                            dispatch(
+                                patchDocument({
+                                    document: base64Contents,
+                                    documentId: currentDocument?.id ?? '',
+                                    resumeReviewId,
+                                    tokenAcquirer: getAccessTokenSilently,
+                                    userId: user?.sub ?? '',
+                                }),
+                            );
+                        }}
+                        saveOptions={{
+                            enableFocusPolling: true, // Auto-saves on focus loss
                         }}
                         className={classes.pdfContainer}
                     />
