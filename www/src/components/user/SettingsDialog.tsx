@@ -18,8 +18,13 @@ const SettingsDialog: FC = () => {
         dispatch(setCurrentRole(role));
     };
 
+    const handleOnClose = () => {
+        dispatch(closeEditRolesDialog());
+        dispatch(closeUserProfileDialog());
+    };
+
     return (
-        <Dialog onClose={() => dispatch(closeEditRolesDialog())} open={isSettingsDialogOpen}>
+        <Dialog onClose={handleOnClose} open={isSettingsDialogOpen}>
             <DialogTitle>Settings</DialogTitle>
             <DialogContent>
                 <FormGroup row>
