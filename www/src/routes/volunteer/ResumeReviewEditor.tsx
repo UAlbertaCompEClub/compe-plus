@@ -37,7 +37,7 @@ const ResumeReviewEditor: React.FC = () => {
         if (isResumeReviewPatched && isDocumentPatched) {
             history.push(RESUME_REVIEW_ROUTE);
         }
-    }, [isResumeReviewPatched]);
+    }, [isResumeReviewPatched, isDocumentPatched]);
 
     useEffect(() => {
         return () => {
