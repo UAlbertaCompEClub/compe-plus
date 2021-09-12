@@ -5,7 +5,7 @@ import { AccountCircle } from '@material-ui/icons';
 import React, { FC, useRef } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { closeUserProfileDialog, openEditRolesDialog, openUserProfileDiaog } from '../../redux/slices/userSlice';
+import { closeUserProfileDialog, openEditRolesDialog, openUserProfileDialog } from '../../redux/slices/userSlice';
 
 const UserProfile: FC = () => {
     const classes = useStyles();
@@ -25,7 +25,7 @@ const UserProfile: FC = () => {
                 color='inherit'
                 ref={userProfileIcon}
                 onClick={() => {
-                    dispatch(openUserProfileDiaog());
+                    dispatch(openUserProfileDialog());
                 }}
             >
                 <AccountCircle color='secondary' />

@@ -37,7 +37,7 @@ export const userSlice = createSlice({
         closeUserProfileDialog(state) {
             state.isUserProfileOpen = false;
         },
-        openUserProfileDiaog(state) {
+        openUserProfileDialog(state) {
             state.isUserProfileOpen = true;
         },
     },
@@ -62,4 +62,4 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const { setCurrentRole, openEditRolesDialog, closeEditRolesDialog, closeUserProfileDialog, openUserProfileDiaog } = userSlice.actions;
+export const { setCurrentRole, openEditRolesDialog, closeEditRolesDialog, closeUserProfileDialog, openUserProfileDialog } = userSlice.actions;
