@@ -3,14 +3,16 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { openEditRolesDialog } from '../../redux/slices/userSlice';
 import { AppDispatch } from '../../redux/store';
+import { RootState } from '../../redux/store';
 import testConstants from '../../util/testConstants';
 import UserProfile from './UserProfile';
 
 jest.mock('../../redux/hooks');
 const useAppDispatchMock = mocked(useAppDispatch, true);
+const mockUseAppSelector = mocked(useAppSelector);
 
 jest.mock('@auth0/auth0-react');
 const useAuth0Mock = mocked(useAuth0, true);
@@ -18,10 +20,13 @@ const useAuth0Mock = mocked(useAuth0, true);
 describe('UserProfile', () => {
     let dispatchMock: jest.MockedFunction<AppDispatch>;
     let logoutMock: jest.MockedFunction<() => void>;
+    let mockGlobalStore: RootState;
 
     beforeEach(() => {
         dispatchMock = jest.fn();
         useAppDispatchMock.mockReturnValue(dispatchMock);
+        mockGlobalStore = testConstants.globalState;
+        mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
 
         logoutMock = jest.fn();
         useAuth0Mock.mockReturnValue({
@@ -33,6 +38,8 @@ describe('UserProfile', () => {
     });
 
     it("extracts the correct ccid portion from the user's email", () => {
+        mockGlobalStore.user.isUserProfileOpen = true;
+        mockUseAppSelector.mockImplementation((selector) => selector(mockGlobalStore));
         const result = shallow(<UserProfile />);
 
         const ccidMenuItem = result.findWhere((component) => component.text() === `Signed in as: ${testConstants.user1.ccid}`).first();
