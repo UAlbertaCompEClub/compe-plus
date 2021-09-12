@@ -2,7 +2,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Backdrop, CircularProgress, IconButton, makeStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Cancel, CheckCircle } from '@material-ui/icons';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
+import { useDropzone } from 'react-dropzone';
 
 import PDFViewer from '../../../components/pdf/PDFViewer';
 import { setIsUploadingResume } from '../../../redux/substores/student/slices/resumeReviewSlice';
@@ -66,11 +67,19 @@ const UploadResume: FC = () => {
         }
     }, [dispatch, isUploadComplete]);
 
+    const onDrop = useCallback((acceptedFiles) => {
+        handleOnFileSelected(dispatch, acceptedFiles);
+    }, []);
+
+    const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
     if (document === null) {
         return (
             <Grid container item xs={12} justify='center'>
-                {/* TODO: Replace with react-dropzone */}
-                <input type='file' aria-label='upload-resume' onChange={(e) => handleOnFileSelected(dispatch, e.target.files)} />
+                <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <p>Drag n&apos; drop resume here</p>
+                </div>
             </Grid>
         );
     }
