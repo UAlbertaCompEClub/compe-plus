@@ -50,6 +50,7 @@ const globalState: RootState = {
         isLoading: false,
         hasRegistered: true,
         isSettingsDialogOpen: false,
+        isUserProfileOpen: false,
     },
     registerUser: {
         year: 0,

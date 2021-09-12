@@ -2,15 +2,15 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Divider, IconButton, Menu, MenuItem } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { AccountCircle } from '@material-ui/icons';
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useRef } from 'react';
 
-import { useAppDispatch } from '../../redux/hooks';
-import { openEditRolesDialog } from '../../redux/slices/userSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { closeUserProfileDialog, openEditRolesDialog, openUserProfileDiaog } from '../../redux/slices/userSlice';
 
 const UserProfile: FC = () => {
     const classes = useStyles();
     const userProfileIcon = useRef(null);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { isUserProfileOpen } = useAppSelector((state) => state.user);
     const { logout, user } = useAuth0();
     const ccid = user?.email?.split('@')[0] ?? '';
 
@@ -25,7 +25,7 @@ const UserProfile: FC = () => {
                 color='inherit'
                 ref={userProfileIcon}
                 onClick={() => {
-                    setIsMenuOpen(true);
+                    dispatch(openUserProfileDiaog());
                 }}
             >
                 <AccountCircle color='secondary' />
@@ -42,8 +42,8 @@ const UserProfile: FC = () => {
                     vertical: 'top',
                     horizontal: 'right',
                 }}
-                open={isMenuOpen}
-                onClose={() => setIsMenuOpen(false)}
+                open={isUserProfileOpen}
+                onClose={() => dispatch(closeUserProfileDialog())}
                 classes={{ paper: classes.menuPaper }}
             >
                 <MenuItem className={classes.menuItem}>Signed in as: {ccid}</MenuItem>

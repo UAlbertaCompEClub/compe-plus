@@ -5,7 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import React, { FC } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { closeEditRolesDialog, setCurrentRole } from '../../redux/slices/userSlice';
+import { closeEditRolesDialog, closeUserProfileDialog, setCurrentRole } from '../../redux/slices/userSlice';
 
 const SettingsDialog: FC = () => {
     const dispatch = useAppDispatch();
@@ -14,8 +14,10 @@ const SettingsDialog: FC = () => {
 
     const handleOnChange = (role: string) => {
         dispatch(closeEditRolesDialog());
+        dispatch(closeUserProfileDialog());
         dispatch(setCurrentRole(role));
     };
+
     return (
         <Dialog onClose={() => dispatch(closeEditRolesDialog())} open={isSettingsDialogOpen}>
             <DialogTitle>Settings</DialogTitle>
