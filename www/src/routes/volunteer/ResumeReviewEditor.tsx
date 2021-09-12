@@ -24,7 +24,7 @@ const ResumeReviewEditor: React.FC = () => {
 
     const { resumeReviewId } = useParams<ResumeReviewParams>();
 
-    const { currentDocument, isLoading, isDone } = useVolunteerSelector((state) => state.resumeReviewEditor);
+    const { currentDocument, isLoading, isResumeReviewPatched, isDocumentPatched } = useVolunteerSelector((state) => state.resumeReviewEditor);
     const { getAccessTokenSilently, user } = useAuth0();
     const history = useHistory();
     const dispatch = useVolunteerDispatch();
@@ -34,10 +34,10 @@ const ResumeReviewEditor: React.FC = () => {
     }, [resumeReviewId]);
 
     useEffect(() => {
-        if (isDone) {
+        if (isResumeReviewPatched && isDocumentPatched) {
             history.push(RESUME_REVIEW_ROUTE);
         }
-    }, [isDone]);
+    }, [isResumeReviewPatched]);
 
     useEffect(() => {
         return () => {
@@ -54,7 +54,7 @@ const ResumeReviewEditor: React.FC = () => {
 
     return (
         <Grid container>
-            <LoadingOverlay open={isLoading} />
+            <LoadingOverlay open={isLoading || (isResumeReviewPatched && !isDocumentPatched)} />
             <Grid item xs={8} className={classes.gridItem}>
                 <Typography>{resumeReviewId}</Typography>
             </Grid>
