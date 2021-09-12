@@ -15,15 +15,14 @@ const Registration: FC = () => {
 
     const { user, getAccessTokenSilently } = useAuth0();
 
-    const { hasRegistered } = useAppSelector((state) => state.user);
-    const { year, program, isLoading } = useAppSelector((state) => state.registerUser);
+    const { year, program, isLoading, registrationSuccess } = useAppSelector((state) => state.registerUser);
 
     const dispatch = useAppDispatch();
 
     // Redirect back to home once register finishes
-    if (hasRegistered) {
+    if (registrationSuccess) {
         dispatch(checkUserRegistration(getAccessTokenSilently));
-        history.replace('/');
+        history.push('/');
     }
 
     const handleRegisterUser = () => {
