@@ -9,6 +9,7 @@ type UserState = {
     hasRegistered: boolean | null;
     isSettingsDialogOpen: boolean;
     isLoading: boolean;
+    isUserProfileOpen: boolean;
 };
 
 const initialState: UserState = {
@@ -17,6 +18,7 @@ const initialState: UserState = {
     hasRegistered: null,
     isSettingsDialogOpen: false,
     isLoading: false,
+    isUserProfileOpen: false,
 };
 
 export const userSlice = createSlice({
@@ -31,6 +33,12 @@ export const userSlice = createSlice({
         },
         closeEditRolesDialog(state) {
             state.isSettingsDialogOpen = false;
+        },
+        closeUserProfileDialog(state) {
+            state.isUserProfileOpen = false;
+        },
+        openUserProfileDialog(state) {
+            state.isUserProfileOpen = true;
         },
     },
     extraReducers: (builder) => {
@@ -54,4 +62,4 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const { setCurrentRole, openEditRolesDialog, closeEditRolesDialog } = userSlice.actions;
+export const { setCurrentRole, openEditRolesDialog, closeEditRolesDialog, closeUserProfileDialog, openUserProfileDialog } = userSlice.actions;
