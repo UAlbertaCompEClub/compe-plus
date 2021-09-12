@@ -1,7 +1,9 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Backdrop, CircularProgress, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Backdrop, Box, CircularProgress, IconButton, makeStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Cancel, CheckCircle } from '@material-ui/icons';
+import PublishIcon from '@material-ui/icons/Publish';
 import React, { FC, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -76,9 +78,15 @@ const UploadResume: FC = () => {
     if (document === null) {
         return (
             <Grid container item xs={12} justify='center'>
-                <div {...getRootProps()}>
+                <div {...getRootProps()} className={classes.uploadBox}>
                     <input {...getInputProps()} />
-                    <p>Drag n&apos; drop resume here</p>
+                    <Box display='flex' alignItems='center'>
+                        <PublishIcon className={classes.uploadIcon} />
+                        <Typography>Drag and Drop or </Typography>
+                        <div className={classes.browseButton}>
+                            <Typography>Browse computer</Typography>
+                        </div>
+                    </Box>
                 </div>
             </Grid>
         );
@@ -139,6 +147,32 @@ const useStyles = makeStyles((theme) => ({
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#fff',
+    },
+    uploadBox: {
+        padding: theme.spacing(4),
+        paddingTop: theme.spacing(6),
+        paddingBottom: theme.spacing(6),
+        backgroundColor: fade(theme.palette.primary.main, 0.5),
+        transition: theme.transitions.create('background-color', {
+            duration: theme.transitions.duration.shortest,
+        }),
+        border: '2px dashed rgba(0, 0, 0, 0.3)',
+        '&:hover': {
+            cursor: 'pointer',
+            backgroundColor: fade(theme.palette.primary.main, 0.6),
+        },
+    },
+    uploadIcon: {
+        marginRight: theme.spacing(1),
+    },
+    browseButton: {
+        margin: theme.spacing(1),
+        padding: theme.spacing(2),
+        backgroundColor: theme.palette.primary.main,
+    },
+    browseButton2: {
+        ...theme.typography.body1,
+        textTransform: 'none',
     },
 }));
 
