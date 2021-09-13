@@ -102,7 +102,7 @@ const Info: FC = () => {
                                 insight on what it&apos;s like to work in the tech industry.
                             </Typography>
                             <br />
-                            <Typography variant='body1'>The CompE+ pilot program is will run from September 13 - November 8, 2021 to target Winter and Summer 2022 recruitment.</Typography>
+                            <Typography variant='body1'>The CompE+ pilot program will run from September 13 - November 8, 2021 to target Winter and Summer 2022 recruitment.</Typography>
                         </Grid>
                         <Grid container item justify='center' alignItems='center' direction='column'>
                             <Typography variant='body1' style={{ fontWeight: 600 }}>
@@ -135,8 +135,8 @@ const Values: FC = () => {
                             <Typography variant='h2'>
                                 Practice
                                 <Typography variant='body1'>
-                                    Technical interviews can be difficult and requires a good amount of practice. By providing resources and services, CompE+ can help computer engineering students
-                                    tackle the technical interview with greater confidence
+                                    Technical interviews can be difficult and require a good amount of practice to master. By providing resources and services, CompE+ can help computer engineering
+                                    students tackle the technical interview with greater confidence
                                 </Typography>
                             </Typography>
                         </Grid>
