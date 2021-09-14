@@ -60,12 +60,14 @@ const Registration: FC = () => {
                 </Grid>
 
                 <Grid container item spacing={4}>
+                    <Grid item xs={12}>
+                        <StyledSelect title='Year' value={year.toString()} onChange={(newYear) => dispatch(setYear(parseInt(newYear)))} choices={yearChoices} />{' '}
+                    </Grid>
+                    <Grid item xs={12}>
+                        <StyledSelect title='Speciality' value={program} onChange={(newProgram) => dispatch(setProgram(newProgram))} choices={programChoices} />
+                    </Grid>
                     <Grid container item xs={12} justify='center'>
-                        <form>
-                            <StyledSelect title='Year' value={year.toString()} onChange={(newYear) => dispatch(setYear(parseInt(newYear)))} choices={yearChoices} />
-                            <StyledSelect title='Speciality' value={program} onChange={(newProgram) => dispatch(setProgram(newProgram))} choices={programChoices} />
-                            <Button onClick={handleRegisterUser}>Submit</Button>
-                        </form>
+                        <Button onClick={handleRegisterUser}>Submit</Button>
                     </Grid>
                 </Grid>
             </Grid>
