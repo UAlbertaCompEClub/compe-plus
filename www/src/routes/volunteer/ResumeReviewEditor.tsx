@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import DoneIcon from '@material-ui/icons/Done';
 import React, { useEffect } from 'react';
@@ -53,59 +53,63 @@ const ResumeReviewEditor: React.FC = () => {
     };
 
     return (
-        <Grid container>
+        <>
             <LoadingOverlay open={isLoading || (isResumeReviewPatched && !isDocumentPatched)} />
-            <Grid item xs={8} className={classes.gridItem}>
-                <Typography>{resumeReviewId}</Typography>
-            </Grid>
-            <Grid container item xs={4} justify='flex-end' className={classes.gridItem}>
-                <Button
-                    variant='contained'
-                    color='primary'
-                    endIcon={<DoneIcon />}
-                    onClick={() =>
+            <Box>
+                <Grid container>
+                    <Grid item xs={8} className={classes.gridItem}>
+                        <Typography>{resumeReviewId}</Typography>
+                    </Grid>
+                    <Grid container item xs={4} justify='flex-end' className={classes.gridItem}>
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            endIcon={<DoneIcon />}
+                            onClick={() =>
+                                dispatch(
+                                    patchResumeReview({
+                                        resumeReviewId,
+                                        tokenAcquirer: getAccessTokenSilently,
+                                        userId: user?.sub ?? '',
+                                    }),
+                                )
+                            }
+                        >
+                            Complete review
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Box>
+            {currentDocument !== null && (
+                <PDFViewer
+                    fileName={currentDocument.id}
+                    filePromise={filePromise}
+                    viewerConfig={{
+                        enableFormFilling: true,
+                        showAnnotationTools: true,
+                        showLeftHandPanel: true,
+                    }}
+                    onSave={(arrayBuffer) => {
+                        const base64Contents = arrayBufferToBase64(arrayBuffer);
                         dispatch(
-                            patchResumeReview({
+                            patchDocument({
+                                document: base64Contents,
+                                documentId: currentDocument?.id ?? '',
                                 resumeReviewId,
                                 tokenAcquirer: getAccessTokenSilently,
                                 userId: user?.sub ?? '',
                             }),
-                        )
-                    }
-                >
-                    Complete review
-                </Button>
-            </Grid>
-            <Grid container item xs={12}>
-                {currentDocument !== null && (
-                    <PDFViewer
-                        fileName={currentDocument.id}
-                        filePromise={filePromise}
-                        viewerConfig={{
-                            enableFormFilling: true,
-                            showAnnotationTools: true,
-                            showLeftHandPanel: true,
-                        }}
-                        onSave={(arrayBuffer) => {
-                            const base64Contents = arrayBufferToBase64(arrayBuffer);
-                            dispatch(
-                                patchDocument({
-                                    document: base64Contents,
-                                    documentId: currentDocument?.id ?? '',
-                                    resumeReviewId,
-                                    tokenAcquirer: getAccessTokenSilently,
-                                    userId: user?.sub ?? '',
-                                }),
-                            );
-                        }}
-                        saveOptions={{
-                            enableFocusPolling: true, // Auto-saves on focus loss
-                        }}
-                        className={classes.pdfContainer}
-                    />
-                )}
-            </Grid>
-        </Grid>
+                        );
+                    }}
+                    saveOptions={{
+                        enableFocusPolling: true, // Auto-saves on focus loss
+                    }}
+                    flex='1 1 auto'
+                    display='flex'
+                    flexDirection='column'
+                />
+            )}
+        </>
     );
 };
 
@@ -113,8 +117,8 @@ const useStyles = makeStyles((theme) => ({
     gridItem: {
         padding: theme.spacing(1),
     },
-    pdfContainer: {
-        minHeight: '60vh',
+    root: {
+        flex: '1 1',
     },
 }));
 
