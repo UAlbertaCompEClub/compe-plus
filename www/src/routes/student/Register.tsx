@@ -68,7 +68,9 @@ const Registration: FC = () => {
                             <StyledSelect title='Speciality' value={program} onChange={(newProgram) => dispatch(setProgram(newProgram))} choices={programChoices} />
                         </Grid>
                         <Grid container item xs={12} justify='center'>
-                            <Button onClick={handleRegisterUser}>Submit</Button>
+                            <Button variant='contained' color='primary' onClick={handleRegisterUser}>
+                                Submit
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>
