@@ -19,17 +19,19 @@ export type PDFViewerProps = {
 } & React.ComponentProps<typeof Box>;
 
 const PDFViewer: FC<PDFViewerProps> = (props: PDFViewerProps) => {
+    const { filePromise, fileName, viewerConfig, saveOptions, onSave, ...remainingProps } = props;
+
     useEffect(() => {
         const viewSDKClient = new ViewSDKClient();
         viewSDKClient.ready().then(() => {
-            viewSDKClient.previewFileUsingFilePromise('adobe-dc-view', props.filePromise(), props.fileName, props.viewerConfig ?? {});
-            if (props.onSave !== undefined) {
-                viewSDKClient.onSave(props.onSave, props.saveOptions);
+            viewSDKClient.previewFileUsingFilePromise('adobe-dc-view', filePromise(), fileName, viewerConfig ?? {});
+            if (onSave !== undefined) {
+                viewSDKClient.onSave(onSave, saveOptions);
             }
         });
     }, []);
 
-    return <Box id='adobe-dc-view' height='100%' width='100%' {...props} />;
+    return <Box id='adobe-dc-view' height='100%' width='100%' {...remainingProps} />;
 };
 
 export default PDFViewer;
