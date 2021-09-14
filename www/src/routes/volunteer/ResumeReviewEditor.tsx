@@ -120,9 +120,6 @@ const useStyles = makeStyles((theme) => ({
     gridItem: {
         padding: theme.spacing(1),
     },
-    root: {
-        flex: '1 1',
-    },
 }));
 
 export default ResumeReviewEditor;
