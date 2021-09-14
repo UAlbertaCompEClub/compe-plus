@@ -5,7 +5,7 @@ type StyledSelectProps = { choices: string[]; title: string; value: string; onCh
 
 const StyledSelect: FC<StyledSelectProps> = (props: StyledSelectProps) => {
     return (
-        <FormControl>
+        <FormControl style={{ width: '100%' }}>
             <InputLabel id='demo-simple-select-label'>{props.title}</InputLabel>
 
             <Select labelId='demo-simple-select-label' id='demo-simple-select' value={props.value} onChange={(e) => props.onChange(e.target.value as string)}>

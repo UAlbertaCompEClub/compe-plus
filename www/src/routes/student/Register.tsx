@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Button, Container, Grid, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -54,23 +54,25 @@ const Registration: FC = () => {
     return (
         <div style={{ overflow: 'hidden' }}>
             <LoadingOverlay open={isLoading} />
-            <Grid container justify='center' alignItems='center' spacing={8} style={{ marginTop: '10px', minHeight: '75vh' }}>
-                <Grid container item justify='center'>
-                    <Typography variant='h1'>Registration</Typography>
-                </Grid>
+            <Container>
+                <Grid container justify='center' alignItems='center' spacing={8} style={{ marginTop: '10px', minHeight: '75vh' }}>
+                    <Grid container item justify='center'>
+                        <Typography variant='h1'>Registration</Typography>
+                    </Grid>
 
-                <Grid container item spacing={4}>
-                    <Grid item xs={12}>
-                        <StyledSelect title='Year' value={year.toString()} onChange={(newYear) => dispatch(setYear(parseInt(newYear)))} choices={yearChoices} />{' '}
-                    </Grid>
-                    <Grid item xs={12}>
-                        <StyledSelect title='Speciality' value={program} onChange={(newProgram) => dispatch(setProgram(newProgram))} choices={programChoices} />
-                    </Grid>
-                    <Grid container item xs={12} justify='center'>
-                        <Button onClick={handleRegisterUser}>Submit</Button>
+                    <Grid container item spacing={4}>
+                        <Grid item xs={12}>
+                            <StyledSelect title='Year' value={year.toString()} onChange={(newYear) => dispatch(setYear(parseInt(newYear)))} choices={yearChoices} />{' '}
+                        </Grid>
+                        <Grid item xs={12}>
+                            <StyledSelect title='Speciality' value={program} onChange={(newProgram) => dispatch(setProgram(newProgram))} choices={programChoices} />
+                        </Grid>
+                        <Grid container item xs={12} justify='center'>
+                            <Button onClick={handleRegisterUser}>Submit</Button>
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
+            </Container>
         </div>
     );
 };
