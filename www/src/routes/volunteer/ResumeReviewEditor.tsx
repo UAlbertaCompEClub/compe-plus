@@ -24,10 +24,13 @@ const ResumeReviewEditor: React.FC = () => {
 
     const { resumeReviewId } = useParams<ResumeReviewParams>();
 
+    const { reviewingResumes } = useVolunteerSelector((state) => state.resumeReview);
     const { currentDocument, isLoading, isResumeReviewPatched, isDocumentPatched } = useVolunteerSelector((state) => state.resumeReviewEditor);
     const { getAccessTokenSilently, user } = useAuth0();
     const history = useHistory();
     const dispatch = useVolunteerDispatch();
+
+    const currentResumeReview = reviewingResumes.find((review) => review.id === resumeReviewId);
 
     useEffect(() => {
         dispatch(getMyDocuments({ tokenAcquirer: getAccessTokenSilently, resumeReviewId: resumeReviewId }));
@@ -57,8 +60,8 @@ const ResumeReviewEditor: React.FC = () => {
             <LoadingOverlay open={isLoading || (isResumeReviewPatched && !isDocumentPatched)} />
             <Box>
                 <Grid container>
-                    <Grid item xs={8} className={classes.gridItem}>
-                        <Typography>{resumeReviewId}</Typography>
+                    <Grid container alignItems='center' item xs={8} className={classes.gridItem}>
+                        {currentResumeReview && <Typography>{currentResumeReview?.reviewee.fullName}&apos;s resume</Typography>}
                     </Grid>
                     <Grid container item xs={4} justify='flex-end' className={classes.gridItem}>
                         <Button
