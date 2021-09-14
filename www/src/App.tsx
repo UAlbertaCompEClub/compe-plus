@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Container, CssBaseline, ThemeProvider } from '@material-ui/core';
+import { Box, CssBaseline, ThemeProvider } from '@material-ui/core';
 import React, { FC } from 'react';
 import { useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
@@ -68,7 +68,7 @@ const App: FC = () => {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <LoadingOverlay open={isLoading || isAuth0Loading} />
-            <Container maxWidth={false} style={{ padding: 0, height: '100%' }}>
+            <Box display='flex' minHeight='100%' width='100%' flexDirection='column'>
                 <Router>
                     <Header sections={header_sections} title={COMPE_PLUS} />
                     <BrowserView renderWithFragment>
@@ -79,7 +79,7 @@ const App: FC = () => {
                         <MobileLanding />
                     </MobileView>
                 </Router>
-            </Container>
+            </Box>
         </ThemeProvider>
     );
 };
