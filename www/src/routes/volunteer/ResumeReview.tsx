@@ -57,7 +57,13 @@ const ResumeReview: FC = () => {
                             <Typography variant='h2'>Currently Reviewing</Typography>
                         </Grid>
                         <Grid item xs={3} container justify='flex-end'>
-                            <Button onClick={() => dispatch(refreshResumeReviews())} variant='contained' color='primary' startIcon={<RefreshIcon />}>
+                            <Button
+                                disabled={availableIsLoading || reviewingIsLoading}
+                                onClick={() => dispatch(refreshResumeReviews())}
+                                variant='contained'
+                                color='primary'
+                                startIcon={<RefreshIcon />}
+                            >
                                 Refresh
                             </Button>
                         </Grid>
