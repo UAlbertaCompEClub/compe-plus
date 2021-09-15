@@ -1,10 +1,12 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { CircularProgress, Grid, Typography } from '@material-ui/core';
+import { Button, CircularProgress, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import React, { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import TitledPage from '../../components/TitledPage';
+import { refreshResumeReviews } from '../../redux/substores/volunteer/slices/resumeReviewSlice';
 import claimResumeReviews from '../../redux/substores/volunteer/thunks/claimResumeReviews';
 import getAvailableResumeReviews from '../../redux/substores/volunteer/thunks/getAvailableResumeReviews';
 import getReviewingResumeReviews from '../../redux/substores/volunteer/thunks/getReviewingResumeReviews';
@@ -12,7 +14,6 @@ import unclaimResumeReviews from '../../redux/substores/volunteer/thunks/unclaim
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 import { ResumeReviewWithUserDetails as RRWUD } from '../../util/serverResponses';
 import ResumeReviewTable from './ResumeReviewTable';
-
 const ResumeReview: FC = () => {
     const { availableResumes, reviewingResumes, availableIsLoading, reviewingIsLoading, shouldReload } = useVolunteerSelector((state) => state.resumeReview);
     const { getAccessTokenSilently, user } = useAuth0();
@@ -51,7 +52,23 @@ const ResumeReview: FC = () => {
         <TitledPage title='Resume Review'>
             <Grid container justify='center' alignItems='center' direction='column'>
                 <Grid container justify='flex-start' alignItems='flex-start' direction='column'>
-                    <Typography variant='h2'>Currently Reviewing</Typography>
+                    <Grid container>
+                        <Grid item xs={9}>
+                            <Typography variant='h2'>Currently Reviewing</Typography>
+                        </Grid>
+                        <Grid item xs={3} container justify='flex-end'>
+                            <Button
+                                disabled={availableIsLoading || reviewingIsLoading}
+                                onClick={() => dispatch(refreshResumeReviews())}
+                                variant='contained'
+                                color='primary'
+                                startIcon={<RefreshIcon />}
+                            >
+                                Refresh
+                            </Button>
+                        </Grid>
+                    </Grid>
+
                     <Grid container justify='flex-start' alignItems='flex-start' className={classes.wrapper}>
                         {reviewingIsLoading && (
                             <Grid container justify='center' alignItems='flex-start'>
