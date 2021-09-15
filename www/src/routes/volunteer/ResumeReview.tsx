@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { CircularProgress, Grid, IconButton, Typography } from '@material-ui/core';
+import { Button, CircularProgress, Grid, IconButton, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import React, { FC, useEffect } from 'react';
@@ -53,13 +53,13 @@ const ResumeReview: FC = () => {
             <Grid container justify='center' alignItems='center' direction='column'>
                 <Grid container justify='flex-start' alignItems='flex-start' direction='column'>
                     <Grid container>
-                        <Grid item>
+                        <Grid item xs={9}>
                             <Typography variant='h2'>Currently Reviewing</Typography>
                         </Grid>
-                        <Grid item alignItems='flex-end'>
-                            <IconButton onClick={() => dispatch(refreshResumeReviews())}>
-                                <RefreshIcon />
-                            </IconButton>
+                        <Grid item xs={3} container justify='flex-end'>
+                            <Button onClick={() => dispatch(refreshResumeReviews())} variant='contained' color='primary' startIcon={<RefreshIcon />}>
+                                Refresh
+                            </Button>
                         </Grid>
                     </Grid>
 
