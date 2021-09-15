@@ -43,7 +43,7 @@ const studentRole: Role = {
     createdAt: '2021-06-14T06:09:19.373404+00:00',
 };
 
-const globalState: RootState = {
+const globalState: Partial<RootState> = {
     user: {
         roles: [],
         currentRole: '',
