@@ -26,7 +26,11 @@ const initialState: ResumeReviewState = {
 export const resumeReviewSlice = createSlice({
     name: 'resumeReview',
     initialState,
-    reducers: {},
+    reducers: {
+        refreshResumeReviews(state) {
+            state.shouldReload = true;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(getAvailableResumeReviews.pending, (state) => {
             state.availableIsLoading = true;
@@ -56,4 +60,5 @@ export const resumeReviewSlice = createSlice({
     },
 });
 
+export const { refreshResumeReviews } = resumeReviewSlice.actions;
 export default resumeReviewSlice.reducer;
