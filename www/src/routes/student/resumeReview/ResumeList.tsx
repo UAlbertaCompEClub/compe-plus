@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Box, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import React, { FC, useEffect } from 'react';
