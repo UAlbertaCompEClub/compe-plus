@@ -1,9 +1,11 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import React, { FC, useEffect } from 'react';
 
 import Loading from '../../../components/Loading';
+import { refreshResumes } from '../../../redux/substores/student/slices/resumeReviewSlice';
 import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
 import getMyResumeReviews from '../../../redux/substores/student/thunks/getMyResumeReviews';
 import NoResumes from './NoResumes';
@@ -36,12 +38,16 @@ const ResumeList: FC = () => {
                 <Typography variant='h2' className={classes.sectionTitle}>
                     Current resume
                 </Typography>
+
                 {currentResume !== null ? <ResumeReviewCard resumeReview={currentResume} /> : <NoResumes />}
             </section>
             <section className={classes.section}>
                 <Typography variant='h2' className={classes.sectionTitle}>
                     Submitted resumes
                 </Typography>
+                <Button className={classes.button} disabled={isLoading} onClick={() => dispatch(refreshResumes())} variant='contained' color='primary' startIcon={<RefreshIcon />}>
+                    Refresh
+                </Button>
                 {submittedResumes.length > 0 ? (
                     submittedResumes.map((submittedResume) => <ResumeReviewCard key={submittedResume.id} resumeReview={submittedResume} />)
                 ) : (
@@ -57,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(8),
     },
     sectionTitle: {
+        marginBottom: theme.spacing(2),
+    },
+    button: {
         marginBottom: theme.spacing(2),
     },
 }));

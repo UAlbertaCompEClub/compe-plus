@@ -26,6 +26,9 @@ export const resumeReviewSlice = createSlice({
         setIsUploadingResume: (state, action: PayloadAction<boolean>) => {
             state.isUploading = action.payload;
         },
+        refreshResumes: (state) => {
+            state.shouldReload = true;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getMyResumeReviews.pending, (state) => {
@@ -49,6 +52,6 @@ export const resumeReviewSlice = createSlice({
     },
 });
 
-export const { setIsUploadingResume } = resumeReviewSlice.actions;
+export const { setIsUploadingResume, refreshResumes } = resumeReviewSlice.actions;
 
 export default resumeReviewSlice.reducer;
