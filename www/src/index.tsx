@@ -4,10 +4,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import App from './App';
+import LoadingOverlay from './components/LoadingOverlay';
 import Auth0ProviderWithHistory from './providers/Auth0ProviderWithHistory';
-import store from './redux/store';
+import store, { persistor } from './redux/store';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -15,7 +17,9 @@ ReactDOM.render(
         <BrowserRouter>
             <Auth0ProviderWithHistory>
                 <Provider store={store}>
-                    <App />
+                    <PersistGate loading={LoadingOverlay} persistor={persistor}>
+                        <App />
+                    </PersistGate>
                 </Provider>
             </Auth0ProviderWithHistory>
         </BrowserRouter>
