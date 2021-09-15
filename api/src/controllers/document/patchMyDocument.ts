@@ -49,7 +49,7 @@ const patchMyDocument = controller(async (req: Request<Params, unknown, ReqBody>
     await new ReqBodyValidator().validateAndThrow(req.body);
 
     // Make sure that the calling user is associated with the document
-    if ((await documentRepository.get(req.params.document, undefined, req.user.sub)).length === 0) {
+    if ((await documentRepository.getAssociatedToUser(req.user.sub, req.params.document, req.params.resumeReview)).length === 0) {
         throw new NotAuthorizedException();
     }
 
