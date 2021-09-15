@@ -43,8 +43,9 @@ beforeEach(() => {
     };
     res = { status: jest.fn().mockReturnThis(), json: jest.fn().mockReturnThis() };
     next = jest.fn();
-    mockResumeReviewRepository.get.mockResolvedValueOnce([testConstants.resumeReview1]);
+    mockResumeReviewRepository.get.mockResolvedValue([testConstants.resumeReview1]);
     mockDocumentRepository.get.mockResolvedValue([testConstants.document1]);
+    mockDocumentRepository.getAssociatedToUser.mockResolvedValue([testConstants.document1]);
 });
 
 afterEach(() => {
@@ -157,7 +158,7 @@ it('catches error with base64Content', async () => {
 it('will not allow a user to modify a document not related to them', async () => {
     mockDocumentRepository.get.mockReset();
     mockDocumentRepository.get.mockResolvedValueOnce([testConstants.document1]);
-    mockDocumentRepository.get.mockResolvedValueOnce([]);
+    mockDocumentRepository.getAssociatedToUser.mockResolvedValueOnce([]);
     await patchMyDocument(req as Request<Params>, res as Response, next);
 
     expect(documentRepository.update).not.toBeCalled();
