@@ -8,6 +8,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import PDFViewer from '../../components/pdf/PDFViewer';
 import { resetResumeReviewEditor } from '../../redux/substores/volunteer/slices/resumeReviewEditorSlice';
+import getReviewingResumeReviews from '../../redux/substores/volunteer/thunks/getReviewingResumeReviews';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 import { RESUME_REVIEW_ROUTE } from '../../util/constants';
 import { arrayBufferToBase64, base64ToArrayBuffer } from '../../util/helpers';
@@ -24,7 +25,7 @@ const ResumeReviewEditor: React.FC = () => {
 
     const { resumeReviewId } = useParams<ResumeReviewParams>();
 
-    const { reviewingResumes } = useVolunteerSelector((state) => state.resumeReview);
+    const { reviewingResumes, shouldReload, reviewingIsLoading } = useVolunteerSelector((state) => state.resumeReview);
     const { currentDocument, isLoading, isResumeReviewPatched, isDocumentPatched } = useVolunteerSelector((state) => state.resumeReviewEditor);
     const { getAccessTokenSilently, user } = useAuth0();
     const history = useHistory();
@@ -35,6 +36,13 @@ const ResumeReviewEditor: React.FC = () => {
     useEffect(() => {
         dispatch(getMyDocuments({ tokenAcquirer: getAccessTokenSilently, resumeReviewId: resumeReviewId }));
     }, [resumeReviewId]);
+
+    // Fetch resumeReview object to get reviewee name
+    useEffect(() => {
+        if (user?.sub !== undefined && shouldReload) {
+            dispatch(getReviewingResumeReviews({ tokenAcquirer: getAccessTokenSilently, userId: user.sub }));
+        }
+    }, [user, shouldReload]);
 
     useEffect(() => {
         if (isResumeReviewPatched && isDocumentPatched) {
@@ -57,7 +65,7 @@ const ResumeReviewEditor: React.FC = () => {
 
     return (
         <>
-            <LoadingOverlay open={isLoading || (isResumeReviewPatched && !isDocumentPatched)} />
+            <LoadingOverlay open={isLoading || reviewingIsLoading || (isResumeReviewPatched && !isDocumentPatched)} />
             <Box>
                 <Grid container>
                     <Grid container alignItems='center' item xs={8} className={classes.gridItem}>
