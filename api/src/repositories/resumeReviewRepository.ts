@@ -83,7 +83,8 @@ const update = async (id: string, reviewee?: string, reviewer?: string, state?: 
     if (reviewee !== undefined && reviewee !== null) {
         colOptions.reviewee_id = reviewee;
     }
-    if (reviewer !== undefined && reviewer !== null) {
+    // Allow the reviewer to be set to null
+    if (reviewer !== undefined) {
         colOptions.reviewer_id = reviewer;
     }
     if (state !== undefined && state !== null) {

@@ -55,7 +55,6 @@ it('rejects non-uuid resume review', async () => {
 });
 
 it('rejects non-existent resume review', async () => {
-    mockResumeReviewRepository.get.mockReset();
     mockResumeReviewRepository.get.mockResolvedValueOnce([]);
     await patchMyResumeReview(req as Request<Params>, res as Response, next);
 
@@ -115,7 +114,6 @@ it('works with all fields', async () => {
 
 it('throws error when update fails', async () => {
     const err = new Error('');
-    mockResumeReviewRepository.update.mockReset();
     mockResumeReviewRepository.update.mockRejectedValueOnce(err);
 
     await patchMyResumeReview(req as Request<Params>, res as Response, next);
@@ -125,8 +123,12 @@ it('throws error when update fails', async () => {
 });
 
 it('throws not authorized when user does not match', async () => {
-    mockResumeReviewRepository.get.mockReset();
-    mockResumeReviewRepository.get.mockResolvedValueOnce([testConstants.resumeReview1]).mockResolvedValueOnce([]).mockResolvedValueOnce([]);
+    // Mock for validation
+    mockResumeReviewRepository.get.mockResolvedValueOnce([testConstants.resumeReview1]);
+    // Mock to check whether it's overriding another person's claim
+    mockResumeReviewRepository.get.mockResolvedValueOnce([testConstants.resumeReview1]);
+    // Mocks to check association to user
+    mockResumeReviewRepository.get.mockResolvedValueOnce([]).mockResolvedValueOnce([]);
 
     await patchMyResumeReview(req as Request<Params>, res as Response, next);
 

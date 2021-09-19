@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import type * as s from 'zapatos/schema';
 
+import BadRequestException from '../../exceptions/BadRequestException';
 import InternalServerErrorException from '../../exceptions/InternalServerErrorException';
 import * as resumeReviewRepository from '../../repositories/resumeReviewRepository';
 import controller from '../controllerUtil';
@@ -51,6 +52,14 @@ class ReqBodyValidator extends Validator<ReqBody> {
 const patchAllResumeReview = controller(async (req: Request<Params, unknown, ReqBody>, res: Response): Promise<void> => {
     await new ParamsValidator().validateAndThrow(req.params);
     await new ReqBodyValidator().validateAndThrow(req.body);
+
+    // Ensure that you can't claim a resume review claimed by someone else
+    if (req.body.reviewer !== undefined) {
+        const rr = await resumeReviewRepository.get(req.params.resumeReview);
+        if (req.body.reviewer !== null && rr[0].reviewer_id !== null) {
+            throw new BadRequestException({ issue: 'You must set the reviewer to null before you can change it to another user.' });
+        }
+    }
 
     try {
         await resumeReviewRepository.update(req.params.resumeReview, req.body.reviewee, req.body.reviewer, req.body.state);
