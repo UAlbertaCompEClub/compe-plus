@@ -21,6 +21,7 @@ const getMe = controller(async (req: Request, res: Response<ResBody>): Promise<v
     const userExists = matches.length === 1;
     if (!userExists) {
         res.status(404).end();
+        return;
     }
 
     res.status(200).json({ user: toCamelCase(matches[0]) });
