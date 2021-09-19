@@ -34,7 +34,7 @@ beforeEach(() => {
     };
     res = { status: jest.fn().mockReturnThis(), end: jest.fn().mockReturnThis() };
     next = jest.fn();
-    mockResumeReviewRepository.get.mockResolvedValueOnce([testConstants.resumeReview1]);
+    mockResumeReviewRepository.get.mockResolvedValue([testConstants.resumeReview1]);
     mockUserRepository.get.mockResolvedValue([testConstants.user1]);
 });
 
