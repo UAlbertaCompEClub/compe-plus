@@ -10,6 +10,7 @@ type ResumeReviewState = {
     isLoading: boolean;
     isUploading: boolean;
     shouldReload: boolean;
+    errorMessage: string | null;
 };
 
 const initialState: ResumeReviewState = {
@@ -17,6 +18,7 @@ const initialState: ResumeReviewState = {
     isUploading: false,
     isLoading: false,
     shouldReload: true,
+    errorMessage: null,
 };
 
 export const resumeReviewSlice = createSlice({
@@ -38,6 +40,13 @@ export const resumeReviewSlice = createSlice({
             state.isLoading = false;
             state.resumeReviews = action.payload.resumeReviews;
             state.shouldReload = false;
+        });
+        builder.addCase(getMyResumeReviews.rejected, (state, action) => {
+            state.isLoading = false;
+            if (action.payload === undefined) {
+                return;
+            }
+            state.errorMessage = action.payload;
         });
         builder.addCase(cancelMyResumeReview.pending, (state) => {
             state.isLoading = true;

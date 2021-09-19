@@ -24,10 +24,10 @@ export const getMyResumeReviews = async (params: InitiateResumeReviewParams): Pr
     return resumeReviewResult?.data ?? { resumeReviews: [] };
 };
 
-export default createAsyncThunk<WrappedResumeReviewsWithDetails, InitiateResumeReviewParams, AsyncThunkConfig>('resumeReview/getMyResumeReviews', (params, thunkApi) => {
+export default createAsyncThunk<WrappedResumeReviewsWithDetails, InitiateResumeReviewParams, AsyncThunkConfig>('resumeReview/getMyResumeReviews', async (params, thunkApi) => {
     try {
-        return getMyResumeReviews(params);
+        return await getMyResumeReviews(params);
     } catch (e) {
-        return thunkApi.rejectWithValue(e);
+        return thunkApi.rejectWithValue(e.message);
     }
 });
