@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 
 import TitledPage from '../../components/TitledPage';
@@ -13,6 +13,13 @@ const ResumeReview: FC = () => {
         <TitledPage title='Resume Review'>
             <Grid container item justify='center'>
                 {isUploading ? <UploadResume /> : <ResumeList />}
+            </Grid>
+            <Grid container item justify='center'>
+                <Typography variant='body1' paragraph>
+                    Please note that uploaded resumes should not be following the co-op format (if such a format exists). This platform is meant to provide resume reviews for students applying outside
+                    of PlacePro, and as such should be following &quot;industry standard&quot; resume formats. Please go to the Community page to see the relevant resources for building a resume prior
+                    to submitting a resume for review, thank you. 😁
+                </Typography>
             </Grid>
         </TitledPage>
     );
