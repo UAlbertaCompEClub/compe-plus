@@ -29,6 +29,6 @@ export default createAsyncThunk<WrappedDocuments, GetMyDocumentsParams, AsyncThu
     try {
         return getMyDocuments(params);
     } catch (e) {
-        return thunkApi.rejectWithValue(e);
+        return thunkApi.rejectWithValue(e as string);
     }
 });

@@ -35,6 +35,6 @@ export default createAsyncThunk<void, CancelResumeReviewParams, AsyncThunkConfig
     try {
         return cancelMyResumeReview(params);
     } catch (e) {
-        return thunkApi.rejectWithValue(e);
+        return thunkApi.rejectWithValue(e as string);
     }
 });
