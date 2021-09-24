@@ -6,10 +6,12 @@ import { mocked } from 'ts-jest/utils';
 
 import LoadingOverlay from '../../components/LoadingOverlay';
 import PDFViewer from '../../components/pdf/PDFViewer';
+import getReviewingResumeReviews, { GetReviewingResumeReviewParams } from '../../redux/substores/volunteer/thunks/getReviewingResumeReviews';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 import { VolunteerState } from '../../redux/substores/volunteer/volunteerStore';
 import { RESUME_REVIEW_ROUTE } from '../../util/constants';
-import { WrappedDocuments } from '../../util/serverResponses';
+import { WrappedDocuments, WrappedResumeReviewsWithDetails } from '../../util/serverResponses';
+import testConstants from '../../util/testConstants';
 import mockConstants from '../../util/testConstants';
 import ResumeReviewEditor from './ResumeReviewEditor';
 import getMyDocuments, { AsyncThunkConfig, GetMyDocumentsParams } from './thunks/getMyDocuments';
@@ -37,11 +39,17 @@ const mockUseVolunteerDispatch = mocked(useVolunteerDispatch, true);
 jest.mock('./thunks/getMyDocuments');
 const mockGetMyDocuments = mocked(getMyDocuments, true);
 
+jest.mock('../../redux/substores/volunteer/thunks/getReviewingResumeReviews');
+const mockGetReviewingResumes = mocked(getReviewingResumeReviews, true);
+
 describe('ReviewResume', () => {
     let mockVolunteerState: VolunteerState;
     const mockDispatch = jest.fn();
     const mockGetAccessTokenSilently = jest.fn();
     const mockAuth0State = {
+        user: {
+            sub: testConstants.user1.id,
+        },
         getAccessTokenSilently: mockGetAccessTokenSilently,
     } as unknown as Auth0ContextInterface<User>;
 
@@ -59,6 +67,18 @@ describe('ReviewResume', () => {
 
         const mockAction = {};
         mockGetMyDocuments.mockReturnValueOnce(mockAction as AsyncThunkAction<WrappedDocuments, GetMyDocumentsParams, AsyncThunkConfig>);
+
+        mount(<ResumeReviewEditor />);
+
+        expect(mockDispatch).toBeCalledWith(mockAction);
+    });
+
+    it("refetches the reviewing resumes to get the reviewee's name on refresh", () => {
+        mockVolunteerState.resumeReview.shouldReload = true;
+        mockUseVolunteerSelector.mockImplementation((selector) => selector(mockVolunteerState));
+
+        const mockAction = {};
+        mockGetReviewingResumes.mockReturnValueOnce(mockAction as AsyncThunkAction<WrappedResumeReviewsWithDetails, GetReviewingResumeReviewParams, AsyncThunkConfig>);
 
         mount(<ResumeReviewEditor />);
 
