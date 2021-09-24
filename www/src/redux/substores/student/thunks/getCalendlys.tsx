@@ -32,6 +32,6 @@ export default createAsyncThunk<Output, GetCalendlysParams, AsyncThunkConfig>('m
     try {
         return getCalendlys(params);
     } catch (e) {
-        return thunkApi.rejectWithValue(e);
+        return thunkApi.rejectWithValue(e as string);
     }
 });
