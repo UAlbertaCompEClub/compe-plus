@@ -26,7 +26,7 @@ const ResumeReviewTable: FC<ResumeReviewTableProps> = (props: ResumeReviewTableP
                         <StyledTableCell>Name</StyledTableCell>
                         <StyledTableCell>Uploaded On</StyledTableCell>
                         <StyledTableCell>Year</StyledTableCell>
-                        <StyledTableCell>Specialty</StyledTableCell>
+                        <StyledTableCell>Program</StyledTableCell>
                         <StyledTableCell align='right'>Actions</StyledTableCell>
                     </StyledTableRow>
                 </TableHead>
