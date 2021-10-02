@@ -25,6 +25,8 @@ const ResumeReviewTable: FC<ResumeReviewTableProps> = (props: ResumeReviewTableP
                     <StyledTableRow>
                         <StyledTableCell>Name</StyledTableCell>
                         <StyledTableCell>Uploaded On</StyledTableCell>
+                        <StyledTableCell>Year</StyledTableCell>
+                        <StyledTableCell>Specialty</StyledTableCell>
                         <StyledTableCell align='right'>Actions</StyledTableCell>
                     </StyledTableRow>
                 </TableHead>
@@ -36,6 +38,8 @@ const ResumeReviewTable: FC<ResumeReviewTableProps> = (props: ResumeReviewTableP
                                     {resume.reviewee.fullName}
                                 </StyledTableCell>
                                 <StyledTableCell>{dateFormat(new Date(resume.createdAt), 'dddd, mmmm dS yyyy')}</StyledTableCell>
+                                <StyledTableCell>{resume.reviewee.year}</StyledTableCell>
+                                <StyledTableCell>{resume.reviewee.program}</StyledTableCell>
                                 <StyledTableCell align='right'>
                                     <ButtonGroup>
                                         {props.actions.map((action) => {
