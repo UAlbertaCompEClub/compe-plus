@@ -26,9 +26,12 @@ const MockInterview: FC = () => {
 
     const paired = (
         <Grid container item xs={6} justify='center'>
-            <Typography align='center'>
-                You have been paired with an interviewer. Go to there <Link href={calendlyLink}>Calendly link</Link> to find a time for a mock interview.
-            </Typography>
+            {calendlyLink && (
+                <Typography align='center'>
+                    You have been paired with an interviewer. Go to there <Link href={calendlyLink}>Calendly link</Link> to find a time for a mock interview.
+                </Typography>
+            )}
+            {!calendlyLink && <Typography align='center'>You have been paired with an interviewer, we are still waiting for them to upload their Calendly Link</Typography>}
         </Grid>
     );
 
