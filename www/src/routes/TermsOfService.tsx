@@ -1,8 +1,9 @@
+import Container from '@material-ui/core/Container';
 import React, { FC } from 'react';
 
 const TermsOfService: FC = () => {
     return (
-        <>
+        <Container>
             <h1>CompE+ Terms and Conditions of Use</h1>
             <h2>1. Terms</h2>
             <p>
@@ -23,7 +24,7 @@ const TermsOfService: FC = () => {
                 <li>transferring the materials to another person or &quot;mirror&quot; the materials on any other server.</li>
             </ul>
             <p>
-                This will let Computer Engineering Club to terminate upon violations of any of these restrictions.Upon termination, your viewing right will also be terminated and you should destroy
+                This will let Computer Engineering Club to terminate upon violations of any of these restrictions. Upon termination, your viewing right will also be terminated and you should destroy
                 any downloaded materials in your possession whether it is printed or electronic format.These Terms of Service has been created with the help of the{' '}
                 <a href='https://www.termsofservicegenerator.net'>Terms Of Service Generator</a>.
             </p>
@@ -62,7 +63,7 @@ const TermsOfService: FC = () => {
             </p>
             <h2>9. Governing Law</h2>
             <p>Any claim related to Computer Engineering Club&apos;s Website shall be governed by the laws of ca without regards to its conflict of law provisions.</p>
-        </>
+        </Container>
     );
 };
 
