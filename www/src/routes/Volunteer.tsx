@@ -3,8 +3,9 @@ import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import volunteerStore from '../redux/substores/volunteer/volunteerStore';
-import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW_EDITOR_ROUTE, RESUME_REVIEW_ROUTE } from '../util/constants';
+import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW_EDITOR_ROUTE, RESUME_REVIEW_ROUTE, TERMS_OF_SERVICE_ROUTE } from '../util/constants';
 import Community from './Community';
+import TermsOfService from './TermsOfService';
 import Landing from './unauthenticated/Landing';
 import MockInterview from './volunteer/MockInterview';
 import ResumeReview from './volunteer/ResumeReview';
@@ -25,6 +26,9 @@ const VolunteerApp: FC = () => {
                 </Route>
                 <Route path={COMMUNITY_ROUTE}>
                     <Community />
+                </Route>
+                <Route path={TERMS_OF_SERVICE_ROUTE}>
+                    <TermsOfService />
                 </Route>
                 <Route path='/'>
                     <Landing />

@@ -18,6 +18,7 @@ import Wave3 from '../../assets/wave_3.svg';
 import Wave4 from '../../assets/wave_4.svg';
 import { Fade } from '../../components/Fade';
 import useGlobalStyles from '../../styles/style';
+import { TERMS_OF_SERVICE_ROUTE } from '../../util/constants';
 
 const Landing: FC = () => {
     const classes = useStyles();
@@ -252,6 +253,13 @@ const Footer: FC = () => {
                                 In affiliation with the{' '}
                                 <Link href='https://www.compeclub.com/' color='inherit' underline='always'>
                                     CompE Club
+                                </Link>
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography className={classes.footer_text} align='left'>
+                                <Link href={TERMS_OF_SERVICE_ROUTE} color='inherit' underline='always'>
+                                    Terms of Service
                                 </Link>
                             </Typography>
                         </Grid>

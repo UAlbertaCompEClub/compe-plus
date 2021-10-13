@@ -3,11 +3,12 @@ import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import studentStore from '../redux/substores/student/studentStore';
-import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW_ROUTE, RESUME_REVIEW_VIEWER_ROUTE } from '../util/constants';
+import { COMMUNITY_ROUTE, MOCK_INTERVIEW_ROUTE, RESUME_REVIEW_ROUTE, RESUME_REVIEW_VIEWER_ROUTE, TERMS_OF_SERVICE_ROUTE } from '../util/constants';
 import Community from './Community';
 import MockInterview from './student/MockInterview';
 import ResumeReview from './student/ResumeReview';
 import ResumeReviewViewer from './student/resumeReview/ResumeReviewViewer';
+import TermsOfService from './TermsOfService';
 import Landing from './unauthenticated/Landing';
 
 const StudentApp: FC = () => {
@@ -25,6 +26,9 @@ const StudentApp: FC = () => {
                 </Route>
                 <Route path={COMMUNITY_ROUTE}>
                     <Community />
+                </Route>
+                <Route path={TERMS_OF_SERVICE_ROUTE}>
+                    <TermsOfService />
                 </Route>
                 <Route path='/'>
                     <Landing />
