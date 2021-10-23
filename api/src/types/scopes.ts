@@ -3,6 +3,7 @@
  */
 enum Scope {
     ReadUsers = 'read:users',
+    UpdateUser = 'update:user',
     ReadRoles = 'read:roles',
     CreateRoles = 'create:roles',
     DeleteRoles = 'delete:roles',

@@ -13,6 +13,8 @@ router.get('/users', middleware.authorize(Scope.ReadUsers), () => {
 
 router.post('/users', controller.postUser);
 
+router.patch('/users/:id', middleware.authorizeAndFallThrough(Scope.UpdateUser), controller.patchUser);
+
 router.get('/users/me', controller.getMe);
 
 export default router;
