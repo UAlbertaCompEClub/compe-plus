@@ -63,6 +63,8 @@ resourceServers:
             description: Create calendlys
           - value: 'update:calendlys'
             description: Update calendlys
+          - value: 'update:user'
+            description: Update your user details
       signing_alg: RS256
       skip_consent_for_verifiable_first_party_clients: true
       token_dialect: access_token_authz
@@ -443,6 +445,8 @@ roles:
             resource_server_identifier: 'https://compe.plus/api'
           - permission_name: 'update:calendlys'
             resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update:user'
+            resource_server_identifier: 'https://compe.plus/api'
     - name: Interviewer
       description: Allowed to conduct interviews
       permissions:
@@ -464,6 +468,8 @@ roles:
             resource_server_identifier: 'https://compe.plus/api'
           - permission_name: 'read:users'
             resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update:user'
+            resource_server_identifier: 'https://compe.plus/api'
     - name: Reviewer
       description: Allowed to view submitted resumes and submit reviews
       permissions:
@@ -482,6 +488,8 @@ roles:
           - permission_name: 'update_my:documents'
             resource_server_identifier: 'https://compe.plus/api'
           - permission_name: 'update_my:resume_reviews'
+            resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update:user'
             resource_server_identifier: 'https://compe.plus/api'
     - name: Student
       description: 'Allowed to submit resume for review, be an interviewee, etc.'
@@ -512,6 +520,8 @@ roles:
             resource_server_identifier: 'https://compe.plus/api'
           - permission_name: 'update_my:resume_reviews'
             resource_server_identifier: 'https://compe.plus/api'
+          - permission_name: 'update:user'
+            resource_server_identifier: 'https://compe.plus/api'
 branding:
     colors:
         page_background: '#E2F8E2'
@@ -520,7 +530,8 @@ branding:
 prompts:
     universal_login_experience: new
     identifier_first: false
-migrations: {}
+migrations:
+    issue_opaque_access_tokens: true
 actions:
     - name: test
       code: ./actions/test/code.js
