@@ -966,7 +966,7 @@ declare module 'zapatos/schema' {
       /**
       * **users.has_agreed_to_terms_of_service**
       * - `bool` in database
-      * - `NOT NULL`, no default
+      * - `NOT NULL`, default: `false`
       */
       has_agreed_to_terms_of_service: boolean;
     }
@@ -1040,7 +1040,7 @@ declare module 'zapatos/schema' {
       /**
       * **users.has_agreed_to_terms_of_service**
       * - `bool` in database
-      * - `NOT NULL`, no default
+      * - `NOT NULL`, default: `false`
       */
       has_agreed_to_terms_of_service: boolean;
     }
@@ -1114,7 +1114,7 @@ declare module 'zapatos/schema' {
       /**
       * **users.has_agreed_to_terms_of_service**
       * - `bool` in database
-      * - `NOT NULL`, no default
+      * - `NOT NULL`, default: `false`
       */
       has_agreed_to_terms_of_service?: boolean | db.Parameter<boolean> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, boolean | db.Parameter<boolean> | db.SQLFragment | db.ParentColumn>;
     }
@@ -1176,9 +1176,9 @@ declare module 'zapatos/schema' {
       /**
       * **users.has_agreed_to_terms_of_service**
       * - `bool` in database
-      * - `NOT NULL`, no default
+      * - `NOT NULL`, default: `false`
       */
-      has_agreed_to_terms_of_service: boolean | db.Parameter<boolean> | db.SQLFragment;
+      has_agreed_to_terms_of_service?: boolean | db.Parameter<boolean> | db.DefaultType | db.SQLFragment;
     }
     export interface Updatable {
       /**
@@ -1238,9 +1238,9 @@ declare module 'zapatos/schema' {
       /**
       * **users.has_agreed_to_terms_of_service**
       * - `bool` in database
-      * - `NOT NULL`, no default
+      * - `NOT NULL`, default: `false`
       */
-      has_agreed_to_terms_of_service?: boolean | db.Parameter<boolean> | db.SQLFragment | db.SQLFragment<any, boolean | db.Parameter<boolean> | db.SQLFragment>;
+      has_agreed_to_terms_of_service?: boolean | db.Parameter<boolean> | db.DefaultType | db.SQLFragment | db.SQLFragment<any, boolean | db.Parameter<boolean> | db.DefaultType | db.SQLFragment>;
     }
     export type UniqueIndex = 'users_pkey';
     export type Column = keyof Selectable;
