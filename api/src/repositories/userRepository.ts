@@ -24,4 +24,14 @@ const create = async (user: s.users.Insertable): Promise<[s.users.JSONSelectable
     return db.serializable(pool, (txnClient) => Promise.all([db.insert('users', user).run(txnClient), db.insert('user_roles', { user_id: user.id, role: 'student' }).run(txnClient)]));
 };
 
-export { create, get };
+const update = async (id: string, user: s.users.Updatable): Promise<s.users.JSONSelectable[]> => {
+    const where: s.users.Whereable = {
+        id: dc.eq(id),
+    };
+    const value: s.users.Updatable = {
+        has_agreed_to_terms_of_service: user.has_agreed_to_terms_of_service,
+    };
+    return db.update('users', value, where).run(pool);
+};
+
+export { create, get, update };
