@@ -963,6 +963,12 @@ declare module 'zapatos/schema' {
       * - `NOT NULL`, default: `now()`
       */
       updated_at: Date;
+      /**
+      * **users.has_agreed_to_terms_of_service**
+      * - `bool` in database
+      * - `NOT NULL`, default: `false`
+      */
+      has_agreed_to_terms_of_service: boolean;
     }
     export interface JSONSelectable {
       /**
@@ -1031,6 +1037,12 @@ declare module 'zapatos/schema' {
       * - `NOT NULL`, default: `now()`
       */
       updated_at: db.TimestampTzString;
+      /**
+      * **users.has_agreed_to_terms_of_service**
+      * - `bool` in database
+      * - `NOT NULL`, default: `false`
+      */
+      has_agreed_to_terms_of_service: boolean;
     }
     export interface Whereable {
       /**
@@ -1099,6 +1111,12 @@ declare module 'zapatos/schema' {
       * - `NOT NULL`, default: `now()`
       */
       updated_at?: (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, (db.TimestampTzString | Date) | db.Parameter<(db.TimestampTzString | Date)> | db.SQLFragment | db.ParentColumn>;
+      /**
+      * **users.has_agreed_to_terms_of_service**
+      * - `bool` in database
+      * - `NOT NULL`, default: `false`
+      */
+      has_agreed_to_terms_of_service?: boolean | db.Parameter<boolean> | db.SQLFragment | db.ParentColumn | db.SQLFragment<any, boolean | db.Parameter<boolean> | db.SQLFragment | db.ParentColumn>;
     }
     export interface Insertable {
       /**
@@ -1155,6 +1173,12 @@ declare module 'zapatos/schema' {
       * - Nullable, no default
       */
       photo_url?: string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment;
+      /**
+      * **users.has_agreed_to_terms_of_service**
+      * - `bool` in database
+      * - `NOT NULL`, default: `false`
+      */
+      has_agreed_to_terms_of_service?: boolean | db.Parameter<boolean> | db.DefaultType | db.SQLFragment;
     }
     export interface Updatable {
       /**
@@ -1211,6 +1235,12 @@ declare module 'zapatos/schema' {
       * - Nullable, no default
       */
       photo_url?: string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment | db.SQLFragment<any, string | db.Parameter<string> | null | db.DefaultType | db.SQLFragment>;
+      /**
+      * **users.has_agreed_to_terms_of_service**
+      * - `bool` in database
+      * - `NOT NULL`, default: `false`
+      */
+      has_agreed_to_terms_of_service?: boolean | db.Parameter<boolean> | db.DefaultType | db.SQLFragment | db.SQLFragment<any, boolean | db.Parameter<boolean> | db.DefaultType | db.SQLFragment>;
     }
     export type UniqueIndex = 'users_pkey';
     export type Column = keyof Selectable;
