@@ -12,6 +12,7 @@ const user1: s.users.JSONSelectable = {
     photo_url: 'asdf.com',
     created_at: '2021-06-14T06:09:19.373404+00:00',
     updated_at: '2021-06-14T06:09:19.373404+00:00',
+    has_agreed_to_terms_of_service: false,
 };
 
 const resumeReview1: s.resume_reviews.JSONSelectable = {
