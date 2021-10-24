@@ -4,12 +4,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import React from 'react';
+import React, { FC } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { closeTermsOfServiceDialog } from '../../redux/slices/userSlice';
 
-const TermsOfServiceDialog: React.FC = () => {
+const TermsOfServiceDialog: FC = () => {
     const dispatch = useAppDispatch();
     const { isTermsOfServiceDialogOpen } = useAppSelector((state) => state.user);
 
@@ -25,7 +25,7 @@ const TermsOfServiceDialog: React.FC = () => {
         <Dialog onClose={closeDialog} open={isTermsOfServiceDialogOpen} scroll='paper' maxWidth='lg'>
             <DialogTitle>Terms of service</DialogTitle>
             <DialogContent dividers>
-                <DialogContentText>
+                <DialogContentText color='textPrimary'>
                     <p>
                         <strong>IMPORTANT - LEGAL NOTICE</strong>
                     </p>
@@ -50,12 +50,8 @@ const TermsOfServiceDialog: React.FC = () => {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={closeDialog} color='primary'>
-                    Cancel
-                </Button>
-                <Button onClick={handleAgreeToTermsOfService} color='primary'>
-                    Agree
-                </Button>
+                <Button onClick={closeDialog}>Cancel</Button>
+                <Button onClick={handleAgreeToTermsOfService}>Agree</Button>
             </DialogActions>
         </Dialog>
     );
