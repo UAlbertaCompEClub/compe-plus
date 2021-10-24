@@ -15,6 +15,7 @@ const user1: User = {
     photoUrl: 'asdf.com',
     createdAt: '2021-06-14T06:09:19.373404+00:00',
     updatedAt: '2021-06-14T06:09:19.373404+00:00',
+    hasAgreedToTermsOfService: true,
 };
 
 const resumeReview1: ResumeReview = {
