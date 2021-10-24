@@ -51,6 +51,7 @@ const globalState: Partial<RootState> = {
         hasRegistered: true,
         isSettingsDialogOpen: false,
         isUserProfileOpen: false,
+        hasAgreedToTermsOfService: true,
     },
     registerUser: {
         year: 0,

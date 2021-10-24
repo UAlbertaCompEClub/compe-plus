@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import checkUserRegistration from '../thunks/checkUserRegistration';
+import fetchUserInfo from '../thunks/fetchUserInfo';
 import getUserRole from '../thunks/getUserRole';
 
 type UserState = {
     roles: string[];
     currentRole: string;
+    hasAgreedToTermsOfService: boolean | null;
     hasRegistered: boolean | null;
     isSettingsDialogOpen: boolean;
     isLoading: boolean;
@@ -16,6 +17,7 @@ const initialState: UserState = {
     roles: [],
     currentRole: '',
     hasRegistered: null,
+    hasAgreedToTermsOfService: null,
     isSettingsDialogOpen: false,
     isLoading: false,
     isUserProfileOpen: false,
@@ -42,10 +44,10 @@ export const userSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(checkUserRegistration.pending, (state) => {
+        builder.addCase(fetchUserInfo.pending, (state) => {
             state.isLoading = true;
         });
-        builder.addCase(checkUserRegistration.fulfilled, (state, action) => {
+        builder.addCase(fetchUserInfo.fulfilled, (state, action) => {
             state.isLoading = false;
             state.hasRegistered = action.payload !== null;
         });
