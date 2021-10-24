@@ -8,7 +8,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Header, Section } from './components/Header';
 import LoadingOverlay from './components/LoadingOverlay';
 import SettingsDialog from './components/user/SettingsDialog';
+import TermsOfServiceDialog from './components/user/TermsOfServiceDialog';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { openTermsOfServiceDialog } from './redux/slices/userSlice';
 import fetchUserInfo from './redux/thunks/fetchUserInfo';
 import getUserRole from './redux/thunks/getUserRole';
 import AdminApp from './routes/Admin';
@@ -60,7 +62,7 @@ const App: FC = () => {
 
     useEffect(() => {
         if (hasAgreedToTermsOfService === false) {
-            // TODO: Display terms of service dialog
+            dispatch(openTermsOfServiceDialog());
         }
     }, [hasAgreedToTermsOfService]);
 
@@ -79,6 +81,7 @@ const App: FC = () => {
                     <Header sections={header_sections} title={COMPE_PLUS} />
                     <BrowserView renderWithFragment>
                         {content}
+                        <TermsOfServiceDialog />
                         <SettingsDialog />
                     </BrowserView>
                     <MobileView>
