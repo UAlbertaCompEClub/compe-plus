@@ -9,7 +9,7 @@ import { Header, Section } from './components/Header';
 import LoadingOverlay from './components/LoadingOverlay';
 import SettingsDialog from './components/user/SettingsDialog';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import checkUserRegistration from './redux/thunks/checkUserRegistration';
+import fetchUserInfo from './redux/thunks/fetchUserInfo';
 import getUserRole from './redux/thunks/getUserRole';
 import AdminApp from './routes/Admin';
 import StudentApp from './routes/Student';
@@ -48,7 +48,7 @@ const App: FC = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            dispatch(checkUserRegistration(getAccessTokenSilently));
+            dispatch(fetchUserInfo(getAccessTokenSilently));
         }
     }, [isAuthenticated]);
 
