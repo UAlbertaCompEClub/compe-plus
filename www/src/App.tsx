@@ -41,7 +41,7 @@ const getContentByRole = (role: string) => {
 const App: FC = () => {
     const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading, user, error } = useAuth0();
 
-    const { currentRole, isLoading, hasRegistered } = useAppSelector((state) => state.user);
+    const { currentRole, isLoading, hasRegistered, hasAgreedToTermsOfService } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
 
     const content = getContentByRole(currentRole);
@@ -57,6 +57,12 @@ const App: FC = () => {
             dispatch(getUserRole({ userId: user.sub, tokenAcquirer: getAccessTokenSilently }));
         }
     }, [hasRegistered]);
+
+    useEffect(() => {
+        if (hasAgreedToTermsOfService === false) {
+            // TODO: Display terms of service dialog
+        }
+    }, [hasAgreedToTermsOfService]);
 
     useEffect(() => {
         if (error !== undefined) {
