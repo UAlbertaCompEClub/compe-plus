@@ -4,18 +4,17 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
 import React from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { openTermsOfServiceDialog } from '../../redux/slices/userSlice';
+import { closeTermsOfServiceDialog } from '../../redux/slices/userSlice';
 
 const TermsOfServiceDialog: React.FC = () => {
     const dispatch = useAppDispatch();
     const { isTermsOfServiceDialogOpen } = useAppSelector((state) => state.user);
 
     const closeDialog = () => {
-        dispatch(openTermsOfServiceDialog());
+        dispatch(closeTermsOfServiceDialog());
     };
 
     const handleAgreeToTermsOfService = () => {
@@ -23,9 +22,9 @@ const TermsOfServiceDialog: React.FC = () => {
     };
 
     return (
-        <Dialog onClose={closeDialog} open={isTermsOfServiceDialogOpen}>
+        <Dialog onClose={closeDialog} open={isTermsOfServiceDialogOpen} scroll='paper' maxWidth='lg'>
             <DialogTitle>Terms of service</DialogTitle>
-            <DialogContent>
+            <DialogContent dividers>
                 <DialogContentText>
                     <p>
                         <strong>IMPORTANT - LEGAL NOTICE</strong>
@@ -49,7 +48,6 @@ const TermsOfServiceDialog: React.FC = () => {
                         or communications by or to you.
                     </p>
                 </DialogContentText>
-                <TextField autoFocus margin='dense' id='name' label='Email Address' type='email' fullWidth />
             </DialogContent>
             <DialogActions>
                 <Button onClick={closeDialog} color='primary'>
