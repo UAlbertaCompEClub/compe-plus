@@ -50,6 +50,7 @@ export const userSlice = createSlice({
         builder.addCase(fetchUserInfo.fulfilled, (state, action) => {
             state.isLoading = false;
             state.hasRegistered = action.payload !== null;
+            state.hasAgreedToTermsOfService = action.payload?.user.hasAgreedToTermsOfService ?? null;
         });
         builder.addCase(getUserRole.pending, (state) => {
             state.isLoading = true;

@@ -10,6 +10,7 @@ export type User = {
     photoUrl?: string;
     createdAt: string;
     updatedAt: string;
+    hasAgreedToTermsOfService: boolean;
 };
 
 export type WrappedUser = {
