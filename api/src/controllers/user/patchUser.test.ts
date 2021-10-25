@@ -24,7 +24,7 @@ beforeEach(() => {
             hasAgreedToTermsOfService: false,
         },
         params: {
-            id: testConstants.user1.id,
+            id: encodeURIComponent(testConstants.user1.id),
         },
         user: {
             sub: testConstants.user1.id,
@@ -38,6 +38,16 @@ beforeEach(() => {
 
 afterEach(() => {
     jest.clearAllMocks();
+});
+
+it('rejects non encoded URI', async () => {
+    req.params = {
+        id: '%E0%A4%A',
+    };
+
+    await patchUser(req as Request<Params>, res as Response, next);
+
+    expect(next.mock.calls[0][0]).toMatchObject({ status: 400, details: { id: 'Must be properly encoded with encodeURIComponent' } });
 });
 
 it('rejects non existing user', async () => {
