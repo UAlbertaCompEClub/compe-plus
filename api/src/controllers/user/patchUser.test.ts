@@ -24,7 +24,7 @@ beforeEach(() => {
             hasAgreedToTermsOfService: false,
         },
         params: {
-            id: testConstants.user1.id,
+            id: encodeURIComponent(testConstants.user1.id),
         },
         user: {
             sub: testConstants.user1.id,
