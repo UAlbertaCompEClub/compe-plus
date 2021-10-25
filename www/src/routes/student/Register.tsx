@@ -7,7 +7,7 @@ import LoadingOverlay from '../../components/LoadingOverlay';
 import StyledSelect from '../../components/StyledSelect';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { setProgram, setYear } from '../../redux/slices/registerUserSlice';
-import checkUserRegistration from '../../redux/thunks/checkUserRegistration';
+import fetchUserInfo from '../../redux/thunks/fetchUserInfo';
 import registerUser from '../../redux/thunks/registerUser';
 
 const Registration: FC = () => {
@@ -21,7 +21,7 @@ const Registration: FC = () => {
 
     // Redirect back to home once register finishes
     if (registrationSuccess) {
-        dispatch(checkUserRegistration(getAccessTokenSilently));
+        dispatch(fetchUserInfo(getAccessTokenSilently));
         history.push('/');
     }
 

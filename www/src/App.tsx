@@ -9,7 +9,7 @@ import { Header, Section } from './components/Header';
 import LoadingOverlay from './components/LoadingOverlay';
 import SettingsDialog from './components/user/SettingsDialog';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import checkUserRegistration from './redux/thunks/checkUserRegistration';
+import fetchUserInfo from './redux/thunks/fetchUserInfo';
 import getUserRole from './redux/thunks/getUserRole';
 import AdminApp from './routes/Admin';
 import StudentApp from './routes/Student';
@@ -41,14 +41,14 @@ const getContentByRole = (role: string) => {
 const App: FC = () => {
     const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading, user, error } = useAuth0();
 
-    const { currentRole, isLoading, hasRegistered } = useAppSelector((state) => state.user);
+    const { currentRole, isLoading, hasRegistered, hasAgreedToTermsOfService } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
 
     const content = getContentByRole(currentRole);
 
     useEffect(() => {
         if (isAuthenticated) {
-            dispatch(checkUserRegistration(getAccessTokenSilently));
+            dispatch(fetchUserInfo(getAccessTokenSilently));
         }
     }, [isAuthenticated]);
 
@@ -57,6 +57,12 @@ const App: FC = () => {
             dispatch(getUserRole({ userId: user.sub, tokenAcquirer: getAccessTokenSilently }));
         }
     }, [hasRegistered]);
+
+    useEffect(() => {
+        if (hasAgreedToTermsOfService === false) {
+            // TODO: Display terms of service dialog
+        }
+    }, [hasAgreedToTermsOfService]);
 
     useEffect(() => {
         if (error !== undefined) {

@@ -8,7 +8,7 @@ import { mocked } from 'ts-jest/utils';
 import App from './App';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { AppDispatch, RootState } from './redux/store';
-import checkUserRegistration from './redux/thunks/checkUserRegistration';
+import fetchUserInfo from './redux/thunks/fetchUserInfo';
 import getUserRole, { GetUserRoleParameters, GetUserRolesResponse } from './redux/thunks/getUserRole';
 import Landing from './routes/unauthenticated/Landing';
 import TokenAcquirer from './util/auth0/TokenAcquirer';
@@ -31,8 +31,8 @@ jest.mock('./redux/hooks');
 const mockUseAppDispatch = mocked(useAppDispatch, true);
 const mockUseAppSelector = mocked(useAppSelector, true);
 
-jest.mock('./redux/thunks/checkUserRegistration');
-const mockCheckUserRegistration = mocked(checkUserRegistration);
+jest.mock('./redux/thunks/fetchUserInfo');
+const mockFetchUserInfo = mocked(fetchUserInfo);
 
 jest.mock('./redux/thunks/getUserRole');
 const mockGetUserRole = mocked(getUserRole);
@@ -95,7 +95,7 @@ describe('App', () => {
         mockAuth0State.isAuthenticated = isAuthenticated;
 
         const mockAction = {};
-        mockCheckUserRegistration.mockReturnValueOnce(mockAction as AsyncThunkAction<WrappedUser | null | undefined, TokenAcquirer, never>);
+        mockFetchUserInfo.mockReturnValueOnce(mockAction as AsyncThunkAction<WrappedUser | null | undefined, TokenAcquirer, never>);
 
         render(withAuth0(<App />, mockAuth0State));
 
