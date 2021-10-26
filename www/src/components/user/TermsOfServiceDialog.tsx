@@ -1,10 +1,12 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { FC } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -12,8 +14,9 @@ import { closeTermsOfServiceDialog } from '../../redux/slices/userSlice';
 import patchUser from '../../redux/thunks/patchUser';
 
 const TermsOfServiceDialog: FC = () => {
+    const classes = useStyles();
     const dispatch = useAppDispatch();
-    const { isTermsOfServiceDialogOpen } = useAppSelector((state) => state.user);
+    const { isTermsOfServiceDialogOpen, isLoading } = useAppSelector((state) => state.user);
     const { user, getAccessTokenSilently } = useAuth0();
 
     const closeDialog = () => {
@@ -60,10 +63,24 @@ const TermsOfServiceDialog: FC = () => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={closeDialog}>Cancel</Button>
-                <Button onClick={handleAgreeToTermsOfService}>Agree</Button>
+                <Button onClick={handleAgreeToTermsOfService}>
+                    Agree
+                    {isLoading && <CircularProgress size={24} className={classes.loadingButton} />}
+                </Button>
             </DialogActions>
         </Dialog>
     );
 };
+
+const useStyles = makeStyles({
+    loadingButton: {
+        color: 'inherit',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+    },
+});
 
 export default TermsOfServiceDialog;
