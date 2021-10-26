@@ -1,13 +1,17 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { closeTermsOfServiceDialog } from '../../redux/slices/userSlice';
@@ -18,12 +22,17 @@ const TermsOfServiceDialog: FC = () => {
     const dispatch = useAppDispatch();
     const { isTermsOfServiceDialogOpen, isLoading } = useAppSelector((state) => state.user);
     const { user, getAccessTokenSilently } = useAuth0();
+    const [isAgreeChecked, setIsAgreeChecked] = useState(false);
 
     const closeDialog = () => {
         dispatch(closeTermsOfServiceDialog());
     };
 
-    const handleAgreeToTermsOfService = () => {
+    const handleAgreeToTermsOfServiceChanged = (value: boolean) => {
+        setIsAgreeChecked(value);
+    };
+
+    const submitAgreeToTermsOfService = () => {
         dispatch(
             patchUser({
                 tokenAcquirer: getAccessTokenSilently,
@@ -60,11 +69,17 @@ const TermsOfServiceDialog: FC = () => {
                         or communications by or to you.
                     </p>
                 </DialogContentText>
+                <FormGroup row>
+                    <FormControlLabel
+                        control={<Checkbox checked={isAgreeChecked} onChange={(value) => handleAgreeToTermsOfServiceChanged(value.target.checked)} name='checkedA' />}
+                        label="By clicking this checkbox, I agree to CompE+'s terms of service"
+                    />
+                </FormGroup>
             </DialogContent>
             <DialogActions>
                 <Button onClick={closeDialog}>Cancel</Button>
-                <Button onClick={handleAgreeToTermsOfService}>
-                    Agree
+                <Button onClick={submitAgreeToTermsOfService} disabled={!isAgreeChecked}>
+                    Submit
                     {isLoading && <CircularProgress size={24} className={classes.loadingButton} />}
                 </Button>
             </DialogActions>
