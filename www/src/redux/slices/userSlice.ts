@@ -73,6 +73,7 @@ export const userSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(patchUser.fulfilled, (state) => {
+            state.isLoading = false;
             state.hasAgreedToTermsOfService = true;
             state.isTermsOfServiceDialogOpen = false;
         });
