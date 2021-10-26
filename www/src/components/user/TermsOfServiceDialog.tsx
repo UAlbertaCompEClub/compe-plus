@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -8,17 +9,25 @@ import React, { FC } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { closeTermsOfServiceDialog } from '../../redux/slices/userSlice';
+import patchUser from '../../redux/thunks/patchUser';
 
 const TermsOfServiceDialog: FC = () => {
     const dispatch = useAppDispatch();
     const { isTermsOfServiceDialogOpen } = useAppSelector((state) => state.user);
+    const { user, getAccessTokenSilently } = useAuth0();
 
     const closeDialog = () => {
         dispatch(closeTermsOfServiceDialog());
     };
 
     const handleAgreeToTermsOfService = () => {
-        // TODO: Update user hasAgreedToTermsOfService status
+        dispatch(
+            patchUser({
+                tokenAcquirer: getAccessTokenSilently,
+                userId: user?.sub ?? '',
+                hasAgreedToTermsOfService: true,
+            }),
+        );
     };
 
     return (

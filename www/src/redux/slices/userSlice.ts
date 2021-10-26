@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import fetchUserInfo from '../thunks/fetchUserInfo';
 import getUserRole from '../thunks/getUserRole';
+import patchUser from '../thunks/patchUser';
 
 type UserState = {
     roles: string[];
@@ -67,6 +68,13 @@ export const userSlice = createSlice({
             state.isLoading = false;
             state.roles = action.payload?.roles.map((roleObject) => roleObject.role) ?? [];
             state.currentRole = 'student';
+        });
+        builder.addCase(patchUser.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(patchUser.fulfilled, (state) => {
+            state.hasAgreedToTermsOfService = true;
+            state.isTermsOfServiceDialogOpen = false;
         });
     },
 });
