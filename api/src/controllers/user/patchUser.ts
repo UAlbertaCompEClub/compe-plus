@@ -6,7 +6,7 @@ import NotAuthorizedException from '../../exceptions/NotAuthorizedException';
 import * as userRepository from '../../repositories/userRepository';
 import { toSnakeCase } from '../../util/helper';
 import controller from '../controllerUtil';
-import Validator, { beAValidUser } from '../validation';
+import Validator, { beAValidUser, beProperlyUriEncoded } from '../validation';
 
 type Params = {
     id: string;
@@ -16,7 +16,7 @@ class ParamsValidator extends Validator<Params> {
     constructor() {
         super('route parameters');
 
-        this.ruleFor('id').mustAsync(beAValidUser);
+        this.ruleFor('id').mustAsync(beProperlyUriEncoded).mustAsync(beAValidUser);
     }
 }
 
@@ -34,11 +34,13 @@ const patchUser = controller(async (req: Request<Params, unknown, ReqBody>, res:
     await new ParamsValidator().validateAndThrow(req.params);
     await new ReqBodyValidator().validateAndThrow(req.body);
 
-    if (req.user.sub !== req.params.id) {
+    const claimedUserId = decodeURIComponent(req.params.id);
+
+    if (req.user.sub !== claimedUserId) {
         throw new NotAuthorizedException();
     }
 
-    await userRepository.update(req.params.id, toSnakeCase(req.body));
+    await userRepository.update(req.user.sub, toSnakeCase(req.body));
 
     res.status(204).end();
 });
