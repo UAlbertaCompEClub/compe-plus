@@ -5,7 +5,7 @@ import { AccountCircle } from '@material-ui/icons';
 import React, { FC, useRef } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { closeUserProfileDialog, openEditRolesDialog, openUserProfileDialog } from '../../redux/slices/userSlice';
+import { closeUserProfileDialog, openEditRolesDialog, openUserProfileDialog, reset } from '../../redux/slices/userSlice';
 
 const UserProfile: FC = () => {
     const classes = useStyles();
@@ -15,6 +15,11 @@ const UserProfile: FC = () => {
     const ccid = user?.email?.split('@')[0] ?? '';
 
     const dispatch = useAppDispatch();
+
+    const handleLogout = () => {
+        dispatch(reset());
+        logout();
+    };
 
     return (
         <>
@@ -51,7 +56,7 @@ const UserProfile: FC = () => {
                     Settings
                 </MenuItem>
                 <Divider className={classes.menuDivider} />
-                <MenuItem className={classes.menuItem} onClick={() => logout()}>
+                <MenuItem className={classes.menuItem} onClick={handleLogout}>
                     Log out
                 </MenuItem>
             </Menu>

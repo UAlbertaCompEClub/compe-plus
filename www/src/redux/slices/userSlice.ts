@@ -51,6 +51,9 @@ export const userSlice = createSlice({
         closeTermsOfServiceDialog(state) {
             state.isTermsOfServiceDialogOpen = false;
         },
+        reset() {
+            return initialState;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUserInfo.pending, (state) => {
@@ -82,4 +85,5 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const { setCurrentRole, openEditRolesDialog, closeEditRolesDialog, closeUserProfileDialog, openUserProfileDialog, openTermsOfServiceDialog, closeTermsOfServiceDialog } = userSlice.actions;
+export const { reset, setCurrentRole, openEditRolesDialog, closeEditRolesDialog, closeUserProfileDialog, openUserProfileDialog, openTermsOfServiceDialog, closeTermsOfServiceDialog } =
+    userSlice.actions;
