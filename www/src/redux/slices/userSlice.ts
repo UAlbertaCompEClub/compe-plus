@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import fetchUserInfo from '../thunks/fetchUserInfo';
 import getUserRole from '../thunks/getUserRole';
+import patchUser from '../thunks/patchUser';
 
 type UserState = {
     roles: string[];
@@ -11,6 +12,7 @@ type UserState = {
     isSettingsDialogOpen: boolean;
     isLoading: boolean;
     isUserProfileOpen: boolean;
+    isTermsOfServiceDialogOpen: boolean;
 };
 
 const initialState: UserState = {
@@ -21,6 +23,7 @@ const initialState: UserState = {
     isSettingsDialogOpen: false,
     isLoading: false,
     isUserProfileOpen: false,
+    isTermsOfServiceDialogOpen: false,
 };
 
 export const userSlice = createSlice({
@@ -42,6 +45,15 @@ export const userSlice = createSlice({
         openUserProfileDialog(state) {
             state.isUserProfileOpen = true;
         },
+        openTermsOfServiceDialog(state) {
+            state.isTermsOfServiceDialogOpen = true;
+        },
+        closeTermsOfServiceDialog(state) {
+            state.isTermsOfServiceDialogOpen = false;
+        },
+        reset() {
+            return initialState;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUserInfo.pending, (state) => {
@@ -60,9 +72,18 @@ export const userSlice = createSlice({
             state.roles = action.payload?.roles.map((roleObject) => roleObject.role) ?? [];
             state.currentRole = 'student';
         });
+        builder.addCase(patchUser.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(patchUser.fulfilled, (state) => {
+            state.isLoading = false;
+            state.hasAgreedToTermsOfService = true;
+            state.isTermsOfServiceDialogOpen = false;
+        });
     },
 });
 
 export default userSlice.reducer;
 
-export const { setCurrentRole, openEditRolesDialog, closeEditRolesDialog, closeUserProfileDialog, openUserProfileDialog } = userSlice.actions;
+export const { reset, setCurrentRole, openEditRolesDialog, closeEditRolesDialog, closeUserProfileDialog, openUserProfileDialog, openTermsOfServiceDialog, closeTermsOfServiceDialog } =
+    userSlice.actions;
