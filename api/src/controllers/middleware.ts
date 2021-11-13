@@ -135,6 +135,10 @@ function authorizeAndFallThrough(scope: Scope): ErrHandledMiddleware {
     return [checkAuthorization, errorHandler];
 }
 
+/**
+ * Returns the middleware that will ensure the user is registered in our database and has agreed to our terms of service.
+ * @returns registeredUser middleware.
+ */
 function registeredUser(): AsyncMiddleware {
     return async (req: Request, res: Response, next: NextFunction) => {
         const matches = await userRepository.get(req.user.sub);
