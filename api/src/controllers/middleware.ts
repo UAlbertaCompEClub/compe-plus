@@ -139,7 +139,7 @@ function authorizeAndFallThrough(scope: Scope): ErrHandledMiddleware {
  * Returns the middleware that will ensure the user is registered in our database and has agreed to our terms of service.
  * @returns registeredUser middleware.
  */
-function registeredUser(): AsyncMiddleware {
+function checkTOSAgreement(): AsyncMiddleware {
     return async (req: Request, res: Response, next: NextFunction) => {
         const matches = await userRepository.get(req.user.sub);
         if (!(matches.length === 1 && matches[0].has_agreed_to_terms_of_service)) {
@@ -191,7 +191,7 @@ export default {
     notFound,
     errorHandler,
     authenticate,
-    registeredUser,
+    checkTOSAgreement,
     authorize,
     authorizeAndFallThrough,
     jsonParser,

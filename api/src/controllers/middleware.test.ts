@@ -161,7 +161,7 @@ describe('authorizeAndFallthrough middleware', () => {
     });
 });
 
-describe('registeredUser middleware', () => {
+describe('checkTOSAgreement middleware', () => {
     let mockRequest: Partial<Request> = {};
     let mockResponse: Partial<Response>;
     let nextFunction: NextFunction;
@@ -181,7 +181,7 @@ describe('registeredUser middleware', () => {
     it('throws when user does not exist', async () => {
         mockUserRepository.get.mockResolvedValueOnce([]);
 
-        await middleware.registeredUser()(mockRequest as Request, mockResponse as Response, nextFunction);
+        await middleware.checkTOSAgreement()(mockRequest as Request, mockResponse as Response, nextFunction);
 
         expect(nextFunction).toBeCalledWith(
             new NotAuthorizedException({
@@ -194,7 +194,7 @@ describe('registeredUser middleware', () => {
         mockUser.has_agreed_to_terms_of_service = false;
         mockUserRepository.get.mockResolvedValueOnce([mockUser]);
 
-        await middleware.registeredUser()(mockRequest as Request, mockResponse as Response, nextFunction);
+        await middleware.checkTOSAgreement()(mockRequest as Request, mockResponse as Response, nextFunction);
 
         expect(nextFunction).toBeCalledWith(
             new NotAuthorizedException({
@@ -207,7 +207,7 @@ describe('registeredUser middleware', () => {
         mockUser.has_agreed_to_terms_of_service = true;
         mockUserRepository.get.mockResolvedValueOnce([mockUser]);
 
-        await middleware.registeredUser()(mockRequest as Request, mockResponse as Response, nextFunction);
+        await middleware.checkTOSAgreement()(mockRequest as Request, mockResponse as Response, nextFunction);
 
         expect(nextFunction).not.toBeCalledWith(
             new NotAuthorizedException({
