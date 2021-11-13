@@ -11,11 +11,13 @@ import InvalidJsonException from '../exceptions/InvalidJsonException';
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
 import NotFoundException from '../exceptions/NotFoundException';
+import * as userRepository from '../repositories/userRepository';
 import Scope from '../types/scopes';
 import config from '../util/config';
 import logger, { standardSerializers, verboseSerializers } from '../util/logger';
 
 type Middleware = (req: Request, res: Response, next: NextFunction) => void;
+type AsyncMiddleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 type ErrMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => void;
 type ErrHandledMiddleware = [Middleware, ErrMiddleware];
 
@@ -133,6 +135,22 @@ function authorizeAndFallThrough(scope: Scope): ErrHandledMiddleware {
     return [checkAuthorization, errorHandler];
 }
 
+function registeredUser(): AsyncMiddleware {
+    return async (req: Request, res: Response, next: NextFunction) => {
+        const matches = await userRepository.get(req.user.sub);
+        if (!(matches.length === 1 && matches[0].has_agreed_to_terms_of_service)) {
+            next(
+                new NotAuthorizedException({
+                    reason: 'User has not agreed to terms of service',
+                }),
+            );
+            return;
+        }
+
+        next();
+    };
+}
+
 function jsonParser(): ErrHandledMiddleware {
     // Parse a json body
     const parseBody = express.json({
@@ -169,6 +187,7 @@ export default {
     notFound,
     errorHandler,
     authenticate,
+    registeredUser,
     authorize,
     authorizeAndFallThrough,
     jsonParser,
