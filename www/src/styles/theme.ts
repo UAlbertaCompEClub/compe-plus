@@ -1,7 +1,13 @@
-import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 import { TypographyOptions } from '@material-ui/core/styles/createTypography';
 import { Overrides } from '@material-ui/core/styles/overrides';
+
+declare module '@material-ui/core/styles/createMuiTheme' {
+    interface ThemeOptions {
+        themeName?: string;
+    }
+}
 
 const palette: PaletteOptions = {
     primary: {
@@ -55,6 +61,8 @@ const typography: TypographyOptions = {
     fontSize: 18,
 };
 
+const themeName = 'CompE+ Theme';
+
 const overrides: Overrides = {
     MuiPaper: {
         rounded: {
@@ -67,9 +75,10 @@ const overrides: Overrides = {
 };
 
 export default responsiveFontSizes(
-    createTheme({
+    createMuiTheme({
         palette,
         typography,
+        themeName,
         overrides,
     }),
 );
