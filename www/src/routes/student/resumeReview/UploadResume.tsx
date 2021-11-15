@@ -4,10 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Cancel, CheckCircle } from '@material-ui/icons';
 import PublishIcon from '@material-ui/icons/Publish';
-import React, { FC, useCallback, useEffect } from 'react';
+import clsx from 'clsx';
+import React, { FC, useCallback, useContext, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import PDFViewer from '../../../components/pdf/PDFViewer';
+import UserContext from '../../../contexts/UserContext';
 import { setIsUploadingResume } from '../../../redux/substores/student/slices/resumeReviewSlice';
 import { resetUploadResume, setDocument } from '../../../redux/substores/student/slices/uploadResumeSlice';
 import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
@@ -54,6 +56,7 @@ const UploadResume: FC = () => {
     const dispatch = useStudentDispatch();
     const { user, getAccessTokenSilently } = useAuth0();
     const { document, isLoading, isUploadComplete } = useStudentSelector((state) => state.uploadResume);
+    const userContext = useContext(UserContext);
 
     useEffect(() => {
         // Reset when user revisits this page
@@ -73,17 +76,18 @@ const UploadResume: FC = () => {
         handleOnFileSelected(dispatch, acceptedFiles);
     }, []);
 
-    const { getRootProps, getInputProps } = useDropzone({ onDrop });
+    const shouldBeDisabled = !(userContext?.hasAgreedToTermsOfService ?? false);
+    const { getRootProps, getInputProps } = useDropzone({ onDrop, disabled: shouldBeDisabled });
 
     if (document === null) {
         return (
             <Grid container item xs={12} justify='center'>
-                <div {...getRootProps()} className={classes.uploadBox}>
+                <div {...getRootProps()} className={clsx(shouldBeDisabled ? classes.uploadBoxDisabled : classes.uploadBox)}>
                     <input {...getInputProps()} />
                     <Box display='flex' alignItems='center'>
                         <PublishIcon className={classes.uploadIcon} />
                         <Typography>Drag and Drop or </Typography>
-                        <div className={classes.browseButton}>
+                        <div className={shouldBeDisabled ? classes.browseButtonDisabled : classes.browseButton}>
                             <Typography>Browse computer</Typography>
                         </div>
                     </Box>
@@ -157,10 +161,20 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.shortest,
         }),
         border: '2px dashed rgba(0, 0, 0, 0.3)',
-        '&:hover': {
+        ':not(.disabled)&:hover': {
             cursor: 'pointer',
             backgroundColor: fade(theme.palette.primary.main, 0.6),
         },
+    },
+    uploadBoxDisabled: {
+        padding: theme.spacing(4),
+        paddingTop: theme.spacing(6),
+        paddingBottom: theme.spacing(6),
+        backgroundColor: fade(theme.palette.grey[500], 0.5),
+        border: '2px dashed rgba(0, 0, 0, 0.3)',
+        transition: theme.transitions.create('background-color', {
+            duration: theme.transitions.duration.shortest,
+        }),
     },
     uploadIcon: {
         marginRight: theme.spacing(1),
@@ -170,9 +184,10 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         backgroundColor: theme.palette.primary.main,
     },
-    browseButton2: {
-        ...theme.typography.body1,
-        textTransform: 'none',
+    browseButtonDisabled: {
+        margin: theme.spacing(1),
+        padding: theme.spacing(2),
+        backgroundColor: fade(theme.palette.grey[500], 0.5),
     },
 }));
 
