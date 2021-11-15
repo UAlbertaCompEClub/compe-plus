@@ -9,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import App from './App';
 import LoadingOverlay from './components/LoadingOverlay';
 import Auth0ProviderWithHistory from './providers/Auth0ProviderWithHistory';
+import UserProvider from './providers/UserProvider';
 import store, { persistor } from './redux/store';
 import reportWebVitals from './reportWebVitals';
 
@@ -18,7 +19,9 @@ ReactDOM.render(
             <Auth0ProviderWithHistory>
                 <Provider store={store}>
                     <PersistGate loading={LoadingOverlay} persistor={persistor}>
-                        <App />
+                        <UserProvider>
+                            <App />
+                        </UserProvider>
                     </PersistGate>
                 </Provider>
             </Auth0ProviderWithHistory>
