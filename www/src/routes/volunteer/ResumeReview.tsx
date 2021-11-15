@@ -2,10 +2,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Button, CircularProgress, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import TitledPage from '../../components/TitledPage';
+import UserContext from '../../contexts/UserContext';
 import { refreshResumeReviews } from '../../redux/substores/volunteer/slices/resumeReviewSlice';
 import claimResumeReviews from '../../redux/substores/volunteer/thunks/claimResumeReviews';
 import getAvailableResumeReviews from '../../redux/substores/volunteer/thunks/getAvailableResumeReviews';
@@ -14,12 +15,14 @@ import unclaimResumeReviews from '../../redux/substores/volunteer/thunks/unclaim
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
 import { ResumeReviewWithUserDetails as RRWUD } from '../../util/serverResponses';
 import ResumeReviewTable from './ResumeReviewTable';
+
 const ResumeReview: FC = () => {
     const { availableResumes, reviewingResumes, availableIsLoading, reviewingIsLoading, shouldReload } = useVolunteerSelector((state) => state.resumeReview);
     const { getAccessTokenSilently, user } = useAuth0();
     const dispatch = useVolunteerDispatch();
     const classes = useStyles();
     const history = useHistory();
+    const userContext = useContext(UserContext);
 
     useEffect(() => {
         if (user?.sub !== undefined && shouldReload) {
@@ -27,6 +30,8 @@ const ResumeReview: FC = () => {
             dispatch(getReviewingResumeReviews({ tokenAcquirer: getAccessTokenSilently, userId: user.sub }));
         }
     }, [user, shouldReload]);
+
+    const actionsShouldBeDisabled = !(userContext?.hasAgreedToTermsOfService ?? false);
 
     const availableTableActions = [
         {
@@ -40,12 +45,17 @@ const ResumeReview: FC = () => {
                     dispatch(claimResumeReviews({ tokenAcquirer: getAccessTokenSilently, userId: user.sub, resumeReviewId: resumeReview.id }));
                 }
             },
+            disabled: actionsShouldBeDisabled,
         },
     ];
 
     const reviewingTableActions = [
-        { name: 'Review resume', func: (resumeReview: RRWUD) => history.push(`/resume-review/${resumeReview.id}`) },
-        { name: 'Unclaim', func: (resumeReview: RRWUD) => dispatch(unclaimResumeReviews({ tokenAcquirer: getAccessTokenSilently, resumeReviewId: resumeReview.id })) },
+        { name: 'Review resume', func: (resumeReview: RRWUD) => history.push(`/resume-review/${resumeReview.id}`), disabled: actionsShouldBeDisabled },
+        {
+            name: 'Unclaim',
+            func: (resumeReview: RRWUD) => dispatch(unclaimResumeReviews({ tokenAcquirer: getAccessTokenSilently, resumeReviewId: resumeReview.id })),
+            disabled: actionsShouldBeDisabled,
+        },
     ];
 
     return (
