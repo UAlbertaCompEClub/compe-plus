@@ -1,9 +1,10 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Grid, Link, Typography } from '@material-ui/core';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 
 import GiveAvailabilityIcon from '../../assets/give_availability.svg';
 import LoadingOverlay from '../../components/LoadingOverlay';
+import UserContext from '../../contexts/UserContext';
 import { useStudentDispatch, useStudentSelector } from '../../redux/substores/student/studentHooks';
 import getCalendlys from '../../redux/substores/student/thunks/getCalendlys';
 
@@ -11,12 +12,15 @@ const MockInterview: FC = () => {
     const { calendlyLink, isLoading } = useStudentSelector((state) => state.mockInterview);
     const dispatch = useStudentDispatch();
     const { getAccessTokenSilently, user } = useAuth0();
+    const userContext = useContext(UserContext);
 
     useEffect(() => {
         if (user?.sub !== undefined) {
             dispatch(getCalendlys({ tokenAcquirer: getAccessTokenSilently, intervieweeId: user.sub }));
         }
     }, [user]);
+
+    const actionsShouldBeDisabled = !(userContext?.hasAgreedToTermsOfService ?? false);
 
     const notPaired = (
         <Grid container item xs={6} justify='center'>
@@ -27,7 +31,7 @@ const MockInterview: FC = () => {
     const paired = (
         <Grid container item xs={6} justify='center'>
             <Typography align='center'>
-                You have been paired with an interviewer. Go to there <Link href={calendlyLink}>Calendly link</Link> to find a time for a mock interview.
+                You have been paired with an interviewer. Go to there {actionsShouldBeDisabled ? 'hidden link' : <Link href={calendlyLink}>Calendly link</Link>} to find a time for a mock interview.
             </Typography>
         </Grid>
     );
