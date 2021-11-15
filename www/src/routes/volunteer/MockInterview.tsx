@@ -1,10 +1,10 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Button, Grid, Link, makeStyles, TextField, Typography } from '@material-ui/core';
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import GiveAvailabilityIcon from '../../assets/give_availability.svg';
 import LoadingOverlay from '../../components/LoadingOverlay';
-import UserContext from '../../contexts/UserContext';
+import useUserContext from '../../hooks/useUserContext';
 import getCalendlyLink from '../../redux/substores/volunteer/thunks/getCalendlyLink';
 import setCalendlyLink from '../../redux/substores/volunteer/thunks/setCalendlyLink';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
@@ -15,7 +15,7 @@ const MockInterview: FC = () => {
     const dispatch = useVolunteerDispatch();
     const { getAccessTokenSilently, user } = useAuth0();
     const [calendlyInput, setCalendlyInput] = useState<string>('');
-    const userContext = useContext(UserContext);
+    const userContext = useUserContext();
 
     useEffect(() => {
         if (user?.sub !== undefined) {

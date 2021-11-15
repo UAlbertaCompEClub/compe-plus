@@ -2,11 +2,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Button, CircularProgress, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import React, { FC, useContext, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import TitledPage from '../../components/TitledPage';
-import UserContext from '../../contexts/UserContext';
+import useUserContext from '../../hooks/useUserContext';
 import { refreshResumeReviews } from '../../redux/substores/volunteer/slices/resumeReviewSlice';
 import claimResumeReviews from '../../redux/substores/volunteer/thunks/claimResumeReviews';
 import getAvailableResumeReviews from '../../redux/substores/volunteer/thunks/getAvailableResumeReviews';
@@ -22,7 +22,7 @@ const ResumeReview: FC = () => {
     const dispatch = useVolunteerDispatch();
     const classes = useStyles();
     const history = useHistory();
-    const userContext = useContext(UserContext);
+    const userContext = useUserContext();
 
     useEffect(() => {
         if (user?.sub !== undefined && shouldReload) {

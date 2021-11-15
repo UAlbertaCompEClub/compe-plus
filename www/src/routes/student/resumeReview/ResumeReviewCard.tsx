@@ -5,9 +5,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import clsx from 'clsx';
 import dateFormat from 'dateformat';
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useState } from 'react';
 
-import UserContext from '../../../contexts/UserContext';
+import useUserContext from '../../../hooks/useUserContext';
 import { useStudentDispatch } from '../../../redux/substores/student/studentHooks';
 import cancelResumeReview from '../../../redux/substores/student/thunks/cancelResumeReview';
 import fetchWithToken from '../../../util/auth0/fetchWithToken';
@@ -44,8 +44,8 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
     const classes = useStyles();
     const [isExpanded, setIsExpanded] = useState(false);
     const dispatch = useStudentDispatch();
+    const userContext = useUserContext();
 
-    const userContext = useContext(UserContext);
     const { getAccessTokenSilently } = useAuth0();
 
     const stateToDisplayNameMap = new Map([

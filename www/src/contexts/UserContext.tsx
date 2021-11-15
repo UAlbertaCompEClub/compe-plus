@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-type SubsetUserState = {
+export type SubsetUserState = {
     roles: string[];
     currentRole: string;
     hasAgreedToTermsOfService: boolean | null;

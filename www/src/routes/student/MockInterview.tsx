@@ -1,10 +1,10 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Grid, Link, Typography } from '@material-ui/core';
-import React, { FC, useContext, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import GiveAvailabilityIcon from '../../assets/give_availability.svg';
 import LoadingOverlay from '../../components/LoadingOverlay';
-import UserContext from '../../contexts/UserContext';
+import useUserContext from '../../hooks/useUserContext';
 import { useStudentDispatch, useStudentSelector } from '../../redux/substores/student/studentHooks';
 import getCalendlys from '../../redux/substores/student/thunks/getCalendlys';
 
@@ -12,7 +12,7 @@ const MockInterview: FC = () => {
     const { calendlyLink, isLoading } = useStudentSelector((state) => state.mockInterview);
     const dispatch = useStudentDispatch();
     const { getAccessTokenSilently, user } = useAuth0();
-    const userContext = useContext(UserContext);
+    const userContext = useUserContext();
 
     useEffect(() => {
         if (user?.sub !== undefined) {

@@ -5,11 +5,11 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Cancel, CheckCircle } from '@material-ui/icons';
 import PublishIcon from '@material-ui/icons/Publish';
 import clsx from 'clsx';
-import React, { FC, useCallback, useContext, useEffect } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import PDFViewer from '../../../components/pdf/PDFViewer';
-import UserContext from '../../../contexts/UserContext';
+import useUserContext from '../../../hooks/useUserContext';
 import { setIsUploadingResume } from '../../../redux/substores/student/slices/resumeReviewSlice';
 import { resetUploadResume, setDocument } from '../../../redux/substores/student/slices/uploadResumeSlice';
 import { useStudentDispatch, useStudentSelector } from '../../../redux/substores/student/studentHooks';
@@ -56,7 +56,7 @@ const UploadResume: FC = () => {
     const dispatch = useStudentDispatch();
     const { user, getAccessTokenSilently } = useAuth0();
     const { document, isLoading, isUploadComplete } = useStudentSelector((state) => state.uploadResume);
-    const userContext = useContext(UserContext);
+    const userContext = useUserContext();
 
     useEffect(() => {
         // Reset when user revisits this page
