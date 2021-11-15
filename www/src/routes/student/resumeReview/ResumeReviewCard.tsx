@@ -5,8 +5,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import clsx from 'clsx';
 import dateFormat from 'dateformat';
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 
+import UserContext from '../../../contexts/UserContext';
 import { useStudentDispatch } from '../../../redux/substores/student/studentHooks';
 import cancelResumeReview from '../../../redux/substores/student/thunks/cancelResumeReview';
 import fetchWithToken from '../../../util/auth0/fetchWithToken';
@@ -44,6 +45,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
     const [isExpanded, setIsExpanded] = useState(false);
     const dispatch = useStudentDispatch();
 
+    const userContext = useContext(UserContext);
     const { getAccessTokenSilently } = useAuth0();
 
     const stateToDisplayNameMap = new Map([
@@ -52,6 +54,8 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
         ['reviewing', 'In review'],
         ['seeking_reviewer', 'Pending'],
     ]);
+
+    const shouldBeDisabled = !userContext?.hasAgreedToTermsOfService ?? false;
 
     return (
         <Card className={classes.currentResumeCard} elevation={0}>
@@ -76,6 +80,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
                             onClick={() => {
                                 dispatch(cancelResumeReview({ resumeReviewId: resumeReview.id, tokenAcquirer: getAccessTokenSilently }));
                             }}
+                            disabled={shouldBeDisabled}
                         >
                             Cancel review
                         </Button>
