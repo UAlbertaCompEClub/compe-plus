@@ -76,18 +76,18 @@ const UploadResume: FC = () => {
         handleOnFileSelected(dispatch, acceptedFiles);
     }, []);
 
-    const shouldBeDisabled = !(userContext?.hasAgreedToTermsOfService ?? false);
-    const { getRootProps, getInputProps } = useDropzone({ onDrop, disabled: shouldBeDisabled });
+    const actionsShouldBeDisabled = !(userContext?.hasAgreedToTermsOfService ?? false);
+    const { getRootProps, getInputProps } = useDropzone({ onDrop, disabled: actionsShouldBeDisabled });
 
     if (document === null) {
         return (
             <Grid container item xs={12} justify='center'>
-                <div {...getRootProps()} className={clsx(shouldBeDisabled ? classes.uploadBoxDisabled : classes.uploadBox)}>
+                <div {...getRootProps()} className={clsx(actionsShouldBeDisabled ? classes.uploadBoxDisabled : classes.uploadBox)}>
                     <input {...getInputProps()} />
                     <Box display='flex' alignItems='center'>
                         <PublishIcon className={classes.uploadIcon} />
                         <Typography>Drag and Drop or </Typography>
-                        <div className={shouldBeDisabled ? classes.browseButtonDisabled : classes.browseButton}>
+                        <div className={actionsShouldBeDisabled ? classes.browseButtonDisabled : classes.browseButton}>
                             <Typography>Browse computer</Typography>
                         </div>
                     </Box>

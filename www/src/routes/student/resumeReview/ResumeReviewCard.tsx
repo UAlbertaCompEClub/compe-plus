@@ -55,7 +55,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
         ['seeking_reviewer', 'Pending'],
     ]);
 
-    const shouldBeDisabled = !userContext?.hasAgreedToTermsOfService ?? false;
+    const actionsShouldBeDisabled = !userContext?.hasAgreedToTermsOfService ?? false;
 
     return (
         <Card className={classes.currentResumeCard} elevation={0}>
@@ -80,7 +80,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
                             onClick={() => {
                                 dispatch(cancelResumeReview({ resumeReviewId: resumeReview.id, tokenAcquirer: getAccessTokenSilently }));
                             }}
-                            disabled={shouldBeDisabled}
+                            disabled={actionsShouldBeDisabled}
                         >
                             Cancel review
                         </Button>
