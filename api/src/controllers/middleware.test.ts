@@ -5,10 +5,15 @@ import { mocked } from 'ts-jest/utils';
 import NotAuthenticatedException from '../exceptions/NotAuthenticatedException';
 import NotAuthorizedException from '../exceptions/NotAuthorizedException';
 import NotFoundException from '../exceptions/NotFoundException';
+import * as userRepository from '../repositories/userRepository';
 import Scope from '../types/scopes';
 import config from '../util/config';
 import logger from '../util/logger';
+import testConstants from '../util/testConstants';
 import middleware from './middleware';
+
+jest.mock('../repositories/userRepository');
+const mockUserRepository = mocked(userRepository, true);
 
 describe('notFound middleware', () => {
     const mockRequest: Partial<Request> = {};
@@ -153,6 +158,62 @@ describe('authorizeAndFallthrough middleware', () => {
         e.message = 'Insufficient scope';
         middleware.authorizeAndFallThrough(Scope.CreateDocuments)[1](e, mockRequest as Request, mockResponse as Response, nextFunction);
         expect(nextFunction).toBeCalledWith('route');
+    });
+});
+
+describe('checkTOSAgreement middleware', () => {
+    let mockRequest: Partial<Request> = {};
+    let mockResponse: Partial<Response>;
+    let nextFunction: NextFunction;
+    let mockUser = testConstants.user1;
+
+    beforeEach(() => {
+        jest.resetAllMocks();
+        mockRequest = {
+            user: {
+                sub: testConstants.user1.id,
+            },
+        };
+        nextFunction = jest.fn();
+        mockUser = testConstants.user1;
+    });
+
+    it('throws when user does not exist', async () => {
+        mockUserRepository.get.mockResolvedValueOnce([]);
+
+        await middleware.checkTOSAgreement()(mockRequest as Request, mockResponse as Response, nextFunction);
+
+        expect(nextFunction).toBeCalledWith(
+            new NotAuthorizedException({
+                reason: 'User has not agreed to terms of service',
+            }),
+        );
+    });
+
+    it("throws when user has not agreed to CompE+'s terms of service", async () => {
+        mockUser.has_agreed_to_terms_of_service = false;
+        mockUserRepository.get.mockResolvedValueOnce([mockUser]);
+
+        await middleware.checkTOSAgreement()(mockRequest as Request, mockResponse as Response, nextFunction);
+
+        expect(nextFunction).toBeCalledWith(
+            new NotAuthorizedException({
+                reason: 'User has not agreed to terms of service',
+            }),
+        );
+    });
+
+    it("doesn't throw when user has agreed to CompE+'s terms of service", async () => {
+        mockUser.has_agreed_to_terms_of_service = true;
+        mockUserRepository.get.mockResolvedValueOnce([mockUser]);
+
+        await middleware.checkTOSAgreement()(mockRequest as Request, mockResponse as Response, nextFunction);
+
+        expect(nextFunction).not.toBeCalledWith(
+            new NotAuthorizedException({
+                reason: 'User has not agreed to terms of service',
+            }),
+        );
     });
 });
 

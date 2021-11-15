@@ -7,7 +7,7 @@ import Scope from '../types/scopes';
 export const router = express.Router();
 
 router.get('/calendlys', middleware.authorize(Scope.ReadCalendlys), controller.getCalendlys);
-router.post('/calendlys/', middleware.authorize(Scope.CreateCalendlys), controller.postCalendly);
-router.patch('/calendlys/:calendly', middleware.authorize(Scope.UpdateCalendlys), controller.patchCalendly);
+router.post('/calendlys/', middleware.authorize(Scope.CreateCalendlys), middleware.checkTOSAgreement(), controller.postCalendly);
+router.patch('/calendlys/:calendly', middleware.authorize(Scope.UpdateCalendlys), middleware.checkTOSAgreement(), controller.patchCalendly);
 
 export default router;
