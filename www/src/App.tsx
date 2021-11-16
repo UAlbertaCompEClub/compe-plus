@@ -7,10 +7,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header, Section } from './components/Header';
 import LoadingOverlay from './components/LoadingOverlay';
+import TermsOfServiceAlert from './components/TermsOfServiceAlert';
 import SettingsDialog from './components/user/SettingsDialog';
 import TermsOfServiceDialog from './components/user/TermsOfServiceDialog';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import { openTermsOfServiceDialog } from './redux/slices/userSlice';
 import fetchUserInfo from './redux/thunks/fetchUserInfo';
 import getUserRole from './redux/thunks/getUserRole';
 import AdminApp from './routes/Admin';
@@ -43,7 +43,7 @@ const getContentByRole = (role: string) => {
 const App: FC = () => {
     const { isAuthenticated, getAccessTokenSilently, isLoading: isAuth0Loading, user, error } = useAuth0();
 
-    const { currentRole, isLoading, hasRegistered, hasAgreedToTermsOfService } = useAppSelector((state) => state.user);
+    const { currentRole, isLoading, hasRegistered } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
 
     const content = getContentByRole(currentRole);
@@ -61,12 +61,6 @@ const App: FC = () => {
     }, [hasRegistered]);
 
     useEffect(() => {
-        if (hasAgreedToTermsOfService === false) {
-            dispatch(openTermsOfServiceDialog());
-        }
-    }, [hasAgreedToTermsOfService]);
-
-    useEffect(() => {
         if (error !== undefined) {
             alert(error.message);
         }
@@ -81,6 +75,7 @@ const App: FC = () => {
                     <Header sections={header_sections} title={COMPE_PLUS} />
                     <BrowserView renderWithFragment>
                         {content}
+                        <TermsOfServiceAlert />
                         <TermsOfServiceDialog />
                         <SettingsDialog />
                     </BrowserView>
