@@ -7,6 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import LoadingOverlay from '../../components/LoadingOverlay';
 import PDFViewer from '../../components/pdf/PDFViewer';
+import useUserContext from '../../hooks/useUserContext';
 import { resetResumeReviewEditor } from '../../redux/substores/volunteer/slices/resumeReviewEditorSlice';
 import getReviewingResumeReviews from '../../redux/substores/volunteer/thunks/getReviewingResumeReviews';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
@@ -30,6 +31,7 @@ const ResumeReviewEditor: React.FC = () => {
     const { getAccessTokenSilently, user } = useAuth0();
     const history = useHistory();
     const dispatch = useVolunteerDispatch();
+    const userContext = useUserContext();
 
     const currentResumeReview = reviewingResumes.find((review) => review.id === resumeReviewId);
 
@@ -63,6 +65,8 @@ const ResumeReviewEditor: React.FC = () => {
         return base64ToArrayBuffer(currentDocument?.base64Contents);
     };
 
+    const actionsShouldBeDisabled = !userContext?.hasAgreedToTermsOfService ?? false;
+
     return (
         <>
             <LoadingOverlay open={isLoading || reviewingIsLoading || (isResumeReviewPatched && !isDocumentPatched)} />
@@ -76,6 +80,7 @@ const ResumeReviewEditor: React.FC = () => {
                             variant='contained'
                             color='primary'
                             endIcon={<DoneIcon />}
+                            disabled={actionsShouldBeDisabled}
                             onClick={() =>
                                 dispatch(
                                     patchResumeReview({
