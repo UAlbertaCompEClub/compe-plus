@@ -55,7 +55,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
         ['seeking_reviewer', 'Pending'],
     ]);
 
-    const actionsShouldBeDisabled = !userContext?.hasAgreedToTermsOfService ?? false;
+    const actionsShouldBeDisabled = !(userContext?.hasAgreedToTermsOfService ?? false);
 
     return (
         <Card className={classes.currentResumeCard} elevation={0}>

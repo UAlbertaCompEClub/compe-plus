@@ -65,7 +65,7 @@ const ResumeReviewEditor: React.FC = () => {
         return base64ToArrayBuffer(currentDocument?.base64Contents);
     };
 
-    const actionsShouldBeDisabled = !userContext?.hasAgreedToTermsOfService ?? false;
+    const actionsShouldBeDisabled = !(userContext?.hasAgreedToTermsOfService ?? false);
 
     return (
         <>
