@@ -1,7 +1,8 @@
+import { SubsetUserState } from '../contexts/UserContext';
 import { RootState } from '../redux/store';
 import { StudentState } from '../redux/substores/student/studentStore';
 import { VolunteerState } from '../redux/substores/volunteer/volunteerStore';
-import { Document, ResumeReview, Role, User } from './serverResponses';
+import { Document, ResumeReview, ResumeReviewWithUserDetails, Role, User } from './serverResponses';
 
 const user1: User = {
     id: 'google-oauth2|999937999992352499990',
@@ -25,6 +26,17 @@ const resumeReview1: ResumeReview = {
     state: 'seeking_reviewer',
     createdAt: '2021-06-14T06:09:19.373404+00:00',
     updatedAt: '2021-06-14T06:09:19.373404+00:00',
+};
+
+const resumeReviewWithUserDetails1: ResumeReviewWithUserDetails = {
+    id: '123e4567-e89b-12d3-a456-426614174000',
+    revieweeId: user1.id,
+    reviewerId: null,
+    state: 'seeking_reviewer',
+    createdAt: '2021-06-14T06:09:19.373404+00:00',
+    updatedAt: '2021-06-14T06:09:19.373404+00:00',
+    reviewer: user1,
+    reviewee: user1,
 };
 
 const document1: Document = {
@@ -107,4 +119,10 @@ const volunteerState: VolunteerState = {
     },
 };
 
-export default { user1, resumeReview1, document1, globalState, studentState, volunteerState, studentRole };
+const subsetUser1: SubsetUserState = {
+    currentRole: 'student',
+    hasAgreedToTermsOfService: true,
+    roles: ['student', 'reviewer', 'interviewer'],
+};
+
+export default { user1, resumeReview1, resumeReviewWithUserDetails1, document1, globalState, studentState, volunteerState, studentRole, subsetUser1 };
