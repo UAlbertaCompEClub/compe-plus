@@ -4,6 +4,7 @@ import React, { FC, useEffect, useState } from 'react';
 
 import GiveAvailabilityIcon from '../../assets/give_availability.svg';
 import LoadingOverlay from '../../components/LoadingOverlay';
+import useUserContext from '../../hooks/useUserContext';
 import getCalendlyLink from '../../redux/substores/volunteer/thunks/getCalendlyLink';
 import setCalendlyLink from '../../redux/substores/volunteer/thunks/setCalendlyLink';
 import { useVolunteerDispatch, useVolunteerSelector } from '../../redux/substores/volunteer/volunteerHooks';
@@ -14,12 +15,15 @@ const MockInterview: FC = () => {
     const dispatch = useVolunteerDispatch();
     const { getAccessTokenSilently, user } = useAuth0();
     const [calendlyInput, setCalendlyInput] = useState<string>('');
+    const userContext = useUserContext();
 
     useEffect(() => {
         if (user?.sub !== undefined) {
             dispatch(getCalendlyLink({ tokenAcquirer: getAccessTokenSilently, interviewerId: user.sub }));
         }
     }, [user]);
+
+    const actionsShouldBeDisabled = !(userContext?.hasAgreedToTermsOfService ?? false);
 
     const submitLink = (
         <>
@@ -37,10 +41,12 @@ const MockInterview: FC = () => {
                     InputLabelProps={{ className: classes.label }}
                     value={calendlyInput}
                     onChange={(e) => setCalendlyInput(e.target.value)}
+                    disabled={actionsShouldBeDisabled}
                 />
                 <Button
                     variant='contained'
                     color='primary'
+                    disabled={actionsShouldBeDisabled}
                     onClick={() => {
                         if (user?.sub !== undefined) {
                             dispatch(setCalendlyLink({ tokenAcquirer: getAccessTokenSilently, interviewerId: user.sub, link: calendlyInput }));

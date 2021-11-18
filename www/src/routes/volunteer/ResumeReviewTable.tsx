@@ -8,6 +8,7 @@ import { ResumeReviewWithUserDetails as RRWUD } from '../../util/serverResponses
 interface Action {
     name: string;
     func: (resumeReview: RRWUD) => void;
+    disabled?: boolean;
 }
 
 interface ResumeReviewTableProps {
@@ -40,7 +41,7 @@ const ResumeReviewTable: FC<ResumeReviewTableProps> = (props: ResumeReviewTableP
                                     <ButtonGroup>
                                         {props.actions.map((action) => {
                                             return (
-                                                <Button key={action.name} onClick={() => action.func(resume)}>
+                                                <Button key={action.name} onClick={() => action.func(resume)} disabled={action.disabled}>
                                                     {action.name}
                                                 </Button>
                                             );

@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import dateFormat from 'dateformat';
 import React, { FC, useState } from 'react';
 
+import useUserContext from '../../../hooks/useUserContext';
 import { useStudentDispatch } from '../../../redux/substores/student/studentHooks';
 import cancelResumeReview from '../../../redux/substores/student/thunks/cancelResumeReview';
 import fetchWithToken from '../../../util/auth0/fetchWithToken';
@@ -43,6 +44,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
     const classes = useStyles();
     const [isExpanded, setIsExpanded] = useState(false);
     const dispatch = useStudentDispatch();
+    const userContext = useUserContext();
 
     const { getAccessTokenSilently } = useAuth0();
 
@@ -52,6 +54,8 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
         ['reviewing', 'In review'],
         ['seeking_reviewer', 'Pending'],
     ]);
+
+    const actionsShouldBeDisabled = !(userContext?.hasAgreedToTermsOfService ?? false);
 
     return (
         <Card className={classes.currentResumeCard} elevation={0}>
@@ -76,6 +80,7 @@ const ResumeReviewCard: FC<ResumeReviewCardProps> = ({ resumeReview }: ResumeRev
                             onClick={() => {
                                 dispatch(cancelResumeReview({ resumeReviewId: resumeReview.id, tokenAcquirer: getAccessTokenSilently }));
                             }}
+                            disabled={actionsShouldBeDisabled}
                         >
                             Cancel review
                         </Button>

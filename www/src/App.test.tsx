@@ -37,13 +37,6 @@ const mockFetchUserInfo = mocked(fetchUserInfo);
 jest.mock('./redux/thunks/getUserRole');
 const mockGetUserRole = mocked(getUserRole);
 
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useHistory: () => ({
-        push: jest.fn(),
-    }),
-}));
-
 describe('App', () => {
     let mockGlobalStore: RootState;
     let mockDispatch: jest.MockedFunction<AppDispatch>;
