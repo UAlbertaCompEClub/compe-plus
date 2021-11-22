@@ -17,7 +17,6 @@ const UserProfile: FC = () => {
     const dispatch = useAppDispatch();
 
     const handleLogout = () => {
-        dispatch(reset());
         logout();
     };
 
