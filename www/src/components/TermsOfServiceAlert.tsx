@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -8,15 +9,20 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { openTermsOfServiceDialog } from '../redux/slices/userSlice';
 
 const TermsOfServiceAlert: FC = () => {
+    const { isAuthenticated } = useAuth0();
     const { hasAgreedToTermsOfService } = useAppSelector((state) => state.user);
-    const [isOpen, setIsOpen] = useState(!hasAgreedToTermsOfService);
+    const [isOpen, setIsOpen] = useState(isAuthenticated && !hasAgreedToTermsOfService);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (hasAgreedToTermsOfService) {
-            setIsOpen(false);
+        if (isAuthenticated) {
+            if (hasAgreedToTermsOfService) {
+                setIsOpen(false);
+            } else {
+                setIsOpen(true);
+            }
         }
-    }, [hasAgreedToTermsOfService]);
+    }, [hasAgreedToTermsOfService, isAuthenticated]);
 
     const handleClose = () => {
         setIsOpen(false);

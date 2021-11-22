@@ -4,7 +4,7 @@ import fetchUserInfo from '../thunks/fetchUserInfo';
 import getUserRole from '../thunks/getUserRole';
 import patchUser from '../thunks/patchUser';
 
-type UserState = {
+export type UserState = {
     roles: string[];
     currentRole: string;
     hasAgreedToTermsOfService: boolean | null;
