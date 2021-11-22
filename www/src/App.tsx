@@ -11,6 +11,7 @@ import TermsOfServiceAlert from './components/TermsOfServiceAlert';
 import SettingsDialog from './components/user/SettingsDialog';
 import TermsOfServiceDialog from './components/user/TermsOfServiceDialog';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { reset } from './redux/slices/userSlice';
 import fetchUserInfo from './redux/thunks/fetchUserInfo';
 import getUserRole from './redux/thunks/getUserRole';
 import AdminApp from './routes/Admin';
@@ -51,6 +52,8 @@ const App: FC = () => {
     useEffect(() => {
         if (isAuthenticated) {
             dispatch(fetchUserInfo(getAccessTokenSilently));
+        } else {
+            dispatch(reset());
         }
     }, [isAuthenticated]);
 
