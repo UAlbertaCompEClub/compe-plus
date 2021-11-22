@@ -1,12 +1,13 @@
 import { Auth0ContextInterface, useAuth0, User } from '@auth0/auth0-react';
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 import { render } from '@testing-library/react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import App from './App';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { reset } from './redux/slices/userSlice';
 import { AppDispatch, RootState } from './redux/store';
 import fetchUserInfo from './redux/thunks/fetchUserInfo';
 import getUserRole, { GetUserRoleParameters, GetUserRolesResponse } from './redux/thunks/getUserRole';
@@ -115,6 +116,22 @@ describe('App', () => {
             expect(mockDispatch).toBeCalledWith(mockAction);
         } else {
             expect(mockDispatch).not.toBeCalledWith(mockAction);
+        }
+    });
+
+    it.each([true, false])('calls reset user state only when user is unauthenticated', (isAuthenticated) => {
+        mockAuth0State = {
+            isAuthenticated,
+            isLoading: false,
+        } as unknown as Auth0ContextInterface<User>;
+        mockUseAuth0.mockReturnValueOnce(mockAuth0State);
+
+        mount(<App />);
+
+        if (isAuthenticated) {
+            expect(mockDispatch).not.toBeCalledWith(reset());
+        } else {
+            expect(mockDispatch).toBeCalledWith(reset());
         }
     });
 });
